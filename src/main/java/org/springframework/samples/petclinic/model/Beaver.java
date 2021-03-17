@@ -13,7 +13,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "beavers")
-@Data
 @Getter
 @Setter
 public class Beaver extends Person {
@@ -30,4 +29,5 @@ public class Beaver extends Person {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
+    
 }
