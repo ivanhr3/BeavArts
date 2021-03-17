@@ -19,21 +19,12 @@ import lombok.Setter;
 public class User{
 	@Id
 	String username;
-
-	@Email
-	String email;
 	
 	String password;
 
 	String nombre;
 
 	String apellidos;
-
-	String especialidades;
-
-	String dni;
-
-	//Double valoracion;
 	
 	boolean enabled;
 	
