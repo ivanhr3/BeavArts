@@ -8,7 +8,7 @@
 
 <petclinic:layout pageName="beavers">
     <h2>
-        <c:if test="${beaver['new']}">New </c:if> Owner
+        <c:if test="${beaver['new']}">Nuevo </c:if> Beaver!
     </h2>
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
