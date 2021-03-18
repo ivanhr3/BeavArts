@@ -6,19 +6,26 @@ import static org.junit.Assert.assertTrue;
 
 
 import org.springframework.stereotype.Service;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.User;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+
 import javax.validation.ConstraintViolationException;
 
 
-@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+
+@SpringBootTest
 public class BeaverServiceTests {
     @Autowired
     protected BeaverService beaverService;
