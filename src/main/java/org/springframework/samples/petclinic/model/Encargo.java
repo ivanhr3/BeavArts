@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -12,6 +14,8 @@ import org.hibernate.validator.constraints.URL;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -38,5 +42,11 @@ public class Encargo extends BaseEntity {
     //Tipo string?? Mirar como añadir la foto
     @URL
     private String photo;
-    
+
+    @ManyToOne
+    private Beaver beaver;
+
+    @OneToMany
+    private Collection<Solicitud> solicitudes;
+
 }
