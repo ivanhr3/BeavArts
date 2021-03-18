@@ -6,6 +6,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Beaver extends Person {
     
     String especialidades;
 
+    @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto") 
 	String dni;
 
 	//Double valoracion;

@@ -6,6 +6,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.URL;
 
@@ -26,8 +27,11 @@ public class Encargo extends BaseEntity {
     @Digits(fraction = 2,integer = 6)
     private double precio;
 
+    @NotNull
     private boolean disponibilidad;
 
+    @NotBlank
+    @Size(min = 30, max = 3000)
     private String descripcion;
 
 
