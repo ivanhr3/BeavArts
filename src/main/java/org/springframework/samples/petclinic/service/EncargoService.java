@@ -15,6 +15,10 @@ public class EncargoService {
 
     private EncargoRepository encargoRepository;
 
+    @Autowired
+    public EncargoService(EncargoRepository encargoRepository){
+        this.encargoRepository = encargoRepository;
+    }
 
     @Transactional
     public Iterable<Encargo> findEncargoByBeaverId(int id){
