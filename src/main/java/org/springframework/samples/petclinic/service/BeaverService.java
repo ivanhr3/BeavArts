@@ -8,6 +8,8 @@ import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BeaverService {
     private BeaverRepository beaverRepository;
@@ -27,4 +29,9 @@ public class BeaverService {
         userService.saveUser(beaver.getUser());
         authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
     }
+
+    public Optional<Beaver> findBeaverById(String id) {
+        return beaverRepository.findById(id);
+    }
+
 }
