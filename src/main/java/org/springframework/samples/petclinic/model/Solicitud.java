@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "solicitudes")
 public class Solicitud extends BaseEntity {
 
 	private boolean	estado;

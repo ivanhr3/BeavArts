@@ -18,6 +18,11 @@ public class SolicitudService {
 	private SolicitudRepository solicitudRepository;
 
 
+	@Autowired
+	public SolicitudService(final SolicitudRepository solicitudRepository) {
+		this.solicitudRepository = solicitudRepository;
+	}
+
 	@Transactional
 	public int solicitudCount() {
 		return (int) this.solicitudRepository.count();
