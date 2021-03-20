@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -57,7 +59,7 @@ public class EncargoController {
 	}
 
 	@PostMapping(value = "/encargos/new")
-	public String processCreationForm(@Valid final Encargo encargo, final BindingResult result, final ModelMap model, @RequestParam("urlImagen") MultipartFile imagen) {
+	public String processCreationForm(@Valid final Encargo encargo, final BindingResult result, final ModelMap model/*, @RequestParam("urlImagen") MultipartFile imagen*/) {
 
 		//Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 
@@ -73,7 +75,7 @@ public class EncargoController {
 			return "encargos/nuevo";
 
 		} else {
-
+/*
             if (!imagen.isEmpty()) {
                 Path directorioImagen = Paths.get("src/main/resources/static/resources/images/imagenes");
                 String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
@@ -92,9 +94,17 @@ public class EncargoController {
 
             }
 
+*/
+
+            if(beaver.getEncargos()==null){
+                Set<Encargo> res = new HashSet<>();
+                beaver.setEncargos(res);
+            }
+
+
 			encargo.setBeaver(beaver);
-			encargoService.saveEncargo(encargo);
-			beaver.getEncargos().add(encargo);
+			beaver.addEncargo(encargo);
+            encargoService.saveEncargo(encargo);
 			beaverService.saveBeaver(beaver);
 
 			return "redirect:/beavers/" + beaver.getId();
@@ -185,21 +195,15 @@ public class EncargoController {
 
 	//Delete Encargo
 
-	@RequestMapping(value = "/encargos/delete")
-	public String deleteEncargo(@RequestParam("encargoId") final int encargoId) {
+	@RequestMapping(value = "/encargos/{encargoId}/delete")
+	public String deleteEncargo(@PathVariable("encargoId") int encargoId) {
 
-		Optional<Encargo> p = this.encargoService.findEncargoById(encargoId);
-		if (p.isPresent()) {
-			Encargo encargo = p.get();
-			Beaver b = encargo.getBeaver();
-			b.getEncargos().removeIf(x -> encargo.getId() == encargoId);
-			this.beaverService.saveBeaver(b);
-			this.encargoService.deleteEncargoById(encargoId);
-			return "encargos/todoOk";
-
-		} else {
-			return "exception";
-		}
+		Encargo encargo = this.encargoService.findEncargoByIntId(encargoId);
+        Beaver b = encargo.getBeaver();
+        b.getEncargos().remove(encargo);
+        beaverService.saveBeaver(b);
+        this.encargoService.deleteEncargoById(encargoId);
+        return "encargos/todoOk";
 
 	}
 
