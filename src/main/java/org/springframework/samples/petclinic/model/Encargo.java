@@ -1,4 +1,7 @@
+
 package org.springframework.samples.petclinic.model;
+
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,38 +18,35 @@ import org.hibernate.validator.constraints.URL;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collection;
-
 @Getter
 @Setter
 @Entity
 @Table(name = "encargos")
 public class Encargo extends BaseEntity {
 
-    @NotBlank
-    private String titulo;
+	@NotBlank
+	private String					titulo;
 
-    @Min(0)
-    @NotNull
-    @Digits(fraction = 2,integer = 6)
-    private double precio;
+	@Min(0)
+	@NotNull
+	@Digits(fraction = 2, integer = 6)
+	private double					precio;
 
-    @NotNull
-    private boolean disponibilidad;
+	@NotNull
+	private boolean					disponibilidad;
 
-    @NotBlank
-    @Size(min = 30, max = 3000)
-    private String descripcion;
+	@NotBlank
+	@Size(min = 30, max = 3000)
+	private String					descripcion;
 
+	//Tipo string?? Mirar como añadir la foto
+	@URL
+	private String					photo;
 
-    //Tipo string?? Mirar como añadir la foto
-    @URL
-    private String photo;
+	@ManyToOne
+	private Beaver					beaver;
 
-    @ManyToOne
-    private Beaver beaver;
-
-    @OneToMany
-    private Collection<Solicitud> solicitudes;
+	@OneToMany
+	private Collection<Solicitud>	solicitudes;
 
 }
