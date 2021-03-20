@@ -33,4 +33,12 @@ public class Beaver extends Person {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "beaver")
     private Set<Encargo> encargos;
 
+    /*
+    public void addEncargo(Encargo encargo) {
+        getEncargos().add(encargo);
+        encargo.setBeaver(this);
+    }
+
+     */
+
 }
