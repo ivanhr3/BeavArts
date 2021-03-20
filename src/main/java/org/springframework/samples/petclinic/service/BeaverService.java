@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class BeaverService {
+    
     private BeaverRepository beaverRepository;
     @Autowired
     private UserService userService;
@@ -40,6 +41,8 @@ public class BeaverService {
         return beaverRepository.findBeaverById(id);
     }
 
-
+    public Beaver findBeaverByUsername(final String username) {
+		return this.beaverRepository.findBeaverByUser(this.userService.findUserByUsername(username));
+	}
 
 }

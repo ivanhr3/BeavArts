@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.repository.BeaverRepository;
+import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.UserService;
@@ -26,26 +28,29 @@ import java.util.Optional;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/beavers/{beaverId}")
+//@RequestMapping("/beavers/{beaverId}")
 public class EncargoController {
 
-    @Autowired
+  
     private EncargoService encargoService;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private BeaverService beaverService;
 
 
-    @GetMapping(value = "/encargos/new")
-    public String crearEncargo(@PathVariable("beaverId") int beaverId, ModelMap model) {
+    @Autowired
+	public EncargoController(final EncargoService encargoService, final UserService userService,
+			final BeaverService beaverService, final AuthoritiesService authoritiesService) throws ClassNotFoundException{
+		this.encargoService = encargoService;
+		this.userService = userService;
+		this.beaverService = beaverService;
+	}
 
-        //Beaver beaver = new Beaver();
-        //String beaverIdString = String.valueOf(beaverId);
-        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+    @GetMapping(value = "/encargos/new")
+    public String initCreationForm(ModelMap model) {
+
+        Beaver beaver = new Beaver();
         Encargo encargo = new Encargo();
+        encargo.setBeaver(beaver);
         model.addAttribute("encargo", encargo);
         model.addAttribute("beaver", beaver);
         return "encargos/nuevo";
@@ -53,7 +58,7 @@ public class EncargoController {
     }
 
     @PostMapping(value = "/encargos/new")
-    public String guardarEncargo(@PathVariable("beaverId") int beaverId, @Valid Encargo encargo, BindingResult result,
+    public String processCreationForm(@PathVariable("beaverId") int beaverId, @Valid Encargo encargo, BindingResult result,
                                   ModelMap model) {
 
         Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
@@ -69,7 +74,8 @@ public class EncargoController {
             this.encargoService.saveEncargo(encargo);
             beaver.getEncargos().add(encargo);
             this.beaverService.saveBeaver(beaver);
-            return "redirect:/beavers/beaver{id}";
+
+            return "redirect:/beavers/" + beaverId;
         }
 
     }
@@ -78,7 +84,7 @@ public class EncargoController {
 
     //lIST ENCARGOS
 
-    @GetMapping("/list")
+    @GetMapping("/beavers/{beaverId}/encargos/list")
     public String listarEncargos(@PathVariable("beaverId") int beaverId, ModelMap model) {
 
         Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
@@ -89,7 +95,7 @@ public class EncargoController {
 
     // SHOW ENCARGOS
 
-    @GetMapping("/encargoInfo/{encargoId}")
+    @GetMapping("/encargos/{encargoId}")
     public ModelAndView mostrarEncargo(@PathVariable("encargoId") int encargoId){
 
         ModelAndView vista = new ModelAndView("encargos/encargosDetails");
