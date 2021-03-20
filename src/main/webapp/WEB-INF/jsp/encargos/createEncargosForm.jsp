@@ -12,13 +12,12 @@
     </h2>
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Titulo" name="firstName"/>
-            <petclinic:inputField label="Precio" name="lastName"/>
-            <petclinic:inputField label="Disponibilidad" name="especialidades"/>
-            <petclinic:inputField label="Descripcion" name="dni"/>
-            <petclinic:inputField label="Foto" name="email"/>
-            <petclinic:inputField label="Username" name="user.username"/>
-            <petclinic:inputField label="Beaver" name="user.password"/>
+            <petclinic:inputField label="Titulo" name="titulo"/>
+            <petclinic:inputField label="Precio" name="precio"/>
+            <petclinic:inputField label="Disponibilidad" name="disponibilidad"/>
+            <petclinic:inputField label="Descripcion" name="descripcion"/>
+            <petclinic:inputField label="Foto" name="photo"/>
+            <petclinic:inputField label="Beaver" name="beaver.user.password"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
