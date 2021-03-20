@@ -30,8 +30,16 @@ public class BeaverService {
         authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
     }
 
+    @Transactional
     public Optional<Beaver> findBeaverById(String id) {
         return beaverRepository.findById(id);
     }
+
+    @Transactional
+    public Beaver findBeaverByIntId(int id) {
+        return beaverRepository.findBeaverById(id);
+    }
+
+
 
 }
