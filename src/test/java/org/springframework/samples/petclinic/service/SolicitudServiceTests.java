@@ -185,7 +185,7 @@ public class SolicitudServiceTests {
 
 	}
 
-	//no funciona
+
 	@Test
 	@Transactional
 	public void findSolicitudByIdTest() {
@@ -200,10 +200,25 @@ public class SolicitudServiceTests {
 		Assertions.assertEquals(sol, solicitud);
 	}
 
+	@Test
+    @Transactional  //Busca una solicitud cuyo id no existe
+	public void findSolicitudByIdTestHasErrors(){
+	    Optional<Solicitud> solicitud = this.solicitudService.findSolicitudById(15265354);
+        Solicitud sol;
+
+	    if(solicitud.isPresent()){
+            sol = solicitud.get();
+        } else {
+	        sol = null;
+        }
+
+	    Assertions.assertEquals(sol, null);
+    }
+
 	//Se necesita hacer un save encargo, por lo que no funcionará cuando estén implementados los encargos
 	/*
 	 * @Test
-	 * 
+	 *
 	 * @Transactional
 	 * public void findSolicitudByEncargoIdTest() {
 	 * Encargo encargo = this.createDummyEncargo();
@@ -232,9 +247,27 @@ public class SolicitudServiceTests {
 		this.solicitudService.saveSolicitud(solicitud2);
 		int res = this.solicitudService.solicitudCount();
 		this.solicitudService.deleteSolicitud(solicitud2);
-
-		Assertions.assertEquals(this.solicitudService.solicitudCount(), res - 1);
+		Assertions.assertSame(this.solicitudService.findSolicitudById(solicitud2.getId()), Optional.empty());
 	}
+
+	@Test
+    @Transactional  //Intenta eliminar una solicitud que no existe
+    public void deleteSolicitudTestHasErrors() {
+        List<Solicitud> solicitudes = this.solicitudService.findSolicitudByEncargoId(1);
+        int res = solicitudes.size();
+        Optional<Solicitud> sol = this.solicitudService.findSolicitudById(171671872);
+        Solicitud sol2 = new Solicitud();
+
+        if(sol.isPresent()) {
+            sol2 = sol.get();
+        }
+
+        this.solicitudService.deleteSolicitud(sol2);
+
+        Assertions.assertNotEquals(this.solicitudService.solicitudCount(), res - 1);
+
+
+    }
 
 	@Test
 	@Transactional
@@ -255,5 +288,28 @@ public class SolicitudServiceTests {
 
 		Assertions.assertEquals(this.solicitudService.solicitudCount(), res - 1);
 	}
+
+    @Test
+    @Transactional  //Intenta eliminar una solicitud cuyo id no existe
+	public void deleteSolicitudByIdTestHasErrors() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setEstado(true);
+        solicitud.setPrecio(25.00);
+
+        Solicitud solicitud2 = new Solicitud();
+        solicitud2.setEstado(true);
+        solicitud2.setPrecio(25.00);
+
+        this.solicitudService.saveSolicitud(solicitud);
+        this.solicitudService.saveSolicitud(solicitud2);
+        int res = this.solicitudService.solicitudCount();
+
+        Optional<Solicitud> solicitud3 = this.solicitudService.findSolicitudById(1836516289);
+        if(solicitud3.isPresent()){
+            this.solicitudService.deleteSolicitudById(1836516289);
+        }
+
+        Assertions.assertEquals(this.solicitudService.solicitudCount(), res);
+    }
 
 }
