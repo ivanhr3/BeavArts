@@ -136,7 +136,8 @@ public class EncargoControllerTests {
 			.perform(MockMvcRequestBuilders.post("/encargos/new").with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "Encargo Pinturas").param("precio", "35.50")
 				.param("disponibilidad", "true")
                 .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
-				.param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))//.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+				.param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + EncargoControllerTests.TEST_BEAVER_ID));
 	}
 
@@ -144,17 +145,35 @@ public class EncargoControllerTests {
 	@Test
 	public void testProcessCreationFormHasErrors() throws Exception {
 		this.mockMvc
-			.perform(MockMvcRequestBuilders.post("/encargos/nuevo")
-                .with(SecurityMockMvcRequestPostProcessors.csrf())
+			.perform(MockMvcRequestBuilders.post("/encargos/new").with(SecurityMockMvcRequestPostProcessors.csrf())
                 .param("titulo", "Encargo Pinturas")
-                //.param("precio", "40.0")
-				.param("disponibilidad", "true")
+                .param("precio", "")
+				.param("disponibilidad", "5")
                 .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros"))
 			//.param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
-			.andExpect(MockMvcResultMatchers.model().attributeHasErrors("precio"))
+			.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("encargo", "disponibilidad"))
 			//.andExpect(model().attributeHasFieldErrors("encargo", "precio"))
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/nuevo"));
+			.andExpect(MockMvcResultMatchers.view().name("encargos/nuevo"));
 	}
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testInitUpdateFormSucces() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/encargos/{encargoId}/edit", EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("encargos/editar")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
+    }
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessUpdateFormSuccess() throws Exception {
+        this.mockMvc
+            .perform(MockMvcRequestBuilders.post("/encargos/new").with(SecurityMockMvcRequestPostProcessors.csrf())
+                .param("titulo", "Encargo Pinturas").param("precio", "35.50")
+                .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
+                .param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+            .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + EncargoControllerTests.TEST_BEAVER_ID));
+    }
 
 
 	@WithMockUser(value = "beaver1")

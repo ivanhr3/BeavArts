@@ -24,11 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -59,18 +55,13 @@ public class EncargoController {
 	}
 
 	@PostMapping(value = "/encargos/new")
-	public String processCreationForm(@Valid final Encargo encargo, final BindingResult result, final ModelMap model/*, @RequestParam("urlImagen") MultipartFile imagen*/) {
-
-		//Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+	public String processCreationForm(@Valid Encargo encargo, BindingResult result, final ModelMap model/*, @RequestParam("urlImagen") MultipartFile imagen*/) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        User user = userService.findUserByUsername(currentPrincipalName);
         Beaver beaver = beaverService.findBeaverByUsername(currentPrincipalName);
 
 		if (result.hasErrors()) {
-
-			//model.addAttribute("beaver", beaver);
 			model.addAttribute("encargo", encargo);
 			return "encargos/nuevo";
 
@@ -93,14 +84,12 @@ public class EncargoController {
                 }
 
             }
-
 */
 
             if(beaver.getEncargos()==null){
                 Set<Encargo> res = new HashSet<>();
                 beaver.setEncargos(res);
             }
-
 
 			encargo.setBeaver(beaver);
 			beaver.addEncargo(encargo);
@@ -158,7 +147,8 @@ public class EncargoController {
 
     @PostMapping(value = "/encargos/{encargoId}/edit")
     public String processUpdateForm(@Valid Encargo encargo, BindingResult result,
-                                    @PathVariable("encargoId") int encargoId, ModelMap model, @RequestParam("urlImagen") MultipartFile imagen) {
+                                    @PathVariable("encargoId") int encargoId, ModelMap model
+                                    /*@RequestParam("urlImagen") MultipartFile imagen*/) {
 
 
 	    if (result.hasErrors()) {
@@ -166,7 +156,7 @@ public class EncargoController {
 	        return "encargos/editar";
 
 	    } else {
-
+/*
             if (!imagen.isEmpty()) {
                 Path directorioImagen = Paths.get("src/main/resources/static/resources/images/imagenes");
                 String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
@@ -184,6 +174,8 @@ public class EncargoController {
                 }
 
             }
+
+ */
 
 
             encargoService.saveEncargo(encargo);
