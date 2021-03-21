@@ -46,5 +46,9 @@ public class Encargo extends BaseEntity {
     //Tipo string?? Mirar como añadir la foto
     @URL
     private String photo;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "beaver_id")
+    private Beaver beaver;
+
 }

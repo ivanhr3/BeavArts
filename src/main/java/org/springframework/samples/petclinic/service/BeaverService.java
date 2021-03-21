@@ -11,6 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BeaverService {
     private BeaverRepository beaverRepository;
@@ -48,6 +50,14 @@ public class BeaverService {
 		Beaver beaver = this.findBeaverByUsername(username);
 		return beaver;
 	}
+  
+    @Transactional
+    public Optional<Beaver> findBeaverById(String id) {
+        return beaverRepository.findById(id);
+    }
 
-    
+    @Transactional
+    public Beaver findBeaverByIntId(int id) {
+        return beaverRepository.findBeaverById(id);
+    }
 }
