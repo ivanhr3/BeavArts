@@ -1,7 +1,8 @@
 package org.springframework.samples.petclinic.service;
 
 import java.io.File;
-
+import java.util.List;
+import java.util.Optional;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -19,8 +20,10 @@ import org.springframework.samples.petclinic.web.EmailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 public class SolicitudService {
+
 
 
     private SolicitudRepository solicitudRepository;
@@ -56,5 +59,33 @@ public class SolicitudService {
     public Boolean existsSol(Integer id){
         return solicitudRepository.existsById(id);
     }
-    
+
+    @Transactional
+    public int solicitudCount() {
+      return (int) this.solicitudRepository.count();
+    }
+  
+    @Transactional
+    public Iterable<Solicitud> findAll() {
+      return this.solicitudRepository.findAll();
+    }
+
+    @Transactional
+    public Optional<Solicitud> findSolicitudById(final int id) {
+      return this.solicitudRepository.findById(id);
+    }
+
+    public List<Solicitud> findSolicitudByEncargoId(final int id) {
+      return this.solicitudRepository.findSolicitudByEncargoId(id);
+    }
+
+    @Transactional
+    public void deleteSolicitud(final Solicitud s) {
+      this.solicitudRepository.delete(s);
+    }
+
+    @Transactional
+    public void deleteSolicitudById(final int id) {
+      this.solicitudRepository.deleteById(id);
+    }
 }

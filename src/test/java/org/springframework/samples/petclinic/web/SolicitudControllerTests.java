@@ -1,5 +1,8 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
@@ -9,11 +12,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
-
+import org.junit.runner.RunWith;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,15 +33,19 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.SolicitudService;
+import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.context.annotation.FilterType;
 
 
-@WebMvcTest(value = SolicitudController.class,
-		excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
-		excludeAutoConfiguration= SecurityConfiguration.class)
+@RunWith(SpringRunner.class)
+// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@WebMvcTest(value = SolicitudController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
+@AutoConfigureMockMvc
 public class SolicitudControllerTests {
     @Autowired
     private SolicitudController solicitudController;
@@ -48,6 +57,11 @@ public class SolicitudControllerTests {
     private BeaverService beaverService;
     @MockBean
     private EncargoService encargoService;
+  @MockBean
+	private UserService			userService;
+
+	@MockBean
+	private AuthoritiesService	authoritiesService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -122,6 +136,7 @@ public class SolicitudControllerTests {
 
         given(solicitudService.findById(Mockito.anyInt())).willReturn(solicitud);
         given(encargoService.findEncargoById(TEST_ENCARGO_ID)).willReturn(encargo);
+      BDDMockito.given(this.userService.findUserByUsername("spring")).willReturn(user);
     }
 
     @WithMockUser(value = "spring")
@@ -167,4 +182,18 @@ public class SolicitudControllerTests {
         .andExpect(status().isOk())
         .andExpect(view().name("ErrorPermisos"));
     }
+  
+  @Test
+	@WithMockUser("testuser")
+	public void listarSolicitudesTest() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/list")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("listaSolicitudes"))
+			.andExpect(MockMvcResultMatchers.view().name("solicitudes/listadoSolicitudes"));
+	}
+
+	@Test
+	@WithMockUser("testuser")
+	public void mostrarSolicitudesTest() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.model().attributeExists("solicitud")).andExpect(MockMvcResultMatchers.view().name("solicitudes/solicitudesDetails"));
+	}
 }

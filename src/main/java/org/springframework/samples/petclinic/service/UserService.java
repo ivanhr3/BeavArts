@@ -60,6 +60,7 @@ public class UserService {
 		return userRepository.findById(username);
 	}
 
+
     public User findUserByUsername(String username){
         return this.userRepository.findByUsername(username);
     }
