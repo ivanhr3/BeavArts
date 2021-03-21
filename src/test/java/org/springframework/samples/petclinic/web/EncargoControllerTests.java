@@ -3,20 +3,13 @@ package org.springframework.samples.petclinic.web;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
@@ -28,7 +21,6 @@ import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -54,13 +46,9 @@ public class EncargoControllerTests {
 	@MockBean
 	private AuthoritiesService	authoritiesService;
 
-	@Autowired
-	private EncargoController	encargoController;
-
 
 	private static final int	TEST_BEAVER_ID		= 1;
 	private static final int	TEST_ENCARGO_ID		= 1;
-	private static final String	TEST_BEAVERUSERNAME	= "beaver1";
 
 	private Beaver				beaver1;
 	//private Encargo encargo1;
@@ -109,7 +97,7 @@ public class EncargoControllerTests {
 
 		System.out.println(this.beaver1.getId());
 		System.out.println(this.beaver1.getFirstName());
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/list", EncargoControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk());
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", EncargoControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk());
 
 	}
 

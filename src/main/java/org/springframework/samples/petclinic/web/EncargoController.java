@@ -60,8 +60,9 @@ public class EncargoController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         Beaver beaver = beaverService.findBeaverByUsername(currentPrincipalName);
+		
 
-		if (result.hasErrors()) {
+		if (result.hasErrors() /*|| encargo.getTitulo()==null || encargo.getPrecio() == 0.0 || checkDesc(encargo.getDescripcion())*/) {
 			model.addAttribute("encargo", encargo);
 			return "encargos/nuevo";
 
@@ -101,6 +102,14 @@ public class EncargoController {
 
 	}
 
+	/* private Boolean checkDesc(String desc){
+		Boolean res = false;
+
+		if(desc.length()< 30 || desc.length() > 3000) res = true;
+
+		return res;
+	} */
+
 	//lIST ENCARGOS
 
 	@GetMapping("beavers/{beaverId}/encargos/list")
@@ -128,6 +137,8 @@ public class EncargoController {
 
 		return vista;
 	}
+
+	//Update Encargos
 
     @GetMapping(value = "/encargos/{encargoId}/edit")
     public String initUpdateForm(@PathVariable("encargoId") int encargoId, ModelMap model) {
