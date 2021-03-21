@@ -58,6 +58,7 @@ public class SolicitudController {
 
 		if (encargos.size() == 0) {
 			//AÑADIR MENSAJE DE "NO HAY SOLICITUDES DISPONIBLES
+			return "solicitudes/solicitudesNotFound";
 		} else {
 
 			for (Encargo e : encargos) {
@@ -97,13 +98,13 @@ public class SolicitudController {
         int beaverId = beaver.getId();
         Encargo encargo = encargoService.findEncargoById(sol.getEncargo().getId());
         if(beaverId != encargo.getBeaver().getId()){ //Hay que comparar con el Beaver del encargo NO el de la solicitud
-            return VISTA_DE_ERROR; //Front: Poned las redirecciones
+            return "solicitudes/errorAceptar"; //Front: Poned las redirecciones
         } else {
             solicitudService.aceptarSolicitud(sol, beaver);
             //Email de Notification
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
             emailSender.sendEmail(beaver.getEmail(), subject);
-            return SOLICITUD_DETAILS; //Front: Poned las redirecciones
+            return "solicitudes/solicitudesDetails"; //Front: Poned las redirecciones
         }
 
     }
@@ -116,13 +117,13 @@ public class SolicitudController {
         int beaverId = beaver.getId();
         Encargo encargo = encargoService.findEncargoById(sol.getEncargo().getId());
         if(beaverId != encargo.getBeaver().getId()){
-            return VISTA_DE_ERROR; //Front: Poned las redirecciones
+            return "solicitudes/errorRechazar"; //Front: Poned las redirecciones
         } else {
             solicitudService.rechazarSolicitud(sol, beaver);
             //Email de Notificacion
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
             emailSender.sendEmail(beaver.getEmail(), subject);
-            return SOLICITUD_DETAILS; //Front: Poned las redirecciones
+            return "solicitudes/solicitudesDetails"; //Front: Poned las redirecciones
         }
 
     }
