@@ -1,8 +1,10 @@
 package org.springframework.samples.petclinic.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -35,6 +37,10 @@ public class Encargo extends BaseEntity {
     @NotBlank
     @Size(min = 30, max = 3000)
     private String descripcion;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "beaver", referencedColumnName = "id")
+    private Beaver beaver;
 
 
     //Tipo string?? Mirar como añadir la foto

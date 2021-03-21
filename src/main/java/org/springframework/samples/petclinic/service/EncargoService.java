@@ -1,15 +1,15 @@
 package org.springframework.samples.petclinic.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.transaction.Transactional;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Encargo;
-import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.samples.petclinic.repository.EncargoRepository;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.repository.BeaverRepository;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class EncargoService {
@@ -22,6 +22,14 @@ public class EncargoService {
     }
 
     @Transactional
+    public void saveEncargo(Encargo encargo) throws DataAccessException{
+        encargoRepository.save(encargo);
+    }
+
+    public Encargo findEncargoById(int id) throws DataAccessException{
+        return encargoRepository.findById(id).orElse(null);
+    }
+    
     public Iterable<Encargo> findEncargoByBeaverId(int id){
         return this.encargoRepository.findEncargoByBeaverId(id);
     }
@@ -40,5 +48,4 @@ public class EncargoService {
     public void deleteEncargoById(Integer id) {
         this.encargoRepository.deleteById(id);
     }
-
 }

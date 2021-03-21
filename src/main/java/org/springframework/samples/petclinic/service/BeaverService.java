@@ -4,8 +4,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.repository.BeaverRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,6 +33,24 @@ public class BeaverService {
         authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
     }
 
+    public Beaver findBeaverByUsername(final String username){
+        return this.beaverRepository.findBeaverByUsername(this.userService.findUser(username).get());
+    }
+
+    public Beaver getCurrentBeaver() throws DataAccessException {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
+
+		if(principal instanceof UserDetails){
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+
+		Beaver beaver = this.findBeaverByUsername(username);
+		return beaver;
+	}
+  
     @Transactional
     public Optional<Beaver> findBeaverById(String id) {
         return beaverRepository.findById(id);
@@ -39,7 +60,4 @@ public class BeaverService {
     public Beaver findBeaverByIntId(int id) {
         return beaverRepository.findBeaverById(id);
     }
-
-
-
 }
