@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -15,9 +16,11 @@ import org.hibernate.validator.constraints.URL;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
+@Table(name = "anuncio")
 @Getter
 @Setter
-@Entity
+
 public class Anuncio extends BaseEntity {
 
     @NotBlank
