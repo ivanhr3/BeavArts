@@ -1,7 +1,9 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
@@ -134,9 +136,16 @@ public class SolicitudControllerTests {
         solicitud.setPrecio(199);
         solicitudService.saveSolicitud(solicitud);
 
+        List<Solicitud> list = new ArrayList<Solicitud>();
+        list.add(solicitud);
+        encargo.setSolicitudes(list);
+        List<Encargo> list2 = new ArrayList<Encargo>();
+        list2.add(encargo);
+        beaver.setEncargos(list2);
+
         given(solicitudService.findById(Mockito.anyInt())).willReturn(solicitud);
-        given(encargoService.findEncargoById(TEST_ENCARGO_ID)).willReturn(encargo);
-      BDDMockito.given(this.userService.findUserByUsername("spring")).willReturn(user);
+        given(encargoService.findEncargoById(TEST_ENCARGO_ID)).willReturn(Optional.of(encargo));
+        given(this.userService.findUserByUsername("spring")).willReturn(user);
     }
 
     @WithMockUser(value = "spring")
@@ -145,7 +154,7 @@ public class SolicitudControllerTests {
         Mockito.doNothing().when(emailSender).sendEmail(Mockito.anyString(), Mockito.anyString());
         given(beaverService.getCurrentBeaver()).willReturn(beaver);
 
-        mockMvc.perform(get("/solicitud/accept/{solId}", TEST_SOLICITUD_ID))
+        mockMvc.perform(get("/solicitudes/accept/{solId}", TEST_SOLICITUD_ID))
         .andExpect(status().isOk())
         .andExpect(view().name("testview"));
     }
@@ -156,7 +165,7 @@ public class SolicitudControllerTests {
         Mockito.doNothing().when(emailSender).sendEmail(Mockito.anyString(), Mockito.anyString());
         given(beaverService.getCurrentBeaver()).willReturn(beaver);
 
-        mockMvc.perform(get("/solicitud/decline/{solId}", TEST_SOLICITUD_ID))
+        mockMvc.perform(get("/solicitudes/decline/{solId}", TEST_SOLICITUD_ID))
         .andExpect(status().isOk())
         .andExpect(view().name("testview"));
     }
@@ -167,7 +176,7 @@ public class SolicitudControllerTests {
         Mockito.doNothing().when(emailSender).sendEmail(Mockito.anyString(), Mockito.anyString());
         given(beaverService.getCurrentBeaver()).willReturn(beaver2);
 
-        mockMvc.perform(get("/solicitud/accept/{solId}", TEST_SOLICITUD_ID))
+        mockMvc.perform(get("/solicitudes/accept/{solId}", TEST_SOLICITUD_ID))
         .andExpect(status().isOk())
         .andExpect(view().name("ErrorPermisos"));
     }
@@ -178,22 +187,26 @@ public class SolicitudControllerTests {
         Mockito.doNothing().when(emailSender).sendEmail(Mockito.anyString(), Mockito.anyString());
         given(beaverService.getCurrentBeaver()).willReturn(beaver2);
 
-        mockMvc.perform(get("/solicitud/accept/{solId}", TEST_SOLICITUD_ID))
+        mockMvc.perform(get("/solicitudes/accept/{solId}", TEST_SOLICITUD_ID))
         .andExpect(status().isOk())
         .andExpect(view().name("ErrorPermisos"));
     }
   
   @Test
-	@WithMockUser("testuser")
+	@WithMockUser(value = "spring")
 	public void listarSolicitudesTest() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/list")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("listaSolicitudes"))
-			.andExpect(MockMvcResultMatchers.view().name("solicitudes/listadoSolicitudes"));
+        given(beaverService.getCurrentBeaver()).willReturn(beaver);
+
+		this.mockMvc.perform(get("/solicitudes/list")).andExpect(status().isOk()).andExpect(model().attributeExists("listaSolicitudes"))
+			.andExpect(view().name("solicitudes/listadoSolicitudes"));
 	}
 
 	@Test
-	@WithMockUser("testuser")
+	@WithMockUser(value = "spring")
 	public void mostrarSolicitudesTest() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.model().attributeExists("solicitud")).andExpect(MockMvcResultMatchers.view().name("solicitudes/solicitudesDetails"));
+        given(beaverService.getCurrentBeaver()).willReturn(beaver);
+
+		this.mockMvc.perform(get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(status().isOk())
+			.andExpect(model().attributeExists("solicitud")).andExpect(view().name("solicitudes/solicitudesDetails"));
 	}
 }

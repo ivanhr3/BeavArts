@@ -25,10 +25,6 @@ public class EncargoService {
     public void saveEncargo(Encargo encargo) throws DataAccessException{
         encargoRepository.save(encargo);
     }
-
-    public Encargo findEncargoById(int id) throws DataAccessException{
-        return encargoRepository.findById(id).orElse(null);
-    }
     
     public Iterable<Encargo> findEncargoByBeaverId(int id){
         return this.encargoRepository.findEncargoByBeaverId(id);
@@ -37,11 +33,6 @@ public class EncargoService {
     @Transactional
     public Optional<Encargo> findEncargoById(int id) {
         return this.encargoRepository.findById(id);
-    }
-
-    @Transactional
-    public Encargo saveEncargo(Encargo encargo) {
-        return encargoRepository.save(encargo);
     }
 
     @Transactional

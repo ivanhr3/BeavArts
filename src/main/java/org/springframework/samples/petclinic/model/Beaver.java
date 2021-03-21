@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 
@@ -32,7 +33,7 @@ public class Beaver extends Person {
 	  private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "beaver")
-    private Set<Encargo> encargos;
+    private Collection<Encargo> encargos;
 
     /*
     public void addEncargo(Encargo encargo) {

@@ -53,9 +53,4 @@ public class Encargo extends BaseEntity {
     @JoinColumn(name = "beaver", referencedColumnName = "id")
     private Beaver beaver;
 
-    @ManyToOne
-    @JoinColumn(name = "beaver_id")
-    private Beaver beaver;
-
-
 }
