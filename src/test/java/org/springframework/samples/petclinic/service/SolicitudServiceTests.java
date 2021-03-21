@@ -113,22 +113,20 @@ public class SolicitudServiceTests {
 
 		Encargo encargo1 = new Encargo();
 		encargo1.setBeaver(beaver1);
-		encargo1.setDescripcion("Encargo1 correcto");
+		encargo1.setDescripcion("Encargo1 correcto mira que largo tiene que ser quien ha sido el que puso");
 		encargo1.setTitulo("Encargo1");
-		encargo1.setPrecio(50);
+		encargo1.setPrecio(50.00);
 		encargo1.setDisponibilidad(true);
 
 		Solicitud solicitud1 = new Solicitud();
 		solicitud1.setEncargo(encargo1);
-		solicitud1.setEstado(true);
-		solicitud1.setPrecio(50);
-		solicitud1.setId(1);
+		solicitud1.setEstado(Estado.PENDIENTE);
+		solicitud1.setPrecio(50.00);
 
 		Solicitud solicitud2 = new Solicitud();
 		solicitud2.setEncargo(encargo1);
-		solicitud2.setEstado(true);
-		solicitud2.setPrecio(50);
-		solicitud2.setId(2);
+		solicitud2.setEstado(Estado.PENDIENTE);
+		solicitud2.setPrecio(50.00);
 
 		List<Solicitud> list = new ArrayList<Solicitud>();
 		list.add(solicitud1);
@@ -251,11 +249,11 @@ public class SolicitudServiceTests {
 	public void deleteSolicitudByIdTest() {
 
 		Solicitud solicitud = new Solicitud();
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 
 		Solicitud solicitud2 = new Solicitud();
-		solicitud2.setEstado(true);
+		solicitud2.setEstado(Estado.PENDIENTE);
 		solicitud2.setPrecio(25.00);
 
 		this.solicitudService.saveSolicitud(solicitud);
@@ -270,11 +268,11 @@ public class SolicitudServiceTests {
     @Transactional  //Intenta eliminar una solicitud cuyo id no existe
 	public void deleteSolicitudByIdTestHasErrors() {
         Solicitud solicitud = new Solicitud();
-        solicitud.setEstado(true);
+        solicitud.setEstado(Estado.PENDIENTE);
         solicitud.setPrecio(25.00);
 
         Solicitud solicitud2 = new Solicitud();
-        solicitud2.setEstado(true);
+        solicitud2.setEstado(Estado.PENDIENTE);
         solicitud2.setPrecio(25.00);
 
         this.solicitudService.saveSolicitud(solicitud);
@@ -294,12 +292,12 @@ public class SolicitudServiceTests {
 	public void deleteSolicitudTest() {
 
 		Solicitud solicitud = new Solicitud();
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 		solicitud.setId(5);
 
 		Solicitud solicitud2 = new Solicitud();
-		solicitud2.setEstado(true);
+		solicitud2.setEstado(Estado.PENDIENTE);
 		solicitud2.setPrecio(25.00);
 		solicitud2.setId(6);
 
@@ -349,12 +347,12 @@ public class SolicitudServiceTests {
 
 		int res = this.solicitudService.solicitudCount();
 		Solicitud solicitud = new Solicitud();
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 		solicitud.setId(5);
 
 		Solicitud solicitud2 = new Solicitud();
-		solicitud2.setEstado(true);
+		solicitud2.setEstado(Estado.PENDIENTE);
 		solicitud2.setPrecio(25.00);
 		solicitud2.setId(6);
 
@@ -372,7 +370,7 @@ public class SolicitudServiceTests {
 
 		Solicitud solicitud = new Solicitud();
 		solicitud.setEncargo(encargo);
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 		solicitud.setId(3);
 		this.solicitudService.saveSolicitud(solicitud);
@@ -388,7 +386,7 @@ public class SolicitudServiceTests {
 	@Transactional
 	public void findSolicitudByIdTest() {
 		Solicitud solicitud = new Solicitud();
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 		this.solicitudService.saveSolicitud(solicitud);
 
