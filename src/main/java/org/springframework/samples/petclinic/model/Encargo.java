@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -38,5 +40,9 @@ public class Encargo extends BaseEntity {
     //Tipo string?? Mirar como añadir la foto
     @URL
     private String photo;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "beaver_id")
+    private Beaver beaver;
+
 }
