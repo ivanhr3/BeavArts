@@ -1,11 +1,14 @@
 
 package org.springframework.samples.petclinic.model;
 
-import java.util.Collection;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import java.util.Collection;
 import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -43,10 +46,16 @@ public class Encargo extends BaseEntity {
 	@URL
 	private String					photo;
 
-	@ManyToOne
-	private Beaver					beaver;
-
 	@OneToMany
 	private Collection<Solicitud>	solicitudes;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "beaver", referencedColumnName = "id")
+    private Beaver beaver;
+
+    @ManyToOne
+    @JoinColumn(name = "beaver_id")
+    private Beaver beaver;
+
 
 }

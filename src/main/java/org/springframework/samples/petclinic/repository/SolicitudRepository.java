@@ -1,4 +1,5 @@
 
+
 package org.springframework.samples.petclinic.repository;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public interface SolicitudRepository extends CrudRepository<Solicitud, Integer> 
 
 	@Query("select s from Solicitud s where s.encargo.id = ?1")
 	List<Solicitud> findSolicitudByEncargoId(Integer id);
+
 
 }
