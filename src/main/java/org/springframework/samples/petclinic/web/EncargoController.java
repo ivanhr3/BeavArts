@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,6 +23,8 @@ import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -30,14 +35,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import antlr.collections.List;
+
 @Controller
-//@RequestMapping("/beavers/{beaverId}")
+@RequestMapping("/beavers/{beaverId}/encargos")
 public class EncargoController {
 	
 	private EncargoService	encargoService;
 	private UserService		userService;
 	private BeaverService	beaverService;
-  private static final String	VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
+ 	private static final String	VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
 
 	@Autowired
 	public EncargoController(final EncargoService encargoService, final UserService userService, final BeaverService beaverService, final AuthoritiesService authoritiesService) throws ClassNotFoundException {
@@ -47,16 +54,21 @@ public class EncargoController {
 	}
 
 
-	@GetMapping(value = "/encargos/new")
+	@GetMapping(value = "/new")
 	public String initCreationForm(final ModelMap model) {
+
+		ArrayList<Boolean> booleanList = new ArrayList<Boolean>();
+        booleanList.add(true);
+        booleanList.add(false);
 
 		Encargo encargo = new Encargo();
 		model.addAttribute("encargo", encargo);
+		model.addAttribute("booleanList", booleanList);
 		return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
 	}
 
-	@PostMapping(value = "/encargos/new")
+	@PostMapping(value = "/new")
 	public String processCreationForm(@Valid Encargo encargo, BindingResult result, final ModelMap model/*, @RequestParam("urlImagen") MultipartFile imagen*/) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -66,7 +78,7 @@ public class EncargoController {
 
 		if (result.hasErrors() /*|| encargo.getTitulo()==null || encargo.getPrecio() == 0.0 || checkDesc(encargo.getDescripcion())*/) {
 			model.addAttribute("encargo", encargo);
-			return "encargos/nuevo";
+			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
 		} else {
 /*
@@ -114,11 +126,13 @@ public class EncargoController {
 	
 	//lIST ENCARGOS
 
-	@GetMapping("beavers/{beaverId}/encargos/list")
+	//@GetMapping("beavers/{beaverId}/encargos/list")
+	@GetMapping("/list")
 	public String listarEncargos(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
 
 		Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
 		model.addAttribute("encargos", encargos);
+		model.addAttribute("beaverId", beaverId);
 		return "encargos/listEncargos";
 
 	}
@@ -126,7 +140,7 @@ public class EncargoController {
 	// SHOW ENCARGOS
 
 
-	@GetMapping("/encargos/{encargoId}")
+	@GetMapping("/{encargoId}")
 	public ModelAndView mostrarEncargo(@PathVariable("encargoId") final int encargoId) {
 
 		ModelAndView vista = new ModelAndView("encargos/encargosDetails");
@@ -143,7 +157,7 @@ public class EncargoController {
 
 	//Update Encargos
 
-    @GetMapping(value = "/encargos/{encargoId}/edit")
+    @GetMapping(value = "/{encargoId}/edit")
     public String initUpdateForm(@PathVariable("encargoId") int encargoId, ModelMap model) {
         Encargo encargo = new Encargo();
         Optional<Encargo> enC = this.encargoService.findEncargoById(encargoId);
@@ -154,12 +168,12 @@ public class EncargoController {
 
         model.addAttribute("encargo", encargo);
 
-        return "encargos/editar";
+        return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
     }
 
 
-    @PostMapping(value = "/encargos/{encargoId}/edit")
+    @PostMapping(value = "/{encargoId}/edit")
     public String processUpdateForm(@Valid Encargo encargo, BindingResult result,
                                     @PathVariable("encargoId") int encargoId, ModelMap model
                                     /*@RequestParam("urlImagen") MultipartFile imagen*/) {
@@ -167,7 +181,7 @@ public class EncargoController {
 
 	    if (result.hasErrors()) {
 	        model.addAttribute("encargo", encargo);
-	        return "encargos/editar";
+	        return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
 	    } else {
 /*
@@ -201,7 +215,7 @@ public class EncargoController {
 
 	//Delete Encargo
 
-	@RequestMapping(value = "/encargos/{encargoId}/delete")
+	@RequestMapping(value = "/{encargoId}/delete")
 	public String deleteEncargo(@PathVariable("encargoId") int encargoId) {
 
 		Encargo encargo = this.encargoService.findEncargoByIntId(encargoId);

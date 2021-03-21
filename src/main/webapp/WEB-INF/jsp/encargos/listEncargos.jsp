@@ -43,4 +43,5 @@
         </c:forEach>
         </tbody>
     </table>
+    <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Crear encargo</a>
 </petclinic:layout>

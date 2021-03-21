@@ -53,8 +53,6 @@ public class EncargoControllerTests {
 	private Beaver				beaver1;
 	//private Encargo encargo1;
 
-
-
 	@BeforeEach
 	void setup() {
 
@@ -104,15 +102,15 @@ public class EncargoControllerTests {
     @Test
     @WithMockUser("beaver1")
     public void mostrarEncargosTest() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/encargos//{encargosId}", EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargosId}", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.model().attributeExists("encargo")).andExpect(MockMvcResultMatchers.view().name("encargos/encargosDetails"));
     }
 
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitCreationSucces() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/encargos/new")).andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("encargos/nuevo")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("encargos/createEncargosForm")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
     }
 
 	@WithMockUser(value = "beaver1")
@@ -121,7 +119,7 @@ public class EncargoControllerTests {
 
         //MockMultipartFile imagen = new MockMultipartFile();
 		this.mockMvc
-			.perform(MockMvcRequestBuilders.post("/encargos/new").with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "Encargo Pinturas").param("precio", "35.50")
+			.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "Encargo Pinturas").param("precio", "35.50")
 				.param("disponibilidad", "true")
                 .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
 				.param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
@@ -133,7 +131,7 @@ public class EncargoControllerTests {
 	@Test
 	public void testProcessCreationFormHasErrors() throws Exception {
 		this.mockMvc
-			.perform(MockMvcRequestBuilders.post("/encargos/new").with(SecurityMockMvcRequestPostProcessors.csrf())
+			.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
                 .param("titulo", "Encargo Pinturas")
                 .param("precio", "")
 				.param("disponibilidad", "5")
@@ -141,23 +139,24 @@ public class EncargoControllerTests {
 			//.param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
 			.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("encargo", "disponibilidad"))
 			//.andExpect(model().attributeHasFieldErrors("encargo", "precio"))
-			.andExpect(MockMvcResultMatchers.view().name("encargos/nuevo"));
+			.andExpect(MockMvcResultMatchers.view().name("encargos/createEncargosForm"));
 	}
 
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitUpdateFormSucces() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/encargos/{encargoId}/edit", EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("encargos/editar")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/edit", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("encargos/createEncargosForm")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
     }
 
     @WithMockUser(value = "beaver1")
     @Test
     public void testProcessUpdateFormSuccess() throws Exception {
         this.mockMvc
-            .perform(MockMvcRequestBuilders.post("/encargos/new").with(SecurityMockMvcRequestPostProcessors.csrf())
+            .perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
                 .param("titulo", "Encargo Pinturas").param("precio", "35.50")
                 .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
+				.param("disponibilidad", "true")
                 .param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
             .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
             .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + EncargoControllerTests.TEST_BEAVER_ID));
@@ -169,7 +168,7 @@ public class EncargoControllerTests {
     public void testInitDeleteEncargo() throws Exception {
 
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/encargos/{encargoId}/delete", EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("encargos/todoOk"));
     }
 

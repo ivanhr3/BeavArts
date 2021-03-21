@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
+
 <petclinic:layout pageName="encargos">
     <h2>
         <c:if test="${encargo['new']}">Nuevo </c:if> Encargo!
@@ -15,9 +16,9 @@
             <petclinic:inputField label="Titulo" name="titulo"/>
             <petclinic:inputField label="Precio" name="precio"/>
             <petclinic:inputField label="Disponibilidad" name="disponibilidad"/>
+            <!-- <petclinic:selectField label="Disponibilidad" name="disponibilidad" names="${booleanList}" size="2"/> -->
             <petclinic:inputField label="Descripcion" name="descripcion"/>
             <petclinic:inputField label="Foto" name="photo"/>
-            <petclinic:inputField label="Beaver" name="beaver.user.password"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

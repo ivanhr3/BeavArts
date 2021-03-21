@@ -30,7 +30,7 @@ public class Encargo extends BaseEntity {
     private double precio;
 
     @NotNull
-    private boolean disponibilidad;
+    private Boolean disponibilidad;
 
     @NotBlank
     @Size(min = 30, max = 3000)
