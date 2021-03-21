@@ -6,7 +6,7 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 
-<petclinic:layout pageName="encargosDetails"></petclinic:layout>
+<petclinic:layout pageName="encargosDetails">
 <h2>Encargo:<c:out value="${encargo.titulo}"/></h2>
 
 	<spring:url value="/encargoInfo/{encargoId}" var="detailUrl">
