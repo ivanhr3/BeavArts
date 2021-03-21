@@ -14,28 +14,30 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
+
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.UserService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 //@RequestMapping("/beavers/{beaverId}")
 public class EncargoController {
-
+	
 	private EncargoService	encargoService;
 	private UserService		userService;
 	private BeaverService	beaverService;
-
+  private static final String	VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
 
 	@Autowired
 	public EncargoController(final EncargoService encargoService, final UserService userService, final BeaverService beaverService, final AuthoritiesService authoritiesService) throws ClassNotFoundException {
@@ -50,7 +52,7 @@ public class EncargoController {
 
 		Encargo encargo = new Encargo();
 		model.addAttribute("encargo", encargo);
-		return "encargos/nuevo";
+		return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
 	}
 
@@ -101,15 +103,15 @@ public class EncargoController {
 		}
 
 	}
-
-	/* private Boolean checkDesc(String desc){
+  
+/* private Boolean checkDesc(String desc){
 		Boolean res = false;
 
 		if(desc.length()< 30 || desc.length() > 3000) res = true;
 
 		return res;
 	} */
-
+	
 	//lIST ENCARGOS
 
 	@GetMapping("beavers/{beaverId}/encargos/list")
@@ -122,6 +124,7 @@ public class EncargoController {
 	}
 
 	// SHOW ENCARGOS
+
 
 	@GetMapping("/encargos/{encargoId}")
 	public ModelAndView mostrarEncargo(@PathVariable("encargoId") final int encargoId) {
