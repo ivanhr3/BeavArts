@@ -41,4 +41,9 @@ public class EncargoService {
         this.encargoRepository.deleteById(id);
     }
 
+    @Transactional
+    public Encargo findEncargoByIntId(int id) {
+        return this.encargoRepository.findEncargoByIntId(id);
+    }
+
 }
