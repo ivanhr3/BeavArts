@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -15,7 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table (name = "portfolio")
 public class Portfolio extends BaseEntity{
     
     @ElementCollection(targetClass=String.class)
