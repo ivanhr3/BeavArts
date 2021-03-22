@@ -5,6 +5,9 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+	
+	<c:set var = "SI" value = "Si"/>
+	<c:set var = "NO" value = "No"/>
 
 <petclinic:layout pageName="encargosList">
     <h2>Mis Encargos</h2>
@@ -12,6 +15,7 @@
     <table id="encargosTable" class="table table-striped">
         <thead>
         <tr>
+        	<th style="width: 150px;">Disponibilidad</th>
             <th style="width: 150px;">Título</th>
             <th style="width: 200px;">Precio</th>
             <th style="width: 120px">Descripción</th>
@@ -24,6 +28,14 @@
         <c:forEach items="${encargos}" var="encargo">
         
             <tr>
+            	<td>
+                    <c:if test="${encargo.disponibilidad == NO}">
+            		<dd>No disponible</dd>
+        		</c:if>
+        		<c:if test="${encargo.disponibilidad == SI}">
+            		<dd>Disponible</dd>
+        		</c:if>
+                </td>
                 <td>
                 <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="encargoUrl">
                         <spring:param name="encargoId" value="${encargo.id}"/>

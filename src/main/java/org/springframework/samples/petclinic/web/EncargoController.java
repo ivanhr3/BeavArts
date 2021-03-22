@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
+import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
@@ -46,23 +47,18 @@ public class EncargoController {
 	}
 
 	@ModelAttribute("status")
-	public List<Boolean> populateStatus() {
-		List<Boolean> status = new ArrayList<>();
-		status.add(true);
-		status.add(false);
+	public List<EncargoStatus> populateStatus() {
+		List<EncargoStatus> status = new ArrayList<>();
+		status.add(EncargoStatus.Si);
+		status.add(EncargoStatus.No);
 		return status;
 	}
 
 	@GetMapping(value = "/new")
 	public String initCreationForm(final ModelMap model) {
 
-		ArrayList<Boolean> booleanList = new ArrayList<Boolean>();
-		booleanList.add(true);
-		booleanList.add(false);
-
 		Encargo encargo = new Encargo();
 		model.addAttribute("encargo", encargo);
-		model.addAttribute("booleanList", booleanList);
 		return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
 	}

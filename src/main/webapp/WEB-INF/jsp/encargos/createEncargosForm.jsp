@@ -21,6 +21,7 @@
             <petclinic:inputField label="Descripcion" name="descripcion"/>
             <petclinic:inputField label="Foto" name="photo"/>
         </div>
+        
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>

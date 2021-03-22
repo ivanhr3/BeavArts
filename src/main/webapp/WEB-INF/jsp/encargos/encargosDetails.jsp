@@ -9,6 +9,9 @@
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
+	
+	<c:set var = "SI" value = "Si"/>
+	<c:set var = "NO" value = "No"/>
 
 <petclinic:layout pageName="encargosDetails">
 <h2>Encargo:<c:out value="${encargo.titulo}"/></h2>
@@ -37,17 +40,26 @@
             <th>Fotos</th>
             <td><c:out value="${encargo.photo}"/></td>
         </tr>
-
-        <c:if test="${encargo.disponibilidad}">
-			<a class="btn btn-default">Encargar</a>
-		</c:if>
-        <c:if test="${!encargo.disponibilidad}">
-            <dd>No disponible</dd>
-        </c:if>
-
+        
+        <tr>
+            <th>Disponibilidad</th>
+            <td>
+            	<c:if test="${encargo.disponibilidad == NO}">
+            		<dd>No disponible</dd>
+        		</c:if>
+        		<c:if test="${encargo.disponibilidad == SI}">
+            		<dd>Disponible</dd>
+        		</c:if>
+        	</td>
+        </tr>
+        
     </table>
     
     <c:if test="${encargo.beaver.user.username == principalUsername}">
+    
+    		<c:if test="${encargo.disponibilidad == SI}">
+				<a class="btn btn-default">Encargar</a>
+			</c:if>
     
       	  	<a class="btn btn-default" href='<spring:url value="${encargo.id}/delete" htmlEscape="true"/>'>Eliminar encargo</a>
         	<a class="btn btn-default" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
