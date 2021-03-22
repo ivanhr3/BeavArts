@@ -16,9 +16,9 @@
         <thead>
         <tr>
         	<th style="width: 150px;">Disponibilidad</th>
-            <th style="width: 150px;">TÃ­tulo</th>
+            <th style="width: 150px;">Título</th>
             <th style="width: 200px;">Precio</th>
-            <th style="width: 120px">DescripciÃ³n</th>
+            <th style="width: 120px">Descripción</th>
             <th style="width: 120px">Fotos</th>
             <th style="width: 120px">Publicado por</th>
         </tr>

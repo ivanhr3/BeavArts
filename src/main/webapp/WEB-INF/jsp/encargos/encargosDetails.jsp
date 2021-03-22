@@ -55,12 +55,13 @@
         
     </table>
     
-    <c:if test="${encargo.beaver.user.username == principalUsername}">
+    <c:if test="${encargo.beaver.user.username != principalUsername}">
     
     		<c:if test="${encargo.disponibilidad == SI}">
-				<a class="btn btn-default">Encargar</a>
+				<a class="btn btn-default" href='<spring:url value="solicitudes/list" htmlEscape="true"/>'>Encargar</a>
 			</c:if>
-    
+     </c:if>
+     <c:if test="${encargo.beaver.user.username == principalUsername}">
       	  	<a class="btn btn-default" href='<spring:url value="${encargo.id}/delete" htmlEscape="true"/>'>Eliminar encargo</a>
         	<a class="btn btn-default" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
 	
