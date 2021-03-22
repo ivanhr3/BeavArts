@@ -1,9 +1,25 @@
-dist: trusty
+dist: xenial
 language: java
-jdk: oraclejdk8
+jdk: openjdk8
 services:
   - mysql
 before_install:
   - chmod +x mvnw
   - mysql -e 'CREATE DATABASE beavarts;'
-script: mvn test -Dspring-boot.run.profiles=mysql-travis
+install:
+  - pip install codacy-coverage
+before_script:
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) download
+
+script:
+  - mvn clean package -DskipTests=true 
+  - mvn test -Dspring-boot.run.profiles=mysql-travis
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://oss.sonatype.org/service/local/repositories/releases/content/com/codacy/codacy-coverage-reporter/2.0.2/codacy-coverage-reporter-2.0.2-assembly.jar
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report
+after_success:
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r target/site/jacoco/*.xml
+branches:
+  only:
+  - main
+  - develop
+  - CodacyImpl
