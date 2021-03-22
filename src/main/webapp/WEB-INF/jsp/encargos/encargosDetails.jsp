@@ -36,9 +36,9 @@
             <td><c:out value="${encargo.descripcion}"/></td>
         </tr>
 
-        <tr>
+       <tr>
             <th>Fotos</th>
-            <td><c:out value="${encargo.photo}"/></td>
+            <td><img width=200px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" /></td>
         </tr>
         
         <tr>

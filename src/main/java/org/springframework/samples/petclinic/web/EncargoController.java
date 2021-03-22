@@ -1,6 +1,10 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +31,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -64,18 +70,29 @@ public class EncargoController {
 	}
 
 	@PostMapping(value = "/new")
-	public String processCreationForm(@Valid final Encargo encargo, final BindingResult result, final ModelMap model/* , @RequestParam("urlImagen") MultipartFile imagen */) {
+	public String processCreationForm(@Valid final Encargo encargo, final BindingResult result, final ModelMap model, @RequestParam("file") final MultipartFile imagen) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication.getName();
 		Beaver beaver = this.beaverService.findBeaverByUsername(currentPrincipalName);
 
-		if (result.hasErrors() /* || encargo.getTitulo()==null || encargo.getPrecio() == 0.0 || checkDesc(encargo.getDescripcion()) */) {
+		if (result.hasErrors() /* encargo.getTitulo()==null encargo.getPrecio() == 0.0 || checkDesc(encargo.getDescripcion()) */) {
 			model.addAttribute("encargo", encargo);
 			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
 		} else {
-
+			if (!imagen.isEmpty()) {
+				Path directorioImagen = Paths.get("src/main/resources/static/resources/images/imagenes");
+				String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
+				try {
+					byte[] bytesImg = imagen.getBytes();
+					Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+					Files.write(rutaCompleta, bytesImg);
+					encargo.setPhoto(imagen.getOriginalFilename());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			if (beaver.getEncargos() == null) {
 				Set<Encargo> res = new HashSet<>();
 				beaver.setEncargos(res);
@@ -90,17 +107,6 @@ public class EncargoController {
 		}
 
 	}
-
-	/*
-	 * private Boolean checkDesc(String desc){
-	 * Boolean res = false;
-	 *
-	 * if(desc.length()< 30 || desc.length() > 3000) res = true;
-	 *
-	 * return res;
-	 * }
-	 */
-
 	//lIST ENCARGOS
 
 	//@GetMapping("beavers/{beaverId}/encargos/list")
@@ -140,14 +146,26 @@ public class EncargoController {
 	}
 
 	@PostMapping(value = "/{encargoId}/edit")
-	public String processUpdateForm(@Valid final Encargo encargo, final BindingResult result, @PathVariable("encargoId") final int encargoId, final ModelMap model
-	/* @RequestParam("urlImagen") MultipartFile imagen */) {
+	public String processUpdateForm(@Valid final Encargo encargo, final BindingResult result, @PathVariable("encargoId") final int encargoId, final ModelMap model, @RequestParam("file") final MultipartFile imagen) {
 
 		if (result.hasErrors()) {
 			model.addAttribute("encargo", encargo);
 			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
 		} else {
+
+			if (!imagen.isEmpty()) {
+				Path directorioImagen = Paths.get("src/main/resources/static/resources/images/imagenes");
+				String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
+				try {
+					byte[] bytesImg = imagen.getBytes();
+					Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+					Files.write(rutaCompleta, bytesImg);
+					encargo.setPhoto(imagen.getOriginalFilename());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 
 			Encargo enC = this.encargoService.findEncargoById(encargoId);
 

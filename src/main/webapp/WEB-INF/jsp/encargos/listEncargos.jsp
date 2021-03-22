@@ -51,7 +51,7 @@
                 	<c:out value="${encargo.descripcion}"/>
                 </td>
                 <td>
-                	<c:out value="${encargo.photo}"/>
+                	<img width=100px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" />
                 </td>
                 <td>
                 	<c:out value="${encargo.beaver.user.username}"/>

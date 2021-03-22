@@ -11,7 +11,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.URL;
 import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 
 import lombok.Getter;
@@ -38,8 +37,6 @@ public class Encargo extends BaseEntity {
 	@Size(min = 30, max = 3000)
 	private String			descripcion;
 
-	//Tipo string?? Mirar como añadir la foto
-	@URL
 	private String			photo;
 
 	@ManyToOne
