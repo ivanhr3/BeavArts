@@ -58,7 +58,7 @@
     <c:if test="${encargo.beaver.user.username != principalUsername}">
     
     		<c:if test="${encargo.disponibilidad == SI}">
-				<a class="btn btn-default" href='<spring:url value="solicitudes/list" htmlEscape="true"/>'>Encargar</a>
+				<a class="btn btn-default">Encargar</a>
 			</c:if>
      </c:if>
      <c:if test="${encargo.beaver.user.username == principalUsername}">
