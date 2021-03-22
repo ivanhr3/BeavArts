@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.springframework.samples.petclinic.web;
 
 import java.util.Map;
@@ -21,15 +22,16 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
-
-import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
-
-import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  * @author Juergen Hoeller
@@ -40,37 +42,61 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserController {
 
-	private static final String VIEWS_BEAVER_CREATE_FORM = "users/createBeaverForm";
+	private static final String	VIEWS_BEAVER_CREATE_FORM	= "users/createBeaverForm";
 
-	private final BeaverService beaverService;
+	private final BeaverService	beaverService;
+
 
 	@Autowired
-	public UserController(BeaverService beavartsService) {
+	public UserController(final BeaverService beavartsService) {
 		this.beaverService = beavartsService;
 	}
 
 	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
+	public void setAllowedFields(final WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
 
 	@GetMapping(value = "/users/new")
-	public String initCreationForm(Map<String, Object> model) {
+	public String initCreationForm(final Map<String, Object> model) {
 		Beaver beaver = new Beaver();
 		model.put("beaver", beaver);
-		return VIEWS_BEAVER_CREATE_FORM;
+		return UserController.VIEWS_BEAVER_CREATE_FORM;
 	}
 
 	@PostMapping(value = "/users/new")
-	public String processCreationForm(@Valid Beaver beaver, BindingResult result) {
+	public String processCreationForm(@Valid final Beaver beaver, final BindingResult result) {
 		if (result.hasErrors()) {
-			return VIEWS_BEAVER_CREATE_FORM;
-		}
-		else {
+			return UserController.VIEWS_BEAVER_CREATE_FORM;
+		} else {
 			//creating owner, user, and authority
 			this.beaverService.saveBeaver(beaver);
 			return "redirect:/";
 		}
+	}
+
+	//PROVISIONAL PARA VER QUE FUNCIONA LA VISTA
+	@GetMapping(value = "/miPerfil")
+	public String showMiPerfil(final Map<String, Object> model) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		Beaver beaver = this.beaverService.findBeaverByUsername(currentPrincipalName);
+
+		model.put("beaver", beaver);
+
+		return "users/miPerfil";
+	}
+
+	//PROVISIONAL PARA VER QUE FUNCIONA LA VISTA
+	@GetMapping(value = "/perfil/{username}")
+	public String showPerfil(final Map<String, Object> model, @PathVariable("username") final String username) {
+
+		Beaver beaver = this.beaverService.findBeaverByUsername(username);
+
+		model.put("beaver", beaver);
+
+		return "users/perfilUsuario";
 	}
 
 }

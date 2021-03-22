@@ -40,12 +40,6 @@
 					<span>Anuncios</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'miperfil'}" url="/"
-					title="miperfil">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Mi perfil</span>
-				</petclinic:menuItem>
-
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
@@ -72,6 +66,14 @@
 							<li>
 								<div class="navbar-login">
 									<div class="row">
+									
+						
+											<petclinic:menuItem active="${name eq 'authenticated'}" url="/miPerfil"
+												title="personal space">
+												<span>Mi Perfil</span>
+											</petclinic:menuItem>
+										
+
 										<div class="col-lg-4">
 											<p class="text-center">
 												<span class="glyphicon glyphicon-user icon-size"></span>

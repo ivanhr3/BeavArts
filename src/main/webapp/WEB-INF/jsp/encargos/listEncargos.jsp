@@ -54,11 +54,15 @@
                 	<img width=100px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" />
                 </td>
                 <td>
-                	<c:out value="${encargo.beaver.user.username}"/>
+                <spring:url value="/perfil/{username}" var="usernameUrl">
+                        <spring:param name="username" value="${encargo.beaver.user.username}"/>
+                </spring:url>  
+                        <a href="${fn:escapeXml(usernameUrl)}"><b><c:out value="${encargo.beaver.user.username}"/></b></a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    
     <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Crear encargo</a>
 </petclinic:layout>
