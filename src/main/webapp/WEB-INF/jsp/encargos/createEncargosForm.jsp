@@ -15,8 +15,9 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="Titulo" name="titulo"/>
             <petclinic:inputField label="Precio" name="precio"/>
-            <petclinic:inputField label="Disponibilidad" name="disponibilidad"/>
-            <!-- <petclinic:selectField label="Disponibilidad" name="disponibilidad" names="${booleanList}" size="2"/> -->
+            <div class="control-group" >
+            	<petclinic:selectField name="disponibilidad" label="Disponibilidad" names="${status}" size="2"/>
+            </div>
             <petclinic:inputField label="Descripcion" name="descripcion"/>
             <petclinic:inputField label="Foto" name="photo"/>
         </div>

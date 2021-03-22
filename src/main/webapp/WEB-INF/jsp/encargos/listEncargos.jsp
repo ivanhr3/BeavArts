@@ -25,7 +25,12 @@
         
             <tr>
                 <td>
-                    <c:out value="${encargo.titulo}"/></a>
+                <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="encargoUrl">
+                        <spring:param name="encargoId" value="${encargo.id}"/>
+                        <spring:param name="beaverId" value="${encargo.beaver.id}"/>
+                </spring:url>  
+                        <a href="${fn:escapeXml(encargoUrl)}"><b><c:out value="${encargo.titulo}"/></b></a>
+                         
                 </td>
                 <td>
                     <c:out value="${encargo.precio}"/>
@@ -37,7 +42,7 @@
                 	<c:out value="${encargo.photo}"/>
                 </td>
                 <td>
-                	<c:out value="${encargo.beaver}"/>
+                	<c:out value="${encargo.beaver.user.username}"/>
                 </td>
             </tr>
         </c:forEach>

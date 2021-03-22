@@ -3,8 +3,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+	
+	<security:authorize access="isAuthenticated()">
+   		<security:authentication var="principalUsername" property="principal.username" /> 
+	</security:authorize>
 
 <petclinic:layout pageName="encargosDetails">
 <h2>Encargo:<c:out value="${encargo.titulo}"/></h2>
@@ -16,7 +20,7 @@
     <table class="table table-striped">
         <tr>
             <th>Publicado por: </th>
-            <td><c:out value="${encargo.beaver}"/></td>
+            <td><c:out value="${encargo.beaver.user.username}"/></td>
         </tr>
 
         <tr>
@@ -43,10 +47,13 @@
 
     </table>
     
-    <sec:authorize access="hasAuthority('admin')">
-        <a class="btn btn-default" href='<spring:url value="/encargos/delete" htmlEscape="true"/>'>Eliminar encargo</a>
-        <a class="btn btn-default" href='<spring:url value="/encargos/{encargoId}/edit" htmlEscape="true"/>'>Editar encargo</a>
-    </sec:authorize>
+    <c:if test="${encargo.beaver.user.username == principalUsername}">
+    
+      	  	<a class="btn btn-default" href='<spring:url value="${encargo.id}/delete" htmlEscape="true"/>'>Eliminar encargo</a>
+        	<a class="btn btn-default" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
+	
+    </c:if>
+    
     <br/>
     <br/>
 

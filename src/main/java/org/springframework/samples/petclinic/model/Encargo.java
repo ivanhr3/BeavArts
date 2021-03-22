@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
@@ -21,28 +22,27 @@ import lombok.Setter;
 @Table(name = "encargos")
 public class Encargo extends BaseEntity {
 
-    @NotBlank
-    private String titulo;
+	@NotBlank
+	private String	titulo;
 
-    @Min(0)
-    @NotNull
-    @Digits(fraction = 2,integer = 6)
-    private double precio;
+	@Min(0)
+	@NotNull
+	@Digits(fraction = 2, integer = 6)
+	private double	precio;
 
-    @NotNull
-    private Boolean disponibilidad;
+	@NotNull
+	private Boolean	disponibilidad;
 
-    @NotBlank
-    @Size(min = 30, max = 3000)
-    private String descripcion;
+	@NotBlank
+	@Size(min = 30, max = 3000)
+	private String	descripcion;
 
+	//Tipo string?? Mirar como añadir la foto
+	@URL
+	private String	photo;
 
-    //Tipo string?? Mirar como añadir la foto
-    @URL
-    private String photo;
-
-    @ManyToOne
-    @JoinColumn(name = "beaver_id")
-    private Beaver beaver;
+	@ManyToOne
+	@JoinColumn(name = "beaver_id")
+	private Beaver	beaver;
 
 }

@@ -1,49 +1,47 @@
+
 package org.springframework.samples.petclinic.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Encargo;
-import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.samples.petclinic.repository.EncargoRepository;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EncargoService {
 
-    private EncargoRepository encargoRepository;
+	private EncargoRepository encargoRepository;
 
-    @Autowired
-    public EncargoService(EncargoRepository encargoRepository){
-        this.encargoRepository = encargoRepository;
-    }
 
-    @Transactional
-    public Iterable<Encargo> findEncargoByBeaverId(int id){
-        return this.encargoRepository.findEncargoByBeaverId(id);
-    }
+	@Autowired
+	public EncargoService(final EncargoRepository encargoRepository) {
+		this.encargoRepository = encargoRepository;
+	}
 
-    @Transactional
-    public Optional<Encargo> findEncargoById(int id) {
-        return this.encargoRepository.findById(id);
-    }
+	@Transactional
+	public Iterable<Encargo> findEncargoByBeaverId(final int id) {
+		return this.encargoRepository.findEncargoByBeaverId(id);
+	}
 
-    @Transactional
-    public Encargo saveEncargo(Encargo encargo) {
-        return encargoRepository.save(encargo);
-    }
+	@Transactional
+	public Encargo findEncargoById(final int id) {
+		return this.encargoRepository.findEncargoByIntId(id);
+	}
 
-    @Transactional
-    public void deleteEncargoById(Integer id) {
-        this.encargoRepository.deleteById(id);
-    }
+	@Transactional
+	public Encargo saveEncargo(final Encargo encargo) {
+		return this.encargoRepository.save(encargo);
+	}
 
-    @Transactional
-    public Encargo findEncargoByIntId(int id) {
-        return this.encargoRepository.findEncargoByIntId(id);
-    }
+	@Transactional
+	public void deleteEncargoById(final Integer id) {
+		this.encargoRepository.deleteById(id);
+	}
+
+	@Transactional
+	public Encargo findEncargoByIntId(final int id) {
+		return this.encargoRepository.findEncargoByIntId(id);
+	}
 
 }
