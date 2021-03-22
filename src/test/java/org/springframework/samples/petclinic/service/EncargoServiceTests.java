@@ -1,12 +1,12 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.List;
 
@@ -41,7 +41,8 @@ public class EncargoServiceTests {
             user.setPassword("supersecretpass");
             user.setEnabled(true);
             beaver.setUser(user);
-        
+
+        beaver.setEncargos(new HashSet<>());
             this.beaverService.saveBeaver(beaver);
 
         return beaver;
@@ -70,13 +71,15 @@ public class EncargoServiceTests {
         encargo.setBeaver(beaver);
 
         this.encargoService.saveEncargo(encargo);
+
+
         return encargo;
     }
 
 
     @Test
     @Transactional
-    void testSaveEncargo(){        
+    void testSaveEncargo(){
         Beaver beaver = this.createDummyBeaver();
         Encargo encargo = this.createDummyEncargo(beaver);
 
@@ -89,10 +92,10 @@ public class EncargoServiceTests {
         Beaver beaver = this.createDummyBeaver();
         Encargo encargo = this.createDummyEncargo(beaver);
         int idEncargo = encargo.getId();
-        
+
 
         Encargo encargo2 = this.encargoService.findEncargoById(idEncargo);
-       
+
 
         assertEquals(encargo.getId(), encargo2.getId());
 
@@ -104,7 +107,7 @@ public class EncargoServiceTests {
         Beaver beaver = this.createDummyBeaver();
         Encargo encargo = this.createDummyEncargo(beaver);
         Encargo encargo2 = this.createDummyEncargo2(beaver);
-        
+
         int beaverId = beaver.getId();
         List<Encargo> encargosLista = new ArrayList<Encargo>();
 
@@ -123,15 +126,30 @@ public class EncargoServiceTests {
     void testDeleteEncargoById(){
         Beaver beaver = this.createDummyBeaver();
         Encargo encargo = this.createDummyEncargo(beaver);
+        Encargo encargo2 = this.createDummyEncargo2(beaver);
         Integer id = encargo.getId();
-        
-        assertTrue(encargo != null); //Comprobando que SI existe
 
         this.encargoService.deleteEncargoById(id);
-        
-        encargo = this.encargoService.findEncargoById(id); //Comprobando que YA NO existe
-        
-        assertTrue(encargo == null);
+
+
+        assertEquals(this.encargoService.encargosCount(), 1);
+
+
+    }
+
+    @Test
+    @Transactional
+    void testFindEncargosByBeaverId(){
+        Beaver beaver = this.createDummyBeaver();
+        Encargo encargo = this.createDummyEncargo(beaver);
+        Encargo encargo2 = this.createDummyEncargo2(beaver);
+        Integer id = beaver.getId();
+
+        List lista = new ArrayList();
+        this.encargoService.findEncargoByBeaverId(id).forEach(lista::add);
+
+        assertEquals(lista.size(), 2);
+
     }
 
 }

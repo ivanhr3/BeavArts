@@ -44,4 +44,9 @@ public class EncargoService {
 		return this.encargoRepository.findEncargoByIntId(id);
 	}
 
+	@Transactional
+    public int encargosCount(){
+	   return (int) this.encargoRepository.count();
+    }
+
 }
