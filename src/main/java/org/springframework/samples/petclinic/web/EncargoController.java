@@ -107,9 +107,9 @@ public class EncargoController {
 		}
 
 	}
-	//lIST ENCARGOS
 
-	//@GetMapping("beavers/{beaverId}/encargos/list")
+	//lIST ***MIS*** ENCARGOS
+
 	@GetMapping("/list")
 	public String listarEncargos(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
 

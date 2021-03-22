@@ -4,18 +4,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 
 
 @SpringBootTest
@@ -47,7 +51,7 @@ public class EncargoServiceTests {
         Encargo encargo = new Encargo();
         encargo.setTitulo("Testing save encargo");
         encargo.setPrecio(39.90);
-        encargo.setDisponibilidad(true);
+        encargo.setDisponibilidad(EncargoStatus.Si);
         encargo.setDescripcion("Testing save encargo que debe estar entre 30 y 3000");
         encargo.setPhoto("https://cnnespanol.cnn.com/wp-content/uploads/2019/12/mejores-imagenes-del-ancc83o-noticias-2019-galeria10.jpg?quality=100&strip=info&w=320&h=240&crop=1");
         encargo.setBeaver(beaver);
@@ -60,7 +64,7 @@ public class EncargoServiceTests {
         Encargo encargo = new Encargo();
         encargo.setTitulo("Testing save encargo 2");
         encargo.setPrecio(59.90);
-        encargo.setDisponibilidad(true);
+        encargo.setDisponibilidad(EncargoStatus.Si);
         encargo.setDescripcion("Testing save encargo (2) que debe estar entre 30 y 3000");
         encargo.setPhoto("https://cnnespanol.cnn.com/wp-content/uploads/2019/12/mejores-imagenes-del-ancc83o-noticias-2019-galeria10.jpg?quality=100&strip=info&w=320&h=240&crop=1");
         encargo.setBeaver(beaver);
@@ -85,12 +89,10 @@ public class EncargoServiceTests {
         Beaver beaver = this.createDummyBeaver();
         Encargo encargo = this.createDummyEncargo(beaver);
         int idEncargo = encargo.getId();
-        Encargo encargo2 = new Encargo();
+        
 
-        Optional<Encargo> en2 = this.encargoService.findEncargoById(idEncargo);
-        if(en2.isPresent()){
-            encargo2 = en2.get();
-        }
+        Encargo encargo2 = this.encargoService.findEncargoById(idEncargo);
+       
 
         assertEquals(encargo.getId(), encargo2.getId());
 
@@ -121,10 +123,15 @@ public class EncargoServiceTests {
     void testDeleteEncargoById(){
         Beaver beaver = this.createDummyBeaver();
         Encargo encargo = this.createDummyEncargo(beaver);
+        Integer id = encargo.getId();
+        
+        assertTrue(encargo != null); //Comprobando que SI existe
 
-        this.encargoService.deleteEncargoById(encargo.getId());
-
-        assertSame(this.encargoService.findEncargoById(encargo.getId()), Optional.empty());
+        this.encargoService.deleteEncargoById(id);
+        
+        encargo = this.encargoService.findEncargoById(id); //Comprobando que YA NO existe
+        
+        assertTrue(encargo == null);
     }
 
 }
