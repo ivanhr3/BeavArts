@@ -135,6 +135,11 @@
             <artifactId>junit</artifactId>
             <groupId>junit</groupId>
         </dependency>
+        <dependency>
+            <groupId>com.codacy</groupId>
+            <artifactId>codacy-coverage-reporter</artifactId>
+            <version>7.1.0</version>
+        </dependency>
         <!-- Development tools -->
         <dependency>
             <groupId>org.projectlombok</groupId>
