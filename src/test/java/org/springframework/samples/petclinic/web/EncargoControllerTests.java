@@ -87,7 +87,7 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.findBeaverByIntId(EncargoControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver1);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(ArgumentMatchers.anyInt())).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByUsername("beaver1")).willReturn(this.beaver1);
-        BDDMockito.given(this.encargoService.findEncargoByIntId(EncargoControllerTests.TEST_ENCARGO_ID)).willReturn(encargo1);
+        BDDMockito.given(this.encargoService.findEncargoById(EncargoControllerTests.TEST_ENCARGO_ID)).willReturn(encargo1);
 	}
 
 	@WithMockUser("beaver1")

@@ -183,7 +183,7 @@ public class EncargoController {
 	@RequestMapping(value = "/{encargoId}/delete")
 	public String deleteEncargo(@PathVariable("encargoId") final int encargoId, final ModelMap model) {
 
-		Encargo encargo = this.encargoService.findEncargoByIntId(encargoId);
+		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		Beaver b = encargo.getBeaver();
 		b.getEncargos().remove(encargo);
 		this.beaverService.saveBeaver(b);
