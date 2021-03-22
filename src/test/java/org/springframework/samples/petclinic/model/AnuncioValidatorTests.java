@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Locale;
 import java.util.Set;
@@ -11,7 +10,6 @@ import javax.validation.Validator;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 public class AnuncioValidatorTests {
