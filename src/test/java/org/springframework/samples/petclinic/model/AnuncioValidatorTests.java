@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Locale;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -22,7 +23,7 @@ public class AnuncioValidatorTests {
 	@Test
 	@DisplayName("No debe validarse con el atributo 'titulo' vacío")
 	void shouldNotValidateWhenTituloIsBlank(){
-
+		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		//ARRANGE
 		Anuncio a = new Anuncio();
 		a.setPrecio(50.00);
@@ -36,13 +37,14 @@ public class AnuncioValidatorTests {
 		assertThat(c.size()).isEqualTo(1);
 		ConstraintViolation<Anuncio> violation = c.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("titulo");
-		assertThat(violation.getMessage()).isEqualTo("no puede estar vacío");
+		assertThat(violation.getMessage()).isEqualTo("must not be blank");
 	}
 
 	@Test
 	@DisplayName("No debe validarse con el atributo 'precio' con más de 6 dígitos en su parte entera")
 	void shouldNotValidateWhenPRecioHasMoreThan6DigitsInHisIntegerPart(){
 
+		LocaleContextHolder.setLocale(Locale.ENGLISH);
 		//ARRANGE
 		Anuncio a = new Anuncio();
 		a.setPrecio(500000000.00);
@@ -56,12 +58,14 @@ public class AnuncioValidatorTests {
 		assertThat(c.size()).isEqualTo(1);
 		ConstraintViolation<Anuncio> violation = c.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("precio");
-		assertThat(violation.getMessage()).isEqualTo("valor numérico fuera de los límites (se esperaba <6 dígitos>.<2 dígitos)");
+		assertThat(violation.getMessage()).isEqualTo("numeric value out of bounds (<6 digits>.<2 digits> expected)");
 	}
 
 	@Test
 	@DisplayName("No debe validarse con el atributo 'precio' con más de 2 dígitos en su parte decimal")
 	void shouldNotValidateWhenPRecioHasMoreThan6DigitsInHisFractionPart(){
+
+		LocaleContextHolder.setLocale(Locale.ENGLISH);
 
 		//ARRANGE
 		Anuncio a = new Anuncio();
@@ -76,13 +80,15 @@ public class AnuncioValidatorTests {
 		assertThat(c.size()).isEqualTo(1);
 		ConstraintViolation<Anuncio> violation = c.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("precio");
-		assertThat(violation.getMessage()).isEqualTo("valor numérico fuera de los límites (se esperaba <6 dígitos>.<2 dígitos)");
+		assertThat(violation.getMessage()).isEqualTo("numeric value out of bounds (<6 digits>.<2 digits> expected)");
 	}
 
 	@Test
 	@DisplayName("No debe validarse con el atributo 'precio' menor que 0.")
 	void shouldNotValidateWhenPrecioLessThan0() {
 		
+		LocaleContextHolder.setLocale(Locale.ENGLISH);
+
 		//ARRANGE
 		Anuncio a = new Anuncio();
 		a.setPrecio(-50.00);
@@ -97,6 +103,6 @@ public class AnuncioValidatorTests {
 		assertThat(c.size()).isEqualTo(1);
 		ConstraintViolation<Anuncio> con = c.iterator().next();
 		assertThat(con.getPropertyPath().toString()).isEqualTo("precio");
-		assertThat(con.getMessage()).isEqualTo("tiene que ser mayor o igual que 0");
+		assertThat(con.getMessage()).isEqualTo("must be greater than or equal to 0");
 	}
 }
