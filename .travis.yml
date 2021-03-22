@@ -20,6 +20,6 @@ after_success:
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r target/site/jacoco/*.xml
 branches:
   only:
-  - main
+  - master
   - develop
   - CodacyImpl
