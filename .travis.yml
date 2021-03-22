@@ -6,8 +6,7 @@ services:
 before_install:
   - chmod +x mvnw
   - mysql -e 'CREATE DATABASE beavarts;'
-install:
-  - pip install codacy-coverage
+
 before_script:
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) download
 script: 
