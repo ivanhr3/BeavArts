@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-//Validacion del modelo anuncio
+
 public class AnuncioValidatorTests {
 
     private Validator createValidator() {
