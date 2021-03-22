@@ -14,7 +14,6 @@ before_script:
 script:
   - mvn clean package -DskipTests=true 
   - mvn test -Dspring-boot.run.profiles=mysql-travis
-  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://oss.sonatype.org/service/local/repositories/releases/content/com/codacy/codacy-coverage-reporter/2.0.2/codacy-coverage-reporter-2.0.2-assembly.jar
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report
 after_success:
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r target/site/jacoco/*.xml
