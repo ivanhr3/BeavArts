@@ -1,33 +1,24 @@
 package org.springframework.samples.petclinic.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import javax.mail.MessagingException;
-import javax.transaction.Transactional;
-
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.boot.test.context.SpringBootTest;
-
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Encargo;
-import org.springframework.samples.petclinic.model.Estado;
-import org.springframework.samples.petclinic.model.Solicitud;
-import org.springframework.samples.petclinic.model.User;
-  
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Assertions;
-
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Encargo;
+import org.springframework.samples.petclinic.model.Estado;
+import org.springframework.samples.petclinic.model.Solicitud;
+import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 import org.springframework.util.Assert;
 
 
@@ -67,7 +58,7 @@ public class SolicitudServiceTests {
         encargo = new Encargo();
         encargo.setTitulo("Encargo chulisimo");
         encargo.setDescripcion("mira que wapo mi encargo reshulon porque tienen que ser tantos caracteres");
-        encargo.setDisponibilidad(true);
+        encargo.setDisponibilidad(EncargoStatus.Si);
         encargo.setPrecio(199);
         this.encargoService.saveEncargo(encargo);
     }
@@ -113,20 +104,20 @@ public class SolicitudServiceTests {
 
 		Encargo encargo1 = new Encargo();
 		encargo1.setBeaver(beaver1);
-		encargo1.setDescripcion("Encargo1 correcto");
+		encargo1.setDescripcion("Encargo1 correcto para las pruebas del controlador");
 		encargo1.setTitulo("Encargo1");
 		encargo1.setPrecio(50);
-		encargo1.setDisponibilidad(true);
+		encargo1.setDisponibilidad(EncargoStatus.Si);
 
 		Solicitud solicitud1 = new Solicitud();
 		solicitud1.setEncargo(encargo1);
-		solicitud1.setEstado(true);
+		solicitud1.setEstado(Estado.PENDIENTE);
 		solicitud1.setPrecio(50);
 		solicitud1.setId(1);
 
 		Solicitud solicitud2 = new Solicitud();
 		solicitud2.setEncargo(encargo1);
-		solicitud2.setEstado(true);
+		solicitud2.setEstado(Estado.PENDIENTE);
 		solicitud2.setPrecio(50);
 		solicitud2.setId(2);
 
@@ -251,11 +242,11 @@ public class SolicitudServiceTests {
 	public void deleteSolicitudByIdTest() {
 
 		Solicitud solicitud = new Solicitud();
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 
 		Solicitud solicitud2 = new Solicitud();
-		solicitud2.setEstado(true);
+		solicitud2.setEstado(Estado.PENDIENTE);
 		solicitud2.setPrecio(25.00);
 
 		this.solicitudService.saveSolicitud(solicitud);
@@ -270,11 +261,11 @@ public class SolicitudServiceTests {
     @Transactional  //Intenta eliminar una solicitud cuyo id no existe
 	public void deleteSolicitudByIdTestHasErrors() {
         Solicitud solicitud = new Solicitud();
-        solicitud.setEstado(true);
+        solicitud.setEstado(Estado.PENDIENTE);
         solicitud.setPrecio(25.00);
 
         Solicitud solicitud2 = new Solicitud();
-        solicitud2.setEstado(true);
+        solicitud2.setEstado(Estado.PENDIENTE);
         solicitud2.setPrecio(25.00);
 
         this.solicitudService.saveSolicitud(solicitud);
@@ -294,12 +285,12 @@ public class SolicitudServiceTests {
 	public void deleteSolicitudTest() {
 
 		Solicitud solicitud = new Solicitud();
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 		solicitud.setId(5);
 
 		Solicitud solicitud2 = new Solicitud();
-		solicitud2.setEstado(true);
+		solicitud2.setEstado(Estado.PENDIENTE);
 		solicitud2.setPrecio(25.00);
 		solicitud2.setId(6);
 
@@ -349,12 +340,12 @@ public class SolicitudServiceTests {
 
 		int res = this.solicitudService.solicitudCount();
 		Solicitud solicitud = new Solicitud();
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 		solicitud.setId(5);
 
 		Solicitud solicitud2 = new Solicitud();
-		solicitud2.setEstado(true);
+		solicitud2.setEstado(Estado.PENDIENTE);
 		solicitud2.setPrecio(25.00);
 		solicitud2.setId(6);
 
@@ -372,7 +363,7 @@ public class SolicitudServiceTests {
 
 		Solicitud solicitud = new Solicitud();
 		solicitud.setEncargo(encargo);
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 		solicitud.setId(3);
 		this.solicitudService.saveSolicitud(solicitud);
@@ -388,7 +379,7 @@ public class SolicitudServiceTests {
 	@Transactional
 	public void findSolicitudByIdTest() {
 		Solicitud solicitud = new Solicitud();
-		solicitud.setEstado(true);
+		solicitud.setEstado(Estado.PENDIENTE);
 		solicitud.setPrecio(25.00);
 		this.solicitudService.saveSolicitud(solicitud);
 

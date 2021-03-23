@@ -56,4 +56,9 @@ public class BeaverService {
     public Beaver findBeaverByIntId(final int id) {
         return this.beaverRepository.findBeaverById(id);
     }
+    
+    @Transactional
+    public Beaver findBeaverByUsername(final String username) {
+        return this.beaverRepository.findBeaverByUser(this.userService.findUserByUsername(username));
+    }
 }

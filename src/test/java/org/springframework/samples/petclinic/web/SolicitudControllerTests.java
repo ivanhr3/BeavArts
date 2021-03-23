@@ -30,6 +30,7 @@ import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.SolicitudService;
@@ -38,6 +39,8 @@ import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.context.annotation.FilterType;
 
@@ -122,7 +125,7 @@ public class SolicitudControllerTests {
         encargo.setId(TEST_ENCARGO_ID);
         encargo.setTitulo("Encargo chulisimo");
         encargo.setDescripcion("mira que wapo mi encargo reshulon porque tienen que ser tantos caracteres");
-        encargo.setDisponibilidad(true);
+        encargo.setDisponibilidad(EncargoStatus.Si);
         encargo.setPrecio(199);
         encargo.setBeaver(beaver);
 
