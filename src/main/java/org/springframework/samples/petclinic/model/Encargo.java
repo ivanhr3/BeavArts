@@ -1,8 +1,14 @@
+
 package org.springframework.samples.petclinic.model;
 
+
+import java.util.Collection;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -21,28 +27,35 @@ import lombok.Setter;
 @Table(name = "encargos")
 public class Encargo extends BaseEntity {
 
-    @NotBlank
-    private String titulo;
+	@NotBlank
+	private String					titulo;
 
-    @Min(0)
-    @NotNull
-    @Digits(fraction = 2,integer = 6)
-    private double precio;
+	@Min(0)
+	@NotNull
+	@Digits(fraction = 2, integer = 6)
+	private double					precio;
 
-    @NotNull
-    private boolean disponibilidad;
+	@NotNull
+	private boolean					disponibilidad;
 
-    @NotBlank
-    @Size(min = 30, max = 3000)
-    private String descripcion;
+	@NotBlank
+	@Size(min = 30, max = 3000)
+	private String					descripcion;
 
+	//Tipo string?? Mirar como añadir la foto
+	@URL
+	private String					photo;
 
-    //Tipo string?? Mirar como añadir la foto
-    @URL
-    private String photo;
+	@OneToMany
+	private Collection<Solicitud>	solicitudes;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "beaver", referencedColumnName = "id")
+    private Beaver beaver;
 
     @ManyToOne
     @JoinColumn(name = "beaver_id")
     private Beaver beaver;
+
 
 }

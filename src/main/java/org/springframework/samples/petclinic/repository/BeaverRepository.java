@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BeaverRepository extends CrudRepository<Beaver, String> {
+    
+    @Query("SELECT b from Beaver b where b.user = :user")
+    Beaver findBeaverByUsername(User user) throws DataAccessException;
 
     @Query("select b from Beaver b where b.id = ?1")
     Beaver findBeaverById(int id);
-
-    @Query("SELECT b from Beaver b where b.user = :user")
-	Beaver findBeaverByUser(User user) throws DataAccessException;
 }
