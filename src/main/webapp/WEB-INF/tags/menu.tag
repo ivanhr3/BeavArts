@@ -66,13 +66,16 @@
 							<li>
 								<div class="navbar-login">
 									<div class="row">
-									
 						
-											<petclinic:menuItem active="${name eq 'authenticated'}" url="/miPerfil"
+											<petclinic:menuItem active="${name eq 'authenticated'}" url="miPerfil"
 												title="personal space">
 												<span>Mi Perfil</span>
 											</petclinic:menuItem>
 										
+											<petclinic:menuItem active="${name eq 'authenticated'}" url="solicitudes/list"
+												title="personal space">
+												<span>Mis solicitudes</span>
+											</petclinic:menuItem>
 
 										<div class="col-lg-4">
 											<p class="text-center">
