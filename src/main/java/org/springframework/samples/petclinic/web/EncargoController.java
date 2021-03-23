@@ -16,12 +16,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
-
-import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
-
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.UserService;
@@ -44,9 +40,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class EncargoController {
 
 
-	private EncargoService		encargoService;
-	private UserService			userService;
-	private BeaverService		beaverService;
+	private final EncargoService		encargoService;
+	private final UserService			userService;
+	private final BeaverService		beaverService;
 	private static final String	VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
 
 
@@ -60,7 +56,7 @@ public class EncargoController {
 
 	@ModelAttribute("status")
 	public List<EncargoStatus> populateStatus() {
-		List<EncargoStatus> status = new ArrayList<>();
+		final List<EncargoStatus> status = new ArrayList<>();
 		status.add(EncargoStatus.Si);
 		status.add(EncargoStatus.No);
 		return status;
@@ -69,7 +65,7 @@ public class EncargoController {
 	@GetMapping(value = "/new")
 	public String initCreationForm(final ModelMap model) {
 
-		Encargo encargo = new Encargo();
+		final Encargo encargo = new Encargo();
 		model.addAttribute("encargo", encargo);
 		return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
@@ -78,9 +74,9 @@ public class EncargoController {
 	@PostMapping(value = "/new")
 	public String processCreationForm(@Valid final Encargo encargo, final BindingResult result, final ModelMap model, @RequestParam("file") final MultipartFile imagen) {
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		Beaver beaver = this.beaverService.findBeaverByUsername(currentPrincipalName);
+		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		final String currentPrincipalName = authentication.getName();
+		final Beaver beaver = this.beaverService.findBeaverByUsername(currentPrincipalName);
 
 		if (result.hasErrors() /* encargo.getTitulo()==null encargo.getPrecio() == 0.0 || checkDesc(encargo.getDescripcion()) */) {
 			model.addAttribute("encargo", encargo);
@@ -88,19 +84,19 @@ public class EncargoController {
 
 		} else {
 			if (!imagen.isEmpty()) {
-				Path directorioImagen = Paths.get("src/main/resources/static/resources/images/imagenes");
-				String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
+				final Path directorioImagen = Paths.get("src/main/resources/static/resources/images/imagenes");
+				final String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
 				try {
-					byte[] bytesImg = imagen.getBytes();
-					Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+					final byte[] bytesImg = imagen.getBytes();
+					final Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
 					Files.write(rutaCompleta, bytesImg);
 					encargo.setPhoto(imagen.getOriginalFilename());
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			}
 			if (beaver.getEncargos() == null) {
-				Set<Encargo> res = new HashSet<>();
+				final Set<Encargo> res = new HashSet<>();
 				beaver.setEncargos(res);
 			}
 
@@ -119,7 +115,7 @@ public class EncargoController {
 	@GetMapping("/list")
 	public String listarEncargos(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
 
-		Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
+		final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
 		model.addAttribute("encargos", encargos);
 		model.addAttribute("beaverId", beaverId);
 		return "encargos/listEncargos";
@@ -131,8 +127,8 @@ public class EncargoController {
 	@GetMapping("/{encargoId}")
 	public ModelAndView mostrarEncargo(@PathVariable("encargoId") final int encargoId, final ModelMap model) {
 
-		ModelAndView vista = new ModelAndView("encargos/encargosDetails");
-		Encargo encargo = this.encargoService.findEncargoById(encargoId);
+		final ModelAndView vista = new ModelAndView("encargos/encargosDetails");
+		final Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		model.addAttribute("encargo", encargo);
 
 		return vista;
@@ -143,7 +139,7 @@ public class EncargoController {
 	@GetMapping(value = "/{encargoId}/edit")
 	public String initUpdateForm(@PathVariable("encargoId") final int encargoId, final ModelMap model) {
 
-		Encargo enC = this.encargoService.findEncargoById(encargoId);
+		final Encargo enC = this.encargoService.findEncargoById(encargoId);
 
 		model.addAttribute("encargo", enC);
 
@@ -161,19 +157,19 @@ public class EncargoController {
 		} else {
 
 			if (!imagen.isEmpty()) {
-				Path directorioImagen = Paths.get("src/main/resources/static/resources/images/imagenes");
-				String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
+				final Path directorioImagen = Paths.get("src/main/resources/static/resources/images/imagenes");
+				final String rutaAbsoluta = directorioImagen.toFile().getAbsolutePath();
 				try {
-					byte[] bytesImg = imagen.getBytes();
-					Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+					final byte[] bytesImg = imagen.getBytes();
+					final Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
 					Files.write(rutaCompleta, bytesImg);
 					encargo.setPhoto(imagen.getOriginalFilename());
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			}
 
-			Encargo enC = this.encargoService.findEncargoById(encargoId);
+			final Encargo enC = this.encargoService.findEncargoById(encargoId);
 
 			BeanUtils.copyProperties(encargo, enC, "id", "beaver");
 
@@ -187,18 +183,9 @@ public class EncargoController {
 	//Delete Encargo
 
 	@RequestMapping(value = "/{encargoId}/delete")
-	public String deleteEncargo(@PathVariable("encargoId") final int encargoId, final ModelMap model) {
-
-		Encargo encargo = this.encargoService.findEncargoById(encargoId);
-		Beaver b = encargo.getBeaver();
-		b.getEncargos().remove(encargo);
-		this.beaverService.saveBeaver(b);
+	public String deleteEncargo(@PathVariable("beaverId") final int beaverId,@PathVariable("encargoId") final int encargoId, final ModelMap model) {
 		this.encargoService.deleteEncargoById(encargoId);
-
-		model.addAttribute("encargo", encargo);
-
-		return "encargos/todoOk";
-
+		return "redirect:/beavers/"+beaverId+"/encargos/list";
 	}
 
 }

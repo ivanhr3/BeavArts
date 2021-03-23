@@ -1,6 +1,9 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -21,13 +24,9 @@ import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @WebMvcTest(controllers = EncargoController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 public class EncargoControllerTests {
@@ -57,7 +56,7 @@ public class EncargoControllerTests {
 	@BeforeEach
 	void setup() {
 
-		User user = new User();
+		final User user = new User();
 		user.setUsername("beaver1");
 		user.setPassword("supersecretpass");
 		user.setEnabled(true);
@@ -72,14 +71,14 @@ public class EncargoControllerTests {
 		this.beaver1.setDni("12345678Q");
 		this.beaver1.setUser(user);
 
-        Encargo encargo1 = new Encargo();
-        encargo1.setBeaver(beaver1);
+        final Encargo encargo1 = new Encargo();
+        encargo1.setBeaver(this.beaver1);
         encargo1.setDescripcion("Encargo1 correcto para las pruebas del controlador");
         encargo1.setTitulo("Encargo1");
         encargo1.setPrecio(50);
-        encargo1.setId(TEST_ENCARGO_ID);
+        encargo1.setId(EncargoControllerTests.TEST_ENCARGO_ID);
         encargo1.setDisponibilidad(EncargoStatus.Si);
-        Set<Encargo> prueba = new HashSet<>();
+        final Set<Encargo> prueba = new HashSet<>();
         prueba.add(encargo1);
         this.beaver1.setEncargos(prueba);
 
@@ -110,7 +109,7 @@ public class EncargoControllerTests {
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitCreationSucces() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("encargos/createEncargosForm")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
     }
 /*
@@ -150,7 +149,7 @@ public class EncargoControllerTests {
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitUpdateFormSucces() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/edit", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/edit", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("encargos/createEncargosForm")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
     }
 /*
@@ -171,11 +170,9 @@ public class EncargoControllerTests {
 	@WithMockUser(value = "beaver1")
     @Test
     public void testInitDeleteEncargo() throws Exception {
-
-
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("encargos/todoOk"));
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 
+        	EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID))
+        .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+        .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + EncargoControllerTests.TEST_BEAVER_ID+"/encargos/list"));
     }
-
-
 }
