@@ -410,4 +410,33 @@ public class SolicitudServiceTests {
 
 	    Assertions.assertEquals(sol, null);
     }
+
+
+	@Test
+	@Transactional
+	public void crearSolicitud(){
+		Solicitud solicitud = new Solicitud();
+		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
+
+		Solicitud solBD = this.solicitudService.findById(solicitud.getId());
+		assertThat(solBD).isEqualTo(solicitud);
+		assertThat(solBD.getEstado()).isEqualTo(Estado.PENDIENTE);
+	}
+
+	@Test
+	@Transactional
+	public void existSolicitudParaUnEncargo(){
+		Solicitud solicitud = new Solicitud();
+		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
+
+		Boolean res = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
+		assertThat(res).isTrue();
+	}
+
+	@Test
+	@Transactional
+	public void dontExistSolicitudParaUnEncargo(){
+		Boolean res = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
+		assertThat(res).isFalse();
+	}
 }

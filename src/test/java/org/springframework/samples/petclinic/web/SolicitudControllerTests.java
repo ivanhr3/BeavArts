@@ -209,4 +209,45 @@ public class SolicitudControllerTests {
 		this.mockMvc.perform(get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(status().isOk())
 			.andExpect(model().attributeExists("solicitud")).andExpect(view().name("solicitudes/solicitudesDetails"));
 	}
+
+    @Test
+    @WithMockUser(value = "spring")
+    public void crearSolicitud() throws Exception {
+        given(beaverService.getCurrentBeaver()).willReturn(beaver2);
+        given(solicitudService.existSolicitudByBeaver(beaver2, encargo)).willReturn(false);
+
+        this.mockMvc.perform(get("/solicitudes/{engId}/create", TEST_ENCARGO_ID)).andExpect(status().isOk())
+        .andExpect(view().name("solicitudSuccess"));
+    }
+
+    @Test
+    @WithMockUser(value = "spring")
+    public void crearSolicitudSameBeaverAsEncargo() throws Exception {
+        given(beaverService.getCurrentBeaver()).willReturn(beaver);
+        given(solicitudService.existSolicitudByBeaver(beaver, encargo)).willReturn(false);
+
+        this.mockMvc.perform(get("/solicitudes/{engId}/create", TEST_ENCARGO_ID)).andExpect(status().isOk())
+        .andExpect(view().name("exception"));
+    }
+
+    @Test
+    @WithMockUser(value = "spring")
+    public void crearSolicitudSolicitudAlreadyExists() throws Exception {
+        given(beaverService.getCurrentBeaver()).willReturn(beaver2);
+        given(solicitudService.existSolicitudByBeaver(beaver2, encargo)).willReturn(true);
+
+        this.mockMvc.perform(get("/solicitudes/{engId}/create", TEST_ENCARGO_ID)).andExpect(status().isOk())
+        .andExpect(view().name("exception"));
+    }
+
+    @Test
+    @WithMockUser(value = "spring")
+    public void crearSolicitudForNonExistingEncargo() throws Exception {
+        given(encargoService.findEncargoById(TEST_ENCARGO_ID)).willReturn(Optional.empty());
+        given(beaverService.getCurrentBeaver()).willReturn(beaver2);
+        given(solicitudService.existSolicitudByBeaver(beaver2, encargo)).willReturn(false);
+
+        this.mockMvc.perform(get("/solicitudes/{engId}/create", TEST_ENCARGO_ID)).andExpect(status().isOk())
+        .andExpect(view().name("exception"));
+    }
 }

@@ -47,7 +47,30 @@ public class SolicitudController {
     private static final String VISTA_DE_ERROR = "ErrorPermisos";
     private static final String SOLICITUD_DETAILS = "testview";
 
-  
+    @GetMapping("{engId}/create")
+    public String crearSolicitud(@PathVariable("engId") int encargoId) {
+        Optional<Encargo> p = encargoService.findEncargoById(encargoId);
+
+        if(!p.isPresent()){ //Excepcion: No existe el encargo
+            return "exception"; //FRONT: Debe llevar a una vista de error controlada, de todas formas este caso NO debería darse.
+        } else {
+            Encargo encargo = p.get();
+            Beaver beaver = beaverService.getCurrentBeaver();
+
+            if(encargo.getBeaver() == beaver){ //No se puede solicitar un encargo a si mismo
+                return "exception"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo. 
+           
+            } else if (solicitudService.existSolicitudByBeaver(beaver, encargo)) { //Excepcion: Un usuario que tiene abierta una solicitud para dicho encargo NO puede hacer otra solicitud
+                return "exception"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
+            } else {
+                Solicitud solicitud = new Solicitud();
+                solicitudService.crearSolicitud(solicitud, encargo, beaver);
+                return "solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
+            }
+        }
+
+    }
+    
     @GetMapping("/list")
 	public String listarSolicitudes(final ModelMap modelMap) {
 		Beaver beaver = beaverService.getCurrentBeaver();

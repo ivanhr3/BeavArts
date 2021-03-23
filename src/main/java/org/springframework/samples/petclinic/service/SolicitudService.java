@@ -13,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.repository.SolicitudRepository;
@@ -36,6 +37,14 @@ public class SolicitudService {
     @Transactional
     public void saveSolicitud(Solicitud solicitud) throws DataAccessException{
         solicitudRepository.save(solicitud);
+    }
+
+    @Transactional
+    public void crearSolicitud(Solicitud solicitud, Encargo encargo, Beaver beaver) throws DataAccessException{
+      solicitud.setEstado(Estado.PENDIENTE);
+      solicitud.setEncargo(encargo);
+      solicitud.setBeaver(beaver);
+      solicitudRepository.save(solicitud);
     }
 
     @Transactional
@@ -87,5 +96,17 @@ public class SolicitudService {
     @Transactional
     public void deleteSolicitudById(final int id) {
       this.solicitudRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Boolean existSolicitudByBeaver(Beaver beaver, Encargo encargo){
+      Solicitud sol = this.solicitudRepository.findSolicitudByBeaver(beaver.getId(), encargo.getId());
+      Boolean res;
+      if(sol == null){
+        res = false;
+      } else {
+        res = true;
+      }
+      return res;
     }
 }
