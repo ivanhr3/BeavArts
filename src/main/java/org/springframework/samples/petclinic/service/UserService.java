@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
-	
+
 	private BeaverService beaverService;
 	@Autowired
 	private PasswordEncoder PasswordEncoder;
@@ -61,7 +61,7 @@ public class UserService {
 		return userRepository.findById(username);
 	}
 
-
+	@Transactional
     public User findUserByUsername(String username){
         return this.userRepository.findByUsername(username);
     }
@@ -79,4 +79,6 @@ public class UserService {
 		Beaver beaver = this.beaverService.findBeaverByUsername(username);
 		return beaver;
 	} */
+
+
 }
