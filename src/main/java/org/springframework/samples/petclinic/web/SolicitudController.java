@@ -69,6 +69,9 @@ public class SolicitudController {
             }
         }
 
+        //Notas: Las distintas excepciones no deberían ser capaces de darse, debéis hacer que el front controle los casos que se exponen.
+        //Si necesitais algún objeto de modelo para controlar estas cosas decidmelo.
+
     }
     
     @GetMapping("/list")
