@@ -35,6 +35,16 @@ public class Beaver extends Person {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "beaver")
     private Collection<Encargo> encargos;
 
+    private String fotoPerfil;
+
+    @OneToMany(mappedBy = "valoracion")
+    private Collection<Valoracion> valoracion;
+
+    private String descripcion;
+
+    @OneToOne
+    private Portfolio portfolio;
+
     /*
     public void addEncargo(Encargo encargo) {
         getEncargos().add(encargo);
