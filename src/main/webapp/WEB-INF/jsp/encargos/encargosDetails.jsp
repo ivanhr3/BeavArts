@@ -43,6 +43,9 @@
 
     </table>
     
+    <a class="btn btn-default" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Aceptar</a>
+    
+    
     <sec:authorize access="hasAuthority('admin')">
         <a class="btn btn-default" href='<spring:url value="/encargos/delete" htmlEscape="true"/>'>Eliminar encargo</a>
         <a class="btn btn-default" href='<spring:url value="/encargos/{encargoId}/edit" htmlEscape="true"/>'>Editar encargo</a>

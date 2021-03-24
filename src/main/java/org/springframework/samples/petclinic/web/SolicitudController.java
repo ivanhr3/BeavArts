@@ -52,16 +52,16 @@ public class SolicitudController {
         Optional<Encargo> p = encargoService.findEncargoById(encargoId);
 
         if(!p.isPresent()){ //Excepcion: No existe el encargo
-            return "exception"; //FRONT: Debe llevar a una vista de error controlada, de todas formas este caso NO debería darse.
+            return "solicitudes/solicitudSinEncargo"; //FRONT: Debe llevar a una vista de error controlada, de todas formas este caso NO debería darse.
         } else {
             Encargo encargo = p.get();
             Beaver beaver = beaverService.getCurrentBeaver();
 
             if(encargo.getBeaver() == beaver){ //No se puede solicitar un encargo a si mismo
-                return "exception"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo. 
+                return "solicitudes/solicitudPropia"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo. 
            
             } else if (solicitudService.existSolicitudByBeaver(beaver, encargo)) { //Excepcion: Un usuario que tiene abierta una solicitud para dicho encargo NO puede hacer otra solicitud
-                return "exception"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
+                return "solicitudes/solicitudExistente"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
             } else {
                 Solicitud solicitud = new Solicitud();
                 solicitudService.crearSolicitud(solicitud, encargo, beaver);
@@ -83,6 +83,7 @@ public class SolicitudController {
 
 		if (encargos.size() == 0) {
 			//AÑADIR MENSAJE DE "NO HAY SOLICITUDES DISPONIBLES
+			return "solicitudes/solicitudesNotFound";
 		} else {
 
 			for (Encargo e : encargos) {
@@ -127,13 +128,13 @@ public class SolicitudController {
         } else {
         Encargo encargo = p.get();
         if(beaverId != encargo.getBeaver().getId()){ 
-            return VISTA_DE_ERROR; //TODO: Front: Poned las redirecciones
+            return "solicitudes/errorAceptar"; //TODO: Front: Poned las redirecciones
         } else {
             solicitudService.aceptarSolicitud(sol, beaver);
             //Email de Notification
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
             emailSender.sendEmail(beaver.getEmail(), subject);
-            return SOLICITUD_DETAILS; //TODO: Front: Poned las redirecciones
+            return "solicitudes/solicitudesDetails"; //TODO: Front: Poned las redirecciones
         }
     
         }
@@ -155,13 +156,13 @@ public class SolicitudController {
         Encargo encargo = p.get();
         
         if(beaverId != encargo.getBeaver().getId()){
-            return VISTA_DE_ERROR; //TODO: Front: Poned las redirecciones
+            return "solicitudes/errorRechazar"; //TODO: Front: Poned las redirecciones
         } else {
             solicitudService.rechazarSolicitud(sol, beaver);
             //Email de Notificacion
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
             emailSender.sendEmail(beaver.getEmail(), subject);
-            return SOLICITUD_DETAILS; //TODO: Front: Poned las redirecciones
+            return "solicitudes/solicitudesDetails"; //TODO: Front: Poned las redirecciones
         }
     }
 
