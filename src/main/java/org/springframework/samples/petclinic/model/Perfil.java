@@ -16,13 +16,19 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table (name = "portfolio")
-public class Portfolio extends BaseEntity{
-    
+public class Perfil extends BaseEntity{
+
+    private String descripcion;
+
     @ElementCollection(targetClass=String.class)
     private Collection<String> photos;
+
+    /*
 
     @Min(0)
     @Digits(fraction=2,integer=6)
     @NotNull
     private double precio;
+
+     */
 }

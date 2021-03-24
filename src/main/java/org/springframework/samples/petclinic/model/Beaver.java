@@ -26,24 +26,19 @@ public class Beaver extends Person {
     @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto")
   	String dni;
 
+    private String fotoPerfil;
+
 	//Double valoracion;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
-	  private User user;
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "beaver")
     private Collection<Encargo> encargos;
 
-    private String fotoPerfil;
-
-    @OneToMany(mappedBy = "valoracion")
-    private Collection<Valoracion> valoracion;
-
-    private String descripcion;
-
     @OneToOne
-    private Portfolio portfolio;
+    private Perfil perfil;
 
     /*
     public void addEncargo(Encargo encargo) {
