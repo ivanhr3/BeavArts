@@ -3,20 +3,28 @@ package org.springframework.samples.petclinic.web;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Perfil;
+import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
-import org.springframework.samples.petclinic.service.SolicitudService;
+import org.springframework.samples.petclinic.service.PerfilService;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -27,46 +35,70 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = SolicitudController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
+@WebMvcTest(value = BeaverController.class,
+    excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
+        classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 @AutoConfigureMockMvc
 public class BeaverControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     private BeaverService beaverService;
 
-    @Autowired
-    private SolicitudService solicitudService;
+    @MockBean
+    private UserService userService;
+
+    @MockBean
+    private PerfilService perfilService;
+
+
+    @MockBean
+    private AuthoritiesService	authoritiesService;
 
     private static final int TEST_BEAVER_ID = 1;
 
-    Beaver beaver;
-    User user;
+    private Beaver				beaver1;
+   // User user;
 
     @BeforeEach
     void setup() {
-        beaver = new Beaver();
-        beaver.setId(TEST_BEAVER_ID);
-        beaver.setFirstName("Nombre");
-        beaver.setLastName("Apellidos");
-        beaver.setEmail("valid@gmail.com");
-        beaver.setEspecialidades("Pintura");
-        beaver.setDni("12345678Q");
 
-        user = new User();
-        user.setUsername("User");
+        final User user = new User();
+        user.setUsername("beaver1");
         user.setPassword("supersecretpass");
         user.setEnabled(true);
 
-        beaver.setUser(user);
+        this.beaver1 = new Beaver();
+        this.beaver1.setId(TEST_BEAVER_ID);
+        this.beaver1.setFirstName("Nombre");
+        this.beaver1.setId(1);
+        this.beaver1.setLastName("Apellidos");
+        this.beaver1.setEmail("valid@gmail.com");
+        this.beaver1.setEspecialidades("Pintura");
+        this.beaver1.setDni("12345678Q");
+        this.beaver1.setUser(user);
+
+        final Perfil perfil = new Perfil();
+        perfil.setBeaver(this.beaver1);
+        perfil.setDescripcion("Descripcion perfil");
+        //Collection<String> portfolio = new HashSet<>();
+        //String foto1 = "fotoPrueba1";
+       // String foto2 = "fotoPrueba2";
+
+        //portfolio.add(foto1);
+       // portfolio.add(foto2);
+
+
+        this.beaver1.setPerfil(perfil);
+
+        BDDMockito.given(this.beaverService.findBeaverByIntId(BeaverControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver1);
     }
 
 
-    @WithMockUser(value = "testuser")
+    @WithMockUser(value = "beaver1")
     @Test
     public void testMostrarPerfilUsuario() throws Exception {
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", TEST_BEAVER_ID))

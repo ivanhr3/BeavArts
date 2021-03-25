@@ -34,10 +34,8 @@ public class BeaverController {
 
     @RequestMapping("/beaverInfo/{beaverId}")
     public ModelAndView mostrarPerfilUsuario(@PathVariable("beaverId") final int beaverId) {
-        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication1.getName();
-        User user = this.userService.findUserByUsername(currentPrincipalName);
-        Beaver beaver = user.getBeaver();
+
+        final Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
         Perfil perfil = beaver.getPerfil();
 
         ModelAndView vista = new ModelAndView("users/perfilBeaver");
