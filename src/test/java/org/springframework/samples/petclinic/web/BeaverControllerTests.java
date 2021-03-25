@@ -104,7 +104,6 @@ public class BeaverControllerTests {
         this.beaver2 = new Beaver();
         this.beaver2.setId(3);
         this.beaver2.setFirstName("Nombre 2");
-        this.beaver2.setId(1);
         this.beaver2.setLastName("Apellidos");
         this.beaver2.setEmail("valid4@gmail.com");
         this.beaver2.setEspecialidades("Pintura");
@@ -151,10 +150,11 @@ public class BeaverControllerTests {
 
     @WithMockUser(value = "beaver1")
     @Test
-    public void testprocessActualizarPerfil() throws Exception {
+    public void testProcessActualizarPerfil() throws Exception {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/perfil/edit", TEST_BEAVER_ID).with(csrf())
             .param("descripcion", "Nueva descripción"))
             .andExpect(status().isOk())
             .andExpect(view().name("users/perfilBeaver"));
     }
+
 }
