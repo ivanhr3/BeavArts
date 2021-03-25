@@ -43,7 +43,7 @@
 
     </table>
     
-    <a class="btn btn-default" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Aceptar</a>
+    <a class="btn btn-default" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar</a>
     
     
     <sec:authorize access="hasAuthority('admin')">

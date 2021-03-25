@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%-- <%@ taglib prefix="sec"
-    uri="http://www.springframework.org/security/tags%22%%3E" %> --%>
+    uri="http://www.springframework.org/security/tags%22%%3E"%> --%>
 
 <petclinic:layout pageName="solicitudesList">
     <h2>Mis solicitudes</h2>
@@ -30,19 +30,12 @@
                 <td>
                     <c:out value="${solicitud.precio}"/>
                 </td>
-                <c:forEach var="encargo" items="${solicitud.encargo}">
                 <td>
-                    <c:out value="${encargo.titulo}"/>
+                    <c:out value="${solicitud.encargo}"/>
                 </td>
                 <td>
-                    <c:out value="${encargo.descripcion}"/>
-                </td>
-                   </c:forEach>
-                   <td>
-                       <c:out value="${solicitud.beaver.user.username}"/>
-                   </td>
-            </tr>
-        </c:forEach>
+                </td>                   
+                 <c:out value="${solicitud.beaver.user.username}"/>
         </tbody>
     </table>
 </petclinic:layout>

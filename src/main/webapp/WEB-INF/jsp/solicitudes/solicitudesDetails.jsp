@@ -15,22 +15,14 @@
             <th>Precio</th>
             <td><c:out value="${solicitud.precio}"/></td>
         </tr>
-
+		<tr>
+            <th>Estado</th>
+            <td><c:out value="${solicitud.estado}"/></td>
+        </tr>
         <tr>
             <th>Usuario</th>
             <td><c:out value="${solicitud.beaver.user.username}"/></td>
         </tr>
-
-      <%--   <c:forEach var="encargo" items="${solicitud.encargo}"> --%>
-<%--         <tr>
-            <th>Encargo: </th>
-            <td><c:out value="${solicitud.encargo.titulo}"/></td>
-        </tr>
- --%>       <%--  <tr>
-            <th>Descripcion de encargo</th>
-            <td><c:out value="${solicitud.encargo.descripcion}"/></td>
-        </tr> --%>
-      <%--   </c:forEach> --%>
     </table>
 
 

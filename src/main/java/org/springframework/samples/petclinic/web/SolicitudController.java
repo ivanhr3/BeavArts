@@ -45,7 +45,7 @@ public class SolicitudController {
 	private static final String	SOLICITUD_DETAILS	= "testview";
 
 
-	@GetMapping("{engId}/create")
+	@GetMapping("/{engId}/create")
 	public String crearSolicitud(@PathVariable("engId") final int encargoId) {
 		Optional<Encargo> p = this.encargoService.findEncargoById(encargoId);
 
@@ -131,7 +131,7 @@ public class SolicitudController {
 				//Email de Notification
 				String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
 				this.emailSender.sendEmail(beaver.getEmail(), subject);
-				return "solicitudes/solicitudesDetails"; //TODO: Front: Poned las redirecciones
+				return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
 			}
 
 		}
@@ -159,7 +159,7 @@ public class SolicitudController {
 				//Email de Notificacion
 				String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
 				this.emailSender.sendEmail(beaver.getEmail(), subject);
-				return "solicitudes/solicitudesDetails"; //TODO: Front: Poned las redirecciones
+				return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
 			}
 		}
 
