@@ -18,8 +18,8 @@ public class PerfilService {
     }
 
     @Transactional
-    public void savePerfil(Perfil perfil) throws DataAccessException {
-        this.perfilRepository.save(perfil);
+    public Perfil savePerfil(Perfil perfil) {
+        return this.perfilRepository.save(perfil);
     }
 
     @Transactional
