@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Perfil;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
@@ -35,11 +37,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @WebMvcTest(value = BeaverController.class,
     excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
         classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
-@AutoConfigureMockMvc
+//@AutoConfigureMockMvc
 public class BeaverControllerTests {
 
     @Autowired
@@ -61,6 +63,8 @@ public class BeaverControllerTests {
     private static final int TEST_BEAVER_ID = 1;
 
     private Beaver				beaver1;
+
+    private Beaver				beaver2;
    // User user;
 
     @BeforeEach
@@ -84,16 +88,33 @@ public class BeaverControllerTests {
         final Perfil perfil = new Perfil();
         perfil.setBeaver(this.beaver1);
         perfil.setDescripcion("Descripcion perfil");
-        //Collection<String> portfolio = new HashSet<>();
-        //String foto1 = "fotoPrueba1";
-       // String foto2 = "fotoPrueba2";
-
-        //portfolio.add(foto1);
-       // portfolio.add(foto2);
-
+        Collection<String> portfolio = new HashSet<>();
+        String foto1 = "fotoPrueba1";
+        String foto2 = "fotoPrueba2";
+        portfolio.add(foto1);
+        portfolio.add(foto2);
 
         this.beaver1.setPerfil(perfil);
 
+        final User user2 = new User();
+        user2.setUsername("beaver2");
+        user2.setPassword("supersecretpass");
+        user2.setEnabled(true);
+
+        this.beaver2 = new Beaver();
+        this.beaver2.setId(3);
+        this.beaver2.setFirstName("Nombre 2");
+        this.beaver2.setId(1);
+        this.beaver2.setLastName("Apellidos");
+        this.beaver2.setEmail("valid4@gmail.com");
+        this.beaver2.setEspecialidades("Pintura");
+        this.beaver2.setDni("12345978Q");
+        this.beaver2.setUser(user2);
+
+
+        BDDMockito.given(this.userService.findUserByUsername("beaver2")).willReturn(user2);
+        BDDMockito.given(this.userService.findUserByUsername("beaver1")).willReturn(user);
+        BDDMockito.given(this.beaverService.findBeaverByUsername("beaver1")).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByIntId(BeaverControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver1);
     }
 
@@ -101,6 +122,9 @@ public class BeaverControllerTests {
     @WithMockUser(value = "beaver1")
     @Test
     public void testMostrarPerfilUsuario() throws Exception {
+
+        System.out.println(this.beaver1.getFirstName());
+
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("beaver"))
@@ -108,28 +132,28 @@ public class BeaverControllerTests {
             .andExpect(view().name("users/perfilBeaver"));
     }
 
-    @WithMockUser(value = "testuser")
+    @WithMockUser(value = "beaver1")
     @Test
     public void testInitActualizarPerfil() throws Exception {
-        this.mockMvc.perform(get("/beavers/beaverInfo/edit/perfil", TEST_BEAVER_ID))
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/perfil/edit", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("perfil"))
             .andExpect(view().name("users/editarPerfil"));
     }
 
-    @WithMockUser(value = "testuser")
+    @WithMockUser(value = "beaver2")
     @Test
     public void testInitActualizarPerfilHasErrors() throws Exception {
-        this.mockMvc.perform(get("/beavers/beaverInfo/edit/perfil"))
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/perfil/edit", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(view().name("accesoNoAutorizado"));
     }
 
-    @WithMockUser(value = "testuser")
+    @WithMockUser(value = "beaver1")
     @Test
     public void testprocessActualizarPerfil() throws Exception {
-        this.mockMvc.perform(post("/beavers/beaverInfo/perfil/edit", TEST_BEAVER_ID)
-            .param("perfil", "Nueva descripción"))
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/perfil/edit", TEST_BEAVER_ID).with(csrf())
+            .param("descripcion", "Nueva descripción"))
             .andExpect(status().isOk())
             .andExpect(view().name("users/perfilBeaver"));
     }
