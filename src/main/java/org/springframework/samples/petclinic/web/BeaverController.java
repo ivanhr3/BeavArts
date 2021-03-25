@@ -56,6 +56,7 @@ public class BeaverController {
         Perfil perfil = beaver.getPerfil();
         String vista;
 
+        //compruebo si el usuario logeado es el mismo que quiere editar su perfil
         if(user.getUsername().equals(beaver.getUser().getUsername())) {
 
             model.addAttribute("perfil", perfil);
@@ -64,7 +65,7 @@ public class BeaverController {
 
         } else {
 
-            vista = "accesoNoAutorizado";
+            vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
         }
 
         return vista;
@@ -72,17 +73,32 @@ public class BeaverController {
 
     @PostMapping("/beaverInfo/{beaverId}/perfil/edit")
     public String processActualizarPerfil(@PathVariable("beaverId") final int beaverId, @Valid Perfil perfil, BindingResult result, ModelMap model) {
-        if (result.hasErrors()) {
-            model.put("perfil", perfil);
-            return "users/editarPerfil";
+        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication1.getName();
+        User user = this.userService.findUserByUsername(currentPrincipalName);
+
+        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+        String vista;
+
+        //compruebo si el usuario logeado es el mismo que el usuario del perfil a editar
+        if(user.getUsername().equals(beaver.getUser().getUsername())) {
+
+            if (result.hasErrors()) {
+                model.put("perfil", perfil);
+                vista = "users/editarPerfil"; //si hay algún error de campos se redirige a la misma vista
+
+            } else {
+                Perfil perfil1 = this.perfilService.savePerfil(perfil);
+                model.put("perfil", perfil1);
+                vista = "users/perfilBeaver"; //si no hay ningún error de campos se redirige al perfil ya actualizado
+            }
 
         } else {
-            Perfil perfil1 = this.perfilService.savePerfil(perfil);
-            String vista = "users/perfilBeaver";
-            model.put("perfil", perfil1);
-
-            return vista;
+            vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
         }
+
+        return vista;
+
     }
 
 }
