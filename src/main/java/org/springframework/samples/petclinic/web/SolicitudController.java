@@ -60,7 +60,7 @@ public class SolicitudController {
             if(encargo.getBeaver() == beaver){ //No se puede solicitar un encargo a si mismo
                 return "exception"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo. 
            
-            } else if (solicitudService.existSolicitudByBeaver(beaver, encargo)) { //Excepcion: Un usuario que tiene abierta una solicitud para dicho encargo NO puede hacer otra solicitud
+            } else if (solicitudService.existSolicitudByBeaver(beaver, encargo)) { //Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
                 return "exception"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
             } else {
                 Solicitud solicitud = new Solicitud();

@@ -18,6 +18,7 @@ import org.springframework.samples.petclinic.model.Estado;
 import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.repository.SolicitudRepository;
 import org.springframework.samples.petclinic.web.EmailSender;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,13 +35,14 @@ public class SolicitudService {
         this.solicitudRepository = solicitudRepository;
     }
 
+    //Sólo para propositos de Debugging y actualización.
     @Transactional
     public void saveSolicitud(Solicitud solicitud) throws DataAccessException{
         solicitudRepository.save(solicitud);
     }
 
     @Transactional
-    public void crearSolicitud(Solicitud solicitud, Encargo encargo, Beaver beaver) throws DataAccessException{
+    public void crearSolicitud(Solicitud solicitud, Encargo encargo, Beaver beaver) throws DataAccessException{      
       solicitud.setEstado(Estado.PENDIENTE);
       solicitud.setEncargo(encargo);
       solicitud.setBeaver(beaver);
@@ -56,6 +58,12 @@ public class SolicitudService {
     @Transactional
     public void rechazarSolicitud(Solicitud solicitud, Beaver beaver) throws DataAccessException{
         solicitud.setEstado(Estado.RECHAZADA);
+        solicitudRepository.save(solicitud);
+    }
+
+    @Transactional
+    public void finalizarSolicitud(Solicitud solicitud, Beaver beaver) throws DataAccessException{
+        solicitud.setEstado(Estado.FINALIZADA);
         solicitudRepository.save(solicitud);
     }
 
@@ -98,14 +106,20 @@ public class SolicitudService {
       this.solicitudRepository.deleteById(id);
     }
 
+
+    //Comprueba si un Beaver ha realizado una solicitud para un encargo y si dicha solicitud sigue PENDIENTE o ACEPTADA
     @Transactional
     public Boolean existSolicitudByBeaver(Beaver beaver, Encargo encargo){
       Solicitud sol = this.solicitudRepository.findSolicitudByBeaver(beaver.getId(), encargo.getId());
       Boolean res;
       if(sol == null){
-        res = false;
+        res = false; //Si no hay solicitud previa no existe
       } else {
-        res = true;
+        if(sol.getEstado() == Estado.RECHAZADA || sol.getEstado() == Estado.FINALIZADA){ //Si la solicitud esta RECHAZADA o FINALIZADA falso
+          res = false;
+        } else {
+        res = true; //Existe solicitud PENDIENTE
+        }
       }
       return res;
     }

@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 
 
@@ -41,13 +41,15 @@ public class SolicitudServiceTests {
     protected BeaverService beaverService;
     @Autowired
     protected EncargoService encargoService;
-  @Autowired
-	private UserService			userService;
+  	@Autowired
+	private UserService	userService;
 
 
     Beaver beaver;
     Encargo encargo;
     User user;
+	Beaver beaveralt;
+	User useralt;
 
     @BeforeEach
     void setDummyData(){
@@ -64,14 +66,28 @@ public class SolicitudServiceTests {
             beaver.setUser(user);
         this.beaverService.saveBeaver(beaver);
 
+		beaveralt = new Beaver();
+        beaveralt.setFirstName("Nombre");
+        beaveralt.setLastName("Apellidos");
+        beaveralt.setEmail("valid@gmail.com");
+        beaveralt.setEspecialidades("Pintura");
+        beaveralt.setDni("12345678Q");
+            useralt = new User();
+            useralt.setUsername("User2");
+            useralt.setPassword("supersecretpass");
+            useralt.setEnabled(true);
+            beaveralt.setUser(useralt);
+        this.beaverService.saveBeaver(beaveralt);
+
         encargo = new Encargo();
         encargo.setTitulo("Encargo chulisimo");
         encargo.setDescripcion("mira que wapo mi encargo reshulon porque tienen que ser tantos caracteres");
         encargo.setDisponibilidad(true);
         encargo.setPrecio(199);
+		encargo.setBeaver(beaveralt);
         this.encargoService.saveEncargo(encargo);
     }
-  
+
   public Beaver createDummyBeaver() {
 
 		User user1 = new User();
@@ -287,7 +303,7 @@ public class SolicitudServiceTests {
         Assertions.assertEquals(this.solicitudService.solicitudCount(), res);
     }
   
-  @Test
+  	@Test
 	@Transactional
 	public void deleteSolicitudTest() {
 
@@ -439,4 +455,42 @@ public class SolicitudServiceTests {
 		Boolean res = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
 		assertThat(res).isFalse();
 	}
+
+	@Test
+	@Transactional
+	public void existASolicitudFinalizadaParaUnEncargo(){
+		Solicitud solicitud = new Solicitud();
+		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
+		solicitud.setEstado(Estado.FINALIZADA);
+		this.solicitudService.saveSolicitud(solicitud);
+
+
+		Boolean res = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
+		assertThat(res).isFalse(); //RN: Pueden existir solicitudes finalizadas previas para un encargo
+	}
+
+	@Test
+	@Transactional
+	public void existASolicitudRechazadaParaUnEncargo(){
+		Solicitud solicitud = new Solicitud();
+		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
+		solicitud.setEstado(Estado.RECHAZADA);
+		this.solicitudService.saveSolicitud(solicitud);
+
+		Boolean res = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
+		assertThat(res).isFalse(); //RN: Pueden existir solicitudes Rechazadas previas para un encargo
+	}
+
+	@Test
+	@Transactional
+	public void existASolicitudAceptadaParaUnEncargo(){
+		Solicitud solicitud = new Solicitud();
+		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
+		solicitud.setEstado(Estado.ACEPTADA);
+		this.solicitudService.saveSolicitud(solicitud);
+
+		Boolean res = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
+		assertThat(res).isTrue(); //RN: No pueden existir solicitudes previas Aceptadas para un encargo
+	}
+	
 }
