@@ -3,9 +3,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
-<petclinic:layout pageName="todoOk">
-<h2>¡Encargo eliminado correctamente!</h2>
+<petclinic:layout pageName="noHaySolicitudes">
 
-<a class="btn btn-default" href='<spring:url value="/beavers/${encargo.beaver.id}/encargos/list" htmlEscape="true"/>'>Volver</a>
+	<h2>No se han encontrado solicitudes disponibles</h2>
+	
+	
+    
 </petclinic:layout>

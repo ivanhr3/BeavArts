@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.URL;
+import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,23 +28,21 @@ import lombok.Setter;
 public class Encargo extends BaseEntity {
 
 	@NotBlank
-	private String					titulo;
+	private String			titulo;
 
 	@Min(0)
 	@NotNull
 	@Digits(fraction = 2, integer = 6)
-	private double					precio;
+	private double			precio;
 
 	@NotNull
-	private boolean					disponibilidad;
+	private EncargoStatus	disponibilidad;
 
 	@NotBlank
 	@Size(min = 30, max = 3000)
-	private String					descripcion;
+	private String			descripcion;
 
-	//Tipo string?? Mirar como añadir la foto
-	@URL
-	private String					photo;
+	private String			photo;
 
 	@OneToMany
 	private Collection<Solicitud>	solicitudes;
@@ -52,5 +50,3 @@ public class Encargo extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "beaver", referencedColumnName = "id")
     private Beaver beaver;
-
-}

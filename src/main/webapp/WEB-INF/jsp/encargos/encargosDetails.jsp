@@ -3,8 +3,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+	
+	<security:authorize access="isAuthenticated()">
+   		<security:authentication var="principalUsername" property="principal.username" /> 
+	</security:authorize>
+	
+	<c:set var = "SI" value = "Si"/>
+	<c:set var = "NO" value = "No"/>
 
 <petclinic:layout pageName="encargosDetails">
 <h2>Encargo:<c:out value="${encargo.titulo}"/></h2>
@@ -16,7 +23,7 @@
     <table class="table table-striped">
         <tr>
             <th>Publicado por: </th>
-            <td><c:out value="${encargo.beaver}"/></td>
+            <td><c:out value="${encargo.beaver.user.username}"/></td>
         </tr>
 
         <tr>
@@ -29,24 +36,37 @@
             <td><c:out value="${encargo.descripcion}"/></td>
         </tr>
 
-        <tr>
+       <tr>
             <th>Fotos</th>
-            <td><c:out value="${encargo.photo}"/></td>
+            <td><img width=200px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" /></td>
         </tr>
-
-        <c:if test="${encargo.disponibilidad}">
-			<a class="btn btn-default">Encargar</a>
-		</c:if>
-        <c:if test="${!encargo.disponibilidad}">
-            <dd>No disponible</dd>
-        </c:if>
-
+        
+        <tr>
+            <th>Disponibilidad</th>
+            <td>
+            	<c:if test="${encargo.disponibilidad == NO}">
+            		<dd>No disponible</dd>
+        		</c:if>
+        		<c:if test="${encargo.disponibilidad == SI}">
+            		<dd>Disponible</dd>
+        		</c:if>
+        	</td>
+        </tr>
+        
     </table>
     
-    <sec:authorize access="hasAuthority('admin')">
-        <a class="btn btn-default" href='<spring:url value="/encargos/delete" htmlEscape="true"/>'>Eliminar encargo</a>
-        <a class="btn btn-default" href='<spring:url value="/encargos/{encargoId}/edit" htmlEscape="true"/>'>Editar encargo</a>
-    </sec:authorize>
+    <c:if test="${encargo.beaver.user.username != principalUsername}">
+    
+    		<c:if test="${encargo.disponibilidad == SI}">
+				<a class="btn btn-default">Encargar</a>
+			</c:if>
+     </c:if>
+     <c:if test="${encargo.beaver.user.username == principalUsername}">
+      	  	<a class="btn btn-default" href='<spring:url value="${encargo.id}/delete" htmlEscape="true"/>'>Eliminar encargo</a>
+        	<a class="btn btn-default" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
+	
+    </c:if>
+    
     <br/>
     <br/>
 

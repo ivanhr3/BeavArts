@@ -1,200 +1,176 @@
+
 package org.springframework.samples.petclinic.web;
 
-
-
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import javax.transaction.Transactional;
-import java.util.Optional;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(value = EncargoController.class,
-    excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
-    excludeAutoConfiguration= SecurityConfiguration.class)
-@AutoConfigureMockMvc
+import java.util.HashSet;
+import java.util.Set;
+
+@WebMvcTest(controllers = EncargoController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 public class EncargoControllerTests {
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc				mockMvc;
 
-    @MockBean
-    private EncargoService encargoService;
+	@MockBean
+	private EncargoService		encargoService;
 
-    @MockBean
-    private BeaverService beaverService;
+	@MockBean
+	private BeaverService		beaverService;
 
-    @MockBean
-    private UserService userService;
+	@MockBean
+	private UserService			userService;
 
-    @MockBean
-    private AuthoritiesService authoritiesService;
-
-    private static final int TEST_BEAVER_ID = 1;
-    private static final int TEST_ENCARGO_ID = 1;
-    private static final String TEST_BEAVERUSER_ID = "beaver2";
-
-    //private Beaver beaver1;
-    //private User beaverUser1;
-    //private Authorities	authorities;
-
-    @BeforeEach
-    void setup() {
-        /*
-        this.beaver1 = new Beaver();
-        this.beaver1.setId(0);
-        this.beaver1.setFirstName("Nombre");
-        this.beaver1.setLastName("Apellidos");
-        this.beaver1.setEmail("valid@gmail.com");
-        this.beaver1.setEspecialidades("Pintura");
-        this.beaver1.setDni("12345678Q");
-
-        this.beaverUser1 = new User();
-        this.beaverUser1.setUsername(TEST_BEAVERUSER_ID);
-        this.beaverUser1.setPassword("supersecretpass");
-        this.beaverUser1.setEnabled(true);
-
-        this.beaver1.setUser(this.beaverUser1);
-        this.beaver1.getUser().setEnabled(true);
-
-        this.authorities = new Authorities();
-        this.authorities.setUser(beaverUser1);
-        this.authorities.setAuthority("beaver");
-
-        BDDMockito.given(this.userService.findUserByUsername(TEST_BEAVERUSER_ID)).willReturn(this.beaverUser1);
-        BDDMockito.given(this.beaverService.findBeaverByIntId(TEST_BEAVER_ID)).willReturn(this.beaver1);
-        BDDMockito.given(this.beaverService.findBeaverByIntId(BDDMockito.anyInt())).willReturn(this.beaver1);
-
-         */
-
-    }
+	@MockBean
+	private AuthoritiesService	authoritiesService;
 
 
+	private static final int	TEST_BEAVER_ID		= 1;
+	private static final int	TEST_ENCARGO_ID		= 1;
+
+	private Beaver				beaver1;
+	//private Encargo encargo1;
+
+	@BeforeEach
+	void setup() {
+
+		User user = new User();
+		user.setUsername("beaver1");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+
+		this.beaver1 = new Beaver();
+		this.beaver1.setId(EncargoControllerTests.TEST_BEAVER_ID);
+		this.beaver1.setFirstName("beaver1");
+		this.beaver1.setId(1);
+		this.beaver1.setLastName("Apellidos");
+		this.beaver1.setEmail("valid@gmail.com");
+		this.beaver1.setEspecialidades("Pintura");
+		this.beaver1.setDni("12345678Q");
+		this.beaver1.setUser(user);
+
+        Encargo encargo1 = new Encargo();
+        encargo1.setBeaver(beaver1);
+        encargo1.setDescripcion("Encargo1 correcto para las pruebas del controlador");
+        encargo1.setTitulo("Encargo1");
+        encargo1.setPrecio(50);
+        encargo1.setId(TEST_ENCARGO_ID);
+        encargo1.setDisponibilidad(EncargoStatus.Si);
+        Set<Encargo> prueba = new HashSet<>();
+        prueba.add(encargo1);
+        this.beaver1.setEncargos(prueba);
+
+		BDDMockito.given(this.userService.findUserByUsername("Apellidos")).willReturn(user);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(EncargoControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver1);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(ArgumentMatchers.anyInt())).willReturn(this.beaver1);
+        BDDMockito.given(this.beaverService.findBeaverByUsername("beaver1")).willReturn(this.beaver1);
+        BDDMockito.given(this.encargoService.findEncargoById(EncargoControllerTests.TEST_ENCARGO_ID)).willReturn(encargo1);
+	}
+
+	@WithMockUser("beaver1")
+	@Test
+	public void listarEncargosTest() throws Exception {
+
+		System.out.println(this.beaver1.getId());
+		System.out.println(this.beaver1.getFirstName());
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", EncargoControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk());
+
+	}
 
     @Test
-    @WithMockUser("testuser")
-    public void listarEncargosTest() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/encargos/list",TEST_BEAVER_ID )).andExpect(status().isOk());
+    @WithMockUser("beaver1")
+    public void mostrarEncargosTest() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargosId}", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.model().attributeExists("encargo")).andExpect(MockMvcResultMatchers.view().name("encargos/encargosDetails"));
     }
 
-
-    /*
-    @WithMockUser(username = "testuser")
-    @Test
-    public void testInitAñadirComentarioHasErrors() throws Exception {
-        mockMvc.perform(get("/beaver/{beaverId}/encargos/nuevo", TEST_BEAVER_ID)).andExpect(status().is4xxClientError());
-    }
-*/
-
-
-
-    @WithMockUser(value = "User")
+    @WithMockUser(value = "beaver1")
     @Test
     public void testInitCreationSucces() throws Exception {
-        Beaver beaver2 = new Beaver();
-        beaver2.setId(1);
-        beaver2.setFirstName("Nombre");
-        beaver2.setLastName("Apellidos");
-        beaver2.setEmail("valid@gmail.com");
-        beaver2.setEspecialidades("Pintura");
-        beaver2.setDni("12345678Q");
+        mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("encargos/createEncargosForm")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
+    }
 
-        User beaver2User = new User();
-        beaver2User.setUsername("beaver2");
-        beaver2User.setPassword("superpasssecret");
-        beaver2User.setEnabled(true);
-        beaver2User.setNombre(beaver2.getFirstName());
-        beaver2User.setApellidos(beaver2.getLastName());
-        beaver2User.setNombre(beaver2.getFirstName());
-        beaver2User.setApellidos(beaver2.getLastName());
+	@WithMockUser(value = "beaver1")
+	@Test
+	public void testProcessCreationSuccess() throws Exception {
 
-        BDDMockito.given(this.beaverService.findBeaverByIntId(TEST_BEAVER_ID)).willReturn(beaver2);
-        mockMvc.perform(get("/beavers/{beaverId}/encargos/new", TEST_BEAVER_ID )).andExpect(status().isOk())
-            .andExpect(view().name("encargos/nuevo")).andExpect(model().attributeExists("encargo"));
+        //MockMultipartFile imagen = new MockMultipartFile();
+		this.mockMvc
+			.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "Encargo Pinturas").param("precio", "35.50")
+				.param("disponibilidad", "true")
+                .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
+				.param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + EncargoControllerTests.TEST_BEAVER_ID));
+	}
+
+	@WithMockUser(value = "beaver1")
+	@Test
+	public void testProcessCreationFormHasErrors() throws Exception {
+		this.mockMvc
+			.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
+                .param("titulo", "Encargo Pinturas")
+                .param("precio", "")
+				.param("disponibilidad", "5")
+                .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros"))
+			//.param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
+			.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("encargo", "disponibilidad"))
+			//.andExpect(model().attributeHasFieldErrors("encargo", "precio"))
+			.andExpect(MockMvcResultMatchers.view().name("encargos/createEncargosForm"));
+	}
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testInitUpdateFormSucces() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/edit", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("encargos/createEncargosForm")).andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
+    }
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessUpdateFormSuccess() throws Exception {
+        this.mockMvc
+            .perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/encargos/new", EncargoControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
+                .param("titulo", "Encargo Pinturas").param("precio", "35.50")
+                .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
+				.param("disponibilidad", "true")
+                .param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+            .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + EncargoControllerTests.TEST_BEAVER_ID));
     }
 
 
-    @WithMockUser(value = "testuser")
+	@WithMockUser(value = "beaver1")
     @Test
-    public void testProcessCreationSuccess() throws Exception {
-        Beaver beaver2 = new Beaver();
-        beaver2.setId(1);
-        beaver2.setFirstName("Nombre");
-        beaver2.setLastName("Apellidos");
-        beaver2.setEmail("valid@gmail.com");
-        beaver2.setEspecialidades("Pintura");
-        beaver2.setDni("12345678Q");
-
-        User beaver2User = new User();
-        beaver2User.setUsername("beaver2");
-        beaver2User.setPassword("superpasssecret");
-        beaver2User.setEnabled(true);
-
-        beaver2.setUser(beaver2User);
-        beaver2.getUser().setEnabled(true);
-        beaver2User.setNombre(beaver2.getFirstName());
-        beaver2User.setApellidos(beaver2.getLastName());
-
-        Authorities authoritie = new Authorities();
-        authoritie.setUser(beaver2User);
-        authoritie.setAuthority("beaver");
-
-        BDDMockito.given(this.userService.findUserByUsername(TEST_BEAVERUSER_ID)).willReturn(beaver2User);
-        BDDMockito.given(this.beaverService.findBeaverByIntId(BDDMockito.anyInt())).willReturn(beaver2);
-        mockMvc.perform(post("/beavers/{beaverId}/encargos/new", TEST_BEAVER_ID).with(csrf())
-            .param("titulo", "Encargo Pinturas")
-            .param("precio", "35.50")
-            .param("disponibilidad", "true")
-            .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
-            .param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
-            //.andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/beavers/{beaverId}"));
-    }
+    public void testInitDeleteEncargo() throws Exception {
 
 
-
-
-
-
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testProcessCreationFormHasErrors() throws Exception {
-        mockMvc.perform(post("/beavers/{beaverId}/encargos/nuevo", TEST_BEAVER_ID).with(csrf())
-            .param("titulo", "Encargo Pinturas")
-            .param("precio", "40.0")
-            .param("disponibilidad", "true")
-            .param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros"))
-            //.param("photo", "https://previews.123rf.com/images/max5799/max57991508/max5799150800006/44259458-paisaje-de-la-pintura-al-%C3%B3leo-ramo-de-flores-en-el-fondo-del-mar-mediterr%C3%A1neo-cerca-de-las-monta%C3%B1as-oast.jpg"))
-            //.andExpect(model().attributeHasErrors("encargo"))
-            //.andExpect(model().attributeHasFieldErrors("encargo", "precio"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("encargos/nuevo"));
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", EncargoControllerTests.TEST_BEAVER_ID, EncargoControllerTests.TEST_ENCARGO_ID)).andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("encargos/todoOk"));
     }
 
 
