@@ -1,12 +1,15 @@
-
 package org.springframework.samples.petclinic.service;
 
 import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.repository.EncargoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.repository.BeaverRepository;
+import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class EncargoService {
@@ -37,4 +40,3 @@ public class EncargoService {
         this.encargoRepository.deleteById(id);
     }
 }
-

@@ -57,7 +57,6 @@ public class SolicitudController {
 
 		if (encargos.size() == 0) {
 			//AÑADIR MENSAJE DE "NO HAY SOLICITUDES DISPONIBLES
-			return "solicitudes/solicitudesNotFound";
 		} else {
 
 			for (Encargo e : encargos) {
@@ -110,6 +109,7 @@ public class SolicitudController {
             emailSender.sendEmail(beaver.getEmail(), subject);
             return SOLICITUD_DETAILS; //TODO: Front: Poned las redirecciones
         }
+    
         }
 
     }
@@ -136,7 +136,6 @@ public class SolicitudController {
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
             emailSender.sendEmail(beaver.getEmail(), subject);
             return SOLICITUD_DETAILS; //TODO: Front: Poned las redirecciones
-
         }
     }
 

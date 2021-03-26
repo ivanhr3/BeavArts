@@ -5,7 +5,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="todoOk">
-<h2>¡Encargo eliminado correctamente!</h2>
+<h2>Â¡Encargo eliminado correctamente!</h2>
 
-<a class="btn btn-default" href='<spring:url value="/beavers/${encargo.beaver.id}/encargos/list" htmlEscape="true"/>'>Volver</a>
+<a class="btn btn-default" href='<spring:url value="/encargos/list" htmlEscape="true"/>'>Volver</a>
 </petclinic:layout>

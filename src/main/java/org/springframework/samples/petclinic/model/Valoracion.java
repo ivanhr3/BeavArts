@@ -1,4 +1,3 @@
-
 package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Entity;
@@ -15,16 +14,14 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "valoracion")
-public class Valoracion extends BaseEntity {
+public class Valoracion extends BaseEntity{
+    
+    @Min(1)
+    @Max(5)
+    @NotBlank
+    private double puntuacion;
 
-	@Min(1)
-	@Max(5)
-	@NotBlank
-	private double	puntuacion;
-
-	@NotBlank
-	@Size(min = 10, max = 300)
-	private String	comentario;
-
-	//faltaría relación al encargo en cuestión
+    @NotBlank
+    @Size(min = 10, max = 300)
+    private String comentario;
 }

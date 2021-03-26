@@ -6,27 +6,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-
 <petclinic:layout pageName="encargos">
     <h2>
         <c:if test="${encargo['new']}">Nuevo </c:if> Encargo!
     </h2>
-    <form:form modelAttribute="encargo" class="form-horizontal" id="add-owner-form" enctype = "multipart/form-data">
+    <form:form modelAttribute="encargo" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Titulo" name="titulo"/>
             <petclinic:inputField label="Precio" name="precio"/>
-            <div class="control-group" >
-            	<petclinic:selectField name="disponibilidad" label="Disponibilidad" names="${status}" size="2"/>
-            </div>
+            <petclinic:inputField label="Disponibilidad" name="disponibilidad"/>
             <petclinic:inputField label="Descripcion" name="descripcion"/>
-            
-            <div class = "form-group row">
-                   <label class = "col-md-2" for="photo">Imagen: </label>
-                   <input type = "file" name = "file" class = "form-control form-control-sm col-md-6" id = "photo">
-            </div>
-            
+            <petclinic:inputField label="Foto" name="photo"/>
+            <petclinic:inputField label="Beaver" name="beaver.user.password"/>
         </div>
-        
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>

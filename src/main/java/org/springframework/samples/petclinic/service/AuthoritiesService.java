@@ -59,12 +59,7 @@ public class AuthoritiesService {
 			//user.get().getAuthorities().add(authority);
 			authoritiesRepository.save(authority);
 		}else
-			throw new DataAccessException("User '"+username+"' not found!") {
-
-				/**
-				 *
-				 */
-				private static final long serialVersionUID = 1L;};
+			throw new DataAccessException("User '"+username+"' not found!") {};
 	}
 
 

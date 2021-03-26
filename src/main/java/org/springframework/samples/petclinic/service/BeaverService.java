@@ -1,40 +1,44 @@
 package org.springframework.samples.petclinic.service;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BeaverService {
-
-    private final BeaverRepository beaverRepository;
+    private BeaverRepository beaverRepository;
     @Autowired
     private UserService userService;
     @Autowired
     private AuthoritiesService authoritiesService;
 
     @Autowired
-    public BeaverService(final BeaverRepository beaverRepository){
+    public BeaverService(BeaverRepository beaverRepository){
         this.beaverRepository = beaverRepository;
     }
 
     @Transactional
-    public void saveBeaver(final Beaver beaver) throws DataAccessException{
-        this.beaverRepository.save(beaver);
-        this.userService.saveUser(beaver.getUser());
-        this.authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
+    public void saveBeaver(Beaver beaver) throws DataAccessException{
+        beaverRepository.save(beaver);
+        userService.saveUser(beaver.getUser());
+        authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
+    }
+
+    public Beaver findBeaverByUsername(final String username){
+        return this.beaverRepository.findBeaverByUsername(this.userService.findUser(username).get());
     }
 
     public Beaver getCurrentBeaver() throws DataAccessException {
-		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
 
 		if(principal instanceof UserDetails){
@@ -43,22 +47,17 @@ public class BeaverService {
 			username = principal.toString();
 		}
 
-		final Beaver beaver = this.findBeaverByUsername(username);
+		Beaver beaver = this.findBeaverByUsername(username);
 		return beaver;
 	}
   
     @Transactional
-    public Optional<Beaver> findBeaverById(final String id) {
-        return this.beaverRepository.findById(id);
+    public Optional<Beaver> findBeaverById(String id) {
+        return beaverRepository.findById(id);
     }
 
     @Transactional
-    public Beaver findBeaverByIntId(final int id) {
-        return this.beaverRepository.findBeaverById(id);
+    public Beaver findBeaverByIntId(int id) {
+        return beaverRepository.findBeaverById(id);
     }
-
-    @Transactional
-    public Beaver findBeaverByUsername(final String username) {
-		return this.beaverRepository.findBeaverByUser(this.userService.findUserByUsername(username));
-	}
 }

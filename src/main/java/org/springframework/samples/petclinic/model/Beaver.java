@@ -40,11 +40,12 @@ public class Beaver extends Person {
     @OneToOne
     private Perfil perfil;
 
-
+    /*
     public void addEncargo(Encargo encargo) {
         getEncargos().add(encargo);
         encargo.setBeaver(this);
     }
 
+     */
 
 }
