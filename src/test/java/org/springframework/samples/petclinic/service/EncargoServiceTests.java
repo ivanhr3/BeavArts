@@ -19,7 +19,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 
 
 @SpringBootTest
@@ -52,7 +51,7 @@ public class EncargoServiceTests {
         Encargo encargo = new Encargo();
         encargo.setTitulo("Testing save encargo");
         encargo.setPrecio(39.90);
-        encargo.setDisponibilidad(EncargoStatus.Si);
+        encargo.setDisponibilidad(true);
         encargo.setDescripcion("Testing save encargo que debe estar entre 30 y 3000");
         encargo.setPhoto("https://cnnespanol.cnn.com/wp-content/uploads/2019/12/mejores-imagenes-del-ancc83o-noticias-2019-galeria10.jpg?quality=100&strip=info&w=320&h=240&crop=1");
         encargo.setBeaver(beaver);
@@ -65,14 +64,12 @@ public class EncargoServiceTests {
         Encargo encargo = new Encargo();
         encargo.setTitulo("Testing save encargo 2");
         encargo.setPrecio(59.90);
-        encargo.setDisponibilidad(EncargoStatus.Si);
+        encargo.setDisponibilidad(true);
         encargo.setDescripcion("Testing save encargo (2) que debe estar entre 30 y 3000");
         encargo.setPhoto("https://cnnespanol.cnn.com/wp-content/uploads/2019/12/mejores-imagenes-del-ancc83o-noticias-2019-galeria10.jpg?quality=100&strip=info&w=320&h=240&crop=1");
         encargo.setBeaver(beaver);
 
         this.encargoService.saveEncargo(encargo);
-
-
         return encargo;
     }
 
@@ -93,12 +90,9 @@ public class EncargoServiceTests {
         Encargo encargo = this.createDummyEncargo(beaver);
         int idEncargo = encargo.getId();
 
-
         Encargo encargo2 = this.encargoService.findEncargoById(idEncargo);
 
-
         assertEquals(encargo.getId(), encargo2.getId());
-
     }
 
     @Test
@@ -133,23 +127,5 @@ public class EncargoServiceTests {
 
 
         assertEquals(this.encargoService.encargosCount(), 1);
-
-
-    }
-
-    @Test
-    @Transactional
-    void testFindEncargosByBeaverId(){
-        Beaver beaver = this.createDummyBeaver();
-        Encargo encargo = this.createDummyEncargo(beaver);
-        Encargo encargo2 = this.createDummyEncargo2(beaver);
-        Integer id = beaver.getId();
-
-        List lista = new ArrayList();
-        this.encargoService.findEncargoByBeaverId(id).forEach(lista::add);
-
-        assertEquals(lista.size(), 2);
-
-    }
-
+     }
 }

@@ -17,7 +17,6 @@ import org.springframework.samples.petclinic.configuration.SecurityConfiguration
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
@@ -77,7 +76,7 @@ public class EncargoControllerTests {
         encargo1.setTitulo("Encargo1");
         encargo1.setPrecio(50);
         encargo1.setId(EncargoControllerTests.TEST_ENCARGO_ID);
-        encargo1.setDisponibilidad(EncargoStatus.Si);
+        encargo1.setDisponibilidad(true);
         final Set<Encargo> prueba = new HashSet<>();
         prueba.add(encargo1);
         this.beaver1.setEncargos(prueba);

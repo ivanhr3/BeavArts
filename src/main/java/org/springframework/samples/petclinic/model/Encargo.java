@@ -15,8 +15,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,7 +33,7 @@ public class Encargo extends BaseEntity {
 	private double			precio;
 
 	@NotNull
-	private EncargoStatus	disponibilidad;
+	private boolean	disponibilidad;
 
 	@NotBlank
 	@Size(min = 30, max = 3000)

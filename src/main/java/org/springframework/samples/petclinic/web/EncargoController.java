@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -16,7 +14,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
-import org.springframework.samples.petclinic.model.Enum.EncargoStatus;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
@@ -39,10 +36,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/beavers/{beaverId}/encargos")
 public class EncargoController {
 
-
 	private final EncargoService		encargoService;
 	private final UserService			userService;
-	private final BeaverService		beaverService;
+	private final BeaverService			beaverService;
 	private static final String	VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
 
 
@@ -54,13 +50,7 @@ public class EncargoController {
 		this.beaverService = beaverService;
 	}
 
-	@ModelAttribute("status")
-	public List<EncargoStatus> populateStatus() {
-		final List<EncargoStatus> status = new ArrayList<>();
-		status.add(EncargoStatus.Si);
-		status.add(EncargoStatus.No);
-		return status;
-	}
+	//Create
 
 	@GetMapping(value = "/new")
 	public String initCreationForm(final ModelMap model) {
@@ -110,7 +100,7 @@ public class EncargoController {
 
 	}
 
-	//lIST ***MIS*** ENCARGOS
+	//List
 
 	@GetMapping("/list")
 	public String listarEncargos(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
@@ -122,7 +112,7 @@ public class EncargoController {
 
 	}
 
-	// SHOW ENCARGOS
+	// Show
 
 	@GetMapping("/{encargoId}")
 	public ModelAndView mostrarEncargo(@PathVariable("encargoId") final int encargoId, final ModelMap model) {
@@ -134,7 +124,7 @@ public class EncargoController {
 		return vista;
 	}
 
-	//Update Encargos
+	//Update
 
 	@GetMapping(value = "/{encargoId}/edit")
 	public String initUpdateForm(@PathVariable("encargoId") final int encargoId, final ModelMap model) {
@@ -180,7 +170,7 @@ public class EncargoController {
 
 	}
 
-	//Delete Encargo
+	//Delete
 
 	@RequestMapping(value = "/{encargoId}/delete")
 	public String deleteEncargo(@PathVariable("beaverId") final int beaverId,@PathVariable("encargoId") final int encargoId, final ModelMap model) {
