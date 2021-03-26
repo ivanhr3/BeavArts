@@ -6,6 +6,7 @@
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
 	description="Name of the active menu: home, owners, vets or error"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <nav class="navbar navbar-default" role="navigation">
@@ -84,8 +85,8 @@
 		    		<spring:url value="" var=""></spring:url>
 		    		<a   href="" class="btn btn-header-home"> Mis Publicaciones</a>
 		    		
-		    		<spring:url value="" var=""></spring:url>
-		    		<a   href="" class="btn btn-header-home"> Mi Perfil</a>
+		    		<spring:url value="/miPerfil" var="perfilUrl"></spring:url>
+		    		<a   href="${fn:escapeXml(perfilUrl)}" class="btn btn-header-home"> Mi Perfil</a>
 	    		</sec:authorize>
     		</div>
     	

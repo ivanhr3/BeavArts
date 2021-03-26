@@ -15,6 +15,11 @@
 
     <table class="table table-striped">
     
+    
+        <tr>
+            <th>Nickname: </th>
+            <td><c:out value="${beaver.user.username}"/></td>
+        </tr>
     	<tr>
             <th>Nombre: </th>
             <td><c:out value="${beaver.firstName}"/></td>
@@ -23,6 +28,16 @@
             <th>Apellidos: </th>
             <td><c:out value="${beaver.lastName}"/></td>
         </tr>
+       
+         <tr>
+            <th>Email: </th>
+            <td><c:out value="${beaver.email}"/></td>
+        </tr>
+        <tr>
+        <tr>
+            <th>Dni: </th>
+            <td><c:out value="${beaver.dni}"/></td>
+        </tr>
         <tr>
             <th>Especialidades: </th>
             <td><c:out value="${beaver.especialidades}"/></td>
@@ -30,24 +45,32 @@
 
         <tr>
             <th>Sobre mi: </th>
-            <td>AQUI VA EL TEXTO DE DESCRIPCIÓN DE LA PERSONA (POR IMPLEMENTAR)</td>
+            <td><c:out value="${beaver.perfil.descripcion}"/></td>
         </tr>
 
        <tr>
             <th>Portfolio:</th>
-            <td><img width=200px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" />
+            
+            <td><c:forEach items="${beaver.perfil.portfolio}" var="foto">
+              <c:out value="${foto}"/>
+            </c:forEach></td>
+            
             <c:if test="${beaver.user.username == principalUsername}">
        			<a class="btn btn-default">Añadir imágenes al Portfolio</a>
-       		</c:if></td>
+       		</c:if>
+       		
        		
         </tr>
+        
+        
         
         
         
     </table>
        
     <c:if test="${beaver.user.username == principalUsername}">
-			<a class="btn btn-default">Editar Perfil</a>
+    <a class="btn btn-default" href='<spring:url value="/beaverInfo/${beaver.id}/perfil/edit" htmlEscape="true"/>'>Editar perfil</a>
+			
 			<a class="btn btn-default">Borrar Perfil</a>	
     </c:if>
     
