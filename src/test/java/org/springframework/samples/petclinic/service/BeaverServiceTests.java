@@ -2,6 +2,9 @@ package org.springframework.samples.petclinic.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.User;
 
 
@@ -25,7 +29,9 @@ public class BeaverServiceTests {
         beaver.setFirstName("Nombre");
         beaver.setLastName("Apellidos");
         beaver.setEmail("valid@gmail.com");
-        beaver.setEspecialidades("Pintura");
+        Collection<Especialidad> espe = new ArrayList<>();
+        espe.add(Especialidad.ACRÍLICO);
+        beaver.setEspecialidades(espe);
         beaver.setDni("12345678Q");
             User user = new User();
             user.setUsername("User");

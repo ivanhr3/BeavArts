@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.model;
 
-import java.util.Collection;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -31,7 +29,9 @@ public class Anuncio extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
 
-    //Tipo string?? Mirar como añadir la foto
+    @NotBlank
+    private String descripcion;
+
     @URL
     private String photo;
     

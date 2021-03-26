@@ -21,10 +21,6 @@ public class User{
 	String username;
 	
 	String password;
-
-	String nombre;
-
-	String apellidos;
 	
 	boolean enabled;
 	

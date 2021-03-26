@@ -1,14 +1,19 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.Collection;
+
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,17 +24,30 @@ import lombok.Setter;
 public class Beaver extends Person {
     
     @Email
-	String email;
+	private String email;
     
-    String especialidades;
+    @ElementCollection(targetClass = Especialidad.class)
+    @Enumerated(EnumType.STRING)
+    private Collection<Especialidad> especialidades;
 
     @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto") 
-	String dni;
-
-	//Double valoracion;
+	private String dni;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
     
+    private Double valoracion;
+
+    private String urlFotoPerfil;
+
+    @OneToMany(mappedBy = "id")
+    private Collection<Encargo> encargos;
+
+    @OneToMany(mappedBy = "id")
+    private Collection<Solicitud> solicitud;
+
+    @OneToOne
+    @JoinColumn(name = "portfolio_id")
+    private Portfolio portfolio;
 }
