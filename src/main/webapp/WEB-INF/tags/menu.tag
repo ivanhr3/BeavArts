@@ -6,6 +6,7 @@
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
 	description="Name of the active menu: home, owners, vets or error"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container">
@@ -18,44 +19,23 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
+
 		</div>
-		<div class="navbar-collapse collapse" id="main-navbar">
-			<ul class="nav navbar-nav">
-
-				<petclinic:menuItem active="${name eq 'home'}" url="/"
-					title="home page">
-					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-					<span>Home</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'encargos'}" url="/"
-					title="encargos">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Encargos</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'anuncios'}" url="/"
-					title="anuncios">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Anuncios</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="trigger a RuntimeException to see how it is handled">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span>Error</span>
-				</petclinic:menuItem>
-
-			</ul>
-
-
-
-
-			<ul class="nav navbar-nav navbar-right">
+		
+			<div class="nav navbar-nav navbar-right">
+			
+			<div style="margin:25px" class="navbar-left">
+				<form action="/action_page.php">
+	      			<input type="text" placeholder="Buscar..." name="search">
+	      			<button type="submit"><i class="fa fa-search"></i></button>
+	    		</form>
+			</div>
+			
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Login</a></li>
 					<li><a href="<c:url value="/users/new" />">Register</a></li>
 				</sec:authorize>
+				
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
@@ -66,14 +46,6 @@
 							<li>
 								<div class="navbar-login">
 									<div class="row">
-									
-						
-											<petclinic:menuItem active="${name eq 'authenticated'}" url="/miPerfil"
-												title="personal space">
-												<span>Mi Perfil</span>
-											</petclinic:menuItem>
-										
-
 										<div class="col-lg-4">
 											<p class="text-center">
 												<span class="glyphicon glyphicon-user icon-size"></span>
@@ -92,27 +64,32 @@
 								</div>
 							</li>
 							<li class="divider"></li>
-<!-- 							
-                            <li> 
-								<div class="navbar-login navbar-login-session">
-									<div class="row">
-										<div class="col-lg-12">
-											<p>
-												<a href="#" class="btn btn-primary btn-block">My Profile</a>
-												<a href="#" class="btn btn-danger btn-block">Change
-													Password</a>
-											</p>
-										</div>
-									</div>
-								</div>
-							</li>
--->
 						</ul></li>
-				</sec:authorize>
-			</ul>
+			</sec:authorize>
 		</div>
-
-
-
 	</div>
+
+	<nav class="navbar2">		
+			<div class="marginLeft">
+	    		<spring:url value="" var=""></spring:url>
+	    		<a   href="" class="btn btn-header-home">Explora</a>
+	    		
+	    		<spring:url value="" var=""></spring:url>
+	    		<a   href="" class="btn btn-header-home">Anuncios</a>
+	    		
+	    		<sec:authorize access="isAuthenticated()">
+		    		<spring:url value="" var=""></spring:url>
+		    		<a   href="" class="btn btn-header-home">Mis Solicitudes</a>
+		    		
+		    		<spring:url value="" var=""></spring:url>
+		    		<a   href="" class="btn btn-header-home"> Mis Publicaciones</a>
+		    		
+		    		<spring:url value="" var=""></spring:url>
+		    		<a   href="" class="btn btn-header-home"> Mi Perfil</a>
+	    		</sec:authorize>
+    		</div>
+    	
+	</nav>
+
+
 </nav>
