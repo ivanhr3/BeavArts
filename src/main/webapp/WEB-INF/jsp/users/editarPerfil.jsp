@@ -6,27 +6,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="beavers">
-    <h2>
-        <c:if test="${beaver['new']}">Nuevo </c:if> Beaver!
-    </h2>
-    <form:form modelAttribute="beaver" class="form-horizontal" id="add-owner-form">
+<petclinic:layout pageName="perfil">
+    <h2> Datos de perfil: </h2>
+    <form:form modelAttribute="perfil" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="First Name" name="firstName"/>
-            <petclinic:inputField label="Last Name" name="lastName"/>
-            <petclinic:inputField label="Especialidades" name="especialidades"/>
-            <petclinic:inputField label="DNI" name="dni"/>
-            <petclinic:inputField label="Email" name="email"/>
-            <petclinic:inputField label="Username" name="user.username"/>
-            <petclinic:inputField label="Password" name="user.password"/>
-            <petclinic:inputField label="FotoPerfil" name="fotoPerfil"/>
-            <petclinic:inputField label="FotoPerfil" name="perfil.descripcion"/>
+               
+            <petclinic:inputField label="Sobre mi" name="descripcion"/>
+            <petclinic:inputField label="Portfolio" name="portfolio"/>
             
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                
-                        <button class="btn btn-default" type="submit">Actualizar Beaver</button>
+                        <button class="btn btn-default" type="submit">Actualizar perfil</button>
                  
             </div>
         </div>

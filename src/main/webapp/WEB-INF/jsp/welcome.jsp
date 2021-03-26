@@ -6,10 +6,7 @@
 
 <beavarts:layout pageName="home">
     <h2><fmt:message key="welcome"/></h2>
-    <div class="row">
-        <div class="col-md-12">
-            <spring:url value="/resources/images/emblema.png" htmlEscape="true" var="emblemaImage"/>
-            <img class="img-responsive" src="${emblemaImage}"/>
-        </div>
-    </div>
+	        <div class="col-12 text-center">
+       			<img src="<spring:url value="/resources/images/emblema.png" htmlEscape="true" />"/>
+       		</div>
 </beavarts:layout>

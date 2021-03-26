@@ -11,11 +11,14 @@
 	</security:authorize>
 	
 <petclinic:layout pageName="miPerfil">
-<h2>${beaver.user.username}</h2>
+<h2>Datos de perfil:</h2>
 
     <table class="table table-striped">
     
-    
+    	<tr>
+            <th>Foto de usuario: </th>
+            <td><c:out value="${beaver.fotoPerfil}"/></td>
+        </tr>
         <tr>
             <th>Nickname: </th>
             <td><c:out value="${beaver.user.username}"/></td>
@@ -33,7 +36,7 @@
             <th>Email: </th>
             <td><c:out value="${beaver.email}"/></td>
         </tr>
-        <tr>
+        
         <tr>
             <th>Dni: </th>
             <td><c:out value="${beaver.dni}"/></td>
@@ -51,14 +54,11 @@
        <tr>
             <th>Portfolio:</th>
             
-            <td><c:forEach items="${beaver.perfil.portfolio}" var="foto">
-              <c:out value="${foto}"/>
-            </c:forEach></td>
-            
-            <c:if test="${beaver.user.username == principalUsername}">
-       			<a class="btn btn-default">Añadir imágenes al Portfolio</a>
-       		</c:if>
-       		
+            <td>
+            	<c:forEach items="${beaver.perfil.portfolio}" var="foto">
+              		<c:out value="${foto}"/>
+            	</c:forEach>      
+       		</td>
        		
         </tr>
         
@@ -69,9 +69,9 @@
     </table>
        
     <c:if test="${beaver.user.username == principalUsername}">
-    <a class="btn btn-default" href='<spring:url value="/beaverInfo/${beaver.id}/perfil/edit" htmlEscape="true"/>'>Editar perfil</a>
+    	<a class="btn btn-default" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/perfil/edit" htmlEscape="true"/>'>Editar perfil</a>
 			
-			<a class="btn btn-default">Borrar Perfil</a>	
+		<a class="btn btn-default">Borrar Perfil</a>	
     </c:if>
     
     

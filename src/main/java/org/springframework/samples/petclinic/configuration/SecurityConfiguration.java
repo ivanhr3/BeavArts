@@ -41,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/encargos/**").permitAll()
 			.antMatchers("/miPerfil").permitAll()
 			.antMatchers("/perfil/**").permitAll()
+			.antMatchers("/beaverInfo/**").permitAll()
 			.antMatchers("/admin/**").hasAnyAuthority("admin")
 			.anyRequest().denyAll().and().formLogin()
 			/* .loginPage("/login") */
