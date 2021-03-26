@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
@@ -32,7 +33,7 @@ public class SolicitudController {
     private SolicitudService solicitudService;
   
     @Autowired
-	  private UserService			userService;
+	  private UserService userService;
 
     @Autowired
     private BeaverService beaverService;
@@ -49,10 +50,8 @@ public class SolicitudController {
   
     @GetMapping("/list")
 	public String listarSolicitudes(final ModelMap modelMap) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		User user = this.userService.findUserByUsername(currentPrincipalName);
-		Collection<Encargo> encargos = user.getBeaver().getEncargos();
+		Beaver beaver = beaverService.getCurrentBeaver();
+		Collection<Encargo> encargos = beaver.getEncargos();
 
 		List<Solicitud> listaSolicitudes = new ArrayList<>();
 
@@ -96,15 +95,21 @@ public class SolicitudController {
         Solicitud sol = this.solicitudService.findById(solId);
         Beaver beaver = this.beaverService.getCurrentBeaver(); 
         int beaverId = beaver.getId();
-        Encargo encargo = encargoService.findEncargoById(sol.getEncargo().getId());
-        if(beaverId != encargo.getBeaver().getId()){ //Hay que comparar con el Beaver del encargo NO el de la solicitud
-            return "solicitudes/errorAceptar"; //Front: Poned las redirecciones
+        Optional<Encargo> p = encargoService.findEncargoById(sol.getEncargo().getId());
+
+        if(!p.isPresent()){
+            return "exception";
+        } else {
+        Encargo encargo = p.get();
+        if(beaverId != encargo.getBeaver().getId()){ 
+            return VISTA_DE_ERROR; //TODO: Front: Poned las redirecciones
         } else {
             solicitudService.aceptarSolicitud(sol, beaver);
             //Email de Notification
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
             emailSender.sendEmail(beaver.getEmail(), subject);
-            return "solicitudes/solicitudesDetails"; //Front: Poned las redirecciones
+            return SOLICITUD_DETAILS; //TODO: Front: Poned las redirecciones
+        }
         }
 
     }
@@ -115,16 +120,25 @@ public class SolicitudController {
         Solicitud sol = this.solicitudService.findById(solId);
         Beaver beaver = this.beaverService.getCurrentBeaver();
         int beaverId = beaver.getId();
-        Encargo encargo = encargoService.findEncargoById(sol.getEncargo().getId());
+        Optional<Encargo> p = encargoService.findEncargoById(sol.getEncargo().getId());
+
+        if(!p.isPresent()){
+            return "exception";
+        } else {
+
+        Encargo encargo = p.get();
+        
         if(beaverId != encargo.getBeaver().getId()){
-            return "solicitudes/errorRechazar"; //Front: Poned las redirecciones
+            return VISTA_DE_ERROR; //TODO: Front: Poned las redirecciones
         } else {
             solicitudService.rechazarSolicitud(sol, beaver);
             //Email de Notificacion
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
             emailSender.sendEmail(beaver.getEmail(), subject);
-            return "solicitudes/solicitudesDetails"; //Front: Poned las redirecciones
+            return SOLICITUD_DETAILS; //TODO: Front: Poned las redirecciones
+
         }
+    }
 
     }
 }

@@ -50,6 +50,3 @@ public class Encargo extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "beaver", referencedColumnName = "id")
     private Beaver beaver;
-
-
-}

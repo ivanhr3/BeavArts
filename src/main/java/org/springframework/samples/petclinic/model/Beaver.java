@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 
@@ -25,14 +26,19 @@ public class Beaver extends Person {
     @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto")
   	String dni;
 
+    private String fotoPerfil;
+
 	//Double valoracion;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
-	  private User user;
+    private User user;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "beaver")
-    private Set<Encargo> encargos;
+    private Collection<Encargo> encargos;
+
+    @OneToOne
+    private Perfil perfil;
 
 
     public void addEncargo(Encargo encargo) {
