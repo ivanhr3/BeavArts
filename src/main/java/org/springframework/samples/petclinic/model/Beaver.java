@@ -30,7 +30,7 @@ public class Beaver extends Person {
     
     @ElementCollection(targetClass = Especialidad.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name="beaver_especialidades")
+    @CollectionTable(name="beaver_especialidades", joinColumns = {@JoinColumn(name="beaver_id")})
     @Column(name="especialidades")
     private Collection<Especialidad> especialidades;
 

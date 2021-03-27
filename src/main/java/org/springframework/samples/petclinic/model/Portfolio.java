@@ -2,12 +2,14 @@ package org.springframework.samples.petclinic.model;
 
 import java.util.Collection;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.persistence.JoinColumn;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +20,7 @@ import lombok.Setter;
 public class Portfolio extends BaseEntity{
     
     @ElementCollection(targetClass=String.class)
+    @CollectionTable(name = "portfolio_photos", joinColumns = {@JoinColumn(name="portfolio_id")})
     private Collection<String> photos;
 
     private String sobreMi;

@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.model;
 
 import java.util.Collection;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,6 +32,7 @@ public class Solicitud extends BaseEntity{
     private double precio;
 
     @ElementCollection(targetClass = String.class)
+    @CollectionTable(name = "solicitud_fotos", joinColumns = {@JoinColumn(name="solicitud_id")})
     private Collection<String> fotos;
 
     @NotBlank

@@ -7,8 +7,8 @@ INSERT INTO users(username,password,enabled) VALUES ('user1', '$2a$10$QaodejE88z
 INSERT INTO authorities(id, username, authority) VALUES(1, 'user1', 'user');
 INSERT INTO portfolio(id, sobre_mi) VALUES (1, 'Soy un usuario que intenta un poco de todo');
 INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, valoracion, portfolio_id, username) VALUES (1, 'Nombre', 'Apellidos', '12234321Q', 'emailprueba@email.com', 'urlfotoperfil.com', 4.5, 1 , 'user1');
-INSERT INTO beaver_especialidades(beaver_id, especialidades) VALUES (1, "ESCULTURA");
 INSERT INTO beaver_especialidades(beaver_id, especialidades) VALUES (1, "TEXTIL");
+INSERT INTO beaver_especialidades(beaver_id, especialidades) VALUES (1, "ESCULTURA");
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, "foto1.com");
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, "foto2.com");
 
@@ -16,8 +16,8 @@ INSERT INTO users(username,password,enabled) VALUES ('user2', '$2a$10$/9VLfws1dO
 INSERT INTO authorities(id, username, authority) VALUES(2, 'user2', 'user');
 INSERT INTO portfolio(id, sobre_mi) VALUES (2, 'Soy un usuario que intenta un poco de todo');
 INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, valoracion, portfolio_id, username) VALUES (2, 'Nombre', 'Apellidos', '12234321Q', 'emailprueba@email.com', 'urlfotoperfil.com', 4.5, 2 , 'user2');
-INSERT INTO beaver_especialidades(beaver_id, especialidades) VALUES (2, "ESCULTURA");
 INSERT INTO beaver_especialidades(beaver_id, especialidades) VALUES (2, "TEXTIL");
+INSERT INTO beaver_especialidades(beaver_id, especialidades) VALUES (2, "ESCULTURA");
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, "foto1.com");
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, "foto2.com");
 
