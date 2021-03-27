@@ -85,7 +85,7 @@
 		    		<spring:url value="" var=""></spring:url>
 		    		<a   href="" class="btn btn-header-home"> Mis Publicaciones</a>
 		    		
-		    		<spring:url value="/miPerfil" var="perfilUrl"></spring:url>
+		    		<spring:url value="/beavers/beaverInfo/miPerfil" var="perfilUrl"></spring:url>
 		    		<a   href="${fn:escapeXml(perfilUrl)}" class="btn btn-header-home"> Mi Perfil</a>
 	    		</sec:authorize>
     		</div>

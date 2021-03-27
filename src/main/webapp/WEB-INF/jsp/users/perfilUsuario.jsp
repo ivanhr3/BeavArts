@@ -21,12 +21,12 @@
 
         <tr>
             <th>Sobre mi: </th>
-            <td>AQUI VA EL TEXTO DE DESCRIPCIÓN DE LA PERSONA (POR IMPLEMENTAR)</td>
+            <td><c:out value="${beaver.perfil.descripcion}"/></td>
         </tr>
 
         <tr>
             <th>Valoración: </th>
-            <td>AQUI VA LA VALORACIÓN MEDIA DEL ARTESANO (POR IMPLEMENTAR)</td>
+            <td>3/5 Estrellas - DECENTE</td>
         </tr>
 
        <tr>

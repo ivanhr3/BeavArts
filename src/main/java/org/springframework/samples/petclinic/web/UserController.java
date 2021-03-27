@@ -22,15 +22,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Perfil;
 import org.springframework.samples.petclinic.service.BeaverService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -70,33 +68,22 @@ public class UserController {
 			return UserController.VIEWS_BEAVER_CREATE_FORM;
 		} else {
 			//creating owner, user, and authority
+
+			Perfil perfil = new Perfil();
+
 			this.beaverService.saveBeaver(beaver);
+
+			//PARA PROBAR LA VISTA DE EDITAR PERFIL SE HA AÑADIDO ESTE CODIGO PROVISIONALMENTE
+			//DONDE SE CREA EL PERFIL DEL USUARIO REGISTRADO
+
+			this.beaverService.savePerfil(perfil);
+
+			perfil.setBeaver(beaver);
+
+			this.beaverService.savePerfil(perfil);
+
 			return "redirect:/";
 		}
-	}
-
-	//PROVISIONAL PARA VER QUE FUNCIONA LA VISTA
-	@GetMapping(value = "/miPerfil")
-	public String showMiPerfil(final Map<String, Object> model) {
-
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String currentPrincipalName = authentication.getName();
-		Beaver beaver = this.beaverService.findBeaverByUsername(currentPrincipalName);
-
-		model.put("beaver", beaver);
-
-		return "users/miPerfil";
-	}
-
-	//PROVISIONAL PARA VER QUE FUNCIONA LA VISTA
-	@GetMapping(value = "/perfil/{username}")
-	public String showPerfil(final Map<String, Object> model, @PathVariable("username") final String username) {
-
-		Beaver beaver = this.beaverService.findBeaverByUsername(username);
-
-		model.put("beaver", beaver);
-
-		return "users/perfilUsuario";
 	}
 
 }

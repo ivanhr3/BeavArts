@@ -1,6 +1,8 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +37,31 @@ public class BeaverController {
 	private PerfilService	perfilService;
 
 
+	//VISTA DE UN USUARIO AJENO
 	@RequestMapping("/beaverInfo/{beaverId}")
 	public ModelAndView mostrarPerfilUsuario(@PathVariable("beaverId") final int beaverId) {
 
-		final Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		Perfil perfil = beaver.getPerfil();
 
-		ModelAndView vista = new ModelAndView("users/perfilBeaver");
+		ModelAndView vista = new ModelAndView("users/perfilUsuario");
 		vista.addObject("beaver", beaver);
 		vista.addObject("perfil", perfil);
 
 		return vista;
+	}
+
+	//VISTA DE MI PERFIL --NUEVO-- (HECHO POR FRONTEND)
+	@GetMapping(value = "/beaverInfo/miPerfil")
+	public String showMiPerfil(final Map<String, Object> model) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication.getName();
+		Beaver beaver = this.beaverService.findBeaverByUsername(currentPrincipalName);
+
+		model.put("beaver", beaver);
+
+		return "users/miPerfil";
 	}
 
 	@GetMapping("/beaverInfo/{beaverId}/perfil/edit")
@@ -56,7 +72,8 @@ public class BeaverController {
 
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 
-		Perfil perfil = beaver.getPerfil();
+		Perfil perfil = this.perfilService.findPerfilByBeaverId(beaverId);
+
 		String vista;
 
 		//compruebo si el usuario logeado es el mismo que quiere editar su perfil
@@ -74,6 +91,7 @@ public class BeaverController {
 		return vista;
 	}
 
+	//EL PERFIL NO SE EDITA NI SE LE ASIGNA AL BEAVER, SOLO SE CREA UNO NUEVO. *ARREGLAR*
 	@PostMapping("/beaverInfo/{beaverId}/perfil/edit")
 	public String processActualizarPerfil(@PathVariable("beaverId") final int beaverId, @Valid final Perfil perfil, final BindingResult result, final ModelMap model) {
 		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
@@ -93,7 +111,8 @@ public class BeaverController {
 			} else {
 				Perfil perfil1 = this.perfilService.savePerfil(perfil);
 				model.put("perfil", perfil1);
-				vista = "users/perfilBeaver"; //si no hay ningún error de campos se redirige al perfil ya actualizado
+				model.put("beaver", beaver);
+				vista = "users/miPerfil"; //si no hay ningún error de campos se redirige al perfil ya actualizado
 			}
 
 		} else {
