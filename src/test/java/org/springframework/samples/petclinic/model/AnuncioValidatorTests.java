@@ -30,6 +30,8 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(50.00);
 		a.setTitulo("");
+		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setDescripcion("Descripcion muy bonita.");
 
 		//ACT
 		Validator v = createValidator();
@@ -51,6 +53,8 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(500000000.00);
 		a.setTitulo("The best anuncio ever");
+		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setDescripcion("Descripcion muy bonita.");
 
 		//ACT
 		Validator v = createValidator();
@@ -73,6 +77,8 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(500.455);
 		a.setTitulo("The best anuncio ever");
+		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setDescripcion("Descripcion muy bonita.");
 
 		//ACT
 		Validator v = createValidator();
@@ -95,6 +101,8 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(-50.00);
 		a.setTitulo("The best anuncio ever");
+		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setDescripcion("Descripcion muy bonita.");
 				
 				
 		//ACT
@@ -106,5 +114,30 @@ public class AnuncioValidatorTests {
 		ConstraintViolation<Anuncio> con = c.iterator().next();
 		assertThat(con.getPropertyPath().toString()).isEqualTo("precio");
 		assertThat(con.getMessage()).isEqualTo("must be greater than or equal to 0");
+	}
+
+	@Test
+	@DisplayName("No debe validarse con el atributo 'descripcion' vacía.")
+	void shouldNotValidateWhenDescripcionIsNull() {
+		
+		LocaleContextHolder.setLocale(Locale.ENGLISH);
+
+		//ARRANGE
+		Anuncio a = new Anuncio();
+		a.setPrecio(50.00);
+		a.setTitulo("The best anuncio ever");
+		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setDescripcion(null);
+				
+				
+		//ACT
+		Validator v = createValidator();
+		Set<ConstraintViolation<Anuncio>> c = v.validate(a);
+				
+		//ASSERT
+		assertThat(c.size()).isEqualTo(1);
+		ConstraintViolation<Anuncio> con = c.iterator().next();
+		assertThat(con.getPropertyPath().toString()).isEqualTo("descripcion");
+		assertThat(con.getMessage()).isEqualTo("must not be blank");
 	}
 }
