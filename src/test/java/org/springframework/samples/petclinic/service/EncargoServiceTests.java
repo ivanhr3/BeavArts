@@ -79,15 +79,6 @@ public class EncargoServiceTests {
             this.encargoService.saveEncargo(encargo2); 
     }
 
-    // @AfterEach
-    
-    //  void tearDown(){
-    //     encargoRepo.delete(encargo1);
-    //     encargoRepo.delete(encargo2);
-    //     beaverRepo.delete(beaver);
-
-    // }
-
     @Test
     @Transactional
     void testSaveEncargo(){
@@ -127,6 +118,30 @@ public class EncargoServiceTests {
         Integer id = encargo1.getId();
         this.encargoService.deleteEncargoById(id);
         assertEquals(this.encargoService.encargosCount(), 2);
+     }
+
+     @Test
+     @Transactional
+     void testCrearEncargo(){
+        Encargo encargoC = new Encargo();
+        encargoC.setTitulo("Testing save encargo 3");
+        encargoC.setPrecio(59.90);
+        encargoC.setDisponibilidad(true);
+        encargoC.setDescripcion("Testing save encargo (3) que debe estar entre 30 y 3000");
+        encargoC.setPhoto("https://cnnespanol.cnn.com/wp-content/uploads/2019/12/mejores-imagenes-del-ancc83o-noticias-2019-galeria10.jpg?quality=100&strip=info&w=320&h=240&crop=1");
+        encargoC.setBeaver(beaver);
+
+        encargoService.CrearEncargo(encargoC, beaver);
+        Encargo prueba = this.encargoService.findEncargoById(encargoC.getId());
+        assertThat(prueba).isEqualTo(encargoC);
+        assertThat(prueba.getBeaver()).isEqualTo(beaver);
+     }
+
+     @Test
+     @Transactional
+     void testFindEncargoByIntId(){
+         Encargo prueba = this.encargoService.findEncargoByIntId(encargo1.getId());
+        assertThat(prueba).isEqualTo(encargo1);
      }
 }
 
