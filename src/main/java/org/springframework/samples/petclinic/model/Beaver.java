@@ -3,6 +3,8 @@ package org.springframework.samples.petclinic.model;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -28,6 +30,8 @@ public class Beaver extends Person {
     
     @ElementCollection(targetClass = Especialidad.class)
     @Enumerated(EnumType.STRING)
+    @CollectionTable(name="beaver_especialidades")
+    @Column(name="especialidades")
     private Collection<Especialidad> especialidades;
 
     @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto") 
