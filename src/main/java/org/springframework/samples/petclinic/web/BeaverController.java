@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.BeanUtils;
 
 import javax.validation.Valid;
 
@@ -88,7 +89,11 @@ public class BeaverController {
                 vista = "users/editarPerfil"; //si hay algún error de campos se redirige a la misma vista
 
             } else {
-                Perfil perfil1 = this.perfilService.savePerfil(perfil);
+
+                final Perfil perfil1 = beaver.getPerfil();
+
+                BeanUtils.copyProperties(perfil, perfil1, "id", "beaver");
+                beaver.setPerfil(perfil1);
                 model.put("perfil", perfil1);
                 vista = "users/perfilBeaver"; //si no hay ningún error de campos se redirige al perfil ya actualizado
             }

@@ -152,7 +152,8 @@ public class BeaverControllerTests {
     @Test
     public void testProcessActualizarPerfil() throws Exception {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/perfil/edit", TEST_BEAVER_ID).with(csrf())
-            .param("descripcion", "Nueva descripción"))
+            .param("descripcion", "Nueva descripción")
+            .param("portfolio", "fotos", "fotos2"))
             .andExpect(status().isOk())
             .andExpect(view().name("users/perfilBeaver"));
     }
