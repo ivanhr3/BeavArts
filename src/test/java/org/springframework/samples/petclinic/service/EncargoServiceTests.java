@@ -16,19 +16,23 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.User;
-
+import org.springframework.samples.petclinic.repository.BeaverRepository;
+import org.springframework.samples.petclinic.repository.EncargoRepository;
 @SpringBootTest
 public class EncargoServiceTests {
     @Autowired
     protected EncargoService encargoService;
     @Autowired
     protected BeaverService beaverService;
+    @Autowired
+    protected EncargoRepository encargoRepo;
+    @Autowired
+    protected BeaverRepository beaverRepo;
 
     private Beaver beaver;
     private Encargo encargo1;
@@ -75,6 +79,15 @@ public class EncargoServiceTests {
             this.encargoService.saveEncargo(encargo2); 
     }
 
+    // @AfterEach
+    
+    //  void tearDown(){
+    //     encargoRepo.delete(encargo1);
+    //     encargoRepo.delete(encargo2);
+    //     beaverRepo.delete(beaver);
+
+    // }
+
     @Test
     @Transactional
     void testSaveEncargo(){
@@ -113,7 +126,7 @@ public class EncargoServiceTests {
     void testDeleteEncargoById(){
         Integer id = encargo1.getId();
         this.encargoService.deleteEncargoById(id);
-        assertEquals(this.encargoService.encargosCount(), 1);
+        assertEquals(this.encargoService.encargosCount(), 2);
      }
 }
 
