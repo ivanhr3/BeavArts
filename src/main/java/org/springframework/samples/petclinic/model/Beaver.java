@@ -30,8 +30,8 @@ public class Beaver extends Person {
     
     @ElementCollection(targetClass = Especialidad.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name="beaver_especialidades", joinColumns = {@JoinColumn(name="beaver_id")})
-    @Column(name="especialidades")
+    @CollectionTable(name="beaver_especialidades", joinColumns = @JoinColumn(name="beaver_id"))
+    @Column(name="especialidad")
     private Collection<Especialidad> especialidades;
 
     @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto") 
