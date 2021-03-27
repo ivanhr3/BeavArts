@@ -137,6 +137,19 @@ public class BeaverControllerTests {
             .andExpect(view().name("users/perfilBeaver"));
     }
 
+    @WithMockUser(value = "beaver2")
+    @Test
+    public void testMostrarPerfilUsuarioPortfolioNulo() throws Exception {
+
+        System.out.println(this.beaver1.getFirstName());
+
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", 12))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("beaver"))
+            .andExpect(model().attributeExists("portfolio"))
+            .andExpect(view().name("users/perfilBeaver"));
+    }
+
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitActualizarPerfil() throws Exception {

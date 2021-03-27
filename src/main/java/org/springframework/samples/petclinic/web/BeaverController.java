@@ -36,6 +36,15 @@ public class BeaverController {
     public ModelAndView mostrarPerfilUsuario(@PathVariable("beaverId") final int beaverId) {
 
         final Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+
+        //Si el atributo portfolio del beaver es nulo, crearemos uno vacío
+        if(beaver.getPortfolio()==null){
+            Portfolio port = new Portfolio();
+            port.setSobreMi("");
+            port.setPhotos(new HashSet<>());
+            beaver.setPortfolio(port);
+        }
+
         Portfolio portfolio = beaver.getPortfolio();
 
         ModelAndView vista = new ModelAndView("users/perfilBeaver");
