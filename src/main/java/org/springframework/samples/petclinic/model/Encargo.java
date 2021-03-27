@@ -45,7 +45,7 @@ public class Encargo extends BaseEntity {
     @JoinColumn(name="beaver_id")
     private Beaver beaver;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "encargo")
     private Collection<Solicitud> solicitud;
     
 }

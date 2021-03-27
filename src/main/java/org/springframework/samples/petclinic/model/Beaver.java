@@ -47,10 +47,10 @@ public class Beaver extends Person {
 
     private String urlFotoPerfil;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "beaver")
     private Collection<Encargo> encargos;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "beaver")
     private Collection<Solicitud> solicitud;
 
     @OneToOne
