@@ -35,7 +35,6 @@ public class Encargo extends BaseEntity {
     @NotNull
     private boolean disponibilidad;
 
-    @NotBlank
     @Size(min = 30, max = 3000)
     private String descripcion;
 

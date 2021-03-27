@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import lombok.Getter;
@@ -34,6 +35,7 @@ public class Beaver extends Person {
     @Column(name="especialidad")
     private Collection<Especialidad> especialidades;
 
+    @NotBlank
     @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto") 
 	private String dni;
 

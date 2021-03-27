@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
@@ -16,10 +17,9 @@ public class Valoracion extends BaseEntity{
     
     @Min(1)
     @Max(5)
-    @NotBlank
+    @NotNull
     private double puntuacion;
 
-    @NotBlank
     @Size(min = 10, max = 300)
     private String comentario;
 }
