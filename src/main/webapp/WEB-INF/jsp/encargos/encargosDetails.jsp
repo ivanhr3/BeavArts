@@ -2,15 +2,16 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 	
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
-<petclinic:layout pageName="encargosDetails">
-<h2>Encargo:<c:out value="${encargo.titulo}"/></h2>
+<beavarts:layout pageName="encargosDetails">
+<h2>Encargo: <c:out value="${encargo.titulo}"/></h2>
 
 	<spring:url value="/encargoInfo/{encargoId}" var="detailUrl">
         <spring:param name="encargoId" value="${encargo.id}"/>
@@ -23,7 +24,7 @@
         </tr>
 
         <tr>
-            <th>Precio</th>
+            <th>Precio:</th>
             <td><c:out value="${encargo.precio}"/></td>
         </tr>
 
@@ -33,12 +34,12 @@
         </tr>
 
        <tr>
-            <th>Fotos</th>
+            <th>Fotos:</th>
             <td><img width=200px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" /></td>
         </tr>
         
         <tr>
-            <th>Disponibilidad</th>
+            <th>Disponibilidad:</th>
             <td>
             	<c:if test="${encargo.disponibilidad == false}">
             		<dd>No disponible</dd>
@@ -67,4 +68,4 @@
     <br/>
 
 
-</petclinic:layout>
+</beavarts:layout>

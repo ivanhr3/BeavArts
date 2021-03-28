@@ -4,21 +4,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
-<petclinic:layout pageName="beavers">
+<beavarts:layout pageName="beavers">
     <h2>
-        <c:if test="${beaver['new']}">Nuevo </c:if> Beaver!
+        <c:if test="${beaver['new']}">Registrarse </c:if>
     </h2>
+    
+    
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="First Name" name="firstName"/>
-            <petclinic:inputField label="Last Name" name="lastName"/>
-            <petclinic:inputField label="Especialidades" name="especialidades"/>
-            <petclinic:inputField label="DNI" name="dni"/>
-            <petclinic:inputField label="Email" name="email"/>
-            <petclinic:inputField label="Username" name="user.username"/>
-            <petclinic:inputField label="Password" name="user.password"/>
+            <beavarts:inputField label="Nombre" name="firstName"/>
+            <beavarts:inputField label="Apellido" name="lastName"/>
+            
+             
+            	<p style="margin-left:210px">Para seleccionar varias especialidades mantenga la tecla 'ctrl' y selecciones sus especialidades.</p>
+           
+            
+            <div class="control-group" style="padding: 10px">
+            	<beavarts:selectField name="especialidades" label="Especialidades" names="${types}" size="8"/>
+            </div>
+            
+            <beavarts:inputField label="DNI" name="dni"/>
+            <beavarts:inputField label="Email" name="email"/>
+            <beavarts:inputField label="Username" name="user.username"/>
+            <beavarts:inputField label="Password" name="user.password"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -33,4 +44,4 @@
             </div>
         </div>
     </form:form>
-</petclinic:layout>
+</beavarts:layout>

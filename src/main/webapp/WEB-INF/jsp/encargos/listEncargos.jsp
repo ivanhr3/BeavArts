@@ -5,17 +5,25 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="encargosList">
     <h2>Mis Encargos</h2>
+
+
+ <c:if test="${hayEncargos == false}">
+ 	<div class= "col-12 text-center"><h1>¡AUN NO TIENES ENCARGOS, CREA UNO AHORA!</h1></div>
+ </c:if>
+ 
+ <c:if test="${hayEncargos != false}">
 
     <table id="encargosTable" class="table table-striped">
         <thead>
         <tr>
         	<th style="width: 150px;">Disponibilidad</th>
-            <th style="width: 150px;">T�tulo</th>
+            <th style="width: 150px;">Título</th>
             <th style="width: 200px;">Precio</th>
-            <th style="width: 120px">Descripci�n</th>
+            <th style="width: 120px">Descripción</th>
             <th style="width: 120px">Fotos</th>
             <th style="width: 120px">Publicado por</th>
         </tr>
@@ -60,5 +68,11 @@
         </c:forEach>
         </tbody>
     </table>
+    
+</c:if>
     <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Crear encargo</a>
+    
+    
+    <p style="color:red; margin-top:10px"><c:out value=" ${errorEspecialidades}"/></p>
+    
 </beavarts:layout>

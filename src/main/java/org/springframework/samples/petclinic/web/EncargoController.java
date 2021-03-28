@@ -41,10 +41,16 @@ public class EncargoController {
 
 	@GetMapping(value = "/new")
 	public String initCreationForm(final ModelMap model) {
+
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		if (beaver.getEspecialidades() == null) {
-			model.put("errorEspecialidades", "No se puede crear un encargo sin tener especialidades asignadas.");
-			return "exception";  //TODO: Front: Redirección hacia atrás
+		model.put("beaverId", beaver.getId()); //Añadido para usar las url del header
+
+		if (beaver.getEspecialidades().isEmpty()) { //DEBE COMPROBARSE QUE ESTA VACÍO, NO SI ES NULO
+
+			model.put("errorEspecialidades", "*No se puede crear un encargo sin tener especialidades asignadas.");
+			model.addAttribute("hayEncargos", false); //Se ha añadido para que no muestre los datos si hay error
+
+			return "encargos/listEncargos";  //TODO: Front: Redirección hacia atrás *DONE*
 		} else {
 			final Encargo encargo = new Encargo();
 			model.addAttribute("encargo", encargo);
@@ -55,6 +61,8 @@ public class EncargoController {
 	@PostMapping(value = "/new")
 	public String processCreationForm(@Valid final Encargo encargo, final BindingResult result, final ModelMap model) {
 		Beaver beaver = this.beaverService.getCurrentBeaver();
+
+		model.put("beaverId", beaver.getId()); //Añadido para usar las url del header
 
 		if (result.hasErrors() /* encargo.getTitulo()==null encargo.getPrecio() == 0.0 || checkDesc(encargo.getDescripcion()) */) {
 			model.addAttribute("encargo", encargo);
@@ -85,10 +93,10 @@ public class EncargoController {
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		model.addAttribute("beaverId", beaverId);
 		if (beaver != this.beaverService.getCurrentBeaver()) {
-			return "accessNotAuthorized"; //Acceso no autorizado
+			return "accesoNoAutorizado"; //Acceso no autorizado
 		} else {
 			if (beaver.getEncargos().isEmpty()) {
-				model.addAttribute("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos
+				model.addAttribute("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos *DONE*
 			} else {
 				final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
 				model.addAttribute("encargos", encargos);
@@ -106,6 +114,9 @@ public class EncargoController {
 		final Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		model.addAttribute("encargo", encargo);
 
+		Beaver beaver = this.beaverService.getCurrentBeaver();//Necesario para ver el id y usar las url
+		model.addAttribute("beaverId", beaver.getId());
+
 		if (this.beaverService.getCurrentBeaver() == encargo.getBeaver()) {
 			model.addAttribute("createdByUser", true); //TODO: Front: Sólo quien creó el encargo puede actualizarlo. Mostrad el botón sólo en este caso.
 		} else {
@@ -121,8 +132,11 @@ public class EncargoController {
 	public String initUpdateForm(@PathVariable("encargoId") final int encargoId, final ModelMap model) {
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		final Encargo enC = this.encargoService.findEncargoById(encargoId);
+
+		model.put("beaverId", beaver.getId()); //Añadido para usar las url del header
+
 		if (enC.getBeaver() != beaver) {
-			return "accessNotAuthorized"; //Acceso no Autorizado
+			return "accesoNoAutorizado"; //Acceso no Autorizado -Nombre cambiado para homogeneidad con las otras ramas-
 		} else {
 			model.addAttribute("encargo", enC);
 			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
@@ -131,6 +145,9 @@ public class EncargoController {
 
 	@PostMapping(value = "/{encargoId}/edit")
 	public String processUpdateForm(@Valid final Encargo encargo, final BindingResult result, @PathVariable("encargoId") final int encargoId, final ModelMap model) {
+
+		Beaver beaver = this.beaverService.getCurrentBeaver();
+		model.put("beaverId", beaver.getId()); //Añadido para usar las url del header
 
 		if (result.hasErrors() || encargo.isDisponibilidad() == true) {
 			model.addAttribute("encargo", encargo);
@@ -151,7 +168,7 @@ public class EncargoController {
 	@RequestMapping(value = "/{encargoId}/delete")
 	public String deleteEncargo(@PathVariable("beaverId") final int beaverId, @PathVariable("encargoId") final int encargoId, final ModelMap model) {
 		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
-			return "accessNotAuthorized"; // Acceso no autorizado
+			return "accesoNoAutorizado"; // Acceso no autorizado
 		} else {
 			this.encargoService.deleteEncargoById(encargoId);
 			return "redirect:/beavers/" + beaverId + "/encargos/list";

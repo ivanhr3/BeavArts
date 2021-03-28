@@ -5,20 +5,25 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 
 <beavarts:layout pageName="encargos">
     <h2>
-        <c:if test="${encargo['new']}">Nuevo </c:if> Encargo!
+        <c:if test="${encargo['new']}">Registrar </c:if> Encargo
     </h2>
+    
+    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
-            <beavarts:inputField label="Titulo" name="titulo"/>
-            <beavarts:inputField label="Precio" name="precio"/>
-            <beavarts:inputField label="Descripcion" name="descripcion"/>
-            
+        <div class="control-group" >
+            <beavarts:inputField label="*Titulo" name="titulo"/>
+            <beavarts:inputField label="*Precio" name="precio"/>
+            <beavarts:inputField label="*Descripcion" name="descripcion"/>
+        </div>    
             <div class="control-group" >
-            	<label class = "col-md-2" for="photo">Disponibilidad: </label>
+            	<label class = "col-md-2" for="disponibilidad">Disponibilidad: </label>
             	<select class="form-control" v-model="allowMultiple">
                     <option v-bind:value=true>Disponible</option>
                     <option v-bind:value=false>No disponible</option>
