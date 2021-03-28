@@ -459,9 +459,67 @@ public class EncargoControllerTests {
 		this.beaverService.saveBeaver(beaver);
 		BDDMockito.given(this.encargoService.findEncargoById(55)).willReturn(e);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 7, 55)).andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 			.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/7/encargos/list"));
+	}
+
+	@WithMockUser(value = "User123")
+	@Test
+	public void testEncargoDeleteNotAuthorized() throws Exception {
+
+		Beaver beaver = new Beaver();
+		beaver.setFirstName("Nombre2");
+		beaver.setLastName("Apellidos");
+		beaver.setEmail("vali2d@gmail.com");
+		beaver.setDni("12345678Q");
+		beaver.setId(7);
+		User user = new User();
+		user.setUsername("User12");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+		beaver.setUser(user);
+
+		Encargo e = new Encargo();
+		e.setId(55);
+		e.setBeaver(beaver);
+		Set<Encargo> s = new HashSet<>();
+		s.add(e);
+		beaver.setEncargos(s);
+		this.beaverService.saveBeaver(beaver);
+		BDDMockito.given(this.encargoService.findEncargoById(55)).willReturn(e);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 1, 55)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accessNotAuthorized"));
+	}
+
+	@WithMockUser(value = "User123")
+	@Test
+	public void testListarEncargoNotAuthorized() throws Exception {
+
+		Beaver beaver = new Beaver();
+		beaver.setFirstName("Nombre2");
+		beaver.setLastName("Apellidos");
+		beaver.setEmail("vali2d@gmail.com");
+		beaver.setDni("12345678Q");
+		beaver.setId(7);
+		User user = new User();
+		user.setUsername("User12");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+		beaver.setUser(user);
+
+		Encargo e = new Encargo();
+		Set<Encargo> s = new HashSet<>();
+		s.add(e);
+		beaver.setEncargos(s);
+		this.beaverService.saveBeaver(beaver);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accessNotAuthorized"));
 	}
 
 }

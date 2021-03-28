@@ -84,13 +84,17 @@ public class EncargoController {
 
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		model.addAttribute("beaverId", beaverId);
-		if (beaver.getEncargos().isEmpty()) {
-			model.addAttribute("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos
+		if (beaver != this.beaverService.getCurrentBeaver()) {
+			return "accessNotAuthorized"; //Acceso no autorizado
 		} else {
-			final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
-			model.addAttribute("encargos", encargos);
+			if (beaver.getEncargos().isEmpty()) {
+				model.addAttribute("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos
+			} else {
+				final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
+				model.addAttribute("encargos", encargos);
+			}
+			return "encargos/listEncargos";
 		}
-		return "encargos/listEncargos";
 	}
 
 	// Show
@@ -146,8 +150,12 @@ public class EncargoController {
 
 	@RequestMapping(value = "/{encargoId}/delete")
 	public String deleteEncargo(@PathVariable("beaverId") final int beaverId, @PathVariable("encargoId") final int encargoId, final ModelMap model) {
-		this.encargoService.deleteEncargoById(encargoId);
-		return "redirect:/beavers/" + beaverId + "/encargos/list";
+		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
+			return "accessNotAuthorized"; // Acceso no autorizado
+		} else {
+			this.encargoService.deleteEncargoById(encargoId);
+			return "redirect:/beavers/" + beaverId + "/encargos/list";
+		}
 	} //TODO: Falta la regla de Negocio 11
 
 }
