@@ -50,7 +50,7 @@
                          
                 </td>
                 <td>
-                    <c:out value="${encargo.precio}"/>
+                    <c:out value="${encargo.precio} €"/>
                 </td>
                 <td>
                 	<c:out value="${encargo.descripcion}"/>

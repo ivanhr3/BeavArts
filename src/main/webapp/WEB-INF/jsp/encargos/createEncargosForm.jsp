@@ -10,29 +10,31 @@
 
 <beavarts:layout pageName="encargos">
     <h2>
-        <c:if test="${encargo['new']}">Registrar </c:if> Encargo
+        <c:if test="${encargo['new']}">Registrar </c:if> 
+        <c:if test="${!encargo['new']}">Editar </c:if> Encargo
     </h2>
     
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
-    
+    <br/>
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
         <div class="form-group" >
             <beavarts:inputField label="*Título:" name="titulo"/>
             <beavarts:inputField label="*Precio:" name="precio"/>
             <beavarts:inputField label="*Descripción:" name="descripcion"/>
-        </div>    
-            <div class="form-group" >
+                   
             	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
-            	<select class="control-group">
-                    <option value=true>Disponible</option>
-                    <option value=false>No disponible</option>
-                </select>
-            </div>
+            		<div class="col-sm-2">
+		            	<select class="form-control" name="disponibilidad">
+		                    <option value=true>Disponible</option>
+		                    <option value=false>No disponible</option>
+		                </select>
+            		</div>
+    		</div>
             <br/>
             <div class = "col-sm-12 form-group">
-                   <label class = "col-sm-2 control-label" for="photo">Añade alguna imagen </label>
-                   <input type = "file" name = "file" class = "control-group" id = "photo">
+                   <label class = "col-sm-2 control-label" for="photo">Añade alguna imagen: </label>
+                   <input style="margin-top:6px" type = "file" name = "file" id = "photo">                 
             </div>
         </div>
         

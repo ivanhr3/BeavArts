@@ -11,31 +11,37 @@
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
 <beavarts:layout pageName="encargosDetails">
-<h2>Encargo: <c:out value="${encargo.titulo}"/></h2>
+<h1>Encargo: <c:out value="${encargo.titulo}"/></h1>
 
 	<spring:url value="/encargoInfo/{encargoId}" var="detailUrl">
         <spring:param name="encargoId" value="${encargo.id}"/>
     </spring:url>
     
 	<div class="table-responsive-sm">
+	
     <table class="table table-borderless">
+ 
         <tr>
             <th>Publicado por: </th>
-            <td><c:out value="${encargo.beaver.user.username}"/></td>
+            <td>
+            	<spring:url value="/beavers/{beaverId}" var="beaverUrl">
+                	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
+               	</spring:url>
+               	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${encargo.beaver.user.username}"/></b></a></td>
         </tr>
 
         <tr>
             <th>Precio:</th>
-            <td><c:out value="${encargo.precio}"/></td>
+            <td><c:out value="${encargo.precio} €"/></td>
         </tr>
-
+	
         <tr>
             <th><h3>Descripción: </h3></th>
             <td><c:out value="${encargo.descripcion}"/></td>
         </tr>
 
        <tr>
-            <th>Imágenes de ejemplo:</th>
+            <th><h3>Imágenes de ejemplo:</h3></th>
             <td><img width=200px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" /></td>
         </tr>
         
