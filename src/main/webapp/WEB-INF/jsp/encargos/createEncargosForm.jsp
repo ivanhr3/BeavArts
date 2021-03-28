@@ -17,24 +17,23 @@
     
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
-        <div class="control-group" >
-            <beavarts:inputField label="*Titulo" name="titulo"/>
-            <beavarts:inputField label="*Precio" name="precio"/>
-            <beavarts:inputField label="*Descripcion" name="descripcion"/>
+        <div class="form-group" >
+            <beavarts:inputField label="*Título:" name="titulo"/>
+            <beavarts:inputField label="*Precio:" name="precio"/>
+            <beavarts:inputField label="*Descripción:" name="descripcion"/>
         </div>    
-            <div class="control-group" >
-            	<label class = "col-md-2" for="disponibilidad">Disponibilidad: </label>
-            	<select class="form-control" v-model="allowMultiple">
-                    <option v-bind:value=true>Disponible</option>
-                    <option v-bind:value=false>No disponible</option>
+            <div class="form-group" >
+            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
+            	<select class="control-group">
+                    <option value=true>Disponible</option>
+                    <option value=false>No disponible</option>
                 </select>
             </div>
-            
-            <div class = "form-group row">
-                   <label class = "col-md-2" for="photo">Imagen: </label>
-                   <input type = "file" name = "file" class = "form-control form-control-sm col-md-6" id = "photo">
+            <br/>
+            <div class = "col-sm-12 form-group">
+                   <label class = "col-sm-2 control-label" for="photo">Añade alguna imagen </label>
+                   <input type = "file" name = "file" class = "control-group" id = "photo">
             </div>
-            
         </div>
         
         <div class="form-group">

@@ -16,8 +16,9 @@
 	<spring:url value="/encargoInfo/{encargoId}" var="detailUrl">
         <spring:param name="encargoId" value="${encargo.id}"/>
     </spring:url>
-
-    <table class="table table-striped">
+    
+	<div class="table-responsive-sm">
+    <table class="table table-borderless">
         <tr>
             <th>Publicado por: </th>
             <td><c:out value="${encargo.beaver.user.username}"/></td>
@@ -29,28 +30,29 @@
         </tr>
 
         <tr>
-            <th>Descripción: </th>
+            <th><h3>Descripción: </h3></th>
             <td><c:out value="${encargo.descripcion}"/></td>
         </tr>
 
        <tr>
-            <th>Fotos:</th>
+            <th>Imágenes de ejemplo:</th>
             <td><img width=200px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" /></td>
         </tr>
         
         <tr>
             <th>Disponibilidad:</th>
             <td>
-            	<c:if test="${encargo.disponibilidad == false}">
-            		<dd>No disponible</dd>
-        		</c:if>
-        		<c:if test="${encargo.disponibilidad == true}">
+            	<c:if test="${encargo.disponibilidad==true}">
             		<dd>Disponible</dd>
+        		</c:if>
+            	<c:if test="${encargo.disponibilidad==false}">
+            		<dd>No disponible</dd>
         		</c:if>
         	</td>
         </tr>
         
     </table>
+    </div>
     
     <c:if test="${encargo.beaver.user.username != principalUsername}">
     

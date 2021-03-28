@@ -19,7 +19,7 @@
             <beavarts:inputField label="Apellido" name="lastName"/>
             
              
-            	<p style="margin-left:210px">Para seleccionar varias especialidades mantenga la tecla 'ctrl' y selecciones sus especialidades.</p>
+            	<p style="margin-left:210px">Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
            
             
             <div class="control-group" style="padding: 10px">
