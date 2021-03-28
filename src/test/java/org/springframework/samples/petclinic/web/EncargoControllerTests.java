@@ -329,7 +329,7 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.encargoService.findEncargoById(55)).willReturn(e);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/edit", 11, 55)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accessNotAuthorized"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/edit", 11, 55)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
 	}
 
 	@WithMockUser(value = "User123")
@@ -492,7 +492,7 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 1, 55)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accessNotAuthorized"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 1, 55)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
 	}
 
 	@WithMockUser(value = "User123")
@@ -519,7 +519,7 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accessNotAuthorized"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
 	}
 
 }
