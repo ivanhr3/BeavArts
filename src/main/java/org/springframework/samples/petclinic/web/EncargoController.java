@@ -1,9 +1,6 @@
+
 package org.springframework.samples.petclinic.web;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,10 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/beavers/{beaverId}/encargos")
 public class EncargoController {
 
-	private final EncargoService		encargoService;
-	private final BeaverService			beaverService;
-	private static final String	VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
-
+	private final EncargoService	encargoService;
+	private final BeaverService		beaverService;
+	private static final String		VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
 
 
 	@Autowired
@@ -45,37 +41,37 @@ public class EncargoController {
 
 	@GetMapping(value = "/new")
 	public String initCreationForm(final ModelMap model) {
-		Beaver beaver = beaverService.getCurrentBeaver();
-		if(beaver.getEspecialidades().isEmpty()){
+		Beaver beaver = this.beaverService.getCurrentBeaver();
+		if (beaver.getEspecialidades() == null) {
 			model.put("errorEspecialidades", "No se puede crear un encargo sin tener especialidades asignadas.");
-			return "/"; //TODO: Front: Redirección hacia atrás
+			return "exception";  //TODO: Front: Redirección hacia atrás
 		} else {
-		final Encargo encargo = new Encargo();
-		model.addAttribute("encargo", encargo);
-		return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
+			final Encargo encargo = new Encargo();
+			model.addAttribute("encargo", encargo);
+			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 		}
 	}
 
 	@PostMapping(value = "/new")
 	public String processCreationForm(@Valid final Encargo encargo, final BindingResult result, final ModelMap model) {
-		Beaver beaver = beaverService.getCurrentBeaver();
+		Beaver beaver = this.beaverService.getCurrentBeaver();
 
 		if (result.hasErrors() /* encargo.getTitulo()==null encargo.getPrecio() == 0.0 || checkDesc(encargo.getDescripcion()) */) {
 			model.addAttribute("encargo", encargo);
 			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
 		} else {
-			if (beaver.getEncargos() == null) {
+			if (beaver.getEncargos().isEmpty() || beaver.getEncargos() == null) {
 				final Set<Encargo> res = new HashSet<>();
 				res.add(encargo);
 				encargo.setBeaver(beaver);
 				beaver.setEncargos(res);
-				
+
 			} else {
-			beaver.getEncargos().add(encargo);
-			encargo.setBeaver(beaver);
+				beaver.getEncargos().add(encargo);
+				encargo.setBeaver(beaver);
 			}
-			encargoService.CrearEncargo(encargo, beaver);
+			this.encargoService.CrearEncargo(encargo, beaver);
 			return "redirect:/beavers/" + beaver.getId() + "/encargos/" + encargo.getId();
 		}
 
@@ -88,11 +84,11 @@ public class EncargoController {
 
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		model.addAttribute("beaverId", beaverId);
-		if(beaver.getEncargos().isEmpty()){
+		if (beaver.getEncargos().isEmpty()) {
 			model.addAttribute("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos
 		} else {
-		final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
-		model.addAttribute("encargos", encargos);
+			final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
+			model.addAttribute("encargos", encargos);
 		}
 		return "encargos/listEncargos";
 	}
@@ -106,7 +102,7 @@ public class EncargoController {
 		final Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		model.addAttribute("encargo", encargo);
 
-		if(beaverService.getCurrentBeaver() == encargo.getBeaver()){
+		if (this.beaverService.getCurrentBeaver() == encargo.getBeaver()) {
 			model.addAttribute("createdByUser", true); //TODO: Front: Sólo quien creó el encargo puede actualizarlo. Mostrad el botón sólo en este caso.
 		} else {
 			model.addAttribute("createdByUser", false); //TODO: Front: Controla que el usuario que está viendo la vista es el mismo que creó el encargo.
@@ -119,13 +115,13 @@ public class EncargoController {
 
 	@GetMapping(value = "/{encargoId}/edit")
 	public String initUpdateForm(@PathVariable("encargoId") final int encargoId, final ModelMap model) {
-		Beaver beaver = beaverService.getCurrentBeaver();
+		Beaver beaver = this.beaverService.getCurrentBeaver();
 		final Encargo enC = this.encargoService.findEncargoById(encargoId);
-		if(enC.getBeaver() == beaver){
+		if (enC.getBeaver() != beaver) {
 			return "accessNotAuthorized"; //Acceso no Autorizado
 		} else {
-		model.addAttribute("encargo", enC);
-		return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
+			model.addAttribute("encargo", enC);
+			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 		} //TODO: Falta implementar la regla de negocio 11
 	}
 
@@ -149,9 +145,9 @@ public class EncargoController {
 	//Delete
 
 	@RequestMapping(value = "/{encargoId}/delete")
-	public String deleteEncargo(@PathVariable("beaverId") final int beaverId,@PathVariable("encargoId") final int encargoId, final ModelMap model) {
+	public String deleteEncargo(@PathVariable("beaverId") final int beaverId, @PathVariable("encargoId") final int encargoId, final ModelMap model) {
 		this.encargoService.deleteEncargoById(encargoId);
-		return "redirect:/beavers/"+beaverId+"/encargos/list";
+		return "redirect:/beavers/" + beaverId + "/encargos/list";
 	} //TODO: Falta la regla de Negocio 11
 
 }
