@@ -20,12 +20,12 @@
     <table id="encargosTable" class="table table-striped">
         <thead>
         <tr>
-        	<th style="width: auto;" id="Disponibilidad">Disponibilidad</th>
-        	<th style="width: auto" id="Publicado por">Publicado por</th>
-            <th style="width: 100%;" id="Titulo">Título</th>
-            <th style="width: auto;" id="Precio">Precio</th>
-            <th style="width: auto" id="Descripcion">Descripción</th>
-            <th style="width: auto" id="Fotos">Fotos</th>
+        	<th>Disponibilidad</th>
+        	<th>Publicado por</th>
+            <th>Título</th>
+            <th>Precio</th>
+            <th>Descripción</th>
+            <th>Fotos</th>
             
         </tr>
         </thead>

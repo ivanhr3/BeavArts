@@ -22,8 +22,8 @@
     <table class="table table-borderless">
  
         <tr>
-        	<c:if test="${encargo.beaver.user.username != principalUsername}">
-            <th >Publicado por: </th>
+        	<c:if test="${createdByUser== false}">
+            <th>Publicado por: </th>
             <td style="text-align: left">
             	<spring:url value="/beavers/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
