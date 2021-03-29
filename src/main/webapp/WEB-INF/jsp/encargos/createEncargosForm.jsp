@@ -34,7 +34,7 @@
 	            		</div>
             	</c:if>  
             	          
-                <c:if test="${encargo.disponibilidad != true}">        		
+                <c:if test="${encargo.disponibilidad != true}">
 	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
 	            		<div class="col-sm-2">
 			            	<select class="form-control" name="disponibilidad">
@@ -47,10 +47,7 @@
             		
     		</div>
             <br/>
-            <div class = "col-sm-12 form-group">
-                   <label class = "col-sm-2 control-label" for="photo">Añade alguna imagen: </label>
-                   <input style="margin-top:6px" type = "file" name = "file" id = "photo">                 
-            </div>
+           <beavarts:inputField label="Introduce URL de la foto:" name="photo" readonly="${isDisponible}"/>
         </div>
         
         <div class="form-group">

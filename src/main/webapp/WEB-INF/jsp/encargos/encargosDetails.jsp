@@ -17,37 +17,39 @@
         <spring:param name="encargoId" value="${encargo.id}"/>
     </spring:url>
     
-	<div class="table-responsive-sm">
+	<div class="table-responsive">
 	
     <table class="table table-borderless">
  
         <tr>
-            <th>Publicado por: </th>
-            <td>
+        	<c:if test="${encargo.beaver.user.username != principalUsername}">
+            <th >Publicado por: </th>
+            <td style="text-align: left">
             	<spring:url value="/beavers/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	</spring:url>
                	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${encargo.beaver.user.username}"/></b></a></td>
+        	</c:if>
         </tr>
 
         <tr>
             <th>Precio:</th>
-            <td><c:out value="${encargo.precio} €"/></td>
+            <td style="text-align: left"><c:out value="${encargo.precio} €"/></td>
         </tr>
 	
         <tr>
             <th><h3>Descripción: </h3></th>
-            <td><c:out value="${encargo.descripcion}"/></td>
+            <td style="text-align: left"><c:out value="${encargo.descripcion}"/></td>
         </tr>
 
        <tr>
-            <th><h3>Imágenes de ejemplo:</h3></th>
-            <td><img width=200px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" /></td>
+            <th>Imágenes de ejemplo:</th>
+            <td style="text-align: left"><a href="${encargo.photo}"><c:out value="${encargo.photo}"/></a></td>
         </tr>
         
         <tr>
             <th>Disponibilidad:</th>
-            <td>
+            <td style="text-align: left">
             	<c:if test="${encargo.disponibilidad==true}">
             		<dd>Disponible</dd>
         		</c:if>
@@ -60,13 +62,13 @@
     </table>
     </div>
     
-    <c:if test="${encargo.beaver.user.username != principalUsername}">
+    <c:if test="${createdByUser== false}">
     
     		<c:if test="${encargo.disponibilidad == true}">
 				<a class="btn btn-default">Encargar</a>
 			</c:if>
      </c:if>
-     <c:if test="${encargo.beaver.user.username == principalUsername}">
+     <c:if test="${createdByUser == true}">
       	  	<a class="btn btn-default" href='<spring:url value="${encargo.id}/delete" htmlEscape="true"/>'>Eliminar encargo</a>
         	<a class="btn btn-default" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
 	

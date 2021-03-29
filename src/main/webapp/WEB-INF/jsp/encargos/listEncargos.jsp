@@ -16,16 +16,17 @@
  </c:if>
  
  <c:if test="${hayEncargos != false}">
-
+	<div class="table-responsive">
     <table id="encargosTable" class="table table-striped">
         <thead>
         <tr>
-        	<th style="width: 150px;">Disponibilidad</th>
-            <th style="width: 150px;">Título</th>
-            <th style="width: 200px;">Precio</th>
-            <th style="width: 120px">Descripción</th>
-            <th style="width: 120px">Fotos</th>
-            <th style="width: 120px">Publicado por</th>
+        	<th style="width: auto;" id="Disponibilidad">Disponibilidad</th>
+        	<th style="width: auto" id="Publicado por">Publicado por</th>
+            <th style="width: 100%;" id="Titulo">Título</th>
+            <th style="width: auto;" id="Precio">Precio</th>
+            <th style="width: auto" id="Descripcion">Descripción</th>
+            <th style="width: auto" id="Fotos">Fotos</th>
+            
         </tr>
         </thead>
         
@@ -41,12 +42,20 @@
             		<dd>Disponible</dd>
         		</c:if>
                 </td>
+                
+                <spring:url value="/beavers/{beaverId}" var="beaverUrl">
+                        <spring:param name="beaverId" value="${encargo.beaver.id}"/>
+                </spring:url>
+                <td>
+                		<a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a>
+                </td>
+                
                 <td>
                 <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="encargoUrl">
                         <spring:param name="encargoId" value="${encargo.id}"/>
                         <spring:param name="beaverId" value="${encargo.beaver.id}"/>
                 </spring:url>  
-                        <a href="${fn:escapeXml(encargoUrl)}"><b><c:out value="${encargo.titulo}"/></b></a>
+                        <a href="${fn:escapeXml(encargoUrl)}"><strong><c:out value="${encargo.titulo}"/></strong></a>
                          
                 </td>
                 <td>
@@ -56,19 +65,13 @@
                 	<c:out value="${encargo.descripcion}"/>
                 </td>
                 <td>
-                	<img width=100px height= auto src="/resources/images/imagenes/${encargo.photo}" alt ="Foto" />
-                </td>
-                <td>
-                	<spring:url value="/beavers/{beaverId}" var="beaverUrl">
-                        <spring:param name="beaverId" value="${encargo.beaver.id}"/>
-                	</spring:url>
-                	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${encargo.beaver.user.username}"/></b></a>
+                	<a href="${encargo.photo}"><c:out value="${encargo.photo}"/></a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    
+    </div>
 </c:if>
     <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Crear encargo</a>
     
