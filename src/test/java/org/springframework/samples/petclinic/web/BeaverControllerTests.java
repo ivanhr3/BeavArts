@@ -173,8 +173,8 @@ public class BeaverControllerTests {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID).with(csrf())
             .param("sobreMi", "Nueva descripción")
             .param("photos", "fotos", "fotos2"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("users/perfilBeaver"));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/beavers/beaverInfo/"+TEST_BEAVER_ID));
     }
 
     @WithMockUser(value = "beaver2")
@@ -183,8 +183,8 @@ public class BeaverControllerTests {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", 12).with(csrf())
             .param("sobreMi", "Nueva descripción")
             .param("photos", "fotos", "fotos2"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("users/perfilBeaver"));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/beavers/beaverInfo/"+12));
     }
 
 }

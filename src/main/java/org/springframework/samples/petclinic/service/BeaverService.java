@@ -1,4 +1,7 @@
+
 package org.springframework.samples.petclinic.service;
+
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -10,53 +13,54 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class BeaverService {
-    private BeaverRepository beaverRepository;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private AuthoritiesService authoritiesService;
 
-    @Autowired
-    public BeaverService(BeaverRepository beaverRepository){
-        this.beaverRepository = beaverRepository;
-    }
+	private BeaverRepository	beaverRepository;
+	@Autowired
+	private UserService			userService;
+	@Autowired
+	private AuthoritiesService	authoritiesService;
 
-    @Transactional
-    public void saveBeaver(Beaver beaver) throws DataAccessException{
-        beaverRepository.save(beaver);
-        userService.saveUser(beaver.getUser());
-        authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
-    }
 
-    public Beaver findBeaverByUsername(final String username){
-        return this.beaverRepository.findBeaverByUsername(this.userService.findUser(username).get());
-    }
+	@Autowired
+	public BeaverService(final BeaverRepository beaverRepository) {
+		this.beaverRepository = beaverRepository;
+	}
 
-    public Beaver getCurrentBeaver() throws DataAccessException {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
+	@Transactional
+	public void saveBeaver(final Beaver beaver) throws DataAccessException {
+		this.beaverRepository.save(beaver);
+		this.userService.saveUser(beaver.getUser());
+		this.authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
+	}
 
-        if(principal instanceof UserDetails){
-            username = ((UserDetails) principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+	@Transactional
+	public Beaver findBeaverByUsername(final String username) {
+		return this.beaverRepository.findBeaverByUser(this.userService.findUserByUsername(username));
+	}
 
-        Beaver beaver = this.findBeaverByUsername(username);
-        return beaver;
-    }
+	public Beaver getCurrentBeaver() throws DataAccessException {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username;
 
-    @Transactional
-    public Optional<Beaver> findBeaverById(String id) {
-        return beaverRepository.findById(id);
-    }
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails) principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
 
-    @Transactional
-    public Beaver findBeaverByIntId(int id) {
-        return beaverRepository.findBeaverById(id);
-    }
+		Beaver beaver = this.findBeaverByUsername(username);
+		return beaver;
+	}
+
+	@Transactional
+	public Optional<Beaver> findBeaverById(final String id) {
+		return this.beaverRepository.findById(id);
+	}
+
+	@Transactional
+	public Beaver findBeaverByIntId(final int id) {
+		return this.beaverRepository.findBeaverById(id);
+	}
 }

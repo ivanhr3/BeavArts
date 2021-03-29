@@ -6,6 +6,8 @@
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
 	description="Name of the active menu: home, owners, vets or error"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container">
@@ -18,47 +20,26 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
+
 		</div>
-		<div class="navbar-collapse collapse" id="main-navbar">
-			<ul class="nav navbar-nav">
-
-				<petclinic:menuItem active="${name eq 'home'}" url="/"
-					title="home page">
-					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-					<span>Home</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'encargos'}" url="/"
-					title="encargos">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Encargos</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'anuncios'}" url="/"
-					title="anuncios">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Anuncios</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'miperfil'}" url="/"
-					title="miperfil">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Mi perfil</span>
-				</petclinic:menuItem>
-
-			</ul>
-
-
-
-
-			<ul class="nav navbar-nav navbar-right">
+		
+			<div class="nav navbar-nav navbar-right">
+			
+			<div style="margin:25px" class="navbar-left">
+				<form action="/action_page.php">
+	      			<input type="text" placeholder="Buscar..." name="search">
+	      			<button type="submit"><i class="fa fa-search"></i></button>
+	    		</form>
+			</div>
+			
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Login</a></li>
 					<li><a href="<c:url value="/users/new" />">Register</a></li>
 				</sec:authorize>
+				
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>�
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
@@ -84,27 +65,32 @@
 								</div>
 							</li>
 							<li class="divider"></li>
-<!-- 							
-                            <li> 
-								<div class="navbar-login navbar-login-session">
-									<div class="row">
-										<div class="col-lg-12">
-											<p>
-												<a href="#" class="btn btn-primary btn-block">My Profile</a>
-												<a href="#" class="btn btn-danger btn-block">Change
-													Password</a>
-											</p>
-										</div>
-									</div>
-								</div>
-							</li>
--->
 						</ul></li>
-				</sec:authorize>
-			</ul>
+			</sec:authorize>
 		</div>
-
-
-
 	</div>
+
+	<nav class="navbar2">		
+			<div class="marginLeft">
+	    		<spring:url value="" var=""></spring:url>
+	    		<a   href="" class="btn btn-header-home">Explora</a>
+	    		
+	    		<spring:url value="" var=""></spring:url>
+	    		<a   href="" class="btn btn-header-home">Anuncios</a>
+	    		
+	    		<sec:authorize access="isAuthenticated()">
+		    		<spring:url value="" var=""></spring:url>
+		    		<a   href="" class="btn btn-header-home">Mis Solicitudes</a>
+		    		
+		    		<spring:url value="/beavers/${beaverId}/encargos/list" var="misEncargosUrl"></spring:url>
+		    		<a   href="${fn:escapeXml(misEncargosUrl)}" class="btn btn-header-home"> Mis Publicaciones</a>
+		    		
+		    		<spring:url value="/beavers/beaverInfo/${beaverId}" var="perfilUrl"></spring:url>
+		    		<a   href="${fn:escapeXml(perfilUrl)}" class="btn btn-header-home"> Mi Perfil</a>
+	    		</sec:authorize>
+    		</div>
+    	
+	</nav>
+
+
 </nav>
