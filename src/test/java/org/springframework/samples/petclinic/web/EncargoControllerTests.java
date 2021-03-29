@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -97,6 +98,8 @@ public class EncargoControllerTests {
 		beaver.setLastName("Apellidos");
 		beaver.setEmail("vali2d@gmail.com");
 		beaver.setDni("12345678Q");
+		Collection<Especialidad> a = new ArrayList<>();
+		beaver.setEspecialidades(a);
 		User user = new User();
 		user.setUsername("User12");
 		user.setPassword("supersecretpass");
@@ -107,7 +110,7 @@ public class EncargoControllerTests {
 		this.beaverService.saveBeaver(beaver);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/new", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("exception"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/new", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"));
 
 	}
 
@@ -383,6 +386,7 @@ public class EncargoControllerTests {
 		beaver.setUser(user);
 
 		Encargo e = new Encargo();
+		e.setDisponibilidad(true);
 		e.setId(55);
 		e.setBeaver(beaver);
 		Set<Encargo> s = new HashSet<>();
