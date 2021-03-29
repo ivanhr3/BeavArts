@@ -134,6 +134,7 @@ public class EncargoController {
 		final Encargo enC = this.encargoService.findEncargoById(encargoId);
 
 		model.put("beaverId", beaver.getId()); //Añadido para usar las url del header
+		model.put("editando", true); //Para que los botones no cambien
 
 		if (enC.getBeaver() != beaver) {
 			return "accesoNoAutorizado"; //Acceso no Autorizado -Nombre cambiado para homogeneidad con las otras ramas-
@@ -149,16 +150,18 @@ public class EncargoController {
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		model.put("beaverId", beaver.getId()); //Añadido para usar las url del header
+		model.put("editando", true); //Para que los botones no cambien
+
 		final Encargo enC = this.encargoService.findEncargoById(encargoId);
 		model.addAttribute("isDisponible", enC.isDisponibilidad()); //TODO: Poner los campos de edición a READ ONLY cuando isDisponible sea True
-		
+
 		if (result.hasErrors()) {
 			model.addAttribute("encargo", encargo);
-			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;		
-		} else if(enC.isDisponibilidad() == true && encargo.isDisponibilidad() == true){
+			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
+		} else if (enC.isDisponibilidad() == true && encargo.isDisponibilidad() == true) {
 			model.addAttribute("encargo", encargo);
 			result.rejectValue("disponibilidad", "No se puede editar un encargo que esté disponible.");
-			return VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
+			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 		} else {
 			BeanUtils.copyProperties(encargo, enC, "id", "beaver");
 			this.encargoService.saveEncargo(enC);

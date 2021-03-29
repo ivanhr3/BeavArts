@@ -10,8 +10,8 @@
 
 <beavarts:layout pageName="encargos">
     <h2>
-        <c:if test="${encargo['new']}">Registrar </c:if> 
-        <c:if test="${!encargo['new']}">Editar </c:if> Encargo
+        <c:if test="${!editando}">Registrar </c:if> 
+        <c:if test="${editando}">Editar </c:if> Encargo
     </h2>
     
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
@@ -19,17 +19,32 @@
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
         <div class="form-group" >
-            <beavarts:inputField label="*Título:" name="titulo"/>
-            <beavarts:inputField label="*Precio:" name="precio"/>
-            <beavarts:inputField label="*Descripción:" name="descripcion"/>
+            <beavarts:inputField label="*Título:" name="titulo" readonly="${isDisponible}"/>
+            <beavarts:inputField label="*Precio:" name="precio" readonly="${isDisponible}"/>
+            <beavarts:inputField label="*Descripción:" name="descripcion" readonly="${isDisponible}"/>
                    
-            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
-            		<div class="col-sm-2">
-		            	<select class="form-control" name="disponibilidad">
-		                    <option value=true>Disponible</option>
-		                    <option value=false>No disponible</option>
-		                </select>
-            		</div>
+                   
+                <c:if test="${encargo.disponibilidad == true}">
+	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
+	            		<div class="col-sm-2">
+			            	<select class="form-control" name="disponibilidad">
+			                    <option value=true>Disponible</option>
+			                    <option value=false>No disponible</option>
+			                </select>
+	            		</div>
+            	</c:if>  
+            	          
+                <c:if test="${encargo.disponibilidad != true}">        		
+	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
+	            		<div class="col-sm-2">
+			            	<select class="form-control" name="disponibilidad">
+			                    <option value=false>No Disponible</option>
+			                    <option value=true>Disponible</option>
+			                </select>
+	            		</div>            		
+            	</c:if>
+            
+            		
     		</div>
             <br/>
             <div class = "col-sm-12 form-group">
@@ -41,7 +56,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
-                    <c:when test="${encargo['new']}">
+                    <c:when test="${!editando}">
                         <button class="btn btn-default" type="submit">Crear encargo</button>
                     </c:when>
                     <c:otherwise>
