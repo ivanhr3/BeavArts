@@ -79,8 +79,8 @@
 	    		<a   href="" class="btn btn-header-home">Anuncios</a>
 	    		
 	    		<sec:authorize access="isAuthenticated()">
-		    		<spring:url value="" var=""></spring:url>
-		    		<a   href="" class="btn btn-header-home">Mis Solicitudes</a>
+		    		<spring:url value="/solicitudes/list" var="misSolicitudesUrl"></spring:url>
+		    		<a   href="${fn:escapeXml(misSolicitudesUrl)}" class="btn btn-header-home">Mis Solicitudes</a>
 		    		
 		    		<spring:url value="/beavers/${beaverId}/encargos/list" var="misEncargosUrl"></spring:url>
 		    		<a   href="${fn:escapeXml(misEncargosUrl)}" class="btn btn-header-home"> Mis Publicaciones</a>

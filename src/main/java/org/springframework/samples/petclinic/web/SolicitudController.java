@@ -55,20 +55,20 @@ public class SolicitudController {
             Beaver beaver = beaverService.getCurrentBeaver();
 
             if(encargo.getBeaver() == beaver){ //No se puede solicitar un encargo a si mismo
-                return "exception"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo. 
+                return "solicitudes/solicitudPropia"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo. 
            
             } else if (solicitudService.existSolicitudByBeaver(beaver, encargo)) { //Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
-                return "exception"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
+                return "solicitudes/solicitudExistente"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
             } else if(!encargo.isDisponibilidad()) {
-                return "exception"; //FRONT: No se puede solicitar un encargo que no este disponible
+                return "solicitudes/solicitudSinEncargo"; //FRONT: No se puede solicitar un encargo que no este disponible
             } else if(beaver == null) {
-                return "exception"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
+                return "accesoNoAutorizado"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
             }
             
             else {
                 Solicitud solicitud = new Solicitud();
                 solicitudService.crearSolicitud(solicitud, encargo, beaver);
-                return "solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
+                return "solicitudes/solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
             }
         
         //Notas: Las distintas excepciones no deberían ser capaces de darse, debéis hacer que el front controle los casos que se exponen.
@@ -84,6 +84,7 @@ public class SolicitudController {
 
 		if (encargos.size() == 0) {
 			//AÑADIR MENSAJE DE "NO HAY SOLICITUDES DISPONIBLES
+			return "solicitudes/solicitudesNotFound";
 		} else {
 
 			for (Encargo e : encargos) {
@@ -126,7 +127,7 @@ public class SolicitudController {
         Encargo encargo = encargoService.findEncargoById(sol.getEncargo().getId());
 
         if(beaverId != encargo.getBeaver().getId()){ 
-            return VISTA_DE_ERROR; //TODO: Front: Poned las redirecciones
+            return "solicitudes/errorAceptar"; //TODO: Front: Poned las redirecciones
         } else {
             //solicitudService.aceptarSolicitud(sol, beaver);
             sol.setEstado(Estados.ACEPTADO);
@@ -134,7 +135,7 @@ public class SolicitudController {
             //Email de Notification
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
             emailSender.sendEmail(beaver.getEmail(), subject);
-            return SOLICITUD_DETAILS; //TODO: Front: Poned las redirecciones
+            return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
         }
     
      }
@@ -148,7 +149,7 @@ public class SolicitudController {
         Encargo encargo = encargoService.findEncargoById(sol.getEncargo().getId());
         
         if(beaverId != encargo.getBeaver().getId()){
-            return VISTA_DE_ERROR; //TODO: Front: Poned las redirecciones
+            return "solicitudes/errorRechazar"; //TODO: Front: Poned las redirecciones
         } else {
             //solicitudService.rechazarSolicitud(sol, beaver);
             sol.setEstado(Estados.RECHAZADO);
@@ -156,7 +157,7 @@ public class SolicitudController {
             //Email de Notificacion
             String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
             emailSender.sendEmail(beaver.getEmail(), subject);
-            return SOLICITUD_DETAILS; //TODO: Front: Poned las redirecciones
+            return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
         }
     }
     

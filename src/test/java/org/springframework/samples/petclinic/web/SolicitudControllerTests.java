@@ -161,7 +161,7 @@ public class SolicitudControllerTests {
 
         mockMvc.perform(get("/solicitudes/accept/{solId}", TEST_SOLICITUD_ID))
         .andExpect(status().isOk())
-        .andExpect(view().name("testview"));
+        .andExpect(view().name("solicitudes/listadoSolicitudes"));
     }
 
     @WithMockUser(value = "spring")
@@ -172,7 +172,7 @@ public class SolicitudControllerTests {
 
         mockMvc.perform(get("/solicitudes/decline/{solId}", TEST_SOLICITUD_ID))
         .andExpect(status().isOk())
-        .andExpect(view().name("testview"));
+        .andExpect(view().name("solicitudes/listadoSolicitudes"));
     }
 
     @WithMockUser(value = "spring")
@@ -183,7 +183,7 @@ public class SolicitudControllerTests {
 
         mockMvc.perform(get("/solicitudes/accept/{solId}", TEST_SOLICITUD_ID))
         .andExpect(status().isOk())
-        .andExpect(view().name("ErrorPermisos"));
+        .andExpect(view().name("solicitudes/errorAceptar"));
     }
 
     @WithMockUser(value = "spring")
@@ -194,7 +194,7 @@ public class SolicitudControllerTests {
 
         mockMvc.perform(get("/solicitudes/accept/{solId}", TEST_SOLICITUD_ID))
         .andExpect(status().isOk())
-        .andExpect(view().name("ErrorPermisos"));
+        .andExpect(view().name("solicitudes/errorAceptar"));
     }
   
   @Test
@@ -222,7 +222,7 @@ public class SolicitudControllerTests {
         given(solicitudService.existSolicitudByBeaver(beaver2, encargo)).willReturn(false);
 
         this.mockMvc.perform(get("/solicitudes/{engId}/create", TEST_ENCARGO_ID)).andExpect(status().isOk())
-        .andExpect(view().name("solicitudSuccess"));
+        .andExpect(view().name("solicitudes/solicitudSuccess"));
     }
 
     @Test
@@ -232,7 +232,7 @@ public class SolicitudControllerTests {
         given(solicitudService.existSolicitudByBeaver(beaver, encargo)).willReturn(false);
 
         this.mockMvc.perform(get("/solicitudes/{engId}/create", TEST_ENCARGO_ID)).andExpect(status().isOk())
-        .andExpect(view().name("exception"));
+        .andExpect(view().name("solicitudes/solicitudPropia"));
     }
 
     @Test
@@ -242,7 +242,7 @@ public class SolicitudControllerTests {
         given(solicitudService.existSolicitudByBeaver(beaver2, encargo)).willReturn(true);
 
         this.mockMvc.perform(get("/solicitudes/{engId}/create", TEST_ENCARGO_ID)).andExpect(status().isOk())
-        .andExpect(view().name("exception"));
+        .andExpect(view().name("solicitudes/solicitudExistente"));
     }
 
     @Test

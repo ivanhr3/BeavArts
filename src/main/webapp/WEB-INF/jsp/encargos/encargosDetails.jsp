@@ -62,10 +62,10 @@
     </table>
     </div>
     
-    <c:if test="${createdByUser== false}">
+    <c:if test="${createdByUser == false}">
     
     		<c:if test="${encargo.disponibilidad == true}">
-				<a class="btn btn-default">Encargar</a>
+				<a class="btn btn-default" href='<spring:url value="solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Eliminar encargo</a>
 			</c:if>
      </c:if>
      <c:if test="${createdByUser == true}">
