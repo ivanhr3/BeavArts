@@ -67,23 +67,23 @@ public class BeaverController {
 		User user = this.userService.findUserByUsername(currentPrincipalName);
 
 		//Si el usuario no esta logueado tb salta el no autorizado
-	/**	if (user == null) { 
+	    if (user == null) {
 			return "accesoNoAutorizado";
-		}  **/
+		}
 
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 
 		Portfolio portfolio = beaver.getPortfolio();
 
 		//Necesario tambien en el get
-/**	if (beaver.getPortfolio() == null) {
+        if (beaver.getPortfolio() == null) {
 			Portfolio port = new Portfolio();
 			port.setSobreMi("");
 			port.setPhotos(new HashSet<>());
 			beaver.setPortfolio(port);
-			portfolio = port;		
-		} 
-**/
+			portfolio = port;
+		}
+
 
 		String vista;
 
@@ -134,7 +134,7 @@ public class BeaverController {
 				beaver.setPortfolio(portfolio1);
 
 				//Necesario para que se actualice el portfolio
-		/**		this.portfolioService.savePortfolio(portfolio1);   **/
+			    this.portfolioService.savePortfolio(portfolio1);
 
 				model.put("portfolio", portfolio1);
 				return "redirect:/beavers/beaverInfo/" + beaver.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
