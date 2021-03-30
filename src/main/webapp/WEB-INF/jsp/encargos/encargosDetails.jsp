@@ -39,12 +39,13 @@
 	
         <tr>
             <th><h3>Descripción: </h3></th>
+             
             <td style="text-align: left"><c:out value="${encargo.descripcion}"/></td>
         </tr>
 
        <tr>
-            <th>Imágenes de ejemplo:</th>
-            <td style="text-align: left"><a href="${encargo.photo}"><c:out value="${encargo.photo}"/></a></td>
+            <th><h3>Imágenes de ejemplo:</h3></th>
+            <td style="text-align: left"><img width=150px height=auto hspace="20"; src="${encargo.photo}"/></td>
         </tr>
         
         <tr>

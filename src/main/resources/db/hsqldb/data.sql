@@ -23,7 +23,7 @@ INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'foto2.com');
 
 --Encargos
 
-INSERT INTO encargos(id, descripcion, disponibilidad, photo, precio, titulo, beaver_id) VALUES (1, 'Mira que descripcion más larga', true, 'foto1.com', 30.0, 'Titulo de Encargo', 1);
+INSERT INTO encargos(id, descripcion, disponibilidad, photo, precio, titulo, beaver_id) VALUES (1, '¿Quieres un retrato de una persona importante para ti y tenerla de recuerdo? Contacta conmigo y te haré un retrato al estilo que quieras.', true, 'https://cdn.pixabay.com/photo/2017/05/09/17/35/portrait-2298842_960_720.jpg', 40.0, 'Retratos de Personas', 1);
 
 --Solicitud
 

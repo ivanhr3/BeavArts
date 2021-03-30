@@ -25,7 +25,7 @@
             <th>Título</th>
             <th>Precio</th>
             <th>Descripción</th>
-            <th>Fotos</th>
+            <th>Foto</th>
             
         </tr>
         </thead>
@@ -59,13 +59,13 @@
                          
                 </td>
                 <td>
-                    <c:out value="${encargo.precio} €"/>
+                    <c:out value="${encargo.precio}"/>
                 </td>
                 <td>
                 	<c:out value="${encargo.descripcion}"/>
                 </td>
                 <td>
-                	<a href="${encargo.photo}"><c:out value="${encargo.photo}"/></a>
+                	<img width=40px height=40px hspace="20"; src="${encargo.photo}"/></a>                
                 </td>
             </tr>
         </c:forEach>
