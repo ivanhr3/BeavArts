@@ -45,7 +45,6 @@ public class SolicitudService {
     public void crearSolicitud(Solicitud solicitud, Encargo encargo, Beaver beaver) throws DataAccessException{      
       solicitud.setEstado(Estados.PENDIENTE);
       solicitud.setPrecio(50.0);
-      solicitud.setDescripcion("descripcion");
       solicitud.setEncargo(encargo);
       solicitud.setBeaver(beaver);
       solicitudRepository.save(solicitud);
