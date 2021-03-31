@@ -71,7 +71,7 @@ public class SolicitudController {
 	}
 
 	@PostMapping("{engId}/create")
-	public String crearSolicitud(@PathVariable("engId") final int encargoId, final BindingResult result, @Valid final Solicitud solicitud, final ModelMap model) {
+	public String crearSolicitud(@PathVariable("engId") final int encargoId, final Solicitud solicitud, final BindingResult result, final ModelMap model) {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();

@@ -246,11 +246,16 @@ public class SolicitudControllerTests {
 	@Test
 	@WithMockUser(value = "spring")
 	public void crearSolicitudPost() throws Exception {
-		BDDMockito.given(this.encargoService.findEncargoById(SolicitudControllerTests.TEST_ENCARGO_ID)).willReturn(null);
+		BDDMockito.given(this.encargoService.findEncargoById(SolicitudControllerTests.TEST_ENCARGO_ID)).willReturn(this.encargo);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver2);
 		BDDMockito.given(this.solicitudService.existSolicitudByBeaver(this.beaver2, this.encargo)).willReturn(false);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/{engId}/create", SolicitudControllerTests.TEST_ENCARGO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("estado", "PENDIENTE")
-			.param("descripcion", "esta es la descripcion")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("solicitudes/solicitudSuccess"));
+		this.mockMvc.perform(MockMvcRequestBuilders
+			.post("/solicitudes/{engId}/create", SolicitudControllerTests.TEST_ENCARGO_ID)
+			.with(SecurityMockMvcRequestPostProcessors.csrf())
+			.param("descripcion", "esta es la descripcion"))
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.view()
+			.name("solicitudes/solicitudSuccess"));
 	}
 }
