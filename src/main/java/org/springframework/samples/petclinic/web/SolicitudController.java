@@ -76,7 +76,7 @@ public class SolicitudController {
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 
-		if (result.hasErrors()) {
+		if (solicitud.getDescripcion().isBlank() || !solicitudService.isCollectionAllURL(solicitud)) {
 			model.addAttribute("solicitud", solicitud);
 			return "solicitudes/creationForm";
 		} else {

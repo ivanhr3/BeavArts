@@ -1,11 +1,16 @@
 package org.springframework.samples.petclinic.service;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.hibernate.validator.internal.constraintvalidators.hv.URLValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -29,6 +34,11 @@ public class SolicitudService {
 
 
     private SolicitudRepository solicitudRepository;
+
+    private static final String URL_REGEX =
+    "^((((https?|ftps?|gopher|telnet|nntp)://)|(mailto:|news:))" +
+            "(%{2}|[-()_.!~*';/?:@&=+$, A-Za-z0-9])+)" + "([).!';/?:, ][[:blank:]])?$";
+    private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);
     
     @Autowired
     public SolicitudService(SolicitudRepository solicitudRepository){
@@ -107,7 +117,6 @@ public class SolicitudService {
       this.solicitudRepository.deleteById(id);
     }
 
-
     //Comprueba si un Beaver ha realizado una solicitud para un encargo y si dicha solicitud sigue PENDIENTE o ACEPTADA
     @Transactional
     public Boolean existSolicitudByBeaver(Beaver beaver, Encargo encargo){
@@ -124,4 +133,28 @@ public class SolicitudService {
       }
       return res;
     }
-}
+
+    public Boolean isCollectionAllURL(Solicitud solicitud){
+      Boolean res = false;
+      if(solicitud.getFotos().isEmpty() || solicitud.getFotos() == null){ //No hay fotos adjuntas
+        res = true;
+      }
+      for(String s: solicitud.getFotos()){
+       if(urlValidator(s)){
+         res = true;
+       }
+      }
+      return res;
+    }
+
+
+    public static boolean urlValidator(String url)
+    {
+        if (url == null) {
+            return false;
+        }
+        Matcher matcher = URL_PATTERN.matcher(url);
+        return matcher.matches();
+    }
+
+  }

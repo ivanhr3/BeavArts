@@ -249,6 +249,7 @@ public class SolicitudControllerTests {
 		BDDMockito.given(this.encargoService.findEncargoById(SolicitudControllerTests.TEST_ENCARGO_ID)).willReturn(this.encargo);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver2);
 		BDDMockito.given(this.solicitudService.existSolicitudByBeaver(this.beaver2, this.encargo)).willReturn(false);
+		BDDMockito.given(this.solicitudService.isCollectionAllURL(Mockito.any(Solicitud.class))).willReturn(true);
 
 		this.mockMvc.perform(MockMvcRequestBuilders
 			.post("/solicitudes/{engId}/create", SolicitudControllerTests.TEST_ENCARGO_ID)
