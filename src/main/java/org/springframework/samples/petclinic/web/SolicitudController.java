@@ -63,6 +63,10 @@ public class SolicitudController {
 			return "accesoNoAutorizado";
 		} else {
 			final Solicitud sol = new Solicitud();
+            sol.setBeaver(beaver);
+            sol.setEncargo(encargo);
+            sol.setEstado(Estados.PENDIENTE);
+            sol.setPrecio(50.0);
 			model.addAttribute("encargo", encargo);
 			model.addAttribute("solicitud", sol);
 			return "solicitudes/creationForm"; //TODO: FRONT: Formulario con los campos: Fotos (Varias URL, averiguad como pasarlas para que se almacenen) y Descripción
