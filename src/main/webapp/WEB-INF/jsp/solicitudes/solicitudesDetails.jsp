@@ -23,10 +23,8 @@
             <th>Solicitud de</th>
             <td><c:out value="${solicitud.beaver.user.username}"/></td>
         </tr>
-        <c:if test="${solicitud.estado eq 'ACEPTADO'}">
-        	<th>Encargo de: </th>
-            <td><c:out value="${solicitud.encargo.beaver.user.username}"/></td>
-        </c:if>
+       	<th>Encargo de: </th>
+        <td><c:out value="${solicitud.encargo.beaver.user.username}"/></td>
 
     </table>
 
