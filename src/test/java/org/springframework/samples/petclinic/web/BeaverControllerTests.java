@@ -172,9 +172,20 @@ public class BeaverControllerTests {
     public void testProcessActualizarPerfil() throws Exception {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID).with(csrf())
             .param("sobreMi", "Nueva descripción")
-            .param("photos", "fotos", "fotos2"))
+            .param("photos", "https://sites.google.com/site/imagenesdecarrosgratis/_/rsrc/1421516636272/home/carros-deportivos-lamborghini-aventador-tron_aventador.jpg",
+                "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg"))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/beavers/beaverInfo/"+TEST_BEAVER_ID));
+    }
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessActualizarPerfilFotosMal() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID).with(csrf())
+            .param("sobreMi", "Nueva descripción")
+            .param("photos", "fotos", "fotos2"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("users/editarPortfolio"));
     }
 
     @WithMockUser(value = "beaver2")
@@ -182,7 +193,8 @@ public class BeaverControllerTests {
     public void testProcessActualizarPerfilNulo() throws Exception {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", 12).with(csrf())
             .param("sobreMi", "Nueva descripción")
-            .param("photos", "fotos", "fotos2"))
+            .param("photos", "https://sites.google.com/site/imagenesdecarrosgratis/_/rsrc/1421516636272/home/carros-deportivos-lamborghini-aventador-tron_aventador.jpg",
+                "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg"))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/beavers/beaverInfo/"+12));
     }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 import javax.validation.Valid;
 
+import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
@@ -114,7 +115,12 @@ public class BeaverController {
 		//compruebo si el usuario logeado es el mismo que el usuario del perfil a editar
 		if (user.getUsername().equals(beaver.getUser().getUsername())) {
 
-			if (result.hasErrors()) {
+            UrlValidator validar = new UrlValidator();
+
+            Boolean compruebaUrl = portfolio.getPhotos().stream().allMatch(url -> validar.isValid(url));
+
+			if (result.hasErrors() || !compruebaUrl) {
+                model.put("errorUrl", "*Las fotos añadidas al portfolio deben ser Urls");
 				model.put("portfolio", portfolio);
 				vista = "users/editarPortfolio"; //si hay algún error de campos se redirige a la misma vista
 
