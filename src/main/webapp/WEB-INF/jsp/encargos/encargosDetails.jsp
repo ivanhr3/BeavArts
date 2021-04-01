@@ -11,14 +11,15 @@
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
 <beavarts:layout pageName="encargosDetails">
+
+
 <h1>Encargo: <c:out value="${encargo.titulo}"/></h1>
 
 	<spring:url value="/encargoInfo/{encargoId}" var="detailUrl">
         <spring:param name="encargoId" value="${encargo.id}"/>
     </spring:url>
     
-	<div class="table-responsive">
-	
+<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
     <table class="table table-borderless">
  
         <tr>
@@ -33,7 +34,7 @@
         </tr>
 
         <tr>
-            <th>Precio:</th>
+            <th><h3>Precio:</h3></th>
             <td style="text-align: left"><c:out value="${encargo.precio} €"/></td>
         </tr>
 	
@@ -61,7 +62,7 @@
         </tr>
         
     </table>
-    </div>
+</div>
     
     <c:if test="${createdByUser== false}">
     

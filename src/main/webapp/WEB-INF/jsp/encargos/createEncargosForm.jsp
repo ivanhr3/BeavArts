@@ -16,17 +16,18 @@
     
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <br/>
+    <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
-        <div class="form-group" >
+        <div class="form-group">
             <beavarts:inputField label="*Título:" name="titulo" readonly="${isDisponible}"/>
             <beavarts:inputField label="*Precio:" name="precio" readonly="${isDisponible}"/>
             <beavarts:inputField label="*Descripción:" name="descripcion" readonly="${isDisponible}"/>
                    
-                   
+             <div class="form-group">     
                 <c:if test="${encargo.disponibilidad == true}">
 	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
-	            		<div class="col-sm-2">
+	            		<div class="col-sm-3">
 			            	<select class="form-control" name="disponibilidad">
 			                    <option value=true>Disponible</option>
 			                    <option value=false>No disponible</option>
@@ -36,18 +37,17 @@
             	          
                 <c:if test="${encargo.disponibilidad != true}">
 	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
-	            		<div class="col-sm-2">
+	            		<div class="col-sm-3">
 			            	<select class="form-control" name="disponibilidad">
 			                    <option value=false>No Disponible</option>
 			                    <option value=true>Disponible</option>
 			                </select>
 	            		</div>            		
             	</c:if>
-            
-            		
     		</div>
             <br/>
            <beavarts:inputField label="Introduce URL de la foto:" name="photo" readonly="${isDisponible}"/>
+           </div>
         </div>
         
         <div class="form-group">
@@ -63,4 +63,5 @@
             </div>
         </div>
     </form:form>
+    </div>
 </beavarts:layout>
