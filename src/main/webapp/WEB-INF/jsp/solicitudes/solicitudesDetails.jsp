@@ -56,6 +56,7 @@
 </div>
 
 <c:if test= "${isEncargoCreator==true}"> 
+<c:if test= "${solicitudPendiente==true}">
    <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">
    </spring:url>
     <a class="btn btn-default" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
@@ -63,6 +64,6 @@
 	<spring:url value="/solicitudes/decline/${solicitud.id}" var="rechazarUrl">
 	</spring:url>
     <a class="btn btn-default" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
-
+</c:if>
 </c:if>
 </beavarts:layout>

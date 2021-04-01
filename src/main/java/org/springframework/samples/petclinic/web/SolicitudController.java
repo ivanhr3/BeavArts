@@ -174,13 +174,14 @@ public class SolicitudController {
 		vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
 		//Para que el jsp muestre los datos del contacto, ha sido necesario añadir la línea de abajo
 		vista.getModelMap().addAttribute("solicitudAceptada", solicitud.getEstado() == Estados.ACEPTADO);
+		vista.getModelMap().addAttribute("solicitudPendiente", solicitud.getEstado() == Estados.PENDIENTE);
 		return vista;
 		//FRONT: Los datos de contacto del beaver creador del encargo solo deben aparecer cuando la solicitud
 		//a ese encargo esté ACEPTADA
 	}
 
 	//Acepta Solicitudes cuando se pulsa en el botón en los detalles de una solicitud
-	@PostMapping(value = "/accept/{solId}")
+	@GetMapping(value = "/accept/{solId}")
 	public String acceptSolicitud(final Map<String, Object> model, @PathVariable("solId") final int solId) {
 		Solicitud sol = this.solicitudService.findById(solId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
@@ -196,13 +197,13 @@ public class SolicitudController {
 			//Email de Notification
 			String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
 			//emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
-			return "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+			return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
 		}
 
 	}
 
 	//Rechaza Solicitudes cuando se pulsa en el botón en los detalles de una solicitud
-	@PostMapping(value = "/decline/{solId}")
+	@GetMapping(value = "/decline/{solId}")
 	public String declineSolicitud(final Map<String, Object> model, @PathVariable("solId") final int solId) {
 		Solicitud sol = this.solicitudService.findById(solId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
@@ -218,7 +219,7 @@ public class SolicitudController {
 			//Email de Notificacion
 			String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
 			//emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
-			return "solicitudes/rechazarSuccess"; //TODO: Front: Poned las redirecciones
+			return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
 		}
 	}
 
