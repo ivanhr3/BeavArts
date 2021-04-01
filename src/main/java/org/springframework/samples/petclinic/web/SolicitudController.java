@@ -118,7 +118,11 @@ public class SolicitudController {
 	@GetMapping("/list")
 	public String listarSolicitudes(final ModelMap modelMap) {
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		Collection<Encargo> encargos = beaver.getEncargos();
+
+		Collection<Encargo> encargos = new ArrayList<>();
+		if (!(beaver.getEncargos() == null)) {
+			encargos = beaver.getEncargos();
+		}
 
 		Collection<Solicitud> solicitudesEnviadas = new ArrayList<>();
 		if (!(beaver.getSolicitud() == null)) {
@@ -129,7 +133,7 @@ public class SolicitudController {
 		Boolean hayEncargos = false;
 		Boolean haySolicitudes = false;
 
-		if (encargos.size() == 0) {
+		if (encargos.isEmpty()) {
 			hayEncargos = false;
 		} else {
 			hayEncargos = true;
