@@ -7,28 +7,42 @@
     uri="http://www.springframework.org/security/tags%22%%3E "%> --%>
 
 <petclinic:layout pageName="solicitudDetails">
-<h2>Solicitud: </h2>
+
+<h2>Información del encargo: </h2>
 
 
-    <table class="table table-striped">
-        <tr>
-            <th>Precio</th>
-            <td><c:out value="${solicitud.precio}"/></td>
+    <table>
+     <tr>
+            <th>Encargo</th>
+            <td><c:out value="${encargo.titulo}"/></td>
         </tr>
 		<tr>
-            <th>Estado</th>
-            <td><c:out value="${solicitud.estado}"/></td>
-        </tr>
         <tr>
-            <th>Solicitud de</th>
+            <th>Precio</th>
+            <td><c:out value="${encargo.precio}"/></td>
+        </tr>
+		<tr>  
+        
+     </table>
+     
+     
+     <h2>Solicitud: </h2>
+      <table>   
+        <tr> 
+            <th>Realizado por:</th>
             <td><c:out value="${solicitud.beaver.user.username}"/></td>
         </tr>
-       	<th>Encargo de: </th>
-        <td><c:out value="${solicitud.encargo.beaver.user.username}"/></td>
+        <c:if test= "${solicitudAceptada==true}"> 
+       	<th>Datos de contacto </th>
+        <td><c:out value="${solicitud.beaver.email}"/></td>
+         </tr>
+         </c:if>
+        <th>Descripción del encargo </th>
+        <td><c:out value="${solicitud.descripcion}"/></td>
 
     </table>
 
-
+<c:if test= "${isEncargoCreator==true}"> 
    <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">
    </spring:url>
     <a class="btn btn-default" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
@@ -37,5 +51,5 @@
 	</spring:url>
     <a class="btn btn-default" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
 
-
+</c:if>
 </petclinic:layout>

@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
@@ -63,10 +61,10 @@ public class SolicitudController {
 			return "accesoNoAutorizado";
 		} else {
 			final Solicitud sol = new Solicitud();
-            sol.setBeaver(beaver);
-            sol.setEncargo(encargo);
-            sol.setEstado(Estados.PENDIENTE);
-            sol.setPrecio(50.0);
+			sol.setBeaver(beaver);
+			sol.setEncargo(encargo);
+			sol.setEstado(Estados.PENDIENTE);
+			sol.setPrecio(50.0);
 			model.addAttribute("encargo", encargo);
 			model.addAttribute("solicitud", sol);
 			return "solicitudes/creationForm"; //TODO: FRONT: Formulario con los campos: Fotos (Varias URL, averiguad como pasarlas para que se almacenen) y Descripción
@@ -80,7 +78,7 @@ public class SolicitudController {
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 
-		if (solicitud.getDescripcion().isBlank() || !solicitudService.isCollectionAllURL(solicitud)) {
+		if (solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
 			model.addAttribute("solicitud", solicitud);
 			return "solicitudes/creationForm";
 		} else {
@@ -92,7 +90,7 @@ public class SolicitudController {
 			} else if (this.solicitudService.existSolicitudByBeaver(beaver, encargo)) { //Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
 				model.addAttribute("solicitud", solicitud);
 				result.rejectValue("descripcion", "Ya existe una solicitud PENDIENTE para este Encargo");
-				return "solicitudes/CreationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario 
+				return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario 
 			} else if (beaver == null) {
 				return "accesoNoAutorizado"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
 			}
@@ -104,7 +102,7 @@ public class SolicitudController {
 		}
 
 		//Notas: Las distintas excepciones no deberían ser capaces de darse, debéis hacer que el front controle los casos que se exponen.
-		//Si necesitais algún objeto de modelo para controlar estas cosas decidmelo. 
+		//Si necesitais algún objeto de modelo para controlar estas cosas decidmelo.
 		//Como puse aquí, estas excepciones no deberían permitirse desde Front, no que creaseis vistas para cada error.
 	}
 
@@ -160,7 +158,7 @@ public class SolicitudController {
 		vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
 		vista.addObject("solicitud", solicitud);
 		vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
-
+		//		vista.getModelMap().addAttribute("solicitudAceptada", solicitud.getEstado() == Estados.ACEPTADO);
 		return vista;
 		//FRONT: Los datos de contacto del beaver creador del encargo solo deben aparecer cuando la solicitud
 		//a ese encargo esté ACEPTADA
@@ -197,7 +195,7 @@ public class SolicitudController {
 		Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
 
 		if (beaverId != encargo.getBeaver().getId()) {
-			return "solicitudes/errorRechazar"; //TODO: Front: Poned las redirecciones
+			return "solicitudes/errorRechazar";
 		} else {
 			//solicitudService.rechazarSolicitud(sol, beaver);
 			sol.setEstado(Estados.RECHAZADO);

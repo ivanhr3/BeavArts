@@ -24,11 +24,11 @@
     <form:form modelAttribute="solicitud" class="form-horizontal" id="add-solicitud-form">
         <div class="form-group has-feedback">
         <div class="form-group" >
-            <beavarts:inputField label="*Descripción: " name="descripcion"/>
+            <beavarts:inputField label="*Descripción: " name="descripcion"/> 
             <br/>
             <p style="color:black; margin-top:10px"><c:out value=" Asegurese de escribir Urls en este campo"/></p>
     		
-            <beavarts:inputField label="*Fotos: " name="fotos"/>
+            <beavarts:inputField label="Fotos: " name="fotos"/>
                    
          </div>
          </div>         
