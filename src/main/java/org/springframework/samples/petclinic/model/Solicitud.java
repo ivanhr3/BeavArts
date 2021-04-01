@@ -14,6 +14,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.URL;
+
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +34,7 @@ public class Solicitud extends BaseEntity{
     @NotNull
     private double precio;
 
+    @URL
     @ElementCollection(targetClass = String.class)
     @CollectionTable(name = "solicitud_fotos", joinColumns = {@JoinColumn(name="solicitud_id")})
     private Collection<String> fotos;

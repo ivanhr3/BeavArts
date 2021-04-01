@@ -7,9 +7,10 @@
     uri="http://www.springframework.org/security/tags%22%%3E "%> --%>
 
 <petclinic:layout pageName="solicitudDetails">
+<div class="container">
 
 <h2>Información del encargo: </h2>
-
+<br/>
 
     <table>
      <tr>
@@ -24,9 +25,11 @@
 		<tr>  
         
      </table>
-     
+ </div>    
+ <div class="container">
      
      <h2>Solicitud: </h2>
+     <br/>
       <table>   
         <tr> 
             <th>Realizado por:</th>
@@ -39,8 +42,18 @@
          </c:if>
         <th>Descripción del encargo </th>
         <td><c:out value="${solicitud.descripcion}"/></td>
-
     </table>
+ </div> 
+<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
+ 
+    <c:forEach items="${solicitud.fotos}" var="foto">
+        <table>
+        <tbody>
+        	<td><img width=150px height=130px src="${foto}"/></td>
+        </tbody>
+        </table>
+	</c:forEach>
+</div>
 
 <c:if test= "${isEncargoCreator==true}"> 
    <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">

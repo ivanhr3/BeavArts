@@ -6,10 +6,13 @@
  
 
 <petclinic:layout pageName="solicitudesList">
+<c:if test="${hayEncargo==false}">
+	<h2>No hay solicitudes.</h2>
+</c:if>
 
-<c:if test="${hayEncargo==true}">
+<c:if test="${hayEncargo}">
     <h2>Mis solicitudes recibidas</h2>
-<div class="table-responsive">
+<div class="container">
  <table id="solicitudesRecibidas" >
         <tbody>
         <c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
@@ -35,8 +38,8 @@
 
 <c:if test="${haySolicitudes==true}">
     <h2>Mis solicitudes enviadas</h2>
-<div class="table-responsive">
- <table id="solicitudesEnviadas" >
+<div class="container">
+<table id="solicitudesEnviadas" >
         <tbody>
         <c:forEach items="${listaSolicitudesEnviadas}" var="solicitud">
 

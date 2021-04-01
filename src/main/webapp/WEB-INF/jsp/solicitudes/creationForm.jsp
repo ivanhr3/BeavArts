@@ -21,22 +21,23 @@
     
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <br/>
+ <div class="container">   
     <form:form modelAttribute="solicitud" class="form-horizontal" id="add-solicitud-form">
         <div class="form-group has-feedback">
         <div class="form-group" >
             <beavarts:inputField label="*Descripción: " name="descripcion"/> 
             <br/>
-            <p style="color:black; margin-top:10px"><c:out value=" Asegurese de escribir Urls en este campo"/></p>
-    		
+            <p style="color:black; margin-top:10px"><c:out value="Asegurese de escribir Urls en este campo."/></p>
+    		<p style="color:black; margin-top:10px"><c:out value="Para añadir varias escriba: url1,url2 sin separar cada url con espacios"/></p>
             <beavarts:inputField label="Fotos: " name="fotos"/>
                    
          </div>
          </div>         
-        
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <button class="btn btn-default" type="submit">Crear solicitud</button>   
             </div>
         </div>
     </form:form>
+</div>
 </beavarts:layout>

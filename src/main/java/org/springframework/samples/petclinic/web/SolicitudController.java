@@ -52,6 +52,10 @@ public class SolicitudController {
 	public String crearSolicitudInit(@PathVariable("engId") final int encargoId, final ModelMap model) {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
+		
+		//De esta forma si al crear la solicitud falla no se desaparecen los datos del encargo, haciendo
+		//que haya que recargar la pagina para verlos
+		//model.addAttribute("encargo", encargo);
 
 		if (encargo.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
 			return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo. 
@@ -87,9 +91,12 @@ public class SolicitudController {
 				return "accesoNoAutorizado"; //TODO: Cuando puse estos comentarios para FRONT, era para que controlaseis esto usando campos read-only y escondiendo botones
 				//TODO: NO HACIENDO VISTAS PARA CADA ERROR.
 
-			} else if (this.solicitudService.existSolicitudByBeaver(beaver, encargo)) { //Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
+			} else if (this.solicitudService.existSolicitudByBeaver(beaver, encargo)) {//Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
 				model.addAttribute("solicitud", solicitud);
 				result.rejectValue("descripcion", "Ya existe una solicitud PENDIENTE para este Encargo");
+				//El result.rejectValue me genera un error500 que no hemos sido capaces de controlar. Comentandolo y mandando el siguiente return se controla que lo de la solicitud pendiente
+				//return "solicitudes/solicitudPendiente"
+				
 				return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario 
 			} else if (beaver == null) {
 				return "accesoNoAutorizado"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
@@ -158,7 +165,8 @@ public class SolicitudController {
 		vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
 		vista.addObject("solicitud", solicitud);
 		vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
-		//		vista.getModelMap().addAttribute("solicitudAceptada", solicitud.getEstado() == Estados.ACEPTADO);
+		//Para que el jsp muestre los datos del contacto, ha sido necesario añadir la línea de abajo
+		//vista.getModelMap().addAttribute("solicitudAceptada", solicitud.getEstado() == Estados.ACEPTADO);
 		return vista;
 		//FRONT: Los datos de contacto del beaver creador del encargo solo deben aparecer cuando la solicitud
 		//a ese encargo esté ACEPTADA
@@ -181,7 +189,7 @@ public class SolicitudController {
 			//Email de Notification
 			String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
 			//emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
-			return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
+			return "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
 		}
 
 	}
@@ -203,7 +211,7 @@ public class SolicitudController {
 			//Email de Notificacion
 			String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
 			//emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
-			return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
+			return "solicitudes/rechazarSuccess"; //TODO: Front: Poned las redirecciones
 		}
 	}
 
