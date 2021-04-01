@@ -12,9 +12,10 @@
     <form:form modelAttribute="portfolio" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
                
-            <petclinic:inputField label="Sobre mi" name="sobreMi"/>
-            <p style="margin-left:210px">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
+            <petclinic:inputField label="Sobre mi" name="sobreMi"/>           
+            <p style="text-align:right">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
             <petclinic:inputField label="Portfolio" name="photos"/>
+             <p style="color:red; text-align:right"><c:out value="${errorUrl}"/></p>
             
     
         </div>

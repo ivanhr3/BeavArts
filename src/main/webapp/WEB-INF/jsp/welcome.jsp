@@ -8,8 +8,8 @@
 <beavarts:layout pageName="home">
     <h2><fmt:message key="welcome"/></h2>
     <div class="row">
-        <div class="col-12 text-center">
-            <img src="<spring:url value="/resources/images/emblema.png" htmlEscape="true" />"
+        <div class="col-12 text-center imageResponsive">
+            <img src="<spring:url value="/resources/images/emblexma.png" htmlEscape="true" />"
                                              alt=""/>
         </div>
     </div>
