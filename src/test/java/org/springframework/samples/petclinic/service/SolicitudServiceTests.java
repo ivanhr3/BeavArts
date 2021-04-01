@@ -448,6 +448,9 @@ public class SolicitudServiceTests {
 	@Transactional
 	public void crearSolicitud(){
 		Solicitud solicitud = new Solicitud();
+		solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+		solicitud.setBeaver(beaveralt);
+		solicitud.setEncargo(encargo);
 		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
 
 		Solicitud solBD = this.solicitudService.findById(solicitud.getId());
@@ -459,6 +462,9 @@ public class SolicitudServiceTests {
 	@Transactional
 	public void existSolicitudParaUnEncargo(){
 		Solicitud solicitud = new Solicitud();
+		solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+		solicitud.setBeaver(beaveralt);
+		solicitud.setEncargo(encargo);
 		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
 
 		Boolean res = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
@@ -476,6 +482,9 @@ public class SolicitudServiceTests {
 	@Transactional
 	public void existASolicitudFinalizadaParaUnEncargo(){
 		Solicitud solicitud = new Solicitud();
+		solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+		solicitud.setBeaver(beaveralt);
+		solicitud.setEncargo(encargo);
 		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
 		solicitud.setEstado(Estados.FINALIZADO);
 		this.solicitudService.saveSolicitud(solicitud);
@@ -489,6 +498,9 @@ public class SolicitudServiceTests {
 	@Transactional
 	public void existASolicitudRechazadaParaUnEncargo(){
 		Solicitud solicitud = new Solicitud();
+		solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+		solicitud.setBeaver(beaveralt);
+		solicitud.setEncargo(encargo);
 		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
 		solicitud.setEstado(Estados.RECHAZADO);
 		this.solicitudService.saveSolicitud(solicitud);
@@ -501,6 +513,9 @@ public class SolicitudServiceTests {
 	@Transactional
 	public void existASolicitudAceptadaParaUnEncargo(){
 		Solicitud solicitud = new Solicitud();
+		solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+		solicitud.setBeaver(beaveralt);
+		solicitud.setEncargo(encargo);
 		this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
 		solicitud.setEstado(Estados.ACEPTADO);
 		this.solicitudService.saveSolicitud(solicitud);
