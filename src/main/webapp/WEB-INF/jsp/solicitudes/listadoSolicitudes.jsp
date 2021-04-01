@@ -2,10 +2,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
  
 
-<petclinic:layout pageName="solicitudesList">
+<beavarts:layout pageName="solicitudesList">
 <c:if test="${hayEncargos==false}">
 	<h2>No hay solicitudes.</h2>
 </c:if>
@@ -58,4 +58,4 @@
     </table>
 </div>
 </c:if>
-</petclinic:layout>
+</beavarts:layout>
