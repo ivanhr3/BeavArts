@@ -26,6 +26,7 @@
         <div class="form-group has-feedback">
         <div class="form-group" >
             <beavarts:inputField label="*Descripción: " name="descripcion"/> 
+            <p style="color:red; margin-top:2px"><c:out value="${descripcion}"/></p>
             <br/>
             <p style="color:black; margin-top:10px"><c:out value="Asegurese de escribir Urls en este campo."/></p>
     		<p style="color:black; margin-top:10px"><c:out value="Para añadir varias escriba: url1,url2 sin separar cada url con espacios"/></p>
@@ -37,6 +38,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <button class="btn btn-default" type="submit">Crear solicitud</button>   
             </div>
+            <p style="color:red; margin-top:2px"><c:out value="${error}"/></p>
         </div>
     </form:form>
 </div>

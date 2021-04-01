@@ -84,6 +84,7 @@ public class SolicitudController {
 
 		if (solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
 			model.addAttribute("solicitud", solicitud);
+			model.put("descripcion", "La descripción no puede estar vacía");
 			return "solicitudes/creationForm";
 		} else {
 
@@ -93,7 +94,8 @@ public class SolicitudController {
 
 			} else if (this.solicitudService.existSolicitudByBeaver(beaver, encargo)) {//Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
 				model.addAttribute("solicitud", solicitud);
-				result.rejectValue("descripcion", "Ya existe una solicitud PENDIENTE para este Encargo");
+				model.put("error", "Tu solicitud se encuentra pendiente de aceptación");
+				//result.rejectValue("descripcion", "Ya existe una solicitud PENDIENTE para este Encargo");
 				//El result.rejectValue me genera un error500 que no hemos sido capaces de controlar. Comentandolo y mandando el siguiente return se controla que lo de la solicitud pendiente
 				//return "solicitudes/solicitudPendiente"
 
@@ -171,7 +173,7 @@ public class SolicitudController {
 		vista.addObject("solicitud", solicitud);
 		vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
 		//Para que el jsp muestre los datos del contacto, ha sido necesario añadir la línea de abajo
-		//vista.getModelMap().addAttribute("solicitudAceptada", solicitud.getEstado() == Estados.ACEPTADO);
+		vista.getModelMap().addAttribute("solicitudAceptada", solicitud.getEstado() == Estados.ACEPTADO);
 		return vista;
 		//FRONT: Los datos de contacto del beaver creador del encargo solo deben aparecer cuando la solicitud
 		//a ese encargo esté ACEPTADA

@@ -34,6 +34,7 @@ public class Solicitud extends BaseEntity{
     @NotNull
     private double precio;
 
+    //Con @URL el validador de constraints comprueba que sean URLs
     @URL
     @ElementCollection(targetClass = String.class)
     @CollectionTable(name = "solicitud_fotos", joinColumns = {@JoinColumn(name="solicitud_id")})
