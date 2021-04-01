@@ -154,7 +154,7 @@ public class SolicitudControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/accept/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "Encargo Pinturas").param("id", "1"))
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("solicitudes/listadoSolicitudes"));
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("solicitudes/aceptarSuccess"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -164,7 +164,7 @@ public class SolicitudControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/decline/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "Encargo Pinturas").param("id", "1"))
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("solicitudes/listadoSolicitudes"));
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("solicitudes/rechazarSuccess"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -192,8 +192,9 @@ public class SolicitudControllerTests {
 	public void listarSolicitudesTest() throws Exception {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/list")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("listaSolicitudes"))
-			.andExpect(MockMvcResultMatchers.view().name("solicitudes/listadoSolicitudes"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/list")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("hayEncargos"))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("haySolicitudes")).andExpect(MockMvcResultMatchers.model().attributeExists("listaSolicitudesRecibidas"))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("listaSolicitudesEnviadas")).andExpect(MockMvcResultMatchers.view().name("solicitudes/listadoSolicitudes"));
 	}
 
 	@Test
@@ -202,7 +203,7 @@ public class SolicitudControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.model().attributeExists("solicitud")).andExpect(MockMvcResultMatchers.view().name("solicitudes/solicitudesDetails"));
+			.andExpect(MockMvcResultMatchers.view().name("solicitudes/solicitudesDetails"));
 	}
 
 	@Test
@@ -249,14 +250,9 @@ public class SolicitudControllerTests {
 		BDDMockito.given(this.encargoService.findEncargoById(SolicitudControllerTests.TEST_ENCARGO_ID)).willReturn(this.encargo);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver2);
 		BDDMockito.given(this.solicitudService.existSolicitudByBeaver(this.beaver2, this.encargo)).willReturn(false);
-		BDDMockito.given(this.solicitudService.isCollectionAllURL(Mockito.any(Solicitud.class))).willReturn(true);
+		BDDMockito.given(this.solicitudService.isCollectionAllURL(ArgumentMatchers.any(Solicitud.class))).willReturn(true);
 
-		this.mockMvc.perform(MockMvcRequestBuilders
-			.post("/solicitudes/{engId}/create", SolicitudControllerTests.TEST_ENCARGO_ID)
-			.with(SecurityMockMvcRequestPostProcessors.csrf())
-			.param("descripcion", "esta es la descripcion"))
-			.andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.view()
-			.name("solicitudes/solicitudSuccess"));
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/{engId}/create", SolicitudControllerTests.TEST_ENCARGO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("descripcion", "esta es la descripcion"))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("solicitudes/solicitudSuccess"));
 	}
 }

@@ -52,7 +52,7 @@ public class SolicitudController {
 	public String crearSolicitudInit(@PathVariable("engId") final int encargoId, final ModelMap model) {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		
+
 		//De esta forma si al crear la solicitud falla no se desaparecen los datos del encargo, haciendo
 		//que haya que recargar la pagina para verlos
 		//model.addAttribute("encargo", encargo);
@@ -96,7 +96,7 @@ public class SolicitudController {
 				result.rejectValue("descripcion", "Ya existe una solicitud PENDIENTE para este Encargo");
 				//El result.rejectValue me genera un error500 que no hemos sido capaces de controlar. Comentandolo y mandando el siguiente return se controla que lo de la solicitud pendiente
 				//return "solicitudes/solicitudPendiente"
-				
+
 				return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario 
 			} else if (beaver == null) {
 				return "accesoNoAutorizado"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
@@ -117,7 +117,11 @@ public class SolicitudController {
 	public String listarSolicitudes(final ModelMap modelMap) {
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		Collection<Encargo> encargos = beaver.getEncargos();
-		Collection<Solicitud> solicitudesEnviadas = beaver.getSolicitud();
+
+		Collection<Solicitud> solicitudesEnviadas = new ArrayList<>();
+		if (!(beaver.getSolicitud() == null)) {
+			solicitudesEnviadas = beaver.getSolicitud();
+		}
 
 		List<Solicitud> solicitudesRecibidas = new ArrayList<>();
 		Boolean hayEncargos = false;
@@ -137,7 +141,7 @@ public class SolicitudController {
 			}
 		}
 
-		if (solicitudesEnviadas.size() == 0 || solicitudesEnviadas == null) {
+		if (solicitudesEnviadas.isEmpty()) {
 			haySolicitudes = false;
 		} else {
 			haySolicitudes = true;
@@ -162,6 +166,7 @@ public class SolicitudController {
 		if (s.isPresent()) {
 			solicitud = s.get();
 		}
+
 		vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
 		vista.addObject("solicitud", solicitud);
 		vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
