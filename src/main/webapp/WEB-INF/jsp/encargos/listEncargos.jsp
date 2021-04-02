@@ -3,8 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="encargosList">
@@ -16,66 +14,48 @@
  </c:if>
  
  <c:if test="${hayEncargos != false}">
-	<div class="table-responsive">
-    <table id="encargosTable" class="table table-striped">
-        <thead>
-        <tr>
-        	<th>Disponibilidad</th>
-        	<th>Publicado por</th>
-            <th>Título</th>
-            <th>Precio</th>
-            <th>Descripción</th>
-            <th>Fotos</th>
-            
-        </tr>
-        </thead>
-        
+<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
+<c:forEach items="${encargos}" var="encargo">
+    <table style="margin-left:2%;">
         <tbody>
-        <c:forEach items="${encargos}" var="encargo">
-        
             <tr>
             	<td>
-                    <c:if test="${encargo.disponibilidad == false}">
-            		<dd>No disponible</dd>
-        		</c:if>
-        		<c:if test="${encargo.disponibilidad == true}">
-            		<dd>Disponible</dd>
-        		</c:if>
-                </td>
-                
-                <spring:url value="/beavers/{beaverId}" var="beaverUrl">
-                        <spring:param name="beaverId" value="${encargo.beaver.id}"/>
-                </spring:url>
-                <td>
-                		<a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a>
-                </td>
-                
-                <td>
-                <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="encargoUrl">
+            		<spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="encargoUrl">
                         <spring:param name="encargoId" value="${encargo.id}"/>
                         <spring:param name="beaverId" value="${encargo.beaver.id}"/>
-                </spring:url>  
-                        <a href="${fn:escapeXml(encargoUrl)}"><strong><c:out value="${encargo.titulo}"/></strong></a>
-                         
-                </td>
-                <td>
-                    <c:out value="${encargo.precio} €"/>
-                </td>
-                <td>
-                	<c:out value="${encargo.descripcion}"/>
-                </td>
-                <td>
-                	<a href="${encargo.photo}"><c:out value="${encargo.photo}"/></a>
-                </td>
+                	</spring:url>
+                	<c:if test="${!encargo.photo.isEmpty()}">
+            		<a href="${encargoUrl}"><img width=140px height=150px alt="" src="${encargo.photo}"/></a>
+            		<br>
+            		<div class ="col-2 text-center">
+            		<strong><c:out value="${encargo.titulo}"/></strong>
+                    	<c:if test="${encargo.disponibilidad == false}">
+            				<dd>No disponible</dd>
+        				</c:if>
+        				<c:if test="${encargo.disponibilidad == true}">
+            				<dd>Disponible</dd>
+        				</c:if>
+        			</div>
+            		</c:if>
+            		
+            		<c:if test="${encargo.photo.isEmpty()}">
+            		<div class ="col-2 text-center" style="margin-top:25%;">
+            			<a href="${encargoUrl}"><strong><c:out value="${encargo.titulo}"/></strong></a>
+                    		<c:if test="${encargo.disponibilidad == false}">
+            					<dd>No disponible</dd>
+        					</c:if>
+        					<c:if test="${encargo.disponibilidad == true}">
+            					<dd>Disponible</dd>
+        					</c:if>
+        				</div>
+            		</c:if>
+                </td>  
             </tr>
-        </c:forEach>
         </tbody>
     </table>
-    </div>
+  </c:forEach>
+</div>
 </c:if>
-    <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Crear encargo</a>
-    
-    
-    <p style="color:red; margin-top:10px"><c:out value=" ${errorEspecialidades}"/></p>
-    
+    <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Nuevo encargo</a>
+    <p style="color:red; margin-top:10px"><c:out value="${errorEspecialidades}"/></p>
 </beavarts:layout>
