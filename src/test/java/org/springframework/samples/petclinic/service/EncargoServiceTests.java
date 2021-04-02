@@ -144,9 +144,10 @@ public class EncargoServiceTests {
     @Test
     @Transactional
     void testDeleteEncargoById(){
+        int numEncargos = this.encargoService.encargosCount();
         Integer id = encargo1.getId();
         this.encargoService.deleteEncargoById(id);
-        assertEquals(this.encargoService.encargosCount(), 2);
+        assertEquals(this.encargoService.encargosCount(), numEncargos - 1);
      }
 
      @Test
