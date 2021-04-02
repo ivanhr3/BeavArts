@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.service;
 
 import java.util.Optional;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BeaverService {
+
     private BeaverRepository beaverRepository;
     @Autowired
     private UserService userService;
@@ -41,7 +43,6 @@ public class BeaverService {
 		} else {
 			username = principal.toString();
 		}
-
 		final Beaver beaver = this.findBeaverByUsername(username);
 		return beaver;
 	}
@@ -60,4 +61,5 @@ public class BeaverService {
     public Beaver findBeaverByUsername(final String username) {
         return this.beaverRepository.findBeaverByUser(this.userService.findUserByUsername(username));
     }
+
 }

@@ -10,9 +10,13 @@
     	<spring:url value="/resources/images/ForbiddenAccess.png" var="forbiddenImage"/>
     	<img style="margin-bottom:10px" src="${forbiddenImage}"/>
 
+
     	<h2>¡ACCESO NO AUTORIZADO!</h2>
+
 
     	
      </div>
 
+
 </beavarts:layout>
+

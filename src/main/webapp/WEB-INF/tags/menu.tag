@@ -10,28 +10,38 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <nav class="navbar navbar-default" role="navigation">
+
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand"
-				href="<spring:url value="/" htmlEscape="true" />"><span></span></a>
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#main-navbar">
-				<span class="sr-only"><os-p>Toggle navigation</os-p></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-
+		<a href="/" id="logo"><img class="bannerHeader" src="<spring:url value="/resources/images/v2.png" htmlEscape="true" />"
+                                             alt=""/></a>
 		</div>
+			<ul style="margin-left:50px" class="nav navbar-nav">
 		
+				<petclinic:menuItem active="${name eq 'explora'}" url="">
+					<span>Explora</span>
+				</petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'Anuncios'}" url="">
+					<span>Anuncios</span>
+				</petclinic:menuItem>
+				
+				<sec:authorize access="isAuthenticated()">
+					<petclinic:menuItem active="${name eq 'mis solicitudes'}" url="">
+						<span>Mis Solicitudes</span>
+					</petclinic:menuItem>
+					
+					<petclinic:menuItem active="${name eq 'mis publicaciones'}" url="/beavers/${beaverId}/encargos/list">
+						<span>Mis Publicaciones</span>
+					</petclinic:menuItem>
+					
+					<petclinic:menuItem active="${name eq 'explora'}" url="/beavers/beaverInfo/${beaverId}">
+						<span>Mi Perfil</span>
+					</petclinic:menuItem>
+				</sec:authorize>
+				
+			</ul>
 			<div class="nav navbar-nav navbar-right">
-			
-			<div style="margin:25px" class="navbar-left">
-				<form action="/action_page.php">
-	      			<input type="text" placeholder="Buscar..." name="search">
-	      			<button type="submit"><i class="fa fa-search"></i></button>
-	    		</form>
-			</div>
-			
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Login</a></li>
 					<li><a href="<c:url value="/users/new" />">Register</a></li>
@@ -91,6 +101,5 @@
     		</div>
     	
 	</nav>
-
 
 </nav>
