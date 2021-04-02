@@ -22,10 +22,6 @@
 					<span>Explora</span>
 				</petclinic:menuItem>
 				
-				<petclinic:menuItem active="${name eq 'Anuncios'}" url="">
-					<span>Anuncios</span>
-				</petclinic:menuItem>
-				
 				<sec:authorize access="isAuthenticated()">
 					<petclinic:menuItem active="${name eq 'mis solicitudes'}" url="">
 						<span>Mis Solicitudes</span>
@@ -79,27 +75,5 @@
 			</sec:authorize>
 		</div>
 	</div>
-
-	<nav class="navbar2">		
-			<div class="marginLeft">
-	    		<spring:url value="" var=""></spring:url>
-	    		<a   href="" class="btn btn-header-home">Explora</a>
-	    		
-	    		<spring:url value="" var=""></spring:url>
-	    		<a   href="" class="btn btn-header-home">Anuncios</a>
-	    		
-	    		<sec:authorize access="isAuthenticated()">
-		    		<spring:url value="/solicitudes/list" var="misSolicitudesUrl"></spring:url>
-		    		<a   href="${fn:escapeXml(misSolicitudesUrl)}" class="btn btn-header-home">Mis Solicitudes</a>
-		    		
-		    		<spring:url value="/beavers/${beaverId}/encargos/list" var="misEncargosUrl"></spring:url>
-		    		<a   href="${fn:escapeXml(misEncargosUrl)}" class="btn btn-header-home"> Mis Publicaciones</a>
-		    		
-		    		<spring:url value="/beavers/beaverInfo/miPerfil" var="perfilUrl"></spring:url>
-		    		<a   href="${fn:escapeXml(perfilUrl)}" class="btn btn-header-home"> Mi Perfil</a>
-	    		</sec:authorize>
-    		</div>
-    	
-	</nav>
 
 </nav>
