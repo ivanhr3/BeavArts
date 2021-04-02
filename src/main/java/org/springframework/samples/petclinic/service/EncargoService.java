@@ -55,7 +55,7 @@ public class EncargoService {
 	@Transactional
 	public void CrearEncargo(Encargo encargo, Beaver beaver){
 		
-		this.beaverService.saveBeaver(beaver);
+		this.beaverService.guardarUsuario(beaver);
 		encargoRepository.save(encargo);
 		
 	}

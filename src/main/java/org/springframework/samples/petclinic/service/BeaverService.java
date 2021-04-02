@@ -34,6 +34,12 @@ public class BeaverService {
         authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
     }
 
+    @Transactional
+    public void guardarUsuario(Beaver beaver) throws DataAccessException{
+        beaverRepository.save(beaver);
+        userService.save(beaver.getUser());
+    }
+
     public Beaver getCurrentBeaver() throws DataAccessException {
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;

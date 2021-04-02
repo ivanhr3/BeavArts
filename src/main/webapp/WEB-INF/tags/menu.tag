@@ -23,7 +23,7 @@
 				</petclinic:menuItem>
 				
 				<sec:authorize access="isAuthenticated()">
-					<petclinic:menuItem active="${name eq 'mis solicitudes'}" url="">
+					<petclinic:menuItem active="${name eq 'mis solicitudes'}" url="/solicitudes/list">
 						<span>Mis Solicitudes</span>
 					</petclinic:menuItem>
 					
