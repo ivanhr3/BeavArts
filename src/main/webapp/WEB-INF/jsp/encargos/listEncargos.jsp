@@ -3,8 +3,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="encargosList">
@@ -18,7 +16,7 @@
  <c:if test="${hayEncargos != false}">
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
 <c:forEach items="${encargos}" var="encargo">
-    <table id="encargosTable">
+    <table style="margin-left:2%;">
         <tbody>
             <tr>
             	<td>
@@ -27,10 +25,10 @@
                         <spring:param name="beaverId" value="${encargo.beaver.id}"/>
                 	</spring:url>
                 	<c:if test="${!encargo.photo.isEmpty()}">
-            		<a href="${encargoUrl}"><img width=150px height=150px alt="" src="${encargo.photo}"/></a>
+            		<a href="${encargoUrl}"><img width=140px height=150px alt="" src="${encargo.photo}"/></a>
             		<br>
+            		<div class ="col-2 text-center">
             		<strong><c:out value="${encargo.titulo}"/></strong>
-            		<div class ="col-2 text-center" id = "disponibilidad">
                     	<c:if test="${encargo.disponibilidad == false}">
             				<dd>No disponible</dd>
         				</c:if>
@@ -41,8 +39,8 @@
             		</c:if>
             		
             		<c:if test="${encargo.photo.isEmpty()}">
+            		<div class ="col-2 text-center" style="margin-top:25%;">
             			<a href="${encargoUrl}"><strong><c:out value="${encargo.titulo}"/></strong></a>
-            			<div class ="col-2 text-center" id = "disponibilidad">
                     		<c:if test="${encargo.disponibilidad == false}">
             					<dd>No disponible</dd>
         					</c:if>
@@ -53,15 +51,11 @@
             		</c:if>
                 </td>  
             </tr>
-       
         </tbody>
     </table>
-     </c:forEach>
-    </div>
+  </c:forEach>
+</div>
 </c:if>
-    <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Crear encargo</a>
-    
-    
+    <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Nuevo encargo</a>
     <p style="color:red; margin-top:10px"><c:out value="${errorEspecialidades}"/></p>
-    
 </beavarts:layout>

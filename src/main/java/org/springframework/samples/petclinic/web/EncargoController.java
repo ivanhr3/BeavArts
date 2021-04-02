@@ -42,7 +42,7 @@ public class EncargoController {
 	@GetMapping(value = "/new")
 	public String initCreationForm(final ModelMap model) {
 
-		Beaver beaver = this.beaverService.getCurrentBeaver();
+        Beaver beaver = this.beaverService.getCurrentBeaver();
 		model.put("beaverId", beaver.getId()); //Añadido para usar las url del header
 
 		if (beaver.getEspecialidades().isEmpty()) { //DEBE COMPROBARSE QUE ESTA VACÍO, NO SI ES NULO
@@ -161,6 +161,7 @@ public class EncargoController {
 		} else if (enC.isDisponibilidad() == true && encargo.isDisponibilidad() == true) {
 			model.addAttribute("encargo", encargo);
 			result.rejectValue("disponibilidad", "No se puede editar un encargo que esté disponible.");
+			model.put("errorDisponibilidad", "No se puede editar un encargo que esté disponible.");
 			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 		} else {
 			BeanUtils.copyProperties(encargo, enC, "id", "beaver");

@@ -15,6 +15,7 @@
     </h2>
     
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+     
     <br/>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
@@ -58,8 +59,10 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Actualizar encargo</button>
+                        <p style="color:red; margin-top:10px"><c:out value="${errorDisponibilidad}"/></p>
                     </c:otherwise>
                 </c:choose>
+               
             </div>
         </div>
     </form:form>
