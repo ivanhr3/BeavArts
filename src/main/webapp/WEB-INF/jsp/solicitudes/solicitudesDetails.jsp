@@ -6,6 +6,7 @@
 <%-- <%@ taglib prefix="sec"
     uri="http://www.springframework.org/security/tags%22%%3E "%> --%>
 
+
 <beavarts:layout pageName="solicitudDetails">
 <div class="container">
 
@@ -28,7 +29,7 @@
  </div>    
  <div class="container">
      
-     <h2>Solicitud: </h2>
+     <h2>Solicitud: <c:out value="${solicitud.estado}"/></h2>
      <br/>
       <table>   
         <tr> 
