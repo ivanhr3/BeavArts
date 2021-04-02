@@ -155,7 +155,7 @@ public class SolicitudControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/accept/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.view().name("solicitudes/listadoSolicitudes"));
+			.andExpect(MockMvcResultMatchers.view().name("solicitudes/aceptarSuccess"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -165,7 +165,7 @@ public class SolicitudControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/decline/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.view().name("solicitudes/listadoSolicitudes"));
+			.andExpect(MockMvcResultMatchers.view().name("solicitudes/rechazarSuccess"));
 	}
 
 	@WithMockUser(value = "spring")

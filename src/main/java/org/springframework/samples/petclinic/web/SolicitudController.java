@@ -201,7 +201,7 @@ public class SolicitudController {
 			//Email de Notification
 			String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
 			//emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
-			return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
+			return "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
 		}
 
 	}
@@ -223,7 +223,7 @@ public class SolicitudController {
 			//Email de Notificacion
 			String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
 			//emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
-			return "solicitudes/listadoSolicitudes"; //TODO: Front: Poned las redirecciones
+			return "solicitudes/rechazarSuccess"; //TODO: Front: Poned las redirecciones
 		}
 	}
 
