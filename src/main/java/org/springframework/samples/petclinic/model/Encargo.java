@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.model;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,7 +36,6 @@ public class Encargo extends BaseEntity {
     @NotNull
     private boolean disponibilidad;
 
-    @NotBlank
     @Size(min = 30, max = 3000)
     private String descripcion;
 
@@ -46,7 +46,7 @@ public class Encargo extends BaseEntity {
     @JoinColumn(name="beaver_id")
     private Beaver beaver;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "encargo")
     private Collection<Solicitud> solicitud;
     
 }
