@@ -501,7 +501,7 @@ public class EncargoControllerTests {
 
 	@WithMockUser(value = "User123")
 	@Test
-	public void testListarEncargoNotAuthorized() throws Exception {
+	public void testListarEncargoOtroUsuario() throws Exception {
 
 		Beaver beaver = new Beaver();
 		beaver.setFirstName("Nombre2");
@@ -523,7 +523,7 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 1)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"));
 	}
 
 }

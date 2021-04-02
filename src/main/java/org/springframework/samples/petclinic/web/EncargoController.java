@@ -92,15 +92,20 @@ public class EncargoController {
 
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		model.addAttribute("beaverId", beaverId);
-		if (beaver != this.beaverService.getCurrentBeaver()) {
+		if (this.beaverService.getCurrentBeaver() == null) {  // deben listar solo usuarios logueados, ¿LLevar a otra vista?
 			return "accesoNoAutorizado"; //Acceso no autorizado
 		} else {
 			if (beaver.getEncargos().isEmpty()) {
 				model.addAttribute("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos *DONE*
-			} else {
+			} else if (beaver.equals(this.beaverService.getCurrentBeaver())){
 				final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
 				model.addAttribute("encargos", encargos);
-			}
+			} else {
+			    // para mostrar los encargos de un beaver a otro usuario que la disponibilidad debe ser True
+                final Iterable<Encargo> encargos = this.encargoService.findEncargoByAnotherBeaverId(beaverId);
+                model.addAttribute("encargos", encargos);
+
+            }
 			return "encargos/listEncargos";
 		}
 	}

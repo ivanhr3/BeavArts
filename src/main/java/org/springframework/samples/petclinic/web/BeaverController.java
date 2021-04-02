@@ -154,4 +154,13 @@ public class BeaverController {
 
 	}
 
+	@GetMapping("/list")
+    public String listBeavers(final ModelMap modelMap) {
+        String vista = "users/listBeavers";
+        Iterable<Beaver> beavers = beaverService.findAllBeavers();
+        modelMap.addAttribute("beavers", beavers);
+        return vista;
+
+    }
+
 }
