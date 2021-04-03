@@ -18,7 +18,7 @@
 		</div>
 			<ul style="margin-left:50px" class="nav navbar-nav">
 		
-				<petclinic:menuItem active="${name eq 'explora'}" url="">
+				<petclinic:menuItem active="${name eq 'explora'}" url="/beavers/list">
 					<span>Explora</span>
 				</petclinic:menuItem>
 				
@@ -31,7 +31,7 @@
 						<span>Mis Publicaciones</span>
 					</petclinic:menuItem>
 					
-					<petclinic:menuItem active="${name eq 'explora'}" url="/beavers/beaverInfo/${myBeaverId}">
+					<petclinic:menuItem active="${name eq 'mi perfil'}" url="/beavers/beaverInfo/${myBeaverId}">
 						<span>Mi Perfil</span>
 					</petclinic:menuItem>
 				</sec:authorize>
@@ -39,8 +39,8 @@
 			</ul>
 			<div class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Login</a></li>
-					<li><a href="<c:url value="/users/new" />">Register</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar Sesión</a></li>
+					<li><a href="<c:url value="/users/new" />">¡Regístrate!</a></li>
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">
@@ -64,7 +64,7 @@
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
-													class="btn btn-primary btn-block btn-sm">Logout</a>
+													class="btn btn-primary btn-block btn-sm">Desconectar</a>
 											</p>
 										</div>
 									</div>
