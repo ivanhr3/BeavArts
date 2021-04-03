@@ -7,8 +7,8 @@
 
 <div class="col-12 text-center" >
 	<h2>Ha ocurrido un error.</h2>
-    <spring:url value="/resources/images/sinfondo.png" var="beavartLogo"/>
-    <img src="${beavartLogo}"/>
+    <spring:url value="/resources/images/sadbeaver.png" var="sadBeaver"/>
+    <img src="${sadBeaver}"/>
 
     <p>${exception.message}</p>
     
