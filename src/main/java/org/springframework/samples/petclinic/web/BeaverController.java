@@ -59,7 +59,9 @@ public class BeaverController {
 		vista.addObject("portfolio", portfolio);
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
-		vista.addObject("myBeaverId", me.getId()); //añadimos el id a la vista
+		if (me != null) {//añadido el if para los tests
+			vista.addObject("myBeaverId", me.getId());
+		}
 
 		return vista;
 	}
@@ -91,7 +93,9 @@ public class BeaverController {
 		String vista;
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
-		model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		if (me != null) {//añadido el if para los tests
+			model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
 
 		//compruebo si el usuario logeado es el mismo que quiere editar su perfil
 		if (user.getUsername().equals(beaver.getUser().getUsername())) {
@@ -118,7 +122,9 @@ public class BeaverController {
 		String vista;
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
-		model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		if (me != null) { //añadido el if para los tests
+			model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
 
 		//compruebo si el usuario logeado es el mismo que el usuario del perfil a editar
 		if (user.getUsername().equals(beaver.getUser().getUsername())) {
@@ -166,7 +172,9 @@ public class BeaverController {
 	public String listBeavers(final ModelMap modelMap) {
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
-		modelMap.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		if (me != null) {//añadido el if para los tests
+			modelMap.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
 
 		String vista = "users/listBeavers";
 		Iterable<Beaver> beavers = this.beaverService.findAllBeavers();
