@@ -67,5 +67,10 @@
 	</spring:url>
     <a class="btn btn-default" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
 </c:if>
+<c:if test= "${solicitudAceptada == true}">
+    <spring:url value="/solicitudes/finish/${solicitud.id}" var="finishUrl">
+    </spring:url>
+    <a class="btn btn-default" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
+</c:if>
 </c:if>
 </beavarts:layout>
