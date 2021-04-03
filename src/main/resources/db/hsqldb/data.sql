@@ -15,11 +15,11 @@ INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://estaticos
 INSERT INTO users(username,password,enabled) VALUES ('user2', '$2a$10$/9VLfws1dOLXMW.sB4qfWuY2s/KyyB0y2lsaxP3u1Ubh.pbn98H5u', TRUE);
 INSERT INTO authorities(id, username, authority) VALUES(2, 'user2', 'user');
 INSERT INTO portfolio(id, sobre_mi) VALUES (2, 'Soy un usuario que intenta un poco de todo');
-INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, valoracion, portfolio_id, username) VALUES (2, 'Nombre', 'Apellidos', '12234321Q', 'emailprueba@email.com', 'urlfotoperfil.com', 4.5, 2 , 'user2');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, valoracion, portfolio_id, username) VALUES (2, 'Nombre', 'Apellidos', '12234321Q', 'emailprueba@email.com', 'https://cdn.pixabay.com/photo/2020/10/16/11/02/astronaut-5659227_960_720.png', 4.5, 2 , 'user2');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (2, 'TEXTIL');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (2, 'ESCULTURA');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'foto1.com');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'foto2.com');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://cdn.pixabay.com/photo/2020/10/16/11/02/astronaut-5659227_960_720.png');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://cdn.pixabay.com/photo/2021/03/11/13/57/among-us-6087168_960_720.png');
 
 --Encargos
 
@@ -28,3 +28,5 @@ INSERT INTO encargos(id, descripcion, disponibilidad, photo, precio, titulo, bea
 --Solicitud
 
 INSERT INTO solicitud(id, descripcion, estado, precio, beaver_id, encargo_id) VALUES (1, 'Descripcion Solicitud', 'PENDIENTE', 30.0, 2, 1);
+INSERT INTO solicitud_fotos(solicitud_id, fotos) VALUES (1, 'https://i.imgur.com/V2Y5KIK.png');
+INSERT INTO solicitud_fotos(solicitud_id, fotos) VALUES (1, 'https://cdn.pixabay.com/photo/2019/08/28/15/56/anime-girl-4437093_960_720.png');
