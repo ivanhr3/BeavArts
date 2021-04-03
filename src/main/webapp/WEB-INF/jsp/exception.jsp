@@ -6,7 +6,7 @@
 <beavarts:layout pageName="error">
 
 <div class="col-12 text-center" >
-	<h2>Ha ocurrido un error.</h2>
+	<h2>Ha ocurrido un error. Si este error persiste, es conveniente que avises al administrador del sistema.</h2>
     <spring:url value="/resources/images/sadbeaver.png" var="sadBeaver"/>
     <img src="${sadBeaver}"/>
 
