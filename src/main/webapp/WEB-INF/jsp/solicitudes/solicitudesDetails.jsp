@@ -9,49 +9,60 @@
 
 
 <beavarts:layout pageName="solicitudDetails">
+<div class= "container">
+<h1>Encargo: </h1>
+<div class="col-lg-7">
+    <h3>
+        Título:
+        <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="beaverUrl">
+                	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
+               	    <spring:param name="encargoId" value="${encargo.id}"/>
+                </spring:url>
+               	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${encargo.titulo}"/></b></a>
+    </h3>
+    <h3>
+        Precio:
+        <td style="text-align: justify;"><c:out value="${encargo.precio} €"/></td>
+    </h3>
+</div>
+</div>
 <div class="container">
-
-<h2>Información del encargo: </h2>
-<br/>
-
-    <table>
-     <tr>
-            <th>Encargo</th>
-            <td><c:out value="${encargo.titulo}"/></td>
-        </tr>
-		<tr>
-        <tr>
-            <th>Precio</th>
-            <td><c:out value="${encargo.precio}"/>€</td>
-        </tr>
-		<tr>  
-        
-     </table>
- </div>    
- <div class="container">
-     
-     <h2>Solicitud: <c:out value="${solicitud.estado}"/></h2>
-     <br/>
-      <table>   
-        <tr> 
-            <th>Realizado por:</th>
-            <td><c:out value="${solicitud.beaver.user.username}"/></td>
-        </tr>
+</br>
+</br>
+<h1>Solicitud:</h1>
+ <div class="col-lg-7">
+      <table class="table table-borderless">   
+        <h3>
+            Estado:
+            <c:out value="${solicitud.estado}"/>
+        </h3>
+        <h3> 
+            Realizada por:
+            
+            	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
+                	<spring:param name="beaverId" value="${solicitud.beaver.id}"/>
+               	</spring:url>
+               	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${solicitud.beaver.user.username}"/></b></a>
+               	
+        </h3>
         <c:if test= "${solicitudAceptada==true}"> 
-       	<th>Datos de contacto </th>
-        <td><c:out value="${solicitud.beaver.email}"/></td>
-         </tr>
+       	<h3>
+        Datos de contacto:
+        <c:out value="${solicitud.beaver.email}"/>
+        </h3>
          </c:if>
-        <th>Descripción del encargo </th>
-        <td><c:out value="${solicitud.descripcion}"/></td>
+        <h3>
+        Descripción del encargo:
+        <c:out value="${solicitud.descripcion}"/>
+        </h3>
     </table>
  </div> 
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
  
     <c:forEach items="${solicitud.fotos}" var="foto">
-        <table>
+        <table class="table table-borderless">
         <tbody>
-        	<td><img width=150px height=130px src="${foto}"/></td>
+        	<td style="text-align: justify;"><img width=150px height=130px alt="" src="${foto}"/></td>
         </tbody>
         </table>
 	</c:forEach>

@@ -45,6 +45,10 @@
 </div>
 </c:if>
 
+<c:if test="${haySolicitudes==false}">
+	<h2>No hay solicitudes enviadas.</h2>
+</c:if>
+
 <c:if test="${haySolicitudes==true}">
     <h2>Mis solicitudes enviadas</h2>
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">

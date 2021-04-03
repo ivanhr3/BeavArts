@@ -9,6 +9,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
 <nav class="navbar navbar-default" role="navigation">
 
 	<div class="container">
@@ -48,8 +49,8 @@
 			
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Iniciar Sesión</a></li>
-					<li><a href="<c:url value="/users/new" />">¡Regístrate!</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar Sesiï¿½n</a></li>
+					<li><a href="<c:url value="/users/new" />">ï¿½Regï¿½strate!</a></li>
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">
