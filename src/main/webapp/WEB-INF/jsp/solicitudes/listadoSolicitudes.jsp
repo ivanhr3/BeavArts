@@ -8,11 +8,12 @@
 
 <beavarts:layout pageName="solicitudesList">
 
-<c:if test="${hayEncargos==false}">
+<c:if test="${listaSolicitudesRecibidas.isEmpty()==true}">
 	<h2>No hay solicitudes recibidas.</h2>
 </c:if>
 
-<c:if test="${hayEncargos==true}">
+<c:if test="${listaSolicitudesRecibidas.isEmpty()==false}">
+	
     <h2>Mis solicitudes recibidas de: </h2>
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
 	<c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">

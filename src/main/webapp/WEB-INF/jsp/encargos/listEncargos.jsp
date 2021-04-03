@@ -3,26 +3,30 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
+	<security:authorize access="isAuthenticated()">
+   		<security:authentication var="principalUsername" property="principal.username" /> 
+	</security:authorize>
+	
 <beavarts:layout pageName="encargosList">
-    <h2>Mis Encargos</h2>
-
+    <h2>Encargos</h2> 
 
  <c:if test="${hayEncargos == false}">
- 	<div class= "col-12 text-center"><h1>¡AUN NO TIENES ENCARGOS, CREA UNO AHORA!</h1></div>
+ 		<div class= "col-12 text-center"><h1>¡AÚN NO HAY ENCARGOS!</h1></div>
  </c:if>
  
- <c:if test="${hayEncargos != false}">
+ 
+<c:if test="${hayEncargos != false}">
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
 <c:forEach items="${encargos}" var="encargo">
     <table style="margin-left:2%;">
         <tbody>
             <tr>
             	<td>
-            		<spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="encargoUrl">
+            		<spring:url value="/beavers/${beaverId}/encargos/{encargoId}" var="encargoUrl">
                         <spring:param name="encargoId" value="${encargo.id}"/>
-                        <spring:param name="beaverId" value="${encargo.beaver.id}"/>
                 	</spring:url>
                 	<c:if test="${!encargo.photo.isEmpty()}">
             		<a href="${encargoUrl}"><img width=140px height=150px alt="" src="${encargo.photo}"/></a>
@@ -56,6 +60,11 @@
   </c:forEach>
 </div>
 </c:if>
-    <a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Nuevo encargo</a>
-    <p style="color:red; margin-top:10px"><c:out value="${errorEspecialidades}"/></p>
+
+
+<c:if test="${beaver.user.username == principalUsername}">
+		<a class="btn btn-default" href='<spring:url value="new" htmlEscape="true"/>'>Nuevo encargo</a>
+    	<p style="color:red; margin-top:10px"><c:out value="${errorEspecialidades}"/></p>
+</c:if>
+
 </beavarts:layout>

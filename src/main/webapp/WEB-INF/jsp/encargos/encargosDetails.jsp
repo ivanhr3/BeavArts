@@ -18,7 +18,7 @@
         	<c:if test="${createdByUser== false}">
             <th><h3>Publicado por: </h3></th>
             <td style="text-align: justify;">
-            	<spring:url value="/beavers/{beaverId}" var="beaverUrl">
+            	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	</spring:url>
                	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${encargo.beaver.user.username}"/></b></a>

@@ -95,6 +95,7 @@ public class EncargoController {
 
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		model.addAttribute("beaverId", beaverId);
+		model.addAttribute("beaver", beaver);
 		if (this.beaverService.getCurrentBeaver() == null) {  // deben listar solo usuarios logueados, ¿LLevar a otra vista?
 			return "accesoNoAutorizado"; //Acceso no autorizado
 		} else {
@@ -107,7 +108,6 @@ public class EncargoController {
 				// para mostrar los encargos de un beaver a otro usuario que la disponibilidad debe ser True
 				final Iterable<Encargo> encargos = this.encargoService.findEncargoByAnotherBeaverId(beaverId);
 				model.addAttribute("encargos", encargos);
-
 			}
 			return "encargos/listEncargos";
 		}
