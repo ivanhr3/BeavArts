@@ -31,7 +31,7 @@ public class WelcomeController {
 		Beaver beaver = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
 
 		if (beaver != null) {						//Si no se esta logueado no se hace nada
-			model.put("beaverId", beaver.getId());  //Si se esta logueado se pasa el id a la vista
+			model.put("myBeaverId", beaver.getId());  //Si se esta logueado se pasa el id a la vista
 		}
 
 		return "welcome";

@@ -27,11 +27,11 @@
 						<span>Mis Solicitudes</span>
 					</petclinic:menuItem>
 					
-					<petclinic:menuItem active="${name eq 'mis publicaciones'}" url="/beavers/${beaverId}/encargos/list">
+					<petclinic:menuItem active="${name eq 'mis publicaciones'}" url="/beavers/${myBeaverId}/encargos/list">
 						<span>Mis Publicaciones</span>
 					</petclinic:menuItem>
 					
-					<petclinic:menuItem active="${name eq 'explora'}" url="/beavers/beaverInfo/${beaverId}">
+					<petclinic:menuItem active="${name eq 'explora'}" url="/beavers/beaverInfo/${myBeaverId}">
 						<span>Mi Perfil</span>
 					</petclinic:menuItem>
 				</sec:authorize>

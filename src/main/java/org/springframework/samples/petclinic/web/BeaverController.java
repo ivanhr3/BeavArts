@@ -58,6 +58,9 @@ public class BeaverController {
 		vista.addObject("beaver", beaver);
 		vista.addObject("portfolio", portfolio);
 
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		vista.addObject("myBeaverId", me.getId()); //añadimos el id a la vista
+
 		return vista;
 	}
 
@@ -68,7 +71,7 @@ public class BeaverController {
 		User user = this.userService.findUserByUsername(currentPrincipalName);
 
 		//Si el usuario no esta logueado tb salta el no autorizado
-	    if (user == null) {
+		if (user == null) {
 			return "accesoNoAutorizado";
 		}
 
@@ -77,7 +80,7 @@ public class BeaverController {
 		Portfolio portfolio = beaver.getPortfolio();
 
 		//Necesario tambien en el get
-        if (beaver.getPortfolio() == null) {
+		if (beaver.getPortfolio() == null) {
 			Portfolio port = new Portfolio();
 			port.setSobreMi("");
 			port.setPhotos(new HashSet<>());
@@ -85,8 +88,10 @@ public class BeaverController {
 			portfolio = port;
 		}
 
-
 		String vista;
+
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		model.put("myBeaverId", me.getId()); //añadimos el id a la vista
 
 		//compruebo si el usuario logeado es el mismo que quiere editar su perfil
 		if (user.getUsername().equals(beaver.getUser().getUsername())) {
@@ -112,15 +117,18 @@ public class BeaverController {
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		String vista;
 
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+
 		//compruebo si el usuario logeado es el mismo que el usuario del perfil a editar
 		if (user.getUsername().equals(beaver.getUser().getUsername())) {
 
-            UrlValidator validar = new UrlValidator();
+			UrlValidator validar = new UrlValidator();
 
-            Boolean compruebaUrl = portfolio.getPhotos().stream().allMatch(url -> validar.isValid(url));
+			Boolean compruebaUrl = portfolio.getPhotos().stream().allMatch(url -> validar.isValid(url));
 
 			if (result.hasErrors() || !compruebaUrl) {
-                model.put("errorUrl", "*Las fotos añadidas al portfolio deben ser Urls");
+				model.put("errorUrl", "*Las fotos añadidas al portfolio deben ser Urls");
 				model.put("portfolio", portfolio);
 				vista = "users/editarPortfolio"; //si hay algún error de campos se redirige a la misma vista
 
@@ -140,7 +148,7 @@ public class BeaverController {
 				beaver.setPortfolio(portfolio1);
 
 				//Necesario para que se actualice el portfolio
-			    this.portfolioService.savePortfolio(portfolio1);
+				this.portfolioService.savePortfolio(portfolio1);
 
 				model.put("portfolio", portfolio1);
 				return "redirect:/beavers/beaverInfo/" + beaver.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
@@ -155,12 +163,16 @@ public class BeaverController {
 	}
 
 	@GetMapping("/list")
-    public String listBeavers(final ModelMap modelMap) {
-        String vista = "users/listBeavers";
-        Iterable<Beaver> beavers = beaverService.findAllBeavers();
-        modelMap.addAttribute("beavers", beavers);
-        return vista;
+	public String listBeavers(final ModelMap modelMap) {
 
-    }
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		modelMap.put("myBeaverId", me.getId()); //añadimos el id a la vista
+
+		String vista = "users/listBeavers";
+		Iterable<Beaver> beavers = this.beaverService.findAllBeavers();
+		modelMap.addAttribute("beavers", beavers);
+		return vista;
+
+	}
 
 }
