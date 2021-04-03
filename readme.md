@@ -1,5 +1,7 @@
 # Spring PetClinic Sample Application 
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b6349c42eccb43a0b7e3b45877fff3c4)](https://app.codacy.com/gh/ivanhr3/BeavArts?utm_source=github.com&utm_medium=referral&utm_content=ivanhr3/BeavArts&utm_campaign=Badge_Grade_Settings)
+
 This is a fork of https://github.com/spring-projects/spring-petclinic to be used for the DP1 course. The main changes that have been performed were:
 - Trimming several parts of the application to keep the example low
 - Reorganize some parts of the code according to best practices introduced in the course
