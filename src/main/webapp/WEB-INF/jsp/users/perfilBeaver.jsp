@@ -79,7 +79,7 @@
     </c:if>
  
     
-        
+    <c:if test = "${isAuthenticated}">  
     <div class="izquierda2">
     	<br/>
     	<c:if test="${beaver.user.username != principalUsername}">
@@ -97,4 +97,5 @@
 			<a class="btn btn-default" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>
 		</c:if>
 	</div>
+</c:if>  
 </petclinic:layout>
