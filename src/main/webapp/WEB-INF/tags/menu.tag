@@ -26,6 +26,10 @@
 		<div class="navbar-collapse collapse" id="main-navbar">
 			<ul style="margin-left:50px" class="nav navbar-nav">
 		
+				<beavarts:menuItem active="${name eq 'sobre'}" url="https://beavartsispp.wixsite.com/home">
+					<span>Sobre nosotros</span>
+				</beavarts:menuItem>
+
 				<beavarts:menuItem active="${name eq 'explora'}" url="/beavers/list">
 					<span>Explora</span>
 				</beavarts:menuItem>
@@ -48,8 +52,8 @@
 			
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Iniciar Sesión</a></li>
-					<li><a href="<c:url value="/users/new" />">¡Regístrate!</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar Sesiï¿½n</a></li>
+					<li><a href="<c:url value="/users/new" />">ï¿½Regï¿½strate!</a></li>
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">

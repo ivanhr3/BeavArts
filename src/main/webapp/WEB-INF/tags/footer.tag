@@ -12,4 +12,15 @@
 <spring:url value="/webjars/bootstrap/3.3.6/js/bootstrap.min.js" var="bootstrapJs"/>
 <script src="${bootstrapJs}"></script>
 
+<div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <a href="https://www.instagram.com/beavarts_/"><i class="fa fa-instagram"></i></a>
+				<a href="https://twitter.com/beavarts"><i class="fa fa-twitter"></i></a>
+                <p>&copy; <strong>2021</strong>. Designed by Beavarts</p>
+                
+            </div>
+        </div>
+    </div>
+
 
