@@ -54,7 +54,6 @@
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Iniciar Sesi�n</a></li>
-					<li><a href="<c:url value="/users/new" />">�Reg�strate!</a></li>
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">
