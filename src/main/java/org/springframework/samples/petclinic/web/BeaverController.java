@@ -61,6 +61,9 @@ public class BeaverController {
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
 		if (me != null) {//añadido el if para los tests
 			vista.addObject("myBeaverId", me.getId());
+			vista.addObject("isAuthenticated", true);
+		} else {
+			vista.addObject("isAuthenticated", false);
 		}
 
 		return vista;
