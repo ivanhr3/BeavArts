@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.service;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -120,17 +121,20 @@ public class SolicitudService {
     //Comprueba si un Beaver ha realizado una solicitud para un encargo y si dicha solicitud sigue PENDIENTE o ACEPTADA
     @Transactional
     public Boolean existSolicitudByBeaver(Beaver beaver, Encargo encargo){
-      Solicitud sol = this.solicitudRepository.findSolicitudByBeaver(beaver.getId(), encargo.getId());
-      Boolean res;
-      if(sol == null){
+      Collection<Solicitud> sols = this.solicitudRepository.findSolicitudByBeaver(beaver.getId(), encargo.getId());
+      Boolean res = null;
+      if(sols.isEmpty()){
         res = false; //Si no hay solicitud previa no existe
       } else {
+        for(Solicitud sol: sols){
         if(sol.getEstado() == Estados.RECHAZADO || sol.getEstado() == Estados.FINALIZADO){ //Si la solicitud esta RECHAZADA o FINALIZADA falso
           res = false;
         } else {
-        res = true; //Existe solicitud PENDIENTE
+        res = true;
+        break; //Existe solicitud PENDIENTE
         }
       }
+    }
       return res;
     }
 
