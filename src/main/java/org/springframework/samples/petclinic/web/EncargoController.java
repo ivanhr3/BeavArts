@@ -68,6 +68,10 @@ public class EncargoController {
 			model.addAttribute("encargo", encargo);
 			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 
+		} else if (model.get("precio").toString() == "") {
+			model.addAttribute("encargo", encargo);
+			model.put("precio", "El precio no puede estar vacío");
+			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 		} else {
 			if (beaver.getEncargos().isEmpty() || beaver.getEncargos() == null) {
 				final Set<Encargo> res = new HashSet<>();

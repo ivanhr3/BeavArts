@@ -52,9 +52,9 @@ public class SolicitudController {
 	public String crearSolicitudInit(@PathVariable("engId") final int encargoId, final ModelMap model) {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		
-		if(beaver != null){
-		model.put("myBeaverId", beaver.getId());
+
+		if (beaver != null) {
+			model.put("myBeaverId", beaver.getId());
 		}
 		//De esta forma si al crear la solicitud falla no se desaparecen los datos del encargo, haciendo
 		//que haya que recargar la pagina para verlos
@@ -84,14 +84,18 @@ public class SolicitudController {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		model.addAttribute("encargo", encargo);
-		if(beaver != null){
-		model.put("myBeaverId", beaver.getId());
+
+		if (beaver != null) {
+			model.put("myBeaverId", beaver.getId());
 		}
 
-		if (solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
+		if (solicitud.getDescripcion().isEmpty()) {
 			model.addAttribute("solicitud", solicitud);
 			model.put("descripcion", "La descripción no puede estar vacía");
+			return "solicitudes/creationForm";
+		} else if (!this.solicitudService.isCollectionAllURL(solicitud)) {
+			model.addAttribute("solicitud", solicitud);
+			model.put("fotos", "Las URL deben ser válidas.");
 			return "solicitudes/creationForm";
 		} else {
 
@@ -106,7 +110,7 @@ public class SolicitudController {
 				//El result.rejectValue me genera un error500 que no hemos sido capaces de controlar. Comentandolo y mandando el siguiente return se controla que lo de la solicitud pendiente
 				//return "solicitudes/solicitudPendiente"
 
-				return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario 
+				return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
 			} else if (beaver == null) {
 				return "accesoNoAutorizado"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
 			}
@@ -240,29 +244,5 @@ public class SolicitudController {
 			return "solicitudes/rechazarSuccess"; //TODO: Front: Poned las redirecciones
 		}
 	}
-
-		//Acepta Solicitudes cuando se pulsa en el botón en los detalles de una solicitud
-		@GetMapping(value = "/finish/{solId}")
-		public String finishSolicitud(final Map<String, Object> model, @PathVariable("solId") final int solId) {
-			Solicitud sol = this.solicitudService.findById(solId);
-			Beaver beaver = this.beaverService.getCurrentBeaver();
-			int beaverId = beaver.getId();
-	
-			model.put("myBeaverId", beaverId);
-	
-			Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
-	
-			if (beaverId != encargo.getBeaver().getId()) {
-				return "solicitudes/errorAceptar"; //TODO: Front: Poned las redirecciones
-			} else if(sol.getEstado() == Estados.ACEPTADO) {
-				//solicitudService.aceptarSolicitud(sol, beaver);
-				sol.setEstado(Estados.FINALIZADO);
-				this.solicitudService.saveSolicitud(sol);
-				return "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
-			} else {
-				return "accessNotAuthorized";
-			}
-	
-		}
 
 }
