@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
@@ -13,34 +13,43 @@
 
 	<div class="container">
 		<div class="navbar-header">
-		<a href="/" id="logo"><img class="bannerHeader" src="<spring:url value="/resources/images/v2.png" htmlEscape="true" />"
-                                             alt=""/></a>
+		<a class="navbar-brand"
+				href="<spring:url value="/" htmlEscape="true" />"><span></span></a>
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#main-navbar">
+				<span class="sr-only"><os-p>Toggle navigation</os-p></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			
 		</div>
+		<div class="navbar-collapse collapse" id="main-navbar">
 			<ul style="margin-left:50px" class="nav navbar-nav">
 		
-				<petclinic:menuItem active="${name eq 'explora'}" url="">
+				<beavarts:menuItem active="${name eq 'explora'}" url="/beavers/list">
 					<span>Explora</span>
-				</petclinic:menuItem>
+				</beavarts:menuItem>
 				
 				<sec:authorize access="isAuthenticated()">
-					<petclinic:menuItem active="${name eq 'mis solicitudes'}" url="/solicitudes/list">
+					<beavarts:menuItem active="${name eq 'mis solicitudes'}" url="/solicitudes/list">
 						<span>Mis Solicitudes</span>
-					</petclinic:menuItem>
+					</beavarts:menuItem>
 					
-					<petclinic:menuItem active="${name eq 'mis publicaciones'}" url="/beavers/${beaverId}/encargos/list">
+					<beavarts:menuItem active="${name eq 'mis publicaciones'}" url="/beavers/${myBeaverId}/encargos/list">
 						<span>Mis Publicaciones</span>
-					</petclinic:menuItem>
+					</beavarts:menuItem>
 					
-					<petclinic:menuItem active="${name eq 'explora'}" url="/beavers/beaverInfo/${beaverId}">
+					<beavarts:menuItem active="${name eq 'mi perfil'}" url="/beavers/beaverInfo/${myBeaverId}">
 						<span>Mi Perfil</span>
-					</petclinic:menuItem>
+					</beavarts:menuItem>
 				</sec:authorize>
 				
 			</ul>
-			<div class="nav navbar-nav navbar-right">
+			
+			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a href="<c:url value="/login" />">Login</a></li>
-					<li><a href="<c:url value="/users/new" />">Register</a></li>
+					<li><a href="<c:url value="/login" />">Iniciar Sesión</a></li>
+					<li><a href="<c:url value="/users/new" />">¡Regístrate!</a></li>
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">
@@ -64,7 +73,7 @@
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
-													class="btn btn-primary btn-block btn-sm">Logout</a>
+													class="btn btn-primary btn-block btn-sm">Desconectar</a>
 											</p>
 										</div>
 									</div>
@@ -73,7 +82,7 @@
 							<li class="divider"></li>
 						</ul></li>
 			</sec:authorize>
-		</div>
+		</ul>
 	</div>
-
+</div>
 </nav>

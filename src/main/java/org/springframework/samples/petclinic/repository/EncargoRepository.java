@@ -15,4 +15,7 @@ public interface EncargoRepository extends CrudRepository<Encargo, Integer> {
     @Query("select e from Encargo e where e.id = ?1")
     Encargo findEncargoByIntId(int id);
 
+    @Query("select e from Encargo e where e.beaver.id = ?1 AND e.disponibilidad = true")
+    Iterable<Encargo> findEncargoByAnotherBeaverId(Integer id);
+
 }

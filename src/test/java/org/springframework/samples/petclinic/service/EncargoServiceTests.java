@@ -37,6 +37,7 @@ public class EncargoServiceTests {
     private Beaver beaver;
     private Encargo encargo1;
     private Encargo encargo2;
+    private Encargo encargo3;
 
     @BeforeEach
     public void setUp(){
@@ -57,7 +58,7 @@ public class EncargoServiceTests {
         beaver.setEncargos(new HashSet<>());
             this.beaverService.saveBeaver(beaver);
 
-        
+
             encargo1 = new Encargo();
             encargo1.setTitulo("Testing save encargo");
             encargo1.setPrecio(39.90);
@@ -65,7 +66,7 @@ public class EncargoServiceTests {
             encargo1.setDescripcion("Testing save encargo que debe estar entre 30 y 3000");
             encargo1.setPhoto("https://cnnespanol.cnn.com/wp-content/uploads/2019/12/mejores-imagenes-del-ancc83o-noticias-2019-galeria10.jpg?quality=100&strip=info&w=320&h=240&crop=1");
             encargo1.setBeaver(beaver);
-    
+
             this.encargoService.saveEncargo(encargo1);
 
             encargo2 = new Encargo();
@@ -75,8 +76,19 @@ public class EncargoServiceTests {
             encargo2.setDescripcion("Testing save encargo (2) que debe estar entre 30 y 3000");
             encargo2.setPhoto("https://cnnespanol.cnn.com/wp-content/uploads/2019/12/mejores-imagenes-del-ancc83o-noticias-2019-galeria10.jpg?quality=100&strip=info&w=320&h=240&crop=1");
             encargo2.setBeaver(beaver);
-    
-            this.encargoService.saveEncargo(encargo2); 
+
+            this.encargoService.saveEncargo(encargo2);
+
+            encargo3 = new Encargo();
+            encargo3.setTitulo("Testing save encargo 3");
+            encargo3.setPrecio(59.90);
+            encargo3.setDisponibilidad(false);
+            encargo3.setDescripcion("Testing save encargo (3) que debe estar entre 30 y 3000");
+            encargo3.setPhoto("https://cnnespanol.cnn.com/wp-content/uploads/2019/12/mejores-imagenes-del-ancc83o-noticias-2019-galeria10.jpg?quality=100&strip=info&w=320&h=240&crop=1");
+            encargo3.setBeaver(beaver);
+
+            this.encargoService.saveEncargo(encargo3);
+
     }
 
     @Test
@@ -98,11 +110,28 @@ public class EncargoServiceTests {
     @Test
     @Transactional
     void testFindEncargoByBeaverId(){
- 
+
         int beaverId = beaver.getId();
         List<Encargo> encargosLista = new ArrayList<Encargo>();
 
         Iterable<Encargo> encargosBeaver = this.encargoService.findEncargoByBeaverId(beaverId);
+        for(Encargo e : encargosBeaver){
+            encargosLista.add(e);
+        }
+
+        assertEquals(encargosLista.size(), 3);
+        assertEquals(encargosLista.get(0).getId(), encargo1.getId());
+        assertEquals(encargosLista.get(1).getId(), encargo2.getId());
+    }
+
+    @Test
+    @Transactional
+    void testFindEncargoByAnotherBeaverId(){
+
+        int beaverId = beaver.getId();
+        List<Encargo> encargosLista = new ArrayList<Encargo>();
+
+        Iterable<Encargo> encargosBeaver = this.encargoService.findEncargoByAnotherBeaverId(beaverId);
         for(Encargo e : encargosBeaver){
             encargosLista.add(e);
         }
@@ -115,9 +144,10 @@ public class EncargoServiceTests {
     @Test
     @Transactional
     void testDeleteEncargoById(){
+        int numEncargos = this.encargoService.encargosCount();
         Integer id = encargo1.getId();
         this.encargoService.deleteEncargoById(id);
-        assertEquals(this.encargoService.encargosCount(), 2);
+        assertEquals(this.encargoService.encargosCount(), numEncargos - 1);
      }
 
      @Test

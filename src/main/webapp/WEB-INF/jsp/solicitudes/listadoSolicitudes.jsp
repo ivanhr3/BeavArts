@@ -3,59 +3,72 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
- 
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+
 
 <beavarts:layout pageName="solicitudesList">
-<c:if test="${hayEncargos==false}">
-	<h2>No hay solicitudes.</h2>
+
+<c:if test="${listaSolicitudesRecibidas.isEmpty()==true}">
+	<h2>No hay solicitudes recibidas.</h2>
 </c:if>
 
-<c:if test="${hayEncargos==true}">
-    <h2>Mis solicitudes recibidas</h2>
-<div class="container">
- <table id="solicitudesRecibidas" >
+<c:if test="${listaSolicitudesRecibidas.isEmpty()==false}">
+	
+    <h2>Mis solicitudes recibidas de: </h2>
+<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
+	<c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
+	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
+        <spring:param name="idSolicitud" value="${solicitud.id}"/>
+    </spring:url>
+    <a href="${solicitudUrl}">
+	<table id="solicitudesRecibidas" style="margin-left:2%;">
         <tbody>
-        <c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
-
             <tr>
+            	<td>
+            	<c:out value="${solicitud.beaver.user.username}"/>
+            	</td>
+             </tr>
+             <tr>
                 <td>
-                    <c:out value="${solicitud.descripcion}"/>
+                <c:out value="${solicitud.descripcion}"/>
                 </td>
+              </tr>
+              <tr>
                 <td>
-                    <c:out value="${solicitud.beaver.user.username}"/>
-                </td> 
-                 <spring:url value="/solicitudes/solicitudInfo/${solicitud.id}" var="detallesUrl">
-                </spring:url>
-                <td>
-                		<a class="btn btn-default" href="${fn:escapeXml(detallesUrl)}" >Ver solicitud</a>
+                	<p class="btn btn-default"><c:out value="${solicitud.estado}"/></p>
                 </td>
-         </tr>
-         </c:forEach>
+              </tr>
         </tbody>
     </table>
+    </a>
+    </c:forEach>
 </div>
 </c:if>
 
 <c:if test="${haySolicitudes==true}">
     <h2>Mis solicitudes enviadas</h2>
-<div class="container">
-<table id="solicitudesEnviadas" >
+<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
+	<c:forEach items="${listaSolicitudesEnviadas}" var="solicitud">
+	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
+        <spring:param name="idSolicitud" value="${solicitud.id}"/>
+    </spring:url>
+    <a href="${solicitudUrl}">
+	<table id="solicitudesEnviadas" style="margin-left:2%;">
         <tbody>
-        <c:forEach items="${listaSolicitudesEnviadas}" var="solicitud">
-
             <tr>
                 <td>
-                    <c:out value="${solicitud.descripcion}"/>
+                <c:out value="${solicitud.descripcion}"/>
                 </td>
-                 <spring:url value="/solicitudes/solicitudInfo/${solicitud.id}" var="detallesUrl">
-                </spring:url>
+            </tr>
+            <tr>
                 <td>
-                		<a class="btn btn-default" href="${fn:escapeXml(detallesUrl)}" >Ver solicitud</a>
+                	<p class="btn btn-default"><c:out value="${solicitud.estado}"/></p>
                 </td>
-         </tr>
-         </c:forEach>
+        	</tr>
         </tbody>
     </table>
+    </a>
+    </c:forEach>
 </div>
 </c:if>
 </beavarts:layout>

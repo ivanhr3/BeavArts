@@ -15,7 +15,7 @@
     
     <h2><c:out value="${encargo.titulo}"/></h2>
     <h3>Publicado por: </h3><c:out value="${encargo.beaver.user.username}"/>
-    <h3>Precio: </h3><c:out value="${encargo.precio}"/>
+    <h3>Precio: </h3><c:out value="${encargo.precio}"/>€
     <h2>Descripción: </h2>
     <b><c:out value="${encargo.descripcion}"/></b>
     

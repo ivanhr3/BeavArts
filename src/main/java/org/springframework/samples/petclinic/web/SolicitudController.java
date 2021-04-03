@@ -54,7 +54,7 @@ public class SolicitudController {
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		
 		if(beaver != null){
-		model.put("beaverId", beaver.getId());
+		model.put("myBeaverId", beaver.getId());
 		}
 		//De esta forma si al crear la solicitud falla no se desaparecen los datos del encargo, haciendo
 		//que haya que recargar la pagina para verlos
@@ -86,7 +86,7 @@ public class SolicitudController {
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		
 		if(beaver != null){
-		model.put("beaverId", beaver.getId());
+		model.put("myBeaverId", beaver.getId());
 		}
 
 		if (solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
@@ -125,8 +125,8 @@ public class SolicitudController {
 	@GetMapping("/list")
 	public String listarSolicitudes(final ModelMap modelMap) {
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		modelMap.put("beaverId", beaver.getId());
 
+		modelMap.put("myBeaverId", beaver.getId());
 
 		Collection<Encargo> encargos = new ArrayList<>();
 		if (!(beaver.getEncargos() == null)) {
@@ -176,7 +176,7 @@ public class SolicitudController {
 		ModelAndView vista = new ModelAndView("solicitudes/solicitudesDetails");
 		Solicitud solicitud = new Solicitud();
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		vista.getModel().put("beaverId", beaver.getId());
+		vista.getModel().put("myBeaverId", beaver.getId());
 
 		Optional<Solicitud> s = this.solicitudService.findSolicitudById(solicitudId);
 		if (s.isPresent()) {
@@ -200,7 +200,8 @@ public class SolicitudController {
 		Solicitud sol = this.solicitudService.findById(solId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		int beaverId = beaver.getId();
-		model.put("beaverId", beaverId);
+
+		model.put("myBeaverId", beaverId);
 
 		Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
 
@@ -224,10 +225,9 @@ public class SolicitudController {
 		Solicitud sol = this.solicitudService.findById(solId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		int beaverId = beaver.getId();
-		model.put("beaverId", beaverId);
 
 		Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
-
+		model.put("myBeaverId", beaverId);
 		if (beaverId != encargo.getBeaver().getId()) {
 			return "solicitudes/errorRechazar";
 		} else {

@@ -5,11 +5,13 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%-- <%@ taglib prefix="sec"
     uri="http://www.springframework.org/security/tags%22%%3E "%> --%>
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+
 
 <beavarts:layout pageName="solicitudDetails">
 <div class="container">
 
-<h2>Informaci�n del encargo: </h2>
+<h2>Información del encargo: </h2>
 <br/>
 
     <table>
@@ -20,7 +22,7 @@
 		<tr>
         <tr>
             <th>Precio</th>
-            <td><c:out value="${encargo.precio}"/></td>
+            <td><c:out value="${encargo.precio}"/>€</td>
         </tr>
 		<tr>  
         
@@ -28,7 +30,7 @@
  </div>    
  <div class="container">
      
-     <h2>Solicitud: </h2>
+     <h2>Solicitud: <c:out value="${solicitud.estado}"/></h2>
      <br/>
       <table>   
         <tr> 
@@ -40,7 +42,7 @@
         <td><c:out value="${solicitud.beaver.email}"/></td>
          </tr>
          </c:if>
-        <th>Descripci�n del encargo </th>
+        <th>Descripción del encargo </th>
         <td><c:out value="${solicitud.descripcion}"/></td>
     </table>
  </div> 

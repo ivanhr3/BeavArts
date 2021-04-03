@@ -95,8 +95,6 @@
 		</c:if>
 		<c:if test="${beaver.user.username == principalUsername}">
 			<a class="btn btn-default" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>
-				
-			<a class="btn btn-default">Borrar Perfil</a>
 		</c:if>
 	</div>
 </petclinic:layout>

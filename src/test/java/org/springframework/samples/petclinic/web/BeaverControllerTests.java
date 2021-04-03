@@ -25,6 +25,8 @@ import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -197,6 +199,16 @@ public class BeaverControllerTests {
                 "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg"))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/beavers/beaverInfo/"+12));
+    }
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testListAllBeavers() throws Exception {
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/list")).andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("users/listBeavers"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("beavers"));
+
     }
 
 }
