@@ -8,9 +8,9 @@
 
 <beavarts:layout pageName="home">
     <div class="text-center">
-        <h2>Para ver todas las funcionalidades, <a href="<c:url value="/login" />inicia sesión.</a> </h2>
+        <h2>Para ver todas las funcionalidades, <i>inicia sesión.</i>
 
-        <h2>Y si aún no formas parte de esta gran comunidad, <a href="<c:url value="/users/new" />¡registrate!</a></h2>
+        <h2>Y si aún no formas parte de esta gran comunidad, <i>¡registrate!</i>
     </div>  
 
     <br>
