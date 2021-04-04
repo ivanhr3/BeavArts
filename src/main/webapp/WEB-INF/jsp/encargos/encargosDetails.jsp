@@ -66,7 +66,6 @@
 			</c:if>
      </c:if>
      <c:if test="${createdByUser == true}">
-      	  	<a class="btn btn-default" href='<spring:url value="${encargo.id}/delete" htmlEscape="true"/>'>Eliminar encargo</a>
         	<a class="btn btn-default" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
     </c:if>
 </div>
