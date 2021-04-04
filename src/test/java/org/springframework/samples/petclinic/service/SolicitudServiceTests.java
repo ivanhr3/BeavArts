@@ -87,7 +87,7 @@ public class SolicitudServiceTests {
         encargo.setTitulo("Encargo chulisimo");
         encargo.setDescripcion("mira que wapo mi encargo reshulon porque tienen que ser tantos caracteres");
         encargo.setDisponibilidad(true);
-        encargo.setPrecio(199);
+        encargo.setPrecio(199.0);
 		encargo.setBeaver(beaveralt);
         this.encargoService.saveEncargo(encargo);
     }

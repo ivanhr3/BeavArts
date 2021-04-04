@@ -137,7 +137,7 @@ public class BeaverController {
 			Boolean compruebaUrl = portfolio.getPhotos().stream().allMatch(url -> validar.isValid(url));
 
 			if (result.hasErrors() || !compruebaUrl) {
-				model.put("errorUrl", "*Las fotos añadidas al portfolio deben ser Urls");
+				model.put("errorUrl", "Las fotos añadidas al portfolio deben ser Urls");
 				model.put("portfolio", portfolio);
 				vista = "users/editarPortfolio"; //si hay algún error de campos se redirige a la misma vista
 

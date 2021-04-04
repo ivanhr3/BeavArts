@@ -9,13 +9,20 @@
 
 
 <beavarts:layout pageName="solicitud">
-    <h1>
+    <h2>
         Crear solicitud
-    </h1>
+    </h2>
     
-    <h2><c:out value="${encargo.titulo}"/></h2>
-    <h3>Publicado por: </h3><c:out value="${encargo.beaver.user.username}"/>
-    <h3>Precio: </h3><c:out value="${encargo.precio}"/>€
+    <h1><c:out value="Encargo: ${encargo.titulo}"/></h1>
+    <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
+                        <spring:param name="beaverId" value="${encargo.beaver.id}"/>
+    </spring:url>
+                    
+    <b>Publicado por: </b><a href="${fn:escapeXml(beaverUrl)}"><c:out value=" ${encargo.beaver.user.username}"/></a>
+    <br/>
+    <b>Precio: </b><c:out value="${encargo.precio}"/>€
+    <br/>
+    <br/>
     <h2>Descripción: </h2>
     <b><c:out value="${encargo.descripcion}"/></b>
     
@@ -26,11 +33,12 @@
         <div class="form-group has-feedback">
         <div class="form-group" >
             <beavarts:inputField label="*Descripción: " name="descripcion"/> 
-            <p style="color:red; margin-top:2px"><c:out value="${descripcion}"/></p>
+            <p style="color:red; margin-top:2px; text-align:right"><c:out value="${descripcion}"/></p>
             <br/>
-            <p style="color:black; margin-top:10px"><c:out value="Asegurese de escribir Urls en este campo."/></p>
-    		<p style="color:black; margin-top:10px"><c:out value="Para añadir varias escriba: url1,url2 sin separar cada url con espacios"/></p>
+            
+    		<p style="text-align:right">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
             <beavarts:inputField label="Fotos: " name="fotos"/>
+            <p style="color:red; text-align:right"><c:out value="${errorUrl}"/></p>
                    
          </div>
          </div>         

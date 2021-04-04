@@ -14,7 +14,7 @@
 
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==false}">
 	
-    <h2>Mis solicitudes recibidas de: </h2>
+    <h2>Mis solicitudes recibidas: </h2>
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
 	<c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
 	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
@@ -24,18 +24,10 @@
 	<table id="solicitudesRecibidas" style="margin-left:2%;">
         <tbody>
             <tr>
-            	<td>
-            	<c:out value="${solicitud.beaver.user.username}"/>
-            	</td>
-             </tr>
-             <tr>
-                <td>
-                <c:out value="${solicitud.descripcion}"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                	<p class="btn btn-default"><c:out value="${solicitud.estado}"/></p>
+            <td>
+                <h3><c:out value="${solicitud.encargo.titulo}"/></h3>
+            	<b style="color:#34302D;">De <c:out value="${solicitud.beaver.user.username}"/><b>
+                	<p class="btn btn-default" style="margin-top:5%;"><c:out value="${solicitud.estado}"/></p>
                 </td>
               </tr>
         </tbody>
@@ -59,14 +51,13 @@
     <a href="${solicitudUrl}">
 	<table id="solicitudesEnviadas" style="margin-left:2%;">
         <tbody>
-            <tr>
-                <td>
-                <c:out value="${solicitud.descripcion}"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                	<p class="btn btn-default"><c:out value="${solicitud.estado}"/></p>
+            <tr>  
+             <td>              
+            	<h3><c:out value="${solicitud.encargo.titulo}"/></h3>
+
+                <b style="color:#34302D;"><c:out value="${solicitud.descripcion}"/></b>
+            
+                <p class="btn btn-default" style="margin-top:5%;"><c:out value="${solicitud.estado}"/></p>
                 </td>
         	</tr>
         </tbody>
