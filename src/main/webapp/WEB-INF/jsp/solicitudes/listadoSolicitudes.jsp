@@ -16,24 +16,31 @@
 	
     <h2>Mis solicitudes recibidas: </h2>
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
-	<c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
-	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
-        <spring:param name="idSolicitud" value="${solicitud.id}"/>
-    </spring:url>
-    <a href="${solicitudUrl}">
-	<table id="solicitudesRecibidas" style="margin-left:2%;">
+    <c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
+	<table id="solicitudesRecibidas" class ="table table-responsive" style="margin-left:2%; border: black 1px solid">
         <tbody>
             <tr>
             <td>
                 <h3><c:out value="${solicitud.encargo.titulo}"/></h3>
-            	<b style="color:#34302D;">De <c:out value="${solicitud.beaver.user.username}"/><b>
-                	<p class="btn btn-default" style="margin-top:5%;"><c:out value="${solicitud.estado}"/></p>
-                </td>
-              </tr>
+                <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
+                        <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
+                    </spring:url>
+                    <b style="color:#34302D;">Realizada por: 
+                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b>
+            </td>
+            <td>
+                	<p><c:out value="${solicitud.estado}"/></p>
+            </td>
+            <td>
+            	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
+        			<spring:param name="idSolicitud" value="${solicitud.id}"/>
+    			</spring:url>
+    			<a class="btn btn-default" href="${solicitudUrl}"> Ver solicitud</a>
+    		</td>
+    		</tr>
         </tbody>
     </table>
-    </a>
-    </c:forEach>
+   	</c:forEach>
 </div>
 </c:if>
 
@@ -45,24 +52,24 @@
     <h2>Mis solicitudes enviadas</h2>
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
 	<c:forEach items="${listaSolicitudesEnviadas}" var="solicitud">
-	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
-        <spring:param name="idSolicitud" value="${solicitud.id}"/>
-    </spring:url>
-    <a href="${solicitudUrl}">
-	<table id="solicitudesEnviadas" style="margin-left:2%;">
+	<table id="solicitudesEnviadas" class ="table table-responsive" style="margin-left:2%; border: black 1px solid">
         <tbody>
-            <tr>  
-             <td>              
-            	<h3><c:out value="${solicitud.encargo.titulo}"/></h3>
-
-                <b style="color:#34302D;"><c:out value="${solicitud.descripcion}"/></b>
-            
-                <p class="btn btn-default" style="margin-top:5%;"><c:out value="${solicitud.estado}"/></p>
-                </td>
-        	</tr>
+            <tr>
+            <td>
+                <h3><c:out value="${solicitud.encargo.titulo}"/></h3>
+            </td>
+            <td>
+                	<p><c:out value="${solicitud.estado}"/></p>
+            </td>
+            <td>
+            	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
+        			<spring:param name="idSolicitud" value="${solicitud.id}"/>
+    			</spring:url>
+    			<a class="btn btn-default" href="${solicitudUrl}"> Ver solicitud</a>
+    		</td>
+    		</tr>
         </tbody>
     </table>
-    </a>
     </c:forEach>
 </div>
 </c:if>
