@@ -29,9 +29,9 @@ public class Encargo extends BaseEntity {
     private String titulo;
 
     @Min(0)
-    @NotNull
-    @Digits(fraction = 2,integer = 6)
-    private double precio;
+    @NotNull(message = "no puede estar vacío")
+    @Digits(fraction = 2,integer = 6, message = "Debe contener de 2 a 6 dígitos y 2 decimales")
+    private Double precio;
 
     @NotNull
     private boolean disponibilidad;

@@ -124,7 +124,7 @@ public class SolicitudControllerTests {
 		this.encargo.setTitulo("Encargo chulisimo");
 		this.encargo.setDescripcion("mira que wapo mi encargo reshulon porque tienen que ser tantos caracteres");
 		this.encargo.setDisponibilidad(true);
-		this.encargo.setPrecio(199);
+		this.encargo.setPrecio(199.0);
 		this.encargo.setBeaver(this.beaver);
 
 		this.solicitud = new Solicitud();
