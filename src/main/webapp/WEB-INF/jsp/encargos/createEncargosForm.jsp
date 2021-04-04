@@ -22,7 +22,7 @@
         <div class="form-group has-feedback">
         <div class="form-group">
             <beavarts:inputField label="*Título:" name="titulo" readonly="${isDisponible}"/>
-            <beavarts:inputField label="*Precio:" name="precio" placeholder="0.00" readonly="${isDisponible}"/>
+            <beavarts:inputNumberField label="*Precio:" name="precio" placeholder="0.00" readonly="${isDisponible}"/>
             <beavarts:inputField label="*Descripción:" name="descripcion" readonly="${isDisponible}"/>
                    
              <div class="form-group">     

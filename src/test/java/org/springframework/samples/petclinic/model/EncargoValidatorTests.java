@@ -90,7 +90,7 @@ public class EncargoValidatorTests {
 		assertThat(c.size()).isEqualTo(1);
 		ConstraintViolation<Encargo> violation = c.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("precio");
-		assertThat(violation.getMessage()).isEqualTo("Debe contener de 2 a 6 dígitos y 2 decimales");
+		assertThat(violation.getMessage()).isEqualTo("Debe contener 6 dígitos y 2 decimales");
 	}
 
 	@Test
@@ -114,7 +114,7 @@ public class EncargoValidatorTests {
 		assertThat(c.size()).isEqualTo(1);
 		ConstraintViolation<Encargo> violation = c.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("precio");
-		assertThat(violation.getMessage()).isEqualTo("Debe contener de 2 a 6 dígitos y 2 decimales");
+		assertThat(violation.getMessage()).isEqualTo("Debe contener 6 dígitos y 2 decimales");
 	}
 
 	@Test

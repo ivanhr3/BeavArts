@@ -30,7 +30,7 @@ public class Encargo extends BaseEntity {
 
     @Min(0)
     @NotNull(message = "no puede estar vacío")
-    @Digits(fraction = 2,integer = 6, message = "Debe contener de 2 a 6 dígitos y 2 decimales")
+    @Digits(fraction = 2,integer = 6, message = "Debe contener 6 dígitos y 2 decimales")
     private Double precio;
 
     @NotNull
