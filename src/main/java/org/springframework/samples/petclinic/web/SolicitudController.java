@@ -52,9 +52,9 @@ public class SolicitudController {
 	public String crearSolicitudInit(@PathVariable("engId") final int encargoId, final ModelMap model) {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		
-		if(beaver != null){
-		model.put("myBeaverId", beaver.getId());
+
+		if (beaver != null) {
+			model.put("myBeaverId", beaver.getId());
 		}
 		//De esta forma si al crear la solicitud falla no se desaparecen los datos del encargo, haciendo
 		//que haya que recargar la pagina para verlos
@@ -85,13 +85,17 @@ public class SolicitudController {
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		model.addAttribute("encargo", encargo);
-		if(beaver != null){
-		model.put("myBeaverId", beaver.getId());
+		if (beaver != null) {
+			model.put("myBeaverId", beaver.getId());
 		}
 
 		if (solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
 			model.addAttribute("solicitud", solicitud);
 			model.put("descripcion", "La descripción no puede estar vacía");
+			if (!this.solicitudService.isCollectionAllURL(solicitud)) { //Mensaje SÓLO cuando la url esta mal escrita
+				model.put("errorUrl", "Las fotos añadidas a la solicitud deben ser Urls");
+			}
+
 			return "solicitudes/creationForm";
 		} else {
 
@@ -241,28 +245,28 @@ public class SolicitudController {
 		}
 	}
 
-		//Acepta Solicitudes cuando se pulsa en el botón en los detalles de una solicitud
-		@GetMapping(value = "/finish/{solId}")
-		public String finishSolicitud(final Map<String, Object> model, @PathVariable("solId") final int solId) {
-			Solicitud sol = this.solicitudService.findById(solId);
-			Beaver beaver = this.beaverService.getCurrentBeaver();
-			int beaverId = beaver.getId();
-	
-			model.put("myBeaverId", beaverId);
-	
-			Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
-	
-			if (beaverId != encargo.getBeaver().getId()) {
-				return "solicitudes/errorAceptar"; //TODO: Front: Poned las redirecciones
-			} else if(sol.getEstado() == Estados.ACEPTADO) {
-				//solicitudService.aceptarSolicitud(sol, beaver);
-				sol.setEstado(Estados.FINALIZADO);
-				this.solicitudService.saveSolicitud(sol);
-				return "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
-			} else {
-				return "accessNotAuthorized";
-			}
-	
+	//Acepta Solicitudes cuando se pulsa en el botón en los detalles de una solicitud
+	@GetMapping(value = "/finish/{solId}")
+	public String finishSolicitud(final Map<String, Object> model, @PathVariable("solId") final int solId) {
+		Solicitud sol = this.solicitudService.findById(solId);
+		Beaver beaver = this.beaverService.getCurrentBeaver();
+		int beaverId = beaver.getId();
+
+		model.put("myBeaverId", beaverId);
+
+		Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
+
+		if (beaverId != encargo.getBeaver().getId()) {
+			return "solicitudes/errorAceptar"; //TODO: Front: Poned las redirecciones
+		} else if (sol.getEstado() == Estados.ACEPTADO) {
+			//solicitudService.aceptarSolicitud(sol, beaver);
+			sol.setEstado(Estados.FINALIZADO);
+			this.solicitudService.saveSolicitud(sol);
+			return "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+		} else {
+			return "accessNotAuthorized";
 		}
+
+	}
 
 }
