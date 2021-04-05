@@ -3,6 +3,7 @@
 
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1922da2e3b4f461ba5dae0f6e2971841)](https://www.codacy.com/gh/ivanhr3/BeavArts/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ivanhr3/BeavArts&utm_campaign=Badge_Coverage)
+[![Build Status](https://travis-ci.com/ivanhr3/BeavArts.svg?branch=master)](https://travis-ci.com/ivanhr3/BeavArts)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b6349c42eccb43a0b7e3b45877fff3c4)](https://app.codacy.com/gh/ivanhr3/BeavArts?utm_source=github.com&utm_medium=referral&utm_content=ivanhr3/BeavArts&utm_campaign=Badge_Grade_Settings)
 
 This is a project designed for the ISPP course. The main parts of the project are:
