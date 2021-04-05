@@ -20,10 +20,10 @@ INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://cdn.pixab
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://cdn.pixabay.com/photo/2021/03/11/13/57/among-us-6087168_960_720.png');
 
 --Admin user
-INSERT INTO users(username,password,enabled) VALUES ('admin','$2a$10$B4srWD5ejof0cIiI1CsvseKsIbg01bc9L/40aduSxL9vdKp1fSHKO',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (3,'admin','admin');
+INSERT INTO users(username,password,enabled) VALUES ('adm','$2a$10$B4srWD5ejof0cIiI1CsvseKsIbg01bc9L/40aduSxL9vdKp1fSHKO',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (3,'adm','admin');
 INSERT INTO portfolio(id, sobre_mi) VALUES (3, 'Soy un administrador con todas las funcionalidades activas.');
-INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, valoracion, portfolio_id, username) VALUES (3, 'Nombre', 'Apellidos', '92234321Q', 'adminprueba@email.com', 'https://cdn.pixabay.com/photo/2013/07/13/13/38/man-161282_960_720.png', 4.5, 3 , 'admin');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, valoracion, portfolio_id, username) VALUES (3, 'Nombre', 'Apellidos', '92234321Q', 'adminprueba@email.com', 'https://cdn.pixabay.com/photo/2013/07/13/13/38/man-161282_960_720.png', 4.5, 3 , 'adm');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (3, 'RESINA');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (3, 'ESCULTURA');
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (3, 'https://cdn.pixabay.com/photo/2013/03/29/13/39/system-97634_960_720.png');
