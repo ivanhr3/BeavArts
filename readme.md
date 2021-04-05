@@ -1,4 +1,10 @@
 # Spring Beavarts Application 
+
+
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1922da2e3b4f461ba5dae0f6e2971841)](https://www.codacy.com/gh/ivanhr3/BeavArts/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ivanhr3/BeavArts&utm_campaign=Badge_Coverage)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b6349c42eccb43a0b7e3b45877fff3c4)](https://app.codacy.com/gh/ivanhr3/BeavArts?utm_source=github.com&utm_medium=referral&utm_content=ivanhr3/BeavArts&utm_campaign=Badge_Grade_Settings)
+
 This is a project designed for the ISPP course. The main parts of the project are:
 - Anuncios: Section where you can make new ads and get known by million of artists.
 - Encargos: Section where you can make new petitions to several artists.
@@ -66,7 +72,7 @@ Then either build on the command line `./mvnw generate-resources` or using the E
 
 3) Inside IntelliJ IDEA
 
-In the main menu, choose `File -> Open` and select the Beavarts [pom.xml](pom.xml). Click on the `Open` button.
+In the main menu, choose `File -> Open` and select the Beavarts [pom.xml](pom.xml). Click on the `Open` button.
 
 CSS files are generated from the Maven build. You can either build them on the command line `./mvnw generate-resources`
 or right click on the `spring-beavarts` project then `Maven -> Generates sources and Update Folders`.
