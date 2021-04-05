@@ -1,4 +1,9 @@
 # Spring Beavarts Application 
+
+
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1922da2e3b4f461ba5dae0f6e2971841)](https://www.codacy.com/gh/ivanhr3/BeavArts/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ivanhr3/BeavArts&utm_campaign=Badge_Coverage)
+
 This is a project designed for the ISPP course. The main parts of the project are:
 - Anuncios: Section where you can make new ads and get known by million of artists.
 - Encargos: Section where you can make new petitions to several artists.
