@@ -1,14 +1,17 @@
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
-<petclinic:layout pageName="error">
+<beavarts:layout pageName="error">
 
-    <spring:url value="/resources/images/pets.png" var="petsImage"/>
-    <img src="${petsImage}"/>
-
-    <h2>Something happened...</h2>
+<div class="col-12 text-center" >
+	<h2>Ha ocurrido un error. Si este error persiste, es conveniente que avises al administrador del sistema.</h2>
+    <spring:url value="/resources/images/sadbeaver.png" var="sadBeaver"/>
+    <img src="${sadBeaver}"/>
 
     <p>${exception.message}</p>
-
-</petclinic:layout>
+    
+</div>
+	
+</beavarts:layout>

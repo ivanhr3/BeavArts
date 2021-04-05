@@ -14,7 +14,7 @@ before_script:
 script:
   - mvn clean package -DskipTests=true 
   - mvn test -Dspring-boot.run.profiles=mysql-travis
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report
+  - mvn clean -Dspring-boot.run.profiles=mysql-travis org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report
 after_success:
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r target/site/jacoco/*.xml
 branches:
@@ -22,8 +22,12 @@ branches:
   - master
   - develop
   - CodacyImpl
+  - developFix
+ 
+
 deploy:
   provider: heroku
   app: beavarts
   strategy: git
   apikey: $HEROKU_AUTH_TOKEN_PROD
+

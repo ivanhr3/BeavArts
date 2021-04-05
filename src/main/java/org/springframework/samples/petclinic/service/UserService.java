@@ -51,8 +51,18 @@ public class UserService {
 		user.setPassword(PasswordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
-	
+
+	@Transactional
+	public void save(User user) throws DataAccessException{
+		userRepository.save(user);
+	}
+
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
 	}
+
+	@Transactional
+    public User findUserByUsername(String username){
+        return this.userRepository.findByUsername(username);
+    }
 }
