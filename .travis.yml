@@ -23,5 +23,11 @@ branches:
   - develop
   - CodacyImpl
   - developFix
-  - Hotfix
+ 
+
+deploy:
+  provider: heroku
+  app: beavarts
+  strategy: git
+  apikey: $HEROKU_AUTH_TOKEN_PROD
 
