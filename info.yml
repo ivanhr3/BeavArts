@@ -1,0 +1,57 @@
+project:
+  name: 'Beavarts'
+  owner: 'morning'
+  teamId: '3'
+  identities:
+    github:
+      url: 'https://github.com/ivanhr3/BeavArts'
+    heroku:
+      url: 'https://beavarts.herokuapp.com/'
+    travis:
+      url: 'https://travis-ci.com/github/ivanhr3/BeavArts'
+  members:
+    member1:
+      name: 'Andrés'
+      surname: 'Aguilar Alhama' 
+      githubUsername: 'andagualh'
+      herokuUsername: 'beavartsispp@gmail.com'
+    member2:
+      name: 'Adrián'
+      surname: 'Madero Fernández' 
+      githubUsername: 'adrmadfer'
+    member3:
+      name: 'José Francisco'
+      surname: 'Regadera Mejías' 
+      githubUsername: 'JoseFrancisco-uvus'
+    member4:
+      name: 'Jose Manuel'
+      surname: 'Gallardo Ballesteros' 
+      githubUsername: 'josgalbal'
+    member5:
+      name: 'Lizseth'
+      surname: 'Esquen Saavedra' 
+      githubUsername: 'lizesqsaa'
+    member6:
+      name: 'Manuel'
+      surname: 'Rubio Benavides' 
+      githubUsername: 'manrubben'
+    member7:
+      name: 'Pablo'
+      surname: 'Moreno Delgado' 
+      githubUsername: 'pabmordel'
+    member8:
+      name: 'Pedro Pablo'
+      surname: 'Carvajal Moreno' 
+      githubUsername: 'pedcarmor'
+    member9:
+      name: 'Pedro'
+      surname: 'Coza Mateos' 
+      githubUsername: 'PedroCoza'
+    member10:
+      name: 'Rafael'
+      surname: 'Liébana Fuentes' 
+      githubUsername: 'rafliefue'
+    member11:
+      name: 'Iván'
+      surname: 'Hernández Rodríguez' 
+      githubUsername: 'ivanhr3'      
