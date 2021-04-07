@@ -21,8 +21,7 @@ branches:
   only:
   - master
   - develop
-  - CodacyImpl
-  - developFix
+  - travis-configuration-sprint2
  
 
 deploy:
