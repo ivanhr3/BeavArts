@@ -21,13 +21,13 @@ branches:
   only:
   - master
   - develop
-  - CodacyImpl
-  - developFix
+  - travis-configuration-sprint2
  
 
 deploy:
   provider: heroku
-  app: beavarts
   strategy: git
-  apikey: $HEROKU_AUTH_TOKEN_PROD
-
+  apikey: 
+    master: $HEROKU_AUTH_TOKEN_PROD
+  app:
+    master: beavarts
