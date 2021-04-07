@@ -1,8 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +10,8 @@ import org.hibernate.validator.constraints.URL;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -24,7 +24,7 @@ public class Anuncio extends BaseEntity {
     @Min(0)
     @Digits(fraction=2,integer=6)
     @NotNull
-    private double precio;
+    private Double precio;
 
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
@@ -34,5 +34,12 @@ public class Anuncio extends BaseEntity {
 
     @URL
     private String photo;
-    
+
+    @ManyToOne
+    @JoinColumn(name="beaver_id")
+    private Beaver beaver;
+
+    @OneToMany(mappedBy = "anuncio")
+    private Collection<Solicitud> solicitud;
+
 }
