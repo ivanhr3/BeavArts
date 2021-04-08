@@ -11,58 +11,62 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@icon-font-path:    "../../webjars/bootstrap/fonts/";
+$icon-font-path:    "../../webjars/bootstrap/fonts/";
 
-@spring-green:      #6db33f;
-@spring-dark-green: #5fa134;
-@spring-brown:      #34302D;
-@spring-grey:       #838789;
-@spring-light-grey: #f1f1f1;
-@light-brown: #EFC58D;
-@red-intense: #ff0000;
+$spring-green:      #6db33f;
+$spring-dark-green: #5fa134;
+$spring-brown:      #34302D;
+$spring-grey:       #838789;
+$spring-light-grey: #f1f1f1;
+$light-brown: #EFC58D;
+$red-intense: #ff0000;
 
-@body-bg:                           @light-brown;
-@text-color:                        @red-intense;
-@link-color:                        @spring-dark-green;
-@link-hover-color:                  @spring-dark-green;
+$body-bg:                           $light-brown;
+$text-color:                        $red-intense;
+$link-color:                        $spring-dark-green;
+$link-hover-color:                  $spring-dark-green;
 
-@navbar-default-link-color:         @spring-light-grey;
-@navbar-default-link-active-color:  @spring-light-grey;
-@navbar-default-link-hover-color:   @spring-light-grey;
-@navbar-default-link-hover-bg:      @spring-green;
-@navbar-default-toggle-icon-bar-bg: @spring-light-grey;
-@navbar-default-toggle-hover-bg:    transparent;
-@navbar-default-link-active-bg:     @spring-green;
+$navbar-default-link-color:         $spring-light-grey;
+$navbar-default-link-active-color:  $spring-light-grey;
+$navbar-default-link-hover-color:   $spring-light-grey;
+$navbar-default-link-hover-bg:      $spring-green;
+$navbar-default-toggle-icon-bar-bg: $spring-light-grey;
+$navbar-default-toggle-hover-bg:    transparent;
+$navbar-default-link-active-bg:     $spring-green;
 
-@border-radius-base:             0;
-@border-radius-large:            0;
-@border-radius-small:            0;
+$border-radius-base:             0;
+$border-radius-large:            0;
+$border-radius-small:            0;
 
-@btn-default-color:              @spring-light-grey;
-@btn-default-bg:                 @spring-brown;
-@btn-default-border:             @spring-green;
+$btn-default-color:              $spring-light-grey;
+$btn-default-bg:                 $spring-brown;
+$btn-default-border:             $spring-green;
 
-@nav-tabs-active-link-hover-color:        @spring-light-grey;
-@nav-tabs-active-link-hover-bg:           @spring-brown;
-@nav-tabs-active-link-hover-border-color: @spring-brown;
-@nav-tabs-border-color:                   @spring-brown;
+$nav-tabs-active-link-hover-color:        $spring-light-grey;
+$nav-tabs-active-link-hover-bg:           $spring-brown;
+$nav-tabs-active-link-hover-border-color: $spring-brown;
+$nav-tabs-border-color:                   $spring-brown;
 
-@pagination-active-bg:                    @spring-brown;
-@pagination-active-border:                @spring-green;
-@table-border-color:                      @spring-brown;
+$pagination-active-bg:                    $spring-brown;
+$pagination-active-border:                $spring-green;
+$table-border-color:                      $spring-brown;
 
 .table > thead > tr > th {
-  background-color: lighten(@spring-brown, 3%);
-  color: @spring-light-grey;
+  background-color: lighten($spring-brown, 3%);
+  color: $spring-light-grey;
 }
 
 .table-filter {
-  background-color: @spring-brown;
+  background-color: $spring-brown;
   padding: 9px 12px;
 }
 
 .nav > li > a {
-  color: @spring-grey;
+  color: $spring-grey;
+}
+
+.jumbotron{
+	 background-color: $light-brown;
 }
 
 .btn-default {
@@ -78,8 +82,8 @@
   &:active,
   &.active,
   .open .dropdown-toggle& {
-    background-color: @spring-brown;
-    border-color: @spring-brown;
+    background-color: $spring-brown;
+    border-color: $spring-brown;
   }
 }
 
@@ -120,8 +124,8 @@
   &:active,
   &.active,
   .open .dropdown-toggle& {
-    background-color: @spring-brown;
-    border-color: @spring-brown;
+    background-color: $spring-brown;
+    border-color: $spring-brown;
   }
 }
 
@@ -169,8 +173,8 @@ h1 {
 }
 
 .splash {
-  background: @spring-green;
-  color: @spring-brown;
+  background: $spring-green;
+  color: $spring-brown;
   display: none;
 }
 
@@ -210,7 +214,7 @@ table td.action-column {
 }
 
 .help-block {
-  color: lighten(@text-color, 50%); // lighten the text some for contrast
+  color: lighten($text-color, 50%); // lighten the text some for contrast
 }
 
 .xd-containers {
@@ -234,60 +238,49 @@ table td.action-column {
 }
 
 .deployment-status-deployed {
-  .label-success;
+  @include label-success;
 }
 
 .deployment-status-incomplete {
-  .label-warning;
+  @include label-warning;
 }
 
 .deployment-status-failed {
-  .label-danger;
+  @include label-danger;
 }
 
 .deployment-status-deploying {
-  .label-info
+  @include label-info;
 }
 .deployment-status-na {
 }
 
 .container-details-table th {
-  background-color: lighten(@spring-brown, 3%);
-  color: @spring-light-grey;
+  background-color: lighten($spring-brown, 3%);
+  color: $spring-light-grey;
 }
 
 .status-help-content-table td {
-  color: @spring-brown;
+  color: $spring-brown;
 }
 
-.alert-success {
-  .alert-variant(fade(@alert-success-bg, 70%); @alert-success-border; @alert-success-text);
-}
-.alert-info {
-  .alert-variant(fade(@alert-info-bg, 70%); @alert-info-border; @alert-info-text);
-}
-.alert-warning {
-  .alert-variant(fade(@alert-warning-bg, 70%); @alert-warning-border; @alert-warning-text);
-}
-.alert-danger {
-  .alert-variant(fade(@alert-danger-bg, 70%); @alert-danger-border; @alert-danger-text);
-}
 
-.myspinner {
-  animation-name: spinner;
+
+.myadjust-huener {
+  animation-name: adjust-huener;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 
   -webkit-transform-origin: 49% 50%;
-  -webkit-animation-name: spinner;
+  -webkit-animation-name: adjust-huener;
   -webkit-animation-duration: 2s;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
 }
 
 hr {
-  border-top: 1px dotted @spring-brown;
+  border-top: 1px dotted $spring-brown;
 }
 
 @import "typography.less";

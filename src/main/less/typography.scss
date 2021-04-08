@@ -1,4 +1,4 @@
-@font-face {
+$font-face {
   font-family: 'varela_roundregular';
 
   src: url('../fonts/varela_round-webfont.eot');
@@ -10,7 +10,7 @@
   font-style: normal;
 }
 
-@font-face {
+$font-face {
   font-family: 'montserratregular';
   src: url('../fonts/montserrat-webfont.eot');
   src: url('../fonts/montserrat-webfont.eot?#iefix') format('embedded-opentype'),
@@ -58,3 +58,4 @@ strong {
   font-weight: 700;
   font-family: "montserratregular", sans-serif;
 }
+
