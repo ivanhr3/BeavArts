@@ -25,10 +25,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Beaver extends Person {
-    
+
     @Email
 	private String email;
-    
+
     @ElementCollection(targetClass = Especialidad.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name="beaver_especialidades", joinColumns = @JoinColumn(name="beaver_id"))
@@ -36,13 +36,13 @@ public class Beaver extends Person {
     private Collection<Especialidad> especialidades;
 
     @NotBlank
-    @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto") 
+    @Pattern(regexp="^[0-9]{8}[aA-zZ]{1}",message="introduce un DNI correcto")
 	private String dni;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
-    
+
     private Double valoracion;
 
     private String urlFotoPerfil;
@@ -56,4 +56,7 @@ public class Beaver extends Person {
     @OneToOne
     @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
+
+    @OneToMany(mappedBy = "beaver")
+    private Collection<Anuncio> anuncios;
 }

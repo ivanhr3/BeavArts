@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Solicitud extends BaseEntity{
-    
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private Estados estado;
@@ -48,5 +48,9 @@ public class Solicitud extends BaseEntity{
     @ManyToOne
     @JoinColumn(name="encargo_id")
     private Encargo encargo;
-    
+
+    @ManyToOne
+    @JoinColumn(name="anuncio_id")
+    private Anuncio anuncio;
+
 }
