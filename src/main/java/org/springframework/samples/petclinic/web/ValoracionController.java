@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Valoracion;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.ValoracionService;
@@ -25,11 +26,18 @@ public class ValoracionController {
 
     //LIST
     @GetMapping("/list")
-    public String listarValoraciones(@PathVariable("beaverId") final int beaverId, final ModelMap modelMap){
+    public String listarValoraciones(@PathVariable("beaverId") final int beaverId, final ModelMap model){
 
         String vista = ""; //REDIRECCIONAR A VISTA CORRECTA
+        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+        model.addAttribute("beaverId", beaverId);
+		model.addAttribute("beaver", beaver);
+
+        if (beaver.getValoraciones().isEmpty()) {
+            model.addAttribute("hayValoraciones", false); //Control de falta de valoraciones
+        }
         Iterable<Valoracion> valoraciones = this.valoracionService.findValoracionesByBeaverId(beaverId);
-        modelMap.addAttribute("valoraciones", valoraciones);
+        model.addAttribute("valoraciones", valoraciones);
         return vista;
     }
 }

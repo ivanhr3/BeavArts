@@ -22,6 +22,11 @@ public class ValoracionService {
         return this.valoracionRepository.findValoracionesByBeaverId(id);
     }
 
+    @Transactional
+	public Valoracion saveValoracion(final Valoracion valoracion) {
+		return this.valoracionRepository.save(valoracion);
+	}
+
 
     
 }
