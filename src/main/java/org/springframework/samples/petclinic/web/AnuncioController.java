@@ -3,16 +3,19 @@ package org.springframework.samples.petclinic.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Anuncio;
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.service.AnuncioService;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +31,24 @@ public class AnuncioController {
     public AnuncioController(final AnuncioService anuncioService, final BeaverService beaverService) throws ClassNotFoundException {
         this.anuncioService = anuncioService;
         this.beaverService = beaverService;
+    }
+
+    //Añadido para usarlo en el jsp
+    @ModelAttribute("types")
+    public Collection<Especialidad> populateEspecialidades() {
+
+        Collection<Especialidad> especialidades = new ArrayList<>();
+
+        especialidades.add(Especialidad.ACRÍLICO);
+        especialidades.add(Especialidad.ESCULTURA);
+        especialidades.add(Especialidad.FOTOGRAFÍA);
+        especialidades.add(Especialidad.ILUSTRACIÓN);
+        especialidades.add(Especialidad.JOYERÍA);
+        especialidades.add(Especialidad.RESINA);
+        especialidades.add(Especialidad.TEXTIL);
+        especialidades.add(Especialidad.ÓLEO);
+
+        return especialidades;
     }
 
     // CREAR ANUNCIO
