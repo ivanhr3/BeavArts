@@ -56,4 +56,7 @@ public class Beaver extends Person {
     @OneToOne
     @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
+
+    @OneToMany(mappedBy = "beaver")
+    private Collection<Valoracion> valoraciones;
 }
