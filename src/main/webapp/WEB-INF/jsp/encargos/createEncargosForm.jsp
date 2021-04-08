@@ -15,7 +15,6 @@
     </h2>
     
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
-     
     <br/>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
@@ -40,8 +39,8 @@
 	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
 	            		<div class="col-sm-3">
 			            	<select class="form-control" name="disponibilidad">
+			            		<option value=true>Disponible</option>
 			                    <option value=false>No Disponible</option>
-			                    <option value=true>Disponible</option>
 			                </select>
 	            		</div>            		
             	</c:if>

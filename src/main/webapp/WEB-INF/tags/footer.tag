@@ -9,7 +9,7 @@
 <script src="${jQueryUiCore}"></script>
 
 <%-- Bootstrap --%>
-<spring:url value="/webjars/bootstrap/3.3.6/js/bootstrap.min.js" var="bootstrapJs"/>
+<spring:url value="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" var="bootstrapJs"/>
 <script src="${bootstrapJs}"></script>
 
 

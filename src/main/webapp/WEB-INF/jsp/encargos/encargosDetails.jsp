@@ -12,6 +12,7 @@
     </spring:url>
    
 <div class="container justify-content-center" style="display:flex; flex-wrap:wrap;">
+
 <h1>Encargo: <c:out value="${encargo.titulo}"/></h1> 
     <table class="table table-borderless">
         <tr>
@@ -65,8 +66,8 @@
 				<a class="btn btn-default" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
 			</c:if>
      </c:if>
-     <c:if test="${createdByUser == true}">
-        	<a class="btn btn-default" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
+    </div>
+    <c:if test="${createdByUser == true}">
+        	<a class="btn btn-primary" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
     </c:if>
-</div>
 </beavarts:layout>
