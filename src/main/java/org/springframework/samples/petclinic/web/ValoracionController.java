@@ -30,11 +30,18 @@ public class ValoracionController {
 
     //LIST
     @GetMapping("/list")
-    public String listarValoraciones(@PathVariable("beaverId") final int beaverId, final ModelMap modelMap){
+    public String listarValoraciones(@PathVariable("beaverId") final int beaverId, final ModelMap model){
 
         String vista = ""; //REDIRECCIONAR A VISTA CORRECTA
+        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+        model.addAttribute("beaverId", beaverId);
+		model.addAttribute("beaver", beaver);
+
+        if (beaver.getValoraciones().isEmpty()) {
+            model.addAttribute("hayValoraciones", false); //Control de falta de valoraciones
+        }
         Iterable<Valoracion> valoraciones = this.valoracionService.findValoracionesByBeaverId(beaverId);
-        modelMap.addAttribute("valoraciones", valoraciones);
+        model.addAttribute("valoraciones", valoraciones);
         return vista;
     }
 

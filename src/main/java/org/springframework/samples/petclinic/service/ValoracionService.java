@@ -40,6 +40,11 @@ public class ValoracionService {
         valoracionRepository.save(val);
     }
 
+    @Transactional
+	public Valoracion saveValoracion(final Valoracion valoracion) {
+		return this.valoracionRepository.save(valoracion);
+	}
+
 
     
 }
