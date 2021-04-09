@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Anuncio;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
+import org.springframework.samples.petclinic.model.Estados;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -96,6 +95,31 @@ public class AnuncioController {
             return "redirect:/beavers/" + beaver.getId() + "/anuncios/" + anuncio.getId();
         }
 
+    }
+
+
+
+    // METODO PARA BORRAR ANUNCIOS
+
+    @RequestMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/delete")
+    public String deleteAnuncio(@PathVariable("beaverId") final int beaverId, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
+
+        Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
+
+        if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
+            return "accesoNoAutorizado"; // Acceso no autorizado
+        } else {
+            // SOLO SE PUEDE BORRAR UN ANUNCIO SI NO TIENE SOLICITUDES ACEPTADAS
+            if(anuncio.getSolicitud() != null && anuncio.getSolicitud().stream().anyMatch(s -> s.getEstado()== Estados.ACEPTADO)) {
+                model.put("errorSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas.");
+                return "anuncios/anunciosDetails";
+
+            } else {
+                this.anuncioService.deleteAnuncio(anuncioId);
+                return "redirect:/beavers/" + beaverId + "/encargos/list";
+            }
+
+        }
     }
 
 
