@@ -21,8 +21,6 @@ import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.model.Valoracion;
-import org.springframework.samples.petclinic.repository.BeaverRepository;
-import org.springframework.samples.petclinic.repository.ValoracionRepository;
 
 @SpringBootTest
 public class ValoracionServiceTests {
@@ -33,6 +31,9 @@ public class ValoracionServiceTests {
 
     private Beaver beaver1;
     private Beaver beaver2;
+
+    private Valoracion valoracion1;
+    private Valoracion valoracion2;
 
     @BeforeEach
     public void setUp(){
