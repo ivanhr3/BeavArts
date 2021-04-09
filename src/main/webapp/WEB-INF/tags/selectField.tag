@@ -19,11 +19,13 @@
         <div class="col-sm-10">
             <form:select class="form-control" path="${name}" items="${names}" size="${size}"/>
             <c:if test="${valid}">
-                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                <span class="form-control-feedback" aria-hidden="true"></span>
             </c:if>
             <c:if test="${status.error}">
-                <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                <span class="form-control-feedback" aria-hidden="true"></span>
+                <div class="alert alert-danger" role="alert">
                 <span class="help-inline">${status.errorMessage}</span>
+                </div>
             </c:if>
         </div>
     </div>

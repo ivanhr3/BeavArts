@@ -7,15 +7,13 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
-
-<beavarts:layout pageName="encargos">
+<beavarts:layout pageName="Encargos">
     <h2>
         <c:if test="${!editando}">Registrar </c:if> 
         <c:if test="${editando}">Editar </c:if> Encargo
     </h2>
     
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
-    <br/>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
@@ -39,8 +37,8 @@
 	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
 	            		<div class="col-sm-3">
 			            	<select class="form-control" name="disponibilidad">
+			            	<option value=false>No Disponible</option>
 			            		<option value=true>Disponible</option>
-			                    <option value=false>No Disponible</option>
 			                </select>
 	            		</div>            		
             	</c:if>
@@ -54,14 +52,18 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${!editando}">
-                        <button class="btn btn-default" type="submit">Crear encargo</button>
+                        <button class="btn btn-primary" type="submit">Crear encargo</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Actualizar encargo</button>
-                        <p style="color:red; margin-top:10px"><c:out value="${errorDisponibilidad}"/></p>
+                        <button class="btn btn-primary" type="submit">Actualizar encargo</button>
+                        <br/>
+                        <c:if test="${url == true}">
+                        	<div class="alert alert-danger" role="alert">
+								<c:out value="${errorDisponibilidad}"/>
+							</div>
+						</c:if>
                     </c:otherwise>
                 </c:choose>
-               
             </div>
         </div>
     </form:form>

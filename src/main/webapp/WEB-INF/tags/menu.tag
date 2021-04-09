@@ -44,6 +44,9 @@
 					 <a class="dropdown-item" href="/beavers/${myBeaverId}/anuncios/new">Anuncios</a>
 					</div>
 				</li>
+				<li class="nav-item">
+        			<a class="nav-link" href="/beavers/beaverInfo/${myBeaverId}">Mi perfil</a>
+      			</li>	
 				</sec:authorize>
 			</ul>
 			
