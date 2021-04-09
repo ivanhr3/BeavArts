@@ -190,6 +190,8 @@ public class AnuncioControllerTests {
 
     }
 
+    // TESTS DE EDITAR ANUNCIO
+
     @WithMockUser(value = "testuser")
     @Test
     public void testInitUpdateForm() throws Exception {

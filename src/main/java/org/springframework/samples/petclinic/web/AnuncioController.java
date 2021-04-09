@@ -108,6 +108,9 @@ public class AnuncioController {
         Beaver beaver = this.beaverService.getCurrentBeaver();
         final Anuncio anunc = this.anuncioService.findAnuncioById(anuncio);
 
+        model.put("myBeaverId", beaver.getId()); //Añadido para usar las url del header
+        model.put("editando", true); //Para que los botones no cambien
+
         if (anunc.getBeaver() != beaver) {
             return "accesoNoAutorizado"; //Acceso no Autorizado
         } else {
