@@ -22,6 +22,7 @@ branches:
   - master
   - develop
   - travis-configuration-sprint2
+  - Editar_Anuncios-issue#83
  
 
 deploy:

@@ -1,9 +1,11 @@
 package org.springframework.samples.petclinic.web;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Anuncio;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
+import org.springframework.samples.petclinic.model.Estados;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -96,6 +99,49 @@ public class AnuncioController {
             return "redirect:/beavers/" + beaver.getId() + "/anuncios/" + anuncio.getId();
         }
 
+    }
+
+    //Aquí comienza la parte de editar Anuncio
+
+    @GetMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/edit")
+    public String initUpdateForm(@PathVariable("anuncioId") final int anuncio, final ModelMap model) {
+        Beaver beaver = this.beaverService.getCurrentBeaver();
+        final Anuncio anunc = this.anuncioService.findAnuncioById(anuncio);
+
+        if (anunc.getBeaver() != beaver) {
+            return "accesoNoAutorizado"; //Acceso no Autorizado
+        } else {
+            // Al darle al boton de editar anuncio, saldra un error si dicho anuncio tiene solicitudes aceptadas
+            if(anunc.getSolicitud() != null && anunc.getSolicitud().stream().anyMatch(s -> s.getEstado()== Estados.ACEPTADO)) {
+                model.put("errorSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas.");
+                return "anuncios/anunciosDetails";
+
+            } else {
+
+                model.addAttribute("anuncio", anunc);
+
+                return AnuncioController.VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM;
+            }
+        }
+    }
+
+    @PostMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/edit")
+    public String processUpdateForm(@Valid final Anuncio anuncio, final BindingResult result, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
+
+        Beaver beaver = this.beaverService.getCurrentBeaver();
+        model.put("myBeaverId", beaver.getId()); //Añadido para usar las url del header
+        model.put("editando", true); //Para que los botones no cambien
+
+        final Anuncio anunc = this.anuncioService.findAnuncioById(anuncioId);
+        //El atributo destacado no se edita aquí
+        if (result.hasErrors()) {
+            model.addAttribute("anuncio", anuncio);
+            return AnuncioController.VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM; //Si hay algún error de campo se redirige a la misma vista
+        } else {
+            BeanUtils.copyProperties(anuncio, anunc, "id", "beaver");
+            this.anuncioService.saveAnuncio(anunc);
+            return "redirect:/beavers/" +beaver.getId() + "/anuncios/" + anuncioId;
+        }
     }
 
 
