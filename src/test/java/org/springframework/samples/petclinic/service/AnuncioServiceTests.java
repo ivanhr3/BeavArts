@@ -62,7 +62,7 @@ public class AnuncioServiceTests {
         anuncio3.setDestacado(false);
         anuncio3.setPrecio(30.0);
         anuncio3.setTitulo("Esto es un título 2");
-        anuncio3.setEspecialidad(Especialidad.ACRÍLICO);
+        anuncio3.setEspecialidad(Especialidad.ACRILICO);
 
         this.beaverService.saveBeaver(beaver);
         this.anuncioService.saveAnuncio(anuncio);
@@ -138,7 +138,7 @@ public class AnuncioServiceTests {
         anuncio2.setDescripcion("Esto es una descripción 2");
         anuncio2.setPrecio(30.0);
         anuncio2.setTitulo("Esto es un título 2");
-        anuncio2.setEspecialidad(Especialidad.ACRÍLICO);
+        anuncio2.setEspecialidad(Especialidad.ACRILICO);
         this.anuncioService.saveAnuncio(anuncio2);
         int numAnuncios2 = this.anuncioService.anunciosCount();
 
@@ -156,7 +156,7 @@ public class AnuncioServiceTests {
             anuncio2.setDescripcion("");
             anuncio2.setTitulo("");
             anuncio2.setPrecio(30.0);
-            anuncio2.setEspecialidad(Especialidad.ACRÍLICO);
+            anuncio2.setEspecialidad(Especialidad.ACRILICO);
             this.anuncioService.saveAnuncio(anuncio2);
 
         });

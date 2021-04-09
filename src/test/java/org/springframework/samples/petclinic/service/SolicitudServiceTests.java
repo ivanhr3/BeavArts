@@ -60,7 +60,7 @@ public class SolicitudServiceTests {
         beaver.setLastName("Apellidos");
         beaver.setEmail("valid@gmail.com");
         Collection<Especialidad> especialidad = new HashSet<Especialidad>();
-        especialidad.add(Especialidad.FOTOGRAFÍA);
+        especialidad.add(Especialidad.FOTOGRAFIA);
         beaver.setEspecialidades(especialidad);
         beaver.setDni("12345678Q");
             user = new User();
@@ -102,7 +102,7 @@ public class SolicitudServiceTests {
 		beaver1.setDni("29519811N");
 		beaver1.setEmail("testemail@hotmail.com");
 		Collection<Especialidad> especialidad = new HashSet<Especialidad>();
-        especialidad.add(Especialidad.FOTOGRAFÍA);
+        especialidad.add(Especialidad.FOTOGRAFIA);
         beaver1.setEspecialidades(especialidad);
 		beaver1.setFirstName("testbeaver");
 		beaver1.setLastName("Perez");
@@ -121,7 +121,7 @@ public class SolicitudServiceTests {
 		beaver1.setDni("29519811N");
 		beaver1.setEmail("testemail@hotmail.com");
 		Collection<Especialidad> especialidad = new HashSet<Especialidad>();
-        especialidad.add(Especialidad.FOTOGRAFÍA);
+        especialidad.add(Especialidad.FOTOGRAFIA);
         beaver1.setEspecialidades(especialidad);
 		beaver1.setFirstName("testbeaver");
 		beaver1.setLastName("Perez");

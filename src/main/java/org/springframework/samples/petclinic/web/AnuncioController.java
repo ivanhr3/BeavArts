@@ -39,14 +39,14 @@ public class AnuncioController {
 
         Collection<Especialidad> especialidades = new ArrayList<>();
 
-        especialidades.add(Especialidad.ACRÍLICO);
+        especialidades.add(Especialidad.ACRILICO);
         especialidades.add(Especialidad.ESCULTURA);
-        especialidades.add(Especialidad.FOTOGRAFÍA);
-        especialidades.add(Especialidad.ILUSTRACIÓN);
-        especialidades.add(Especialidad.JOYERÍA);
+        especialidades.add(Especialidad.FOTOGRAFIA);
+        especialidades.add(Especialidad.ILUSTRACION);
+        especialidades.add(Especialidad.JOYERIA);
         especialidades.add(Especialidad.RESINA);
         especialidades.add(Especialidad.TEXTIL);
-        especialidades.add(Especialidad.ÓLEO);
+        especialidades.add(Especialidad.OLEO);
 
         return especialidades;
     }
