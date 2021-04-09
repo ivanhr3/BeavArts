@@ -58,7 +58,7 @@ public class ValoracionController {
             model.addAttribute("myBeaverId", current.getId());
             final Valoracion valoracion = new Valoracion();
             model.addAttribute("valoracion", valoracion);
-            return "vistaDeCreacion"; //TODO FRONT: Añadir vista de creación aquí
+            return ""; //TODO FRONT: Añadir vista de creación aquí
         }
     }
 
@@ -66,8 +66,9 @@ public class ValoracionController {
     public String processCreationForm(@PathVariable("beaverId") final int beaverId, @Valid Valoracion valoracion, final BindingResult result, final ModelMap model){
         Beaver current = this.beaverService.getCurrentBeaver();
         Beaver reciever = this.beaverService.findBeaverByIntId(beaverId);
+        if(current != null){
         model.put("myBeaverId", current.getId());
-
+        }
         if(result.hasErrors()){
             model.addAttribute("valoracion", valoracion);
             return "vistaDeCreacion"; //TODO FRONT: Añadir vista de creación aquí
