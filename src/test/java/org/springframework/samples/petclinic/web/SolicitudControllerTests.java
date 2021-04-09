@@ -95,7 +95,7 @@ public class SolicitudControllerTests {
 		this.beaver.setLastName("Apellidos");
 		this.beaver.setEmail("valid@gmail.com");
 		Collection<Especialidad> especialidad = new HashSet<Especialidad>();
-		especialidad.add(Especialidad.FOTOGRAFÍA);
+		especialidad.add(Especialidad.FOTOGRAFIA);
 		this.beaver.setEspecialidades(especialidad);
 		this.beaver.setDni("12345678Q");
 		this.user = new User();

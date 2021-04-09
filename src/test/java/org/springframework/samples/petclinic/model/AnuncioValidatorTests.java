@@ -30,7 +30,7 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(50.00);
 		a.setTitulo("");
-		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setEspecialidad(Especialidad.ACRILICO);
 		a.setDescripcion("Descripcion muy bonita.");
 
 		//ACT
@@ -53,7 +53,7 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(500000000.00);
 		a.setTitulo("The best anuncio ever");
-		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setEspecialidad(Especialidad.ACRILICO);
 		a.setDescripcion("Descripcion muy bonita.");
 
 		//ACT
@@ -77,7 +77,7 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(500.455);
 		a.setTitulo("The best anuncio ever");
-		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setEspecialidad(Especialidad.ACRILICO);
 		a.setDescripcion("Descripcion muy bonita.");
 
 		//ACT
@@ -101,7 +101,7 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(-50.00);
 		a.setTitulo("The best anuncio ever");
-		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setEspecialidad(Especialidad.ACRILICO);
 		a.setDescripcion("Descripcion muy bonita.");
 				
 				
@@ -126,7 +126,7 @@ public class AnuncioValidatorTests {
 		Anuncio a = new Anuncio();
 		a.setPrecio(50.00);
 		a.setTitulo("The best anuncio ever");
-		a.setEspecialidad(Especialidad.ACRÍLICO);
+		a.setEspecialidad(Especialidad.ACRILICO);
 		a.setDescripcion(null);
 				
 				
