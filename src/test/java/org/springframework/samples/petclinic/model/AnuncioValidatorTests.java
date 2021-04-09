@@ -64,7 +64,7 @@ public class AnuncioValidatorTests {
 		assertThat(c.size()).isEqualTo(1);
 		ConstraintViolation<Anuncio> violation = c.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("precio");
-		assertThat(violation.getMessage()).isEqualTo("numeric value out of bounds (<6 digits>.<2 digits> expected)");
+		assertThat(violation.getMessage()).isEqualTo("Debe contener 6 dígitos y 2 decimales");
 	}
 
 	@Test
@@ -88,7 +88,7 @@ public class AnuncioValidatorTests {
 		assertThat(c.size()).isEqualTo(1);
 		ConstraintViolation<Anuncio> violation = c.iterator().next();
 		assertThat(violation.getPropertyPath().toString()).isEqualTo("precio");
-		assertThat(violation.getMessage()).isEqualTo("numeric value out of bounds (<6 digits>.<2 digits> expected)");
+		assertThat(violation.getMessage()).isEqualTo("Debe contener 6 dígitos y 2 decimales");
 	}
 
 	@Test
