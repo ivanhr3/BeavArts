@@ -33,20 +33,32 @@
         <div class="form-group has-feedback">
         <div class="form-group" >
             <beavarts:inputField label="*Descripción: " name="descripcion"/> 
-            <p style="color:red; margin-top:2px; text-align:right"><c:out value="${descripcion}"/></p>
+            <c:if test="${vacia}">
+            <div class="alert alert-danger" role="alert">
+            	<p><c:out value="${descripcion}"/></p>
+            </div>
+            </c:if>
             <br/>
-            
-    		<p style="text-align:right">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
+         <div>
             <beavarts:inputField label="Fotos: " name="fotos"/>
-            <p style="color:red; text-align:right"><c:out value="${errorUrl}"/></p>
-                   
+            <p style="text-align:justify">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
+			<c:if test="${url}">
+            <div class="alert alert-danger" role="alert">
+            	<p><c:out value="${errorUrl}"/></p>
+            </div>
+            </c:if>
+        </div>          
          </div>
          </div>         
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button class="btn btn-default" type="submit">Crear solicitud</button>   
+                <button class="btn btn-primary" type="submit">Crear solicitud</button>   
             </div>
-            <p style="color:red; margin-top:2px"><c:out value="${error}"/></p>
+            <c:if test="${pendiente}">
+            <div class="alert alert-danger" role="alert">
+            	<p><c:out value="${error}"/></p>
+            </div>
+            </c:if>
         </div>
     </form:form>
 </div>

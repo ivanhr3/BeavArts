@@ -10,33 +10,32 @@
 
 <beavarts:layout pageName="solicitudDetails">
 <div class= "container">
-<h1>Encargo: </h1>
+<h3>Encargo: </h3>
 <div class="col-lg-7">
-    <h3>
+    <h5>
         Título:
         <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	    <spring:param name="encargoId" value="${encargo.id}"/>
                 </spring:url>
                	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${encargo.titulo}"/></b></a>
-    </h3>
-    <h3>
+    </h5>
+    <h5>
         Precio:
         <td style="text-align: justify;"><c:out value="${encargo.precio} €"/></td>
-    </h3>
+    </h5>
 </div>
 </div>
 <div class="container">
 </br>
 </br>
-<h1>Solicitud:</h1>
+<h3>Solicitud:</h3>
  <div class="col-lg-7">
       <table class="table table-borderless">   
-        <h3>
-            Estado:
+        <h3 class="badge badge-info">
             <c:out value="${solicitud.estado}"/>
         </h3>
-        <h3> 
+        <h5> 
             Realizada por:
             
             	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
@@ -44,44 +43,41 @@
                	</spring:url>
                	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${solicitud.beaver.user.username}"/></b></a>
                	
-        </h3>
+        </h5>
         <c:if test= "${solicitudAceptada==true}"> 
-       	<h3>
+       	<h5>
         Datos de contacto:
         <c:out value="${solicitud.beaver.email}"/>
-        </h3>
+        </h5>
          </c:if>
-        <h3>
+        <h5>
         Descripción del encargo:
         <c:out value="${solicitud.descripcion}"/>
-        </h3>
+        </h5>
     </table>
  </div> 
-<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
- 
-    <c:forEach items="${solicitud.fotos}" var="foto">
-        <table class="table table-borderless">
-        <tbody>
-        	<td style="text-align: justify;"><img width=150px height=130px alt="" src="${foto}"/></td>
-        </tbody>
-        </table>
-	</c:forEach>
-</div>
+<c:forEach items="${solicitud.fotos}" var="foto">
 
+           <img class="img-thumbnail" src="${foto}" width=120px height=100px>        
+
+
+</c:forEach>
+<br/>
+<br/>
 <c:if test= "${isEncargoCreator==true}"> 
 <c:if test= "${solicitudPendiente==true}">
    <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">
    </spring:url>
-    <a class="btn btn-default" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
+    <a class="btn btn-primary" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
 	
 	<spring:url value="/solicitudes/decline/${solicitud.id}" var="rechazarUrl">
 	</spring:url>
-    <a class="btn btn-default" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
+    <a class="btn btn-primary" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
 </c:if>
 <c:if test= "${solicitudAceptada == true}">
     <spring:url value="/solicitudes/finish/${solicitud.id}" var="finishUrl">
     </spring:url>
-    <a class="btn btn-default" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
+    <a class="btn btn-primary" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
 </c:if>
 </c:if>
 </beavarts:layout>

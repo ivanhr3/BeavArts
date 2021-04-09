@@ -91,8 +91,10 @@ public class SolicitudController {
 
 		if (solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
 			model.addAttribute("solicitud", solicitud);
+			model.put("vacia", true);
 			model.put("descripcion", "La descripción no puede estar vacía");
 			if (!this.solicitudService.isCollectionAllURL(solicitud)) { //Mensaje SÓLO cuando la url esta mal escrita
+				model.put("url", true);
 				model.put("errorUrl", "Las fotos añadidas a la solicitud deben ser Urls");
 			}
 
@@ -105,6 +107,7 @@ public class SolicitudController {
 
 			} else if (this.solicitudService.existSolicitudByBeaver(beaver, encargo)) {//Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
 				model.addAttribute("solicitud", solicitud);
+				model.put("pendiente", true);
 				model.put("error", "Tu solicitud se encuentra pendiente de aceptación");
 				//result.rejectValue("descripcion", "Ya existe una solicitud PENDIENTE para este Encargo");
 				//El result.rejectValue me genera un error500 que no hemos sido capaces de controlar. Comentandolo y mandando el siguiente return se controla que lo de la solicitud pendiente
