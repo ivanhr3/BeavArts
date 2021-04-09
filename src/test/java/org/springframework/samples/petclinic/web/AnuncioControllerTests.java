@@ -104,7 +104,7 @@ public class AnuncioControllerTests {
         anuncio2.setDescripcion("Esto es una descripción 2");
         anuncio2.setPrecio(40.0);
         anuncio2.setTitulo("Esto es un título 2");
-        anuncio2.setEspecialidad(Especialidad.ACRÍLICO);
+        anuncio2.setEspecialidad(Especialidad.ACRILICO);
         anuncio2.setId(91);
 
         anuncio3 = new Anuncio();
@@ -112,7 +112,7 @@ public class AnuncioControllerTests {
         anuncio3.setDescripcion("Esto es una descripción 2");
         anuncio3.setPrecio(40.0);
         anuncio3.setTitulo("Esto es un título 2");
-        anuncio3.setEspecialidad(Especialidad.ACRÍLICO);
+        anuncio3.setEspecialidad(Especialidad.ACRILICO);
         anuncio3.setId(92);
 
         solicitud = new Solicitud();
