@@ -30,7 +30,7 @@ public class BeaverServiceTests {
         beaver.setLastName("Apellidos");
         beaver.setEmail("valid@gmail.com");
         Collection<Especialidad> espe = new ArrayList<>();
-        espe.add(Especialidad.ACRÍLICO);
+        espe.add(Especialidad.ACRILICO);
         beaver.setEspecialidades(espe);
         beaver.setDni("12345678Q");
             User user = new User();
