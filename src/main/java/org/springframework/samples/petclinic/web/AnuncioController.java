@@ -12,12 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class AnuncioController {
@@ -165,6 +163,76 @@ public class AnuncioController {
             }
 
         }
+    }
+
+    // LISTAR TODOS LOS ANUNCIOS EN EL MENÚ
+    @GetMapping("/anuncios/list")
+    public String listAnuncios(final ModelMap modelMap) {
+
+        Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+
+        if (me != null) {//añadido el if para los tests
+            modelMap.put("myBeaverId", me.getId()); //añadimos el id a la vista
+        }
+
+        String vista = "anuncios/listAnuncios";
+        List<Anuncio> anuncios = new ArrayList<>();
+        List<Anuncio> destacados = this.anuncioService.findAnunciosDestacados();
+        List<Anuncio> noDestacados = this.anuncioService.findAnunciosNoDestacados();
+        anuncios.addAll(destacados);
+        anuncios.addAll(noDestacados);
+
+        modelMap.addAttribute("anuncios", anuncios);
+        return vista;
+    }
+
+    @GetMapping("/anuncios/listEspecialidad")
+    public String listAnunciosPorEspecialidad(final ModelMap modelMap, @RequestParam List<Especialidad> especialidades) {
+
+        List<Anuncio> anunciosPorEspecialidad = new ArrayList<>();
+
+        for(Especialidad e: especialidades){
+            List<Anuncio> aux = this.anuncioService.findAnunciosByEspecialidad(e);
+            anunciosPorEspecialidad.addAll(aux); // se meten en una lista los anuncios ordenados por las especialidades seleccionadas
+        }
+        List<Anuncio> destacados = new ArrayList<>();
+        List<Anuncio> noDestacados = new ArrayList<>();
+        List<Anuncio> anuncios = new ArrayList<>();
+
+        for(Anuncio a: anunciosPorEspecialidad){
+            if(a.getDestacado() == true){
+                destacados.add(a); // se ordenan los anuncios dependiendo si son destacados o no
+            } else {
+                noDestacados.add(a);
+            }
+        }
+        anuncios.addAll(destacados);
+        anuncios.addAll(noDestacados);
+        String vista = "anuncios/listAnuncios";
+        modelMap.addAttribute("anuncios", anuncios);
+        return vista;
+    }
+
+
+    // MOSTRAR LOS DETALLES DE UN ANUNCIO
+
+    @GetMapping("/beavers/{beaverId}/anuncios/{anuncioId}")
+    public ModelAndView mostrarAnuncio(@PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
+
+        final ModelAndView vista = new ModelAndView("anuncios/anunciosDetails");
+        final Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
+        model.addAttribute("anuncio", anuncio);
+
+        Beaver beaver = this.beaverService.getCurrentBeaver(); //Necesario para ver el id y usar las url
+        model.addAttribute("myBeaverId", beaver.getId());
+
+        if (this.beaverService.getCurrentBeaver() == anuncio.getBeaver()) {
+            model.addAttribute("createdByUser", true); //TODO: Front: Sólo quien creó el anuncio puede actualizarlo. Mostrad el botón sólo en este caso.
+        } else {
+            model.addAttribute("createdByUser", false); //TODO: Front: Controla que el usuario que está viendo la vista es el mismo que creó el anuncio.
+            //TODO: Front: El creador del anuncio NO puede crear solicitudes, mostrad el botón si este atributo es false.
+        }
+        return vista;
     }
 
 
