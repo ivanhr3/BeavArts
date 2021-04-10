@@ -33,6 +33,19 @@ public class BeaverService {
     }
 
     @Transactional
+    public void registrarBeaver(Beaver beaver) throws DataAccessException{
+        beaverRepository.save(beaver);
+
+        Portfolio port = new Portfolio();
+        port.setBeaver(beaver);
+        
+        beaver.setPortfolio(port);
+        portfolioService.savePortfolio(port);
+
+        userService.registrarUser(beaver.getUser(), beaver);
+    }
+
+    @Transactional
     public void saveBeaver(Beaver beaver) throws DataAccessException{
         beaverRepository.save(beaver);
 

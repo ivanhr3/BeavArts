@@ -58,8 +58,9 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
+	//Método para registrar usuarios
 	@Transactional
-	public void saveUser(User user, Beaver beaver) throws DataAccessException {
+	public void registrarUser(User user, Beaver beaver) throws DataAccessException {
 		user.setEnabled(false);
 		user.setPassword(PasswordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
@@ -68,6 +69,16 @@ public class UserService {
 		final ConfirmationToken confirmationToken = new ConfirmationToken(beaver.getUser());
 		confirmationTokenService.saveConfirmationToken(confirmationToken);
 		sendConfirmationEmail(beaver.getEmail(), confirmationToken.getConfirmationToken());
+	}
+
+	//MUY IMPORTANTE: SÓLO SE VA A USAR EN TESTS, ES IGUAL QUE EL REGISTRO PERO SIN CONFIRMACION DE EMAIL
+	@Transactional
+	public void saveUser(User user, Beaver beaver) throws DataAccessException {
+		user.setEnabled(true);
+		user.setPassword(PasswordEncoder.encode(user.getPassword()));
+		userRepository.save(user);
+		authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "user");
+		
 	}
 
 	@Transactional

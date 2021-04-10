@@ -101,7 +101,7 @@ public class UserController {
 			return UserController.VIEWS_BEAVER_CREATE_FORM;
 		} else {
 			//creating owner, user, and authority
-			this.beaverService.saveBeaver(beaver);
+			this.beaverService.registrarBeaver(beaver);
 			return "redirect:/";
 		}
 	}
