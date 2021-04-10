@@ -100,11 +100,10 @@ public class ValoracionControllerTests {
 		Set<Valoracion> valoraciones = new HashSet<>();
 		valoraciones.add(v);
 		beaver.setValoraciones(valoraciones);
-		this.beaverService.saveBeaver(beaver);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name(""))
-			.andExpect(MockMvcResultMatchers.model().attributeExists("valoraciones"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", 7)).andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.view().name("")).andExpect(MockMvcResultMatchers.model().attributeExists("valoraciones"));
 	}
 }
