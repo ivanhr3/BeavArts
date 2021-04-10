@@ -44,7 +44,7 @@ public class BeaverService {
 
         userService.registrarUser(beaver.getUser(), beaver);
     }
-
+    //MUY IMPORTANTE: Esto es una copia del Registro pero sólo para Tests, es para evitar que se envíen emails.
     @Transactional
     public void saveBeaver(Beaver beaver) throws DataAccessException{
         beaverRepository.save(beaver);
