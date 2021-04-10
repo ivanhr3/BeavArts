@@ -9,13 +9,15 @@
 
 <petclinic:layout pageName="perfil">
     <h2> Datos de portfolio: </h2>
+    <br/>
     <form:form modelAttribute="portfolio" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
                
             <petclinic:inputField label="Sobre mi" name="sobreMi"/>           
-            <p style="text-align:right">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
+            
             <petclinic:inputField label="Portfolio" name="photos"/>
-             <p style="color:red; text-align:right"><c:out value="${errorUrl}"/></p>
+            <p>Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
+             <p style="color:red"><c:out value="${errorUrl}"/></p>
             
     
         </div>

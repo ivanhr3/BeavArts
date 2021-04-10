@@ -8,6 +8,10 @@ INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (1, 'TEXTIL');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (1, 'ESCULTURA');
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://cflvdg.avoz.es/default/2014/05/13/0012_201405G13P57F1jpg/Foto/G13P57F1.jpg');
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://estaticos-cdn.elperiodico.com/clip/36cd084f-1cf9-42f8-9db5-4b40ae199a92_alta-libre-aspect-ratio_default_0.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://d2lv662meabn0u.cloudfront.net/boing/dynamic/item/00000000/476/3faae11fcacba3706c378cabaaa2e06ef5259b8d_1586336013.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://media.nauticamilanonline.com/product/figura-articulada-doraemon-doraemon-movie-10cm-800x800.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://i.pinimg.com/originals/2a/37/ae/2a37aefdb88a497166da8e054058df52.jpg');
+
 
 --User2
 INSERT INTO users(username,password,enabled) VALUES ('user2', '$2a$10$/h5dlN5Jmeimr/lkdzt/vel9l9YWftfHqI8Opwg75fih62m0cdJSi', TRUE);

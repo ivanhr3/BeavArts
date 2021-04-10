@@ -126,51 +126,48 @@
 
   <!--Carousel Wrapper-->
   <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-
-    <!--Controls-->
-    <div class="controls-top">
-      <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fa fa-chevron-left"></i></a>
-      <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fa fa-chevron-right"></i></a>
-    </div>
-    <!--/.Controls-->
-
-    <!--Indicators-->
-    <ol class="carousel-indicators">
-      <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-      <li data-target="#multi-item-example" data-slide-to="1"></li>
-      <li data-target="#multi-item-example" data-slide-to="2"></li>
-    </ol>
-    <!--/.Indicators-->
-
+  
     <!--Slides-->
-    <div class="carousel-inner" role="listbox">
-
+    <div class="carousel-inner" role="listbox">		
+    
       <!--First slide-->
       <div class="carousel-item active">
+         <img style="display:block; margin:auto;" width="auto" height="500px" class="d-bldk w-50 " alt="..."  src="${beaver.portfolio.photos[0]}">                            
+      </div>
+      
+      <!--Next slides-->
+      <c:forEach items="${beaver.portfolio.photos}" var="photo" >            	
+    	<c:choose>   	
+	    	<c:when test="${photo == beaver.portfolio.photos[0]}"></c:when>
+	    	<c:otherwise>
+	    		<div class="carousel-item">
+		
+		        	<img style="display:block; margin:auto;" width="auto" height="500px" class="d-bldk w-50 " alt="..."  src="${photo}">           
+		      	</div>  
+	    	</c:otherwise>    	
+    	</c:choose>	       
+      </c:forEach>
+   </div>
+   <!--Slide buttons-->
+      <a class="carousel-control-prev" href="#multi-item-example" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previa</span>
+        </a>
+        <a class="carousel-control-next" href="#multi-item-example" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>     
+   </div>
+</div>
+<security:authorize access="isAuthenticated()">
 
-        <div class="row">
-        
-        <c:forEach items="${beaver.portfolio.photos}" var="foto">	                    		
-
-	          <div class="col-md-4">
-	            <div class="card mb-2">
-	              <img class="card-img-top"  src="${foto}"
-	                   alt="Card image cap">            
-	            </div>
-	          </div>
-          </c:forEach>  
-        </div>
-      </div>  
-      <c:if test="${beaver.user.username != principalUsername}">
+ 		<c:if test="${beaver.user.username != principalUsername}">
       		<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
                         <spring:param name="beaverId" value="${beaver.id}"/>
             </spring:url>
-		<b style="font-size:20px">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b style="font-size:20px">Encargos</b></a>
-   	  </c:if>
-    </div>
-  </div>
-</div>
-
+			<b style="font-size:20px">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b style="font-size:20px">Encargos</b></a>
+   	  	</c:if>
+</security:authorize>
 		<c:if test="${beaver.user.username == principalUsername}">
 			<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>
 		</c:if>
