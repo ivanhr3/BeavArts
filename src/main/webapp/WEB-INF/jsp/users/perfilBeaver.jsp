@@ -6,13 +6,18 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
-	
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
 	
 <beavarts:layout pageName="perfil">
-
+	
 <div class="container">
     <div class="main-body">
     
@@ -23,7 +28,7 @@
                   <div class="d-flex flex-column align-items-center text-center">
                     <img width="150px" height="150px" src="${beaver.urlFotoPerfil}" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4>${beaver.user.username}</h4> 
+                      <h4 class="SegoeFont">${beaver.user.username}</h4> 
                       <c:if test="${beaver.user.username != principalUsername}">                    
                   	
                       	<spring:url value="/beavers/{beaverId}/valoraciones/create" var="valorar">
@@ -44,7 +49,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Especialidades</h6>
+                      <h6 class="mb-0 SegoeFont">Especialidades</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       <c:forEach items="${beaver.especialidades}" var="especialidad">
@@ -55,7 +60,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Sobre mi</h6>
+                      <h6 class="mb-0 SegoeFont">Sobre mi</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       ${beaver.portfolio.sobreMi}
@@ -64,10 +69,15 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Valoración:</h6>
+                      <h6 class="mb-0 SegoeFont">Valoración</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      3/5 Estrellas - DECENTE
+                     	<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star checked"></span>
+						<span class="fa fa-star"></span>
+						<span class="fa fa-star"></span>
+						(815)
                     </div>
                   </div>
          
@@ -79,12 +89,13 @@
 	<div class="container my-4">
 		<hr class="mb-5"/>
         <div class="col-md-8">
-            <h2>Datos Personales:</h2> 
+            <h2 class="SegoeFont">Datos Personales:</h2> 
+            <br/>
               <div class="card mb-3">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Nombre</h6>
+                      <h6 class="mb-0 SegoeFont">Nombre</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       ${beaver.firstName}
@@ -93,7 +104,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Apellidos</h6>
+                      <h6 class="mb-0 SegoeFont">Apellidos</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       ${beaver.lastName}
@@ -102,7 +113,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Email</h6>
+                      <h6 class="mb-0 SegoeFont">Email</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       ${beaver.email}
@@ -111,7 +122,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">DNI</h6>
+                      <h6 class="mb-0 SegoeFont">DNI</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       ${beaver.dni}
@@ -129,17 +140,24 @@
 <div class="container my-4">
 
   <hr class="mb-5"/>
-  <h1>Portfolio:</h1>
-
+  <h1 class="SegoeFont">Portfolio:</h1>
+  <br/>
+  <br/>
   <!--Carousel Wrapper-->
   <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
   
     <!--Slides-->
     <div class="carousel-inner" role="listbox">		
     
+    
+  
+    
       <!--First slide-->
       <div class="carousel-item active">
-         <img class="d-bldk w-50 imgCustom" alt="..."  src="${beaver.portfolio.photos[0]}">                            
+      	<a data-fancybox="gallery" href="${beaver.portfolio.photos[0]}">
+      		<img class="d-bldk w-50 imgCustom" alt="..."  src="${beaver.portfolio.photos[0]}"> 
+      	</a>
+                                    
       </div>
       
       <!--Next slides-->
@@ -148,8 +166,9 @@
 	    	<c:when test="${photo == beaver.portfolio.photos[0]}"></c:when>
 	    	<c:otherwise>
 	    		<div class="carousel-item">
-		
-		        	<img class="d-bldk w-50 imgCustom" alt="..."  src="${photo}">           
+					<a data-fancybox="gallery" href="${photo}">
+			      		<img class="d-bldk w-50 imgCustom" alt="..."  src="${photo}"> 
+			      	</a>		        	          
 		      	</div>  
 	    	</c:otherwise>    	
     	</c:choose>	       
@@ -173,7 +192,7 @@
       		<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
                         <spring:param name="beaverId" value="${beaver.id}"/>
             </spring:url>
-			<b style="font-size:20px">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b style="font-size:20px">Encargos</b></a>
+			<b class="SegoeFont" style="font-size:20px">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b  class="SegoeFont" style="color:b14900; font-size:20px">Encargos</b></a>
    	  	</c:if>
 </security:authorize>
 		
