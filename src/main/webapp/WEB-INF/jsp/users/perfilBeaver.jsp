@@ -91,9 +91,13 @@
 	        </div>
 	        
 	        <br/>
-	        <a class="btn btn-default">Valorar</a>
+	         <spring:url value="/beavers/{beaverId}/valoraciones/create" var="valorar">
+		          <spring:param name="beaverId" value="${beaver.id}"/>
+	         </spring:url>  
+	        <a class="btn btn-primary" href="${fn:escapeXml(valorar)}">Valorar</a>
 		</c:if>
 		<c:if test="${beaver.user.username == principalUsername}">
+			
 			<a class="btn btn-default" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>
 		</c:if>
 	</div>

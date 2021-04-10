@@ -32,7 +32,7 @@ public class ValoracionController {
     @GetMapping("/list")
     public String listarValoraciones(@PathVariable("beaverId") final int beaverId, final ModelMap model){
 
-        String vista = ""; //REDIRECCIONAR A VISTA CORRECTA
+        String vista = "valoracion/lista"; //REDIRECCIONAR A VISTA CORRECTA
         Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
         model.addAttribute("beaverId", beaverId);
 		model.addAttribute("beaver", beaver);
@@ -58,7 +58,7 @@ public class ValoracionController {
             model.addAttribute("myBeaverId", current.getId());
             final Valoracion valoracion = new Valoracion();
             model.addAttribute("valoracion", valoracion);
-            return ""; //TODO FRONT: Añadir vista de creación aquí
+            return "valoracion/createValoracion"; //TODO FRONT: Añadir vista de creación aquí
         }
     }
 
@@ -71,12 +71,12 @@ public class ValoracionController {
         }
         if(result.hasErrors()){
             model.addAttribute("valoracion", valoracion);
-            return "vistaDeCreacion"; //TODO FRONT: Añadir vista de creación aquí
+            return "valoracion/createValoracion"; //TODO FRONT: Añadir vista de creación aquí
         } else if(current  == null|| current == reciever){
             return "accesoNoAutorizado";
         } else {
             valoracionService.crearValoracion(valoracion, reciever);
-            return "listaDeValoraciones"; //TODO: FRONT: Añadir vista de lista de valoraciones o el Perfil del usuario valorado
+            return "redirect:/beavers/beaverInfo/"+reciever.getId(); //TODO: FRONT: Añadir vista de lista de valoraciones o el Perfil del usuario valorado
         }
     }
 }

@@ -10,45 +10,41 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
 	<div class="container">
-		<div class="navbar-header">
+		
 		<a class="navbar-brand"
 				href="<spring:url value="/" htmlEscape="true" />"><span></span></a>
-			<button type="button" class="navbar-toggle" data-toggle="collapse"
-				data-target="#main-navbar">
-				<span class="sr-only"><os-p>Toggle navigation</os-p></span> <span
+			<button type="button" class="navbar-toggler" data-toggle="collapse"
+				data-target="#main-navbar" aria-label="Toggle navigation">
+				 <span class="navbar-toggler-icon"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
 			
-		</div>
-		<div class="navbar-collapse collapse" id="main-navbar">
-			<ul style="margin-left:50px" class="nav navbar-nav">
 		
-				<beavarts:menuItem active="${name eq 'sobre'}" url="https://beavartsispp.wixsite.com/home">
-					<span>Sobre nosotros</span>
-				</beavarts:menuItem>
-
-				<beavarts:menuItem active="${name eq 'explora'}" url="/beavers/list">
-					<span>Explora</span>
-				</beavarts:menuItem>
-				
-				<sec:authorize access="isAuthenticated()">
-					<beavarts:menuItem active="${name eq 'mis solicitudes'}" url="/solicitudes/list">
-						<span>Mis Solicitudes</span>
-					</beavarts:menuItem>
-					
-					<beavarts:menuItem active="${name eq 'mis publicaciones'}" url="/beavers/${myBeaverId}/encargos/list">
-						<span>Mis Publicaciones</span>
-					</beavarts:menuItem>
-					
-					<beavarts:menuItem active="${name eq 'mi perfil'}" url="/beavers/beaverInfo/${myBeaverId}">
-						<span>Mi Perfil</span>
-					</beavarts:menuItem>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    		<ul class="navbar-nav mr-auto">
+      			<li class="nav-item">
+				 <a class="nav-link" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
+				  </li>
+				<li class="nav-item">
+        			<a class="nav-link" href="/beavers/list">Explora</a>
+      			</li>
+      			
+      			<sec:authorize access="isAuthenticated()">
+      			<li class="nav-item">
+        			<a class="nav-link" href="/solicitudes/list">Mis Solicitudes</a>
+      			</li>		
+				<li class="nav-item dropdown">
+        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mis Publicaciones</a>
+					 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					 <a class="dropdown-item" href="/beavers/${myBeaverId}/encargos/list">Encargos</a>
+					 <a class="dropdown-item" href="/beavers/${myBeaverId}/anuncios/new">Anuncios</a>
+					</div>
+				</li>
 				</sec:authorize>
-				
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">
@@ -58,9 +54,8 @@
 				
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
-							<strong><sec:authentication property="name" /></strong> <span
-							class="glyphicon glyphicon-chevron-down"></span>
+						data-toggle="dropdown">
+							<strong><sec:authentication property="name" /></strong>
 					</a>
 						<ul class="dropdown-menu">
 							<li>

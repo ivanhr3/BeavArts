@@ -81,7 +81,7 @@ public class ValoracionControllerTests {
 	@Test
 	public void testListValoracionesEmpty() throws Exception {
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", ValoracionControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name(""))
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", ValoracionControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("valoracion/lista"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("hayValoraciones"));
 	}
 
@@ -112,7 +112,7 @@ public class ValoracionControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name(""))
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("valoracion/lista"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("valoraciones"));
 	}
 
@@ -142,7 +142,7 @@ public class ValoracionControllerTests {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.model().attribute("myBeaverId", 99))
 		.andExpect(MockMvcResultMatchers.model().attributeExists("valoracion"))
-		.andExpect(MockMvcResultMatchers.view().name("")); //TODO: Front avisad cuando cambieis el nombre de la vista
+		.andExpect(MockMvcResultMatchers.view().name("valoracion/createValoracion")); //TODO: Front avisad cuando cambieis el nombre de la vista
 
 	}
 
@@ -206,8 +206,8 @@ public class ValoracionControllerTests {
 			.with(SecurityMockMvcRequestPostProcessors.csrf())
 			.param("puntuacion", "3.5")
 			.param("comentario", "Buen vendedor, mejor persona"))
-			.andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.view().name("listaDeValoraciones")); //TODO FRONT: AVISAD CUANDO TENGAIS EL NOMBRE DE LA VISTA
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+			.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/beaverInfo/"+98)); //TODO FRONT: AVISAD CUANDO TENGAIS EL NOMBRE DE LA VISTA
 	}
 
 	@WithMockUser(value = "spring")
@@ -239,7 +239,7 @@ public class ValoracionControllerTests {
 			.param("comentario", "Corto")) //Tiene menos de 10 caracteres
 			.andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.model().attributeExists("valoracion"))
-			.andExpect(MockMvcResultMatchers.view().name("vistaDeCreacion")); //TODO FRONT: AVISAD CUANDO TENGAIS EL NOMBRE DE LA VISTA
+			.andExpect(MockMvcResultMatchers.view().name("valoracion/createValoracion")); //TODO FRONT: AVISAD CUANDO TENGAIS EL NOMBRE DE LA VISTA
 	}
 
 	@WithMockUser(value= "spring")
