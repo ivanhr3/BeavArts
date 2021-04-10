@@ -21,7 +21,6 @@
 <div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
 
 <c:forEach items="${encargos}" var="encargo">
-	<!--<c:if test="${encargos.size() == 1 and encargo.disponibilidad == false and beaver.user.username != principalUsername}"><h1>¡AÚN NO HAY ENCARGOS!</h1></c:if>%-->
             		<spring:url value="/beavers/${beaverId}/encargos/{encargoId}" var="encargoUrl">
                         <spring:param name="encargoId" value="${encargo.id}"/>
                 	</spring:url>
@@ -50,20 +49,16 @@
         				<c:if test="${encargo.disponibilidad == true}">
             				<h5><span class="badge badge-pill badge-success" id="badge-disponible">Disponible</span></h5>
         				</c:if></p>
-        				<a href="${encargoUrl}" class="btn btn-primary" id="verMas">Ver más</a>
+        					<a href="${encargoUrl}" class="btn btn-primary" id="verMas">Ver más</a>
         			</div>
             		</c:if>
             		</div>
-            		<br/>
             		<hr/>
   </c:forEach>
 </div>
 </c:if>
-
-
+<br/>
 <c:if test="${beaver.user.username == principalUsername}">
-<br/>
-<br/>
 		<a class="btn btn-primary" href='<spring:url value="new" htmlEscape="true"/>'>Nuevo encargo</a>
 		<br/>
     	<c:if test="${url == true}">
@@ -72,5 +67,4 @@
 		</div>
 		</c:if>
 </c:if>
-
 </beavarts:layout>

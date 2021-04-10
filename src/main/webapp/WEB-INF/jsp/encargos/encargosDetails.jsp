@@ -23,18 +23,23 @@
             </li>
         	</c:if>
         	<li class="list-group-item">
-           <h3>Precio: </h3><h5><c:out value="${encargo.precio} €"/></h5>
+           <h3>Precio: </h3><h5 class="descripcionEncargo"><c:out value="${encargo.precio} €"/></h5>
         	</li>
 	
        		<li class="list-group-item">
-           		<h3>Descripción: </h3><h5><c:out value="${encargo.descripcion}"/></h5>
+           		<h3>Descripción: </h3><h5 class="descripcionEncargo"><c:out value="${encargo.descripcion}"/></h5>
         	</li>
         
 		<c:if test="${!encargo.photo.isEmpty()}">
        		<li class="list-group-item">
-            	<h3>Imágenes de ejemplo</h3>
+            	<h3>Imagen de ejemplo</h3>
             	<br/>
             		<img class ="img-thumbnail"src="${encargo.photo}" width=217px height=250px alt="">
+        	</li>
+        </c:if>
+        <c:if test="${encargo.photo.isEmpty()}">
+       		<li class="list-group-item">
+            	<h3>No hay imagen para mostrar</h3>
         	</li>
         </c:if>
         <li class="list-group-item">
@@ -47,8 +52,8 @@
         			</c:if></p>
         	</div>
         </li>
+        <br/>
     </ul>
-    <br/>
     <c:if test="${createdByUser == false}">
     		<c:if test="${encargo.disponibilidad == true}">
 				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>

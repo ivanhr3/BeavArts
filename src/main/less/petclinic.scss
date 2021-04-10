@@ -283,6 +283,7 @@ hr {
   border-top: 1px dotted $spring-brown;
 }
 
+
 @import "typography.less";
 @import "header.less";
 @import "responsive.less";
@@ -321,8 +322,8 @@ hr {
 body{
     margin-top:20px;
     color: #1a202c;
-    text-align: left;
-    background-color: #e2e8f0;    
+    text-align: justify;
+    background-color: #EFC58D;   
 }
 .main-body {
     padding: 15px;
@@ -340,15 +341,24 @@ body{
     background-color: #fff;
     background-clip: border-box;
     border: 0 solid rgba(0,0,0,.125);
-    border-radius: .25rem;
+    border-radius: 0.5rem;
+    margin-bottom: 15px 
 }
-
 .card-body {
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1rem;
 }
 
+.footer{
+	position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 80px;
+  line-height: 60px; /* Vertically center the text there */
+	background-color: #7E3E08;
+}
 .gutters-sm {
     margin-right: -8px;
     margin-left: -8px;
@@ -370,4 +380,179 @@ body{
 }
 .shadow-none {
     box-shadow: none!important;
+}
+.navbar-custom {
+  border-top: 4px solid #7E3E08;
+  background-color: #7E3E08;
+  margin-bottom: 0px;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+}
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+	text-transform: uppercase;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+h5.descripcionEncargo {
+	color: rgb(44, 44, 44);
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.navbar2 {
+  border-top: 4px solid #7E3E08;
+  background-color: #af6522;
+  margin-bottom: 0px;
+  border-bottom: 0;
+  border-left: 0;
+  border-right: 0;
+}
+
+.marginLeft {
+  padding-left: 100px;
+
+}
+
+.navbar a.navbar-brand {
+
+  background: url("/resources/images/v2.png") -1px -1px no-repeat;
+  margin: 5px 0 6px;
+  width: 229px;
+  height: 60px;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0;
+}
+
+.navbar a.navbar-brand span {
+  display: block;
+  width: 229px;
+  height: 46px;
+  background: url("/resources/images/v2.png") -1px -1px no-repeat;
+  opacity: 0;
+  -moz-transition: opacity 0.12s ease-in-out;
+  -webkit-transition: opacity 0.12s ease-in-out;
+  -o-transition: opacity 0.12s ease-in-out;
+}
+
+.navbar a:hover.navbar-brand span {
+  opacity: 1;
+}
+
+.navbar li > a, .navbar-text {
+  font-family: "montserratregular", sans-serif;
+  text-shadow: none;
+  font-size: 14px;
+
+/* line-height: 14px; */
+  padding: 28px 20px;
+  transition: all 0.15s;
+  -webkit-transition: all 0.15s;
+  -moz-transition: all 0.15s;
+  -o-transition: all 0.15s;
+  -ms-transition: all 0.15s;
+}
+
+.navbar li > a {
+  text-transform: uppercase;
+	color:rgb(255, 255, 255);
+}
+
+.navbar .navbar-text {
+  margin-top: 0;
+  margin-bottom: 0;
+
+}
+.navbar li:hover > a {
+  color: rgb(255, 255, 255);
+  background-color: #6db33f;
+}
+
+.navbar-toggle {
+  border-width: 0;
+
+  .icon-bar + .icon-bar {
+    margin-top: 3px;
+  }
+  .icon-bar {
+    width: 19px;
+    height: 3px;
+  }
+
+.marginTop {
+  margin-top: 25px;
+	
+}
+
+}
+@media (max-width: 768px) {
+  .navbar-toggle {
+    position:absolute;
+    z-index: 9999;
+    left:0px;
+  top:0px;
+  }
+
+  .navbar a.navbar-brand {
+    display: block;
+    margin: 0 auto 0 auto;
+    width: 148px;
+    height: 50px;
+    float: none;
+    background: url("resources/images/v2.png") 0 center no-repeat;
+  }
+
+  .homepage-billboard .homepage-subtitle {
+    font-size: 21px;
+    line-height: 21px;
+  }
+
+  .navbar a.navbar-brand span {
+    display: none;
+  }
+
+  .navbar {
+    border-top-width: 0;
+  }
+
+  .xd-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  .index-page--subtitle {
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+
 }

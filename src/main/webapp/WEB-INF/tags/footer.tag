@@ -13,12 +13,14 @@
 <script src="${bootstrapJs}"></script>
 
 
-<footer class="text-center text-white navbar navbar-fixed-bottom" style="background-color: #7E3E08; height: 80px;">
+<footer class="container-fluid w-100 py-3 text-white">
   <!-- Grid container -->
-  <div class="container pt-4">
+  <div id="footer">
+  <div class="container-fluid text-center">
     <!-- Section: Social media -->
-    <section class="mb-4">
-
+    <div class="row bottom-part">
+    	<div class="justify-content-between col-md-12 mb-5 px-5">
+			<div class="p-2r flex-fill bd-highlight">
       <!-- Twitter -->
       <a
         class="btn btn-link btn-floating btn-lg text-dark m-1"
@@ -48,13 +50,16 @@
         data-mdb-ripple-color="dark"
         ><i class="fa fa-github"></i
       ></a>
-    </section>
-    <!-- Section: Social media -->
-  </div>
-  <!-- Grid container -->
-
+      
   <!-- Copyright -->
   <p style="color: #FFFFFF;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
   <!-- Copyright -->
+      </div>
+      </div>
+    </div>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+</div>
 </footer>
 
