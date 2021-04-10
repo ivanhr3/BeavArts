@@ -18,23 +18,24 @@
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <br/>
     <div class="container justify-content-center" style="display:block;">
+    <div class="stars">
+    
+    <b style="margin-left:15px"> *Puntuación:</b>
     <form:form modelAttribute="valoracion" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
         <div class="form-group">
-       		<b style="margin-left:15px"> *Puntuación:</b>
-               <div style="margin-left:20px">
-                            		            
-			            <input type="radio" name="puntuacion" value="1" class="star">
-			            <input type="radio" name="puntuacion" value="2" class="star">
-			            <input type="radio" name="puntuacion" value="3" class="star">
-			            <input type="radio" name="puntuacion" value="4" class="star">
-			            <input type="radio" name="puntuacion" value="5" class="star">
-		        	
-		        	<br/>
-		                    1 &nbsp;2 &nbsp;3 &nbsp;4 &nbsp;5
-		            <br/>
-              </div>
-              <br/>
+       		               			    
+			              <input class="star star-5" id="star-5" type="radio" name="puntuacion" value="5"/>
+						  <label class="star star-5" for="star-5"></label>
+						  <input class="star star-4" id="star-4" type="radio" name="puntuacion" value="4"/>
+						  <label class="star star-4" for="star-4"></label>
+						  <input class="star star-3" id="star-3" type="radio" name="puntuacion" value="3"/>
+						  <label class="star star-3" for="star-3"></label>
+						  <input class="star star-2" id="star-2" type="radio" name="puntuacion" value="2"/>
+						  <label class="star star-2" for="star-2"></label>
+						  <input class="star star-1" id="star-1" type="radio" name="puntuacion" value="1"/>
+						  <label class="star star-1" for="star-1"></label>
+
               <b><beavarts:inputField label="*Comentario:" name="comentario"/></b>
            </div>
         </div>
@@ -48,5 +49,5 @@
         </div>
     </form:form>
     </div>
-
+</div>
 </beavarts:layout>
