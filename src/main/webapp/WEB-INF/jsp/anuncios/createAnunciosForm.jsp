@@ -10,7 +10,8 @@
 
 <beavarts:layout pageName="crearAnuncios">
     <h2>
-        Registrar Anuncio
+       	<c:if test="${!editando}">Registrar </c:if> 
+        <c:if test="${editando}">Editar </c:if> Anuncio
     </h2>
     
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
@@ -24,6 +25,8 @@
 			<beavarts:inputNumberField label="*Precio:" name="precio" placeholder="0.00"/>
 			<beavarts:inputField label="*Descripción:" name="descripcion"/>
             <div class="control-group" style="padding: 10px">
+            	<p style= margin-left:7%>Seleccione una categoría</p>
+            	<br/>
             	<beavarts:selectField name="especialidad" label="Categoría" names="${types}" size="8"/>
             </div>
             <beavarts:inputField label="Introduce URL de la foto:" name="photo"/>
@@ -31,7 +34,14 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-default" type="submit">Nuevo anuncio</button>
+                <c:choose>
+                    <c:when test="${!editando}">
+                        <button class="btn btn-default" type="submit">Crear anuncio</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="btn btn-default" type="submit">Actualizar anuncio</button>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </form:form>

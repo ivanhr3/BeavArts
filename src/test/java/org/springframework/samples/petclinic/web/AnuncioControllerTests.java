@@ -20,16 +20,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import java.util.Collection;
+import java.util.HashSet;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
-import java.util.Collection;
-import java.util.HashSet;
 
 @WebMvcTest(value = AnuncioController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 @AutoConfigureMockMvc
@@ -45,7 +43,7 @@ public class AnuncioControllerTests {
     @MockBean
     private BeaverService beaverService;
 
-    private static final int TEST_BEAVER_ID    = 99;
+    private static final int TEST_BEAVER_ID	= 99;
     private static final int TEST_BEAVER_ID2 = 100;
     private static final int TEST_ANUNCIO_ID = 90;
     private static final int TEST_ANUNCIO_ID2 = 91;
@@ -193,6 +191,57 @@ public class AnuncioControllerTests {
 
     }
 
+    // TESTS DE EDITAR ANUNCIO
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testInitUpdateForm() throws Exception {
+        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID)
+            .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("anuncio"))
+            .andExpect(view().name("anuncios/createAnunciosForm"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testInitUpdateFormHasErrors() throws Exception {
+        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID2)
+            .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(view().name("anuncios/anunciosDetails"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testInitUpdateFormHasErrors2() throws Exception {
+        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID3)
+            .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(view().name("accesoNoAutorizado"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testProcessUpdateForm() throws Exception {
+        mockMvc.perform(post("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID)
+            .with(csrf())
+            .param("titulo", "Cambio en el titulo")
+            .param("precio", "49.0")
+            .param("descripcion", "Cambio en la descripcion"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/beavers/" + TEST_BEAVER_ID + "/anuncios/" + TEST_ANUNCIO_ID));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testProcessUpdateFormHasErrors() throws Exception {
+        mockMvc.perform(post("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID2)
+            .with(csrf()))
+            .andExpect(model().attributeExists("anuncio"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("anuncios/createAnunciosForm"));
+    }
 
     // TESTS PARA EL DELETE DE ANUNCIOS
 

@@ -1,6 +1,13 @@
 package org.springframework.samples.petclinic.model;
 
-import javax.persistence.*;
+import java.util.Collection;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -11,8 +18,6 @@ import org.hibernate.validator.constraints.URL;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collection;
-
 @Getter
 @Setter
 @Entity
@@ -22,8 +27,8 @@ public class Anuncio extends BaseEntity {
     private String titulo;
 
     @Min(0)
-    @Digits(fraction=2,integer=6)
-    @NotNull
+    @Digits(fraction=2,integer=6,message="Debe contener 6 dígitos y 2 decimales")
+    @NotNull(message="no puede estar vacío")
     private Double precio;
 
     @Enumerated(EnumType.STRING)
