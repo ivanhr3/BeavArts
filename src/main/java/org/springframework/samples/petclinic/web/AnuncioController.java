@@ -167,5 +167,22 @@ public class AnuncioController {
         }
     }
 
+    @RequestMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/promote")
+    public String promoteAnuncio(@PathVariable("beaverId") final int beaverId, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
+
+        Beaver beaver = this.beaverService.getCurrentBeaver();
+        model.put("myBeaverId", beaver.getId()); //Añadido para usar las url del header
+
+        Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
+
+        if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
+            return "accesoNoAutorizado"; // FRONT: No debe aparecer el botón para los usuarios que no crearon el anuncio. 
+                                         // Esta vista solo debe redirigirse si se intenta un acceso ilegal por url.
+        } else {
+            // EN ESTE ELSE SE REDIRIGIRÁ A LA VISTA DEL PAGO Y SE CONTROLARÁ SI EL PROCESO SE HA REALIZADO CORRECTAMENTE O NO. 
+            return null;
+        }
+    }
+
 
 }
