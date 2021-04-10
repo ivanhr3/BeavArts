@@ -37,7 +37,7 @@ public class PortfolioServiceTests {
         beaver.setLastName("Apellidos");
         beaver.setEmail("valid@gmail.com");
         Collection<Especialidad> esp = new HashSet<>();
-        esp.add(Especialidad.ILUSTRACIÓN);
+        esp.add(Especialidad.ILUSTRACION);
         beaver.setEspecialidades(esp);
         beaver.setDni("12345678Q");
         beaver.setUser(user);

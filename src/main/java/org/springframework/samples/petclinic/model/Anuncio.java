@@ -1,8 +1,13 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -22,9 +27,9 @@ public class Anuncio extends BaseEntity {
     private String titulo;
 
     @Min(0)
-    @Digits(fraction=2,integer=6)
-    @NotNull
-    private double precio;
+    @Digits(fraction=2,integer=6,message="Debe contener 6 dígitos y 2 decimales")
+    @NotNull(message="no puede estar vacío")
+    private Double precio;
 
     @Enumerated(EnumType.STRING)
     private Especialidad especialidad;
@@ -34,5 +39,14 @@ public class Anuncio extends BaseEntity {
 
     @URL
     private String photo;
-    
+
+    @ManyToOne
+    @JoinColumn(name="beaver_id")
+    private Beaver beaver;
+
+    @OneToMany(mappedBy = "anuncio")
+    private Collection<Solicitud> solicitud;
+
+    private Boolean destacado;
+
 }
