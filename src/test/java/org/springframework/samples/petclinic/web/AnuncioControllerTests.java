@@ -271,4 +271,23 @@ public class AnuncioControllerTests {
             .andExpect(status().isOk())
             .andExpect(view().name("accesoNoAutorizado"));
     }
+    
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testPromocionarAnuncio() throws Exception {
+    	 mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/promote", TEST_BEAVER_ID, TEST_ANUNCIO_ID)
+             .with(csrf()))
+             .andExpect(status().isOk()); //Cuando esté implementado el pago, hay que comprobar que dirija a la vista pertinente
+    }
+    
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testPromocionarAnuncioNoAutorizado() throws Exception {
+    	BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver2);
+    	
+    	 mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/promote", TEST_BEAVER_ID, TEST_ANUNCIO_ID)
+             .with(csrf()))
+             .andExpect(status().isOk())
+             .andExpect(view().name("accesoNoAutorizado"));
+    }
 }
