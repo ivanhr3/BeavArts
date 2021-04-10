@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
+import org.springframework.samples.petclinic.model.Portfolio;
 import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,9 @@ public class BeaverService {
     private UserService userService;
     @Autowired
     private AuthoritiesService authoritiesService;
+    @Autowired
+    private PortfolioService portfolioService;
+
 
     @Autowired
     public BeaverService(BeaverRepository beaverRepository){
@@ -31,8 +35,14 @@ public class BeaverService {
     @Transactional
     public void saveBeaver(Beaver beaver) throws DataAccessException{
         beaverRepository.save(beaver);
-        userService.saveUser(beaver.getUser());
-        authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
+
+        Portfolio port = new Portfolio();
+        port.setBeaver(beaver);
+        
+        beaver.setPortfolio(port);
+        portfolioService.savePortfolio(port);
+
+        userService.saveUser(beaver.getUser(), beaver);
     }
 
     @Transactional

@@ -19,13 +19,17 @@ package org.springframework.samples.petclinic.web;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.ConfirmationToken;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.service.BeaverService;
+import org.springframework.samples.petclinic.service.ConfirmationTokenService;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -33,6 +37,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Juergen Hoeller
@@ -47,10 +52,16 @@ public class UserController {
 
 	private final BeaverService	beaverService;
 
+	private final ConfirmationTokenService confirmationTokenService;
+
+	private final UserService userService;
+
 
 	@Autowired
-	public UserController(final BeaverService beavartsService) {
+	public UserController(final BeaverService beavartsService, final ConfirmationTokenService confirmationTokenService, final UserService userService) {
 		this.beaverService = beavartsService;
+		this.confirmationTokenService = confirmationTokenService;
+		this.userService = userService;
 	}
 
 	@InitBinder
@@ -93,6 +104,13 @@ public class UserController {
 			this.beaverService.saveBeaver(beaver);
 			return "redirect:/";
 		}
+	}
+
+	@GetMapping("/confirmar")
+	String confirmarEmail(@RequestParam("token") String token){
+		Optional<ConfirmationToken> optToken = confirmationTokenService.findConfirmationTokenByToken(token);
+		optToken.ifPresent(userService::confirmUser);
+		return "redirect:/login";
 	}
 
 }
