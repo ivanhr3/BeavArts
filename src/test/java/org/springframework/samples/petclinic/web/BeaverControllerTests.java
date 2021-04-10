@@ -85,7 +85,7 @@ public class BeaverControllerTests {
         this.beaver1.setLastName("Apellidos");
         this.beaver1.setEmail("valid@gmail.com");
         Collection<Especialidad> esP = new HashSet<>();
-        esP.add(Especialidad.ILUSTRACIÓN);
+        esP.add(Especialidad.ILUSTRACION);
         this.beaver1.setEspecialidades(esP);
         this.beaver1.setDni("12345678Q");
         this.beaver1.setUser(user);
@@ -112,7 +112,7 @@ public class BeaverControllerTests {
         this.beaver2.setLastName("Apellidos");
         this.beaver2.setEmail("valid4@gmail.com");
         Collection<Especialidad> esp = new HashSet<>();
-        esp.add(Especialidad.ILUSTRACIÓN);
+        esp.add(Especialidad.ILUSTRACION);
         this.beaver2.setEspecialidades(esp);
         this.beaver2.setDni("12345978Q");
         this.beaver2.setUser(user2);

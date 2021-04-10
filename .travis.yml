@@ -23,6 +23,8 @@ branches:
   - develop
   - travis-configuration-sprint2
   - Listado_de_Valoracion-issue#88
+  - fixtestanuncios-issue#102
+
  
 
 deploy:
