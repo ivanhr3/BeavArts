@@ -60,6 +60,7 @@ public class Beaver extends Person {
     @OneToMany(mappedBy = "beaver")
     private Collection<Valoracion> valoraciones;
 
+    @OneToMany(mappedBy = "beaver")
     private Collection<Anuncio> anuncios;
 
 }
