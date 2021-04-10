@@ -2,7 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
@@ -11,7 +11,7 @@
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
 	
-<petclinic:layout pageName="perfil">
+<beavarts:layout pageName="perfil">
 
 <div class="container">
     <div class="main-body">
@@ -25,7 +25,14 @@
                     <div class="mt-3">
                       <h4>${beaver.user.username}</h4> 
                       <c:if test="${beaver.user.username != principalUsername}">                    
-                      	<button class="btn btn-primary">Valorar</button>
+                  	
+                      	<spring:url value="/beavers/{beaverId}/valoraciones/create" var="valorar">
+						<spring:param name="beaverId" value="${beaver.id}"/>              </spring:url>    
+                      	<a class="btn btn-primary" href="${fn:escapeXml(valorar)}">Valorar</a>
+ 	
+                      </c:if>
+                      	<c:if test="${beaver.user.username == principalUsername}">
+							<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>						
                       </c:if> 
                     </div>
                   </div>
@@ -132,7 +139,7 @@
     
       <!--First slide-->
       <div class="carousel-item active">
-         <img style="display:block; margin:auto;" width="auto" height="500px" class="d-bldk w-50 " alt="..."  src="${beaver.portfolio.photos[0]}">                            
+         <img class="d-bldk w-50 imgCustom" alt="..."  src="${beaver.portfolio.photos[0]}">                            
       </div>
       
       <!--Next slides-->
@@ -142,7 +149,7 @@
 	    	<c:otherwise>
 	    		<div class="carousel-item">
 		
-		        	<img style="display:block; margin:auto;" width="auto" height="500px" class="d-bldk w-50 " alt="..."  src="${photo}">           
+		        	<img class="d-bldk w-50 imgCustom" alt="..."  src="${photo}">           
 		      	</div>  
 	    	</c:otherwise>    	
     	</c:choose>	       
@@ -160,7 +167,8 @@
    </div>
 </div>
 <security:authorize access="isAuthenticated()">
-
+   		
+	
  		<c:if test="${beaver.user.username != principalUsername}">
       		<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
                         <spring:param name="beaverId" value="${beaver.id}"/>
@@ -168,8 +176,6 @@
 			<b style="font-size:20px">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b style="font-size:20px">Encargos</b></a>
    	  	</c:if>
 </security:authorize>
-		<c:if test="${beaver.user.username == principalUsername}">
-			<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>
-		</c:if>
+		
 
-</petclinic:layout>
+</beavarts:layout>

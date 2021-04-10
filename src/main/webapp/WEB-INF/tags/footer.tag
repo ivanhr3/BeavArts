@@ -13,17 +13,15 @@
 <script src="${bootstrapJs}"></script>
 
 
-<footer class="container-fluid w-100 py-3 text-white">
-  <!-- Grid container -->
-  <div id="footer">
-  <div class="container-fluid text-center">
-    <!-- Section: Social media -->
-    <div class="row bottom-part">
-    	<div class="justify-content-between col-md-12 mb-5 px-5">
-			<div class="p-2r flex-fill bd-highlight">
-      <!-- Twitter -->
+<!-- Footer -->
+<footer class="bg-light text-center text-lg-start">
+
+ 
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: #824500;">
+  <!-- Twitter -->
       <a
-        class="btn btn-link btn-floating btn-lg text-dark m-1"
+        class="btn btn-link btn-floating btn-lg text-light m-1"
         style="color: #FFFFFF;"
         href="https://twitter.com/beavarts"
         role="button"
@@ -33,7 +31,7 @@
 
       <!-- Instagram -->
       <a
-        class="btn btn-link btn-floating btn-lg text-dark m-1"
+        class="btn btn-link btn-floating btn-lg text-light m-1"
         style="color: #FFFFFF;"
         href="https://www.instagram.com/beavarts_/"
         role="button"
@@ -43,23 +41,15 @@
 
       <!-- Github -->
       <a
-        class="btn btn-link btn-floating btn-lg text-dark m-1"
+        class="btn btn-link btn-floating btn-lg text-light m-1"
         style="color: #FFFFFF;"
         href="https://github.com/ivanhr3/BeavArts"
         role="button"
         data-mdb-ripple-color="dark"
         ><i class="fa fa-github"></i
       ></a>
-      
-  <!-- Copyright -->
-  <p style="color: #FFFFFF;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
-  <!-- Copyright -->
-      </div>
-      </div>
-    </div>
-    <!-- Section: Social media -->
+    <p style="color: #FFFFFF;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
   </div>
-  <!-- Grid container -->
-</div>
+  <!-- Copyright -->
 </footer>
-
+<!-- Footer -->

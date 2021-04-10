@@ -11,23 +11,31 @@
 
 
 <nav class="navbar navbar-custom navbar-expand-lg">
-	
-		<a class="navbar-brand"
-				href="<spring:url value="/" htmlEscape="true" />"><span></span></a>
-			<button type="button" class="navbar-toggler" data-toggle="collapse"
-				data-target="#main-navbar" aria-label="Toggle navigation">
-				 <span class="navbar-toggler-icon"></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>	
-
-		 
-    		<ul class="navbar-nav mr-auto  mt-2 mt-lg-0">
-				<li class="nav-item">
+      <a class="navbar-brand" href="<spring:url value="/" htmlEscape="true" />"><img src="/resources/images/v22.png"  class="d-inline-block align-top" alt="/"></a>
+      
+      
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span>
+      </button>
+      
+      
+      
+      
+      <div class="collapse navbar-collapse" id="navbarsExample05">
+        <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item">
         			<a class="nav-link" href="/beavers/list">Explora</a>
-      			</li>
-      			
-      			<sec:authorize access="isAuthenticated()">
+      	</li>
+      	
+      	<li class="nav-item">
+				 <a class="nav-link" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
+		</li>
+        
+        <sec:authorize access="isAuthenticated()">
       			<li class="nav-item">
         			<a class="nav-link" href="/solicitudes/list">Mis Solicitudes</a>
       			</li>		
@@ -42,13 +50,10 @@
         			<a class="nav-link" href="/beavers/beaverInfo/${myBeaverId}">Mi perfil</a>
       			</li>	
 				</sec:authorize>
-				<li class="nav-item">
-				 <a class="nav-link" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
-				</li>
-			</ul>
-			
-			
-			<ul class="nav navbar-nav ml-auto">
+            
+        </ul>
+        
+        <ul class="nav navbar-nav ml-auto">
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Iniciar Sesión</a></li>
 				</sec:authorize>
@@ -62,4 +67,8 @@
 					</li>
 			</sec:authorize>
 		</ul>
-</nav>
+		
+      </div>
+    </nav>
+<br/>
+<br/>
