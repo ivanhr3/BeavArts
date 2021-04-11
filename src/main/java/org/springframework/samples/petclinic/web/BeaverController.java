@@ -57,7 +57,7 @@ public class BeaverController {
 		ModelAndView vista = new ModelAndView("users/perfilBeaver");
 		Double puntuacionMedia = beaverService.calculatePuntuacion(beaver);
 		if(puntuacionMedia == null){
-			vista.addObject("puntuacionMedia", "Aún no hay valoraciones");	
+			vista.addObject("sinPuntuacionMedia", "Aún no hay valoraciones");	
 		} else {
 			vista.addObject("puntuacionMedia", Math.round(puntuacionMedia*100.0)/100.0);
 		}
