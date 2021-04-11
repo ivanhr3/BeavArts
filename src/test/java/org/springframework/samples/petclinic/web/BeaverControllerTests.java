@@ -154,7 +154,7 @@ public class BeaverControllerTests {
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("beaver"))
             .andExpect(model().attributeExists("portfolio"))
-            .andExpect(model().attribute("puntuacionMedia", "Aún no hay valoraciones"))
+            .andExpect(model().attribute("sinPuntuacionMedia", "Aún no hay valoraciones"))
             .andExpect(view().name("users/perfilBeaver"));
     }
 
