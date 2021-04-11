@@ -20,8 +20,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -48,6 +51,7 @@ public class AnuncioControllerTests {
     private static final int TEST_ANUNCIO_ID = 90;
     private static final int TEST_ANUNCIO_ID2 = 91;
     private static final int TEST_ANUNCIO_ID3 = 92;
+    private static final Especialidad TEST_ESPECIALIDAD = Especialidad.ESCULTURA;
 
     private Beaver beaver;
     private Beaver beaver2;
@@ -55,6 +59,9 @@ public class AnuncioControllerTests {
     private Anuncio anuncio2;
     private Anuncio anuncio3;
     private Solicitud solicitud;
+    private List<Anuncio> listaAnunciosPorEspecialidad;
+    private List<Anuncio> listaAnunciosDestacados;
+    private List<Anuncio> listaAnunciosNoDestacados;
 
 
     @BeforeEach
@@ -96,6 +103,7 @@ public class AnuncioControllerTests {
         anuncio.setDescripcion("Esto es una descripción");
         anuncio.setPrecio(50.0);
         anuncio.setTitulo("Esto es un título");
+        anuncio.setDestacado(false);
         anuncio.setEspecialidad(Especialidad.ESCULTURA);
         anuncio.setId(90);
 
@@ -104,6 +112,7 @@ public class AnuncioControllerTests {
         anuncio2.setDescripcion("Esto es una descripción 2");
         anuncio2.setPrecio(40.0);
         anuncio2.setTitulo("Esto es un título 2");
+        anuncio2.setDestacado(true);
         anuncio2.setEspecialidad(Especialidad.RESINA);
         anuncio2.setId(91);
 
@@ -112,6 +121,7 @@ public class AnuncioControllerTests {
         anuncio3.setDescripcion("Esto es una descripción 2");
         anuncio3.setPrecio(40.0);
         anuncio3.setTitulo("Esto es un título 2");
+        anuncio3.setDestacado(false);
         anuncio3.setEspecialidad(Especialidad.RESINA);
         anuncio3.setId(92);
 
@@ -124,12 +134,25 @@ public class AnuncioControllerTests {
         solicitudes.add(solicitud);
         anuncio2.setSolicitud(solicitudes);
 
+        listaAnunciosPorEspecialidad = new ArrayList<>();
+        listaAnunciosPorEspecialidad.add(anuncio);
+
+        listaAnunciosDestacados = new ArrayList<>();
+        listaAnunciosDestacados.add(anuncio2);
+
+        listaAnunciosNoDestacados = new ArrayList<>();
+        listaAnunciosNoDestacados.add(anuncio);
+        listaAnunciosNoDestacados.add(anuncio3);
+
         BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID)).willReturn(anuncio);
         BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID2)).willReturn(anuncio2);
         BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID3)).willReturn(anuncio3);
         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
         BDDMockito.given(this.beaverService.findBeaverByIntId(TEST_BEAVER_ID)).willReturn(beaver);
         BDDMockito.given(this.beaverService.findBeaverByIntId(TEST_BEAVER_ID2)).willReturn(beaver2);
+        BDDMockito.given(this.anuncioService.findAnunciosByEspecialidad(TEST_ESPECIALIDAD)).willReturn(listaAnunciosPorEspecialidad);
+        BDDMockito.given(this.anuncioService.findAnunciosDestacados()).willReturn(listaAnunciosDestacados);
+        BDDMockito.given(this.anuncioService.findAnunciosNoDestacados()).willReturn(listaAnunciosNoDestacados);
 
     }
 
@@ -284,7 +307,7 @@ public class AnuncioControllerTests {
     @WithMockUser(value = "testuser")
     @Test
     public void testListAnunciosPorEspecialidad() throws Exception {
-        mockMvc.perform(get("/anuncios/listEspecialidad").param("especialidades", "ESCULTURA"))
+        mockMvc.perform(get("/anuncios/listEspecialidad/{especialidades}", TEST_ESPECIALIDAD))
             .andExpect(model().attributeExists("anuncios"))
             .andExpect(status().isOk())
             .andExpect(view().name("anuncios/listAnuncios"));

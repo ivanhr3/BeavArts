@@ -186,8 +186,8 @@ public class AnuncioController {
         return vista;
     }
 
-    @GetMapping("/anuncios/listEspecialidad")
-    public String listAnunciosPorEspecialidad(final ModelMap modelMap, @RequestParam List<Especialidad> especialidades) {
+    @GetMapping("/anuncios/listEspecialidad/{especialidades}")
+    public String listAnunciosPorEspecialidad(final ModelMap modelMap, @PathVariable List<Especialidad> especialidades) {
 
         List<Anuncio> anunciosPorEspecialidad = new ArrayList<>();
 
