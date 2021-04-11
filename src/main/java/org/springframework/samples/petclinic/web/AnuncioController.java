@@ -2,12 +2,10 @@ package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Anuncio;
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Especialidad;
-import org.springframework.samples.petclinic.model.Estados;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
+import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -21,12 +19,14 @@ import java.util.*;
 public class AnuncioController {
 
 
+    private final EncargoService encargoService;
     private final AnuncioService anuncioService;
     private final BeaverService beaverService;
     private static final String		VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM	= "anuncios/createAnunciosForm";
 
     @Autowired
-    public AnuncioController(final AnuncioService anuncioService, final BeaverService beaverService) throws ClassNotFoundException {
+    public AnuncioController(final EncargoService encargoService, final AnuncioService anuncioService, final BeaverService beaverService) throws ClassNotFoundException {
+        this.encargoService = encargoService;
         this.anuncioService = anuncioService;
         this.beaverService = beaverService;
     }
@@ -233,6 +233,52 @@ public class AnuncioController {
             //TODO: Front: El creador del anuncio NO puede crear solicitudes, mostrad el botón si este atributo es false.
         }
         return vista;
+    }
+
+
+    //MOSTRAR MIS ANUNCIOS Y MIS ENCARGOS
+
+    @GetMapping("/beavers/{beaverId}/misPublicaciones")
+    public String listarMisPublicaciones(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
+
+        if (this.beaverService.getCurrentBeaver() != null) {
+            Beaver me = this.beaverService.getCurrentBeaver();
+            model.put("myBeaverId", me.getId()); //Añadido para usar las url del header
+        }
+
+        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+        model.addAttribute("beaverId", beaverId);
+        model.addAttribute("beaver", beaver);
+
+        if (this.beaverService.getCurrentBeaver() == null || !beaver.equals(this.beaverService.getCurrentBeaver())) {
+            return "accesoNoAutorizado"; //Acceso no autorizado
+        } else {
+            if (beaver.getEncargos().isEmpty() && beaver.getAnuncios().isEmpty()) {
+                model.addAttribute("hayEncargos", false);
+                model.addAttribute("hayAnuncios", false);
+
+            } else if(!beaver.getEncargos().isEmpty() && beaver.getAnuncios().isEmpty()) {
+                model.addAttribute("hayAnuncios", false);
+                final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
+                model.addAttribute("encargos", encargos);
+
+            } else if(beaver.getEncargos().isEmpty() && !beaver.getAnuncios().isEmpty()) {
+                model.addAttribute("hayEncargos", false);
+                final Iterable<Anuncio> anuncios = this.anuncioService.findAnuncioByBeaverId(beaverId);
+                model.addAttribute("anuncios", anuncios);
+
+            } else {
+                final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
+                final Iterable<Anuncio> anuncios = this.anuncioService.findAnuncioByBeaverId(beaverId);
+                model.addAttribute("encargos", encargos);
+                model.addAttribute("anuncios", anuncios);
+            }
+
+
+            return "publicaciones/misPublicaciones";
+
+        }
+
     }
 
 

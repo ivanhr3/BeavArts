@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.web;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,7 +15,6 @@ import org.springframework.samples.petclinic.service.*;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -45,6 +43,9 @@ public class AnuncioControllerTests {
 
     @MockBean
     private BeaverService beaverService;
+
+    @MockBean
+    private EncargoService encargoService;
 
     private static final int TEST_BEAVER_ID	= 99;
     private static final int TEST_BEAVER_ID2 = 100;
@@ -143,6 +144,11 @@ public class AnuncioControllerTests {
         listaAnunciosNoDestacados = new ArrayList<>();
         listaAnunciosNoDestacados.add(anuncio);
         listaAnunciosNoDestacados.add(anuncio3);
+
+        Collection<Anuncio> anunciosBeaver1 = new HashSet<>();
+        anunciosBeaver1.add(anuncio);
+        anunciosBeaver1.add(anuncio2);
+        beaver.setAnuncios(anunciosBeaver1);
 
         BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID)).willReturn(anuncio);
         BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID2)).willReturn(anuncio2);
@@ -321,4 +327,16 @@ public class AnuncioControllerTests {
             .andExpect(status().isOk())
             .andExpect(view().name("anuncios/anunciosDetails"));
     }
+
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testListPublicaciones() throws Exception {
+        mockMvc.perform(get("/beavers/{beaverId}/misPublicaciones", TEST_BEAVER_ID))
+            .andExpect(model().attributeExists("anuncios"))
+            .andExpect(model().attributeDoesNotExist("encargos"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("publicaciones/misPublicaciones"));
+    }
+
 }
