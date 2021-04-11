@@ -11,14 +11,14 @@
 	</security:authorize>
 
 <beavarts:layout pageName="Lista de encargos">
-    <h2>Encargos</h2> 
+    <h2 class="SegoeFont">Encargos</h2> 
 	<br/>
  <c:if test="${hayEncargos == false}">
- 		<div class= "col-12 text-center"><h1>¡AÚN NO HAY ENCARGOS!</h1></div>
+ 		<div class= "col-12 text-center"><h1 class="SegoeFont">¡AÚN NO HAY ENCARGOS!</h1></div>
  </c:if>
  
 <c:if test="${hayEncargos != false}">
-<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
+<div class="container " style="display:flex; flex-wrap: wrap;">
 
 <c:forEach items="${encargos}" var="encargo">
             		<spring:url value="/beavers/${beaverId}/encargos/{encargoId}" var="encargoUrl">
@@ -30,12 +30,15 @@
             		<div class="card-body">
             		<h4 class="card-title"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
-            				<h5><span class="badge badge-danger">No disponible</span></h5>
+            				<h5 style="text-align:center"><span class="badge badge-danger">No disponible</span></h5>
         				</c:if>
         				<c:if test="${encargo.disponibilidad == true}">
-            				<h5><span class="badge badge-success">Disponible</span></h5>
+            				<h5 style="text-align:center"><span class="badge badge-success">Disponible</span></h5>
         				</c:if></p>
+        				
         				<a href="${encargoUrl}" class="btn btn-primary" id="verMas">Ver más</a>
+        				
+        				
         			</div>
             		</c:if>
             		

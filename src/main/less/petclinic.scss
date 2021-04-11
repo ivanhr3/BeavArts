@@ -2505,12 +2505,14 @@ fieldset:disabled a.btn {
   color: #000;
   background-color: #56ff52;
   border-color: #49A947;
+  font-weight:bold;
 }
 
 .btn-primary:hover {
   color: #000;
   background-color: #4ED04B;
   border-color: #49A947;
+	font-weight:bold;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -4447,74 +4449,6 @@ tbody.collapse.show {
   margin-left: 0;
 }
 
-.card-encargos{
-	position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
-align-items: center;
-}
-.card-encargos img{
-	width: 30%;
-}
-.encargosCard img{
-	width: 30%;
-}
-@media only screen and (max-width: 768px) {
-  a {
-    display: none;
-  }
-  .card-body {
-    padding: 0.5em 1.2em;
-  }
-  .card-body .card-text {
-    margin: 0;
-  }
-  .card-encargos img {
-    width: auto;
-	text-align: left;
-  }
-  .card-img-top-publicacion{
-	width: auto;
-  }.encargosCard{
-	margin-bottom: 15px;
-	border:none;
-   }
-  .card-encargos{
-	position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
-align-items: center;
-   }
-}
-
-@media only screen and (max-width: 1200px) {
-  .card-encargos img {
-    width: 40%;
-  }
-}
-
 .card > .list-group:first-child .list-group-item:first-child {
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
@@ -4532,15 +4466,8 @@ align-items: center;
   padding: 1.25rem;
 }
 
-.tab-pane{
-	margin-bottom: 0.5rem;
-	text-align: center;
-}
 .card-title {
   margin-bottom: 0.75rem;
-}
-.card-body-anuncios{
-	margin-bottom: 0.75rem;
 }
 
 .card-subtitle {
@@ -4556,23 +4483,6 @@ align-items: center;
   text-decoration: none;
 }
 
-.encargosCard{
-	margin-bottom: 15px;
-	border:none;
-}
-
-.show{
- display: block !important;
-}
-.hide{
-  display: none !important;
-}
-
-.badge-categoria{
-	background-color: rgb(183, 91, 0);
-	color: rgb(235, 235, 235);
-}
-
 .card-link + .card-link {
   margin-left: 1.25rem;
 }
@@ -4584,20 +4494,6 @@ align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-.card-header-publicaciones{
-	padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-	border-top: 1px solid rgba(0, 0, 0, 0.125);
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
 .card-header:first-child {
   border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
 }
@@ -4648,7 +4544,6 @@ align-items: center;
   border-top-right-radius: calc(0.25rem - 1px);
 }
 
-
 .card-img-bottom {
   width: 100%;
   border-bottom-right-radius: calc(0.25rem - 1px);
@@ -4693,9 +4588,6 @@ align-items: center;
     margin-bottom: 0;
     margin-left: 15px;
   }
-.card-body-encargos{
-	padding: 0.5em 1.2em;
-}
 }
 
 .card-group {
@@ -4775,7 +4667,6 @@ align-items: center;
   .card-group > .card:not(:first-child):not(:last-child):not(:only-child) .card-footer {
     border-radius: 0;
   }
-
 }
 
 .card-columns .card {
@@ -9227,4 +9118,308 @@ font-family: "Segoe Print";
 
 .checked {
   color: orange;
+}
+
+.p-4 {
+    padding: 1.5rem!important;
+}
+.mb-0, .my-0 {
+    margin-bottom: 0!important;
+}
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}    
+}
+/* user-dashboard-info-box */
+.user-dashboard-info-box .candidates-list .thumb {
+    margin-right: 20px;
+}
+.user-dashboard-info-box .candidates-list .thumb img {
+    width: 80px;
+    height: 80px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.user-dashboard-info-box .title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 30px 0;
+}
+
+.user-dashboard-info-box .candidates-list td {
+    vertical-align: middle;
+}
+
+.user-dashboard-info-box td li {
+    margin: 0 4px;
+}
+
+.user-dashboard-info-box .table thead th {
+    border-bottom: none;
+}
+
+.table.manage-candidates-top th {
+    border: 0;
+}
+
+.user-dashboard-info-box .candidate-list-favourite-time .candidate-list-favourite {
+    margin-bottom: 10px;
+}
+
+.table.manage-candidates-top {
+    min-width: 650px;
+}
+
+.user-dashboard-info-box .candidate-list-details ul {
+    color: #969696;
+}
+
+/* LISTA DE USUARIOS*/
+.candidate-list {
+    background: #ffffff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-bottom: 1px solid #eeeeee;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.candidate-list:hover {
+    -webkit-box-shadow: 0px 0px 34px 4px rgba(33, 37, 41, 0.06);
+    box-shadow: 0px 0px 34px 4px rgba(33, 37, 41, 0.06);
+    position: relative;
+    z-index: 99;
+}
+.candidate-list:hover a.candidate-list-favourite {
+    color: #e74c3c;
+    -webkit-box-shadow: -1px 4px 10px 1px rgba(24, 111, 201, 0.1);
+    box-shadow: -1px 4px 10px 1px rgba(24, 111, 201, 0.1);
+}
+
+.candidate-list .candidate-list-image {
+    margin-right: 25px;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 80px;
+    flex: 0 0 80px;
+    border: none;
+}
+.candidate-list .candidate-list-image img {
+    width: 80px;
+    height: 80px;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.candidate-list-title {
+    margin-bottom: 5px;
+}
+
+.candidate-list-details ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-bottom: 0px;
+}
+.candidate-list-details ul li {
+    margin: 5px 10px 5px 0px;
+    font-size: 13px;
+}
+
+.candidate-list .candidate-list-favourite-time {
+    margin-left: auto;
+    text-align: center;
+    font-size: 13px;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 90px;
+    flex: 0 0 90px;
+}
+.candidate-list .candidate-list-favourite-time span {
+    display: block;
+    margin: 0 auto;
+}
+.candidate-list .candidate-list-favourite-time .candidate-list-favourite {
+    display: inline-block;
+    position: relative;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border: 1px solid #eeeeee;
+    border-radius: 100%;
+    text-align: center;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #646f79;
+}
+.candidate-list .candidate-list-favourite-time .candidate-list-favourite:hover {
+    background: #ffffff;
+    color: #e74c3c;
+}
+
+.candidate-banner .candidate-list:hover {
+    position: inherit;
+    -webkit-box-shadow: inherit;
+    box-shadow: inherit;
+    z-index: inherit;
+}
+
+.bg-white {
+    background-color: #ffffff !important;
+}
+.p-4 {
+    padding: 1.5rem!important;
+}
+.mb-0, .my-0 {
+    margin-bottom: 0!important;
+}
+.shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.user-dashboard-info-box .candidates-list .thumb {
+    margin-right: 20px;
+}
+
+.centerContainer {
+	
+	margin: auto;	
+}
+
+/* LISTA DE USUARIOS FIN*/
+
+a.customHover:hover {
+  color: #b14900;
+  text-decoration: underline;
+  text-decoration-color: #b14900;
+}
+
+.card-encargos{
+	position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+align-items: center;
+}
+.card-encargos img{
+	width: 30%;
+}
+.encargosCard img{
+	width: 30%;
+}
+@media only screen and (max-width: 768px) {
+  
+  .card-body {
+    padding: 0.5em 1.2em;
+  }
+  .card-body .card-text {
+    margin: 0;
+  }
+  .card-encargos img {
+    width: auto;
+	text-align: left;
+  }
+  .card-img-top-publicacion{
+	width: auto;
+  }.encargosCard{
+	margin-bottom: 15px;
+	border:none;
+   }
+  .card-encargos{
+	position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+align-items: center;
+   }
+}
+
+@media only screen and (max-width: 1200px) {
+  .card-encargos img {
+    width: 40%;
+  }
+}
+
+.tab-pane{
+	margin-bottom: 0.5rem;
+	text-align: center;
+}
+
+.card-body-anuncios{
+	margin-bottom: 0.75rem;
+}
+
+.encargosCard{
+	margin-bottom: 15px;
+	border:none;
+}
+
+.show{
+ display: block !important;
+}
+.hide{
+  display: none !important;
+}
+
+.badge-categoria{
+	background-color: rgb(183, 91, 0);
+	color: rgb(235, 235, 235);
+}
+
+.card-header-publicaciones{
+	padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+	border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.card-body-encargos{
+	padding: 0.5em 1.2em;
+}
+
+@media only screen and (max-width: 600px) {
+  .imagenResponsive img {
+    width: 110%;
+  }
 }

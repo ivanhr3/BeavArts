@@ -8,23 +8,27 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <petclinic:layout pageName="perfil">
-    <h2> Datos de portfolio: </h2>
+    <h2 class="SegoeFont"> Datos de portfolio: </h2>
     <br/>
     <form:form modelAttribute="portfolio" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-               
-            <petclinic:inputField label="Sobre mi" name="sobreMi"/>           
+            <b class="SegoeFont" style="margin-left:15px"> Sobre mi:</b>
+            <petclinic:inputField label="" name="sobreMi"/>           
             
-            <petclinic:inputField label="Portfolio" name="photos"/>
-            <p>Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
-             <p style="color:red"><c:out value="${errorUrl}"/></p>
-            
+            <b class="SegoeFont" style="margin-left:15px"> Portfolio:</b>
+            <petclinic:inputField label="" name="photos"/>                       
+             <c:if test="${errorUrl != null}">
+                        	<div class="alert alert-danger col-sm-10" role="alert">
+								<c:out value="${errorUrl}"/>
+							</div>
+						</c:if>
+            <p class="SegoeFont">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
     
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                
-                        <button class="btn btn-default" type="submit">Actualizar perfil</button>
+                        <button class="btn btn-primary" type="submit">Actualizar perfil</button>
                  
             </div>
         </div>

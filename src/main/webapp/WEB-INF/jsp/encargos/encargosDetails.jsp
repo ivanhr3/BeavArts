@@ -44,6 +44,7 @@
     </div>
     </div>
     </div>
+    <br/>
     <c:if test="${createdByUser == false}">
     		<c:if test="${encargo.disponibilidad == true}">
 				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>

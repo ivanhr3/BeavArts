@@ -8,7 +8,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="Encargos">
-    <h2>
+    <h2 class="SegoeFont">
         <c:if test="${!editando}">Registrar </c:if> 
         <c:if test="${editando}">Editar </c:if> Encargo
     </h2>
@@ -18,13 +18,18 @@
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
         <div class="form-group">
-            <beavarts:inputField label="*Título:" name="titulo" readonly="${isDisponible}"/>
-            <beavarts:inputNumberField label="*Precio:" name="precio" placeholder="0.00" readonly="${isDisponible}"/>
-            <beavarts:inputField label="*Descripción:" name="descripcion" readonly="${isDisponible}"/>
+        	<b class="SegoeFont" style="margin-left:15px"> *Título:</b>
+            <beavarts:inputField label="" name="titulo" readonly="${isDisponible}"/>
+            <b class="SegoeFont" style="margin-left:15px"> *Precio:</b>
+            <beavarts:inputNumberField label="" name="precio" placeholder="0.00" readonly="${isDisponible}"/>
+            <b class="SegoeFont" style="margin-left:15px"> *Descripción:</b>
+            <beavarts:inputField label="" name="descripcion" readonly="${isDisponible}"/>
                    
              <div class="form-group">     
                 <c:if test="${encargo.disponibilidad == true}">
-	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
+                <b class="SegoeFont" style="margin-left:15px"> *Disponibilidad:</b>
+                <br/>
+	            	<label class = "col-sm-2 control-label" for="disponibilidad"> </label>
 	            		<div class="col-sm-3">
 			            	<select class="form-control" name="disponibilidad">
 			                    <option value=true>Disponible</option>
@@ -34,7 +39,9 @@
             	</c:if>  
             	          
                 <c:if test="${encargo.disponibilidad != true}">
-	            	<label class = "col-sm-2 control-label" for="disponibilidad">*Disponibilidad: </label>
+                 <b class="SegoeFont" style="margin-left:15px"> *Disponibilidad:</b>
+                 <br/>
+	            	<label class = "col-sm-2 control-label" for="disponibilidad"></label>
 	            		<div class="col-sm-3">
 			            	<select class="form-control" name="disponibilidad">
 			            	<option value=false>No Disponible</option>
@@ -44,7 +51,8 @@
             	</c:if>
     		</div>
             <br/>
-           <beavarts:inputField label="Introduce URL de la foto:" name="photo" readonly="${isDisponible}"/>
+            <b class="SegoeFont" style="margin-left:15px"> Introduce URL de la foto:</b>
+           <beavarts:inputField label="" name="photo" readonly="${isDisponible}"/>
            </div>
         </div>
         

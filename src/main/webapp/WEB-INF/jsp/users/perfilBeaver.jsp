@@ -72,17 +72,89 @@
                       <h6 class="mb-0 SegoeFont">Valoración</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                     	<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star checked"></span>
-						<span class="fa fa-star"></span>
-						<span class="fa fa-star"></span>
+                    
+                    	<c:if test="${beaver.valoracion < 0}">	
+                    	</c:if>
+                    
+                    	<c:if test="${beaver.valoracion > 0 && beaver.valoracion < 1}">
+	                    	<span class="fa fa-star-half checked"></span>						
+                    	</c:if>
+                    	
+                    	<c:if test="${beaver.valoracion >= 1 && beaver.valoracion < 1.5}">
+	                    	<span class="fa fa-star checked"></span>					
+                    	</c:if>
+                    	
+                    	<c:if test="${beaver.valoracion >= 1.5 && beaver.valoracion < 2}">
+	                    	<span class="fa fa-star checked"></span>
+							<span class="fa fa-star-half checked"></span>							
+                    	</c:if>
+                    	
+                    	<c:if test="${beaver.valoracion >= 2 && beaver.valoracion < 2.5}">
+	                    	<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>													
+                    	</c:if>
+                    	
+                    	<c:if test="${beaver.valoracion >= 2.5 && beaver.valoracion < 3}">
+	                    	<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star-half checked"></span>							
+                    	</c:if>
+                    	
+                    	<c:if test="${beaver.valoracion >= 3 && beaver.valoracion < 3.5}">
+	                    	<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>						
+                    	</c:if>
+                    
+                    
+                     	<c:if test="${beaver.valoracion >= 3.5 && beaver.valoracion < 4}">
+	                    	<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star-half checked"></span>							
+                    	</c:if>
+                    	
+                    	<c:if test="${beaver.valoracion >= 4 && beaver.valoracion < 4.5}">
+	                    	<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							
+                    	</c:if>
+                    	
+                    	<c:if test="${beaver.valoracion >= 4.5 && beaver.valoracion < 5}">
+	                    	
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>	
+							<span class="fa fa-star checked"></span>						
+							<span class="fa fa-star-half checked"></span>
+							
+                    	</c:if>
+                    	
+                    	<c:if test="${beaver.valoracion == 5}">
+	                    	
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							<span class="fa fa-star checked"></span>
+							
+                    	</c:if>
+                    	
 						(815)
                     </div>
                   </div>
-         
+        
                 </div>
+                
               </div> 
+ 
+	      		<spring:url value="/beavers/${beaverId}/valoraciones/list" var="listValUrl">
+	                        <spring:param name="beaverId" value="${beaver.id}"/>
+	            </spring:url>
+				<b class="SegoeFont" style="font-size:20px">Ir a  </b><a class="customHover" href="${fn:escapeXml(listValUrl)}"><b  class="SegoeFont" style="color:b14900; font-size:20px"> Valoraciones</b></a>
+
             </div>
        
  <c:if test="${beaver.user.username == principalUsername}"> 
@@ -137,54 +209,62 @@
   </div>
 </div>
 
-<div class="container my-4">
+<c:if test= "${beaver.portfolio.photos.isEmpty() != true}">
+	<div class="container my-4">
+	
+	  <hr class="mb-5"/>
+	  <h1 class="SegoeFont">Portfolio:</h1>
+	  <br/>
+	  <br/>
+	  <!--Carousel Wrapper-->
+	  <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
+	  
+	    <!--Slides-->
+	    <div class="carousel-inner" role="listbox">		
+	    
+	    
+	  
+	    
+	      <!--First slide-->
+	      <div class="carousel-item active">
+	      	<a data-fancybox="gallery" href="${beaver.portfolio.photos[0]}">
+	      		<img class="d-bldk w-50 imgCustom" alt="..."  src="${beaver.portfolio.photos[0]}"> 
+	      	</a>
+	                                    
+	      </div>
+	      
+	      <!--Next slides-->
+	      <c:forEach items="${beaver.portfolio.photos}" var="photo" >            	
+	    	<c:choose>   	
+		    	<c:when test="${photo == beaver.portfolio.photos[0]}"></c:when>
+		    	<c:otherwise>
+		    		<div class="carousel-item">
+						<a data-fancybox="gallery" href="${photo}">
+				      		<img class="d-bldk w-50 imgCustom" alt="..."  src="${photo}"> 
+				      	</a>		        	          
+			      	</div>  
+		    	</c:otherwise>    	
+	    	</c:choose>	       
+	      </c:forEach>
+	   </div>
+	   <!--Slide buttons-->
+	      <a class="carousel-control-prev" href="#multi-item-example" role="button" data-slide="prev">
+	            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	            <span class="sr-only">Previa</span>
+	        </a>
+	        <a class="carousel-control-next" href="#multi-item-example" role="button" data-slide="next">
+	            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	            <span class="sr-only">Siguiente</span>
+	        </a>     
+	   </div>
+	</div>
+</c:if> 
 
-  <hr class="mb-5"/>
-  <h1 class="SegoeFont">Portfolio:</h1>
-  <br/>
-  <br/>
-  <!--Carousel Wrapper-->
-  <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-  
-    <!--Slides-->
-    <div class="carousel-inner" role="listbox">		
-    
-    
-  
-    
-      <!--First slide-->
-      <div class="carousel-item active">
-      	<a data-fancybox="gallery" href="${beaver.portfolio.photos[0]}">
-      		<img class="d-bldk w-50 imgCustom" alt="..."  src="${beaver.portfolio.photos[0]}"> 
-      	</a>
-                                    
-      </div>
-      
-      <!--Next slides-->
-      <c:forEach items="${beaver.portfolio.photos}" var="photo" >            	
-    	<c:choose>   	
-	    	<c:when test="${photo == beaver.portfolio.photos[0]}"></c:when>
-	    	<c:otherwise>
-	    		<div class="carousel-item">
-					<a data-fancybox="gallery" href="${photo}">
-			      		<img class="d-bldk w-50 imgCustom" alt="..."  src="${photo}"> 
-			      	</a>		        	          
-		      	</div>  
-	    	</c:otherwise>    	
-    	</c:choose>	       
-      </c:forEach>
-   </div>
-   <!--Slide buttons-->
-      <a class="carousel-control-prev" href="#multi-item-example" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previa</span>
-        </a>
-        <a class="carousel-control-next" href="#multi-item-example" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Siguiente</span>
-        </a>     
-   </div>
-</div>
+<c:if test= "${beaver.portfolio.photos.isEmpty() == true}">
+	<h5 class="SegoeFont"> No hay fotos en el portfolio </h5>
+</c:if>
+
+
 <security:authorize access="isAuthenticated()">
    		
 	
@@ -192,7 +272,7 @@
       		<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
                         <spring:param name="beaverId" value="${beaver.id}"/>
             </spring:url>
-			<b class="SegoeFont" style="font-size:20px">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b  class="SegoeFont" style="color:b14900; font-size:20px">Encargos</b></a>
+			<b class="SegoeFont" style="font-size:20px">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a class="customHover" href="${fn:escapeXml(listUrl)}"><b  class="SegoeFont" style="color:b14900; font-size:20px">Encargos</b></a>
    	  	</c:if>
 </security:authorize>
 		
