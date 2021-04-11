@@ -18,6 +18,7 @@
 	
 <beavarts:layout pageName="perfil">
 	
+
 <div class="container">
     <div class="main-body">
     
@@ -72,49 +73,50 @@
                       <h6 class="mb-0 SegoeFont">Valoración</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                    
-                    	<c:if test="${beaver.valoracion < 0}">	
+                    	
+                    	<c:if test = "${puntuacionMedia != null}">
+                    	<c:if test="${puntuacionMedia < 0}">	
                     	</c:if>
                     
-                    	<c:if test="${beaver.valoracion > 0 && beaver.valoracion < 1}">
+                    	<c:if test="${puntuacionMedia > 0 && puntuacionMedia < 1}">
 	                    	<span class="fa fa-star-half checked"></span>						
                     	</c:if>
                     	
-                    	<c:if test="${beaver.valoracion >= 1 && beaver.valoracion < 1.5}">
+                    	<c:if test="${puntuacionMedia >= 1 && puntuacionMedia < 1.5}">
 	                    	<span class="fa fa-star checked"></span>					
                     	</c:if>
                     	
-                    	<c:if test="${beaver.valoracion >= 1.5 && beaver.valoracion < 2}">
+                    	<c:if test="${puntuacionMedia >= 1.5 && puntuacionMedia < 2}">
 	                    	<span class="fa fa-star checked"></span>
 							<span class="fa fa-star-half checked"></span>							
                     	</c:if>
                     	
-                    	<c:if test="${beaver.valoracion >= 2 && beaver.valoracion < 2.5}">
+                    	<c:if test="${puntuacionMedia >= 2 && puntuacionMedia < 2.5}">
 	                    	<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>													
                     	</c:if>
                     	
-                    	<c:if test="${beaver.valoracion >= 2.5 && beaver.valoracion < 3}">
+                    	<c:if test="${puntuacionMedia >= 2.5 && puntuacionMedia < 3}">
 	                    	<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>
 							<span class="fa fa-star-half checked"></span>							
                     	</c:if>
                     	
-                    	<c:if test="${beaver.valoracion >= 3 && beaver.valoracion < 3.5}">
+                    	<c:if test="${puntuacionMedia >= 3 && puntuacionMedia < 3.5}">
 	                    	<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>						
                     	</c:if>
                     
                     
-                     	<c:if test="${beaver.valoracion >= 3.5 && beaver.valoracion < 4}">
+                     	<c:if test="${puntuacionMedia >= 3.5 && puntuacionMedia < 4}">
 	                    	<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>
 							<span class="fa fa-star-half checked"></span>							
                     	</c:if>
                     	
-                    	<c:if test="${beaver.valoracion >= 4 && beaver.valoracion < 4.5}">
+                    	<c:if test="${puntuacionMedia >= 4 && puntuacionMedia < 4.5}">
 	                    	<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>
@@ -122,7 +124,7 @@
 							
                     	</c:if>
                     	
-                    	<c:if test="${beaver.valoracion >= 4.5 && beaver.valoracion < 5}">
+                    	<c:if test="${puntuacionMedia >= 4.5 && puntuacionMedia < 5}">
 	                    	
 							<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>
@@ -132,7 +134,7 @@
 							
                     	</c:if>
                     	
-                    	<c:if test="${beaver.valoracion == 5}">
+                    	<c:if test="${puntuacionMedia == 5}">
 	                    	
 							<span class="fa fa-star checked"></span>
 							<span class="fa fa-star checked"></span>
@@ -141,7 +143,13 @@
 							<span class="fa fa-star checked"></span>
 							
                     	</c:if>
-                    	
+
+                    	</c:if>
+
+                    	<c:if test = "${sinPuntuacionMedia != null}">
+                    	<c:out value = "${sinPuntuacionMedia}"/>
+                    	</c:if>
+	                    	
 						(815)
                     </div>
                   </div>
