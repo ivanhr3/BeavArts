@@ -15,51 +15,42 @@
 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	</spring:url>
-<ul class="list-group list-group-flush">
-		<h1><c:out value="${encargo.titulo}"/></h1> 
-        	<c:if test="${createdByUser== false}">
-            <li class="list-group-item">
-            	<h3>Publicado por: </h3><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h5>
-            </li>
-        	</c:if>
-        	<li class="list-group-item">
-           <h3>Precio: </h3><h5 class="descripcionEncargo"><c:out value="${encargo.precio} €"/></h5>
-        	</li>
-	
-       		<li class="list-group-item">
-           		<h3>Descripción: </h3><h5 class="descripcionEncargo"><c:out value="${encargo.descripcion}"/></h5>
-        	</li>
-        
-		<c:if test="${!encargo.photo.isEmpty()}">
-       		<li class="list-group-item">
-            	<h3>Imagen de ejemplo</h3>
-            	<br/>
-            		<img class ="img-thumbnail"src="${encargo.photo}" width=217px height=250px alt="">
-        	</li>
-        </c:if>
-        <c:if test="${encargo.photo.isEmpty()}">
-       		<li class="list-group-item">
-            	<h3>No hay imagen para mostrar</h3>
-        	</li>
-        </c:if>
-        <li class="list-group-item">
-        	<div class="text-center">
-            	<p><c:if test="${encargo.disponibilidad == false}">
-            				<h5><span class="badge badge-pill badge-danger" id="badge-noDisponible">No disponible</span></h5>
+
+            <div class="card flex-row">
+                <c:if test="${!encargo.photo.isEmpty()}">
+            		<img src="${encargo.photo}" width=420px height=410px alt="">
+        		</c:if>
+		<div class="card-body">
+			<div class="row">
+			<div class="col">
+			<div class="card-title"><h1><c:out value="${encargo.titulo}"/> - <c:if test="${encargo.disponibilidad == false}">
+            				<span class="badge badge-pill badge-danger" style="font-size:24px;" id="badge-noDisponible">No disponible</span>
         				</c:if>
-        			<c:if test="${encargo.disponibilidad == true}">
-            				<h5><span class="badge badge-pill badge-success" id="badge-disponible">Disponible</span></h5>
-        			</c:if></p>
+        				<c:if test="${encargo.disponibilidad == true}">
+            				<span class="badge badge-pill badge-success" style="font-size:24px;"id="badge-disponible">Disponible</span>
+        			</c:if></h1>
+			</div>
+			</div>
+			</div>
+        	<c:if test="${createdByUser== false}">
+            	<h3>Publicado por: </h3><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h5>
+        	</c:if>
+           	<h3>Precio: </h3><h5 class="descripcionEncargo"><c:out value="${encargo.precio} €"/></h5>
+           		<h3>Descripción: </h3><h5 class="descripcionEncargo"><c:out value="${encargo.descripcion}"/></h5>
+        	<div class="text-center">
+            	<c:if test="${encargo.photo.isEmpty()}">
+            	<h3>No hay imagen para mostrar</h3>
+        		</c:if>
         	</div>
-        </li>
-        <br/>
-    </ul>
+    </div>
+    </div>
+    </div>
     <c:if test="${createdByUser == false}">
     		<c:if test="${encargo.disponibilidad == true}">
 				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
 			</c:if>
      </c:if>
-    </div>
+    <br/>
     <c:if test="${createdByUser == true}">
         	<a class="btn btn-primary" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
     </c:if>
