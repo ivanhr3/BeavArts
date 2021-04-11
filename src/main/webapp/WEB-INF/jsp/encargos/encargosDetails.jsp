@@ -11,19 +11,18 @@
         <spring:param name="encargoId" value="${encargo.id}"/>
     </spring:url>
    
-<div class="container justify-content-center" style="display:flex; flex-wrap:wrap;">
+<div class="container">
 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	</spring:url>
-
-            <div class="card flex-row">
+            <div class="card-encargos">
                 <c:if test="${!encargo.photo.isEmpty()}">
-            		<img src="${encargo.photo}" width=420px height=410px alt="">
+            		<img class="card-img-top" src="${encargo.photo}"  alt="">
         		</c:if>
-		<div class="card-body">
+			<div class="card-body">
 			<div class="row">
 			<div class="col">
-			<div class="card-title"><h1><c:out value="${encargo.titulo}"/> - <c:if test="${encargo.disponibilidad == false}">
+			<div class="card-title"><h1 class="mb-0 SegoeFont"><c:out value="${encargo.titulo}"/>&nbsp;<c:if test="${encargo.disponibilidad == false}">
             				<span class="badge badge-pill badge-danger" style="font-size:24px;" id="badge-noDisponible">No disponible</span>
         				</c:if>
         				<c:if test="${encargo.disponibilidad == true}">
@@ -33,13 +32,13 @@
 			</div>
 			</div>
         	<c:if test="${createdByUser== false}">
-            	<h3>Publicado por: </h3><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h5>
+            	<h3 class="mb-0 SegoeFont">Publicado por </h3><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h5>
         	</c:if>
-           	<h3>Precio: </h3><h5 class="descripcionEncargo"><c:out value="${encargo.precio} €"/></h5>
-           		<h3>Descripción: </h3><h5 class="descripcionEncargo"><c:out value="${encargo.descripcion}"/></h5>
+           	<br/><h3 class="mb-0 SegoeFont">Precio </h3><h5><c:out value="${encargo.precio} €"/></h5>
+           		<br/><h3 class="mb-0 SegoeFont">Descripción </h3><h5><c:out value="${encargo.descripcion}"/></h5>
         	<div class="text-center">
             	<c:if test="${encargo.photo.isEmpty()}">
-            	<h3>No hay imagen para mostrar</h3>
+            	<br/><h3 class="mb-0 SegoeFont">No hay imagen para mostrar</h3>
         		</c:if>
         	</div>
     </div>
