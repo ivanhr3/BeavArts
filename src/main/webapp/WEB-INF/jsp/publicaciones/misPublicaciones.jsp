@@ -22,7 +22,7 @@
               		<a class="nav-link" href="#listEncargos" data-toggle="tab">Encargos</a></li>
     		</ul></div>
     		
-    <div class="card-body tab-content">	
+    <div class="card-body tab-content justify-content-center">	
   	<div class="tab-pane fade show active" id="listAnuncios">
   	 	<c:if test="${hayAnuncios == false}">
   			<h2>¡AÚN NO HAY ANUNCIOS!</h2></c:if>
@@ -31,7 +31,7 @@
   					<spring:url value="/beavers/${beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
                         <spring:param name="anuncioId" value="${anuncio.id}"/>
                 	</spring:url>   	
-  			<div class="card-header-publicaciones"><h4><c:out value="${anuncio.titulo}"/></h4></div>
+  			<div class="card-header"><h4><c:out value="${anuncio.titulo}"/></h4></div>
             <div class="card-body card-body-anuncios">
             	<h5><c:out value="${anuncio.descripcion}"/></h5>
             	<h6>Categoría: <span class="badge badge-pill badge-categoria"><c:out value="${anuncio.especialidad}"/></span></h6>
@@ -83,7 +83,6 @@
             		<hr/>
   			</c:forEach>
   			</c:if>
-  			
   			</div>
   </div>
   </div>

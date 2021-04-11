@@ -16,34 +16,34 @@
                 	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	</spring:url>
 <ul class="list-group list-group-flush">
-		<h1><c:out value="${anuncio.titulo}"/></h1> 
+		<h1 class="mb-0 SegoeFont"><c:out value="${anuncio.titulo}"/></h1> <br/>
         	<c:if test="${createdByUser== false}">
             <li class="list-group-item">
-            	<h3>Publicado por: </h3><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h5>
+            	<h3 class="mb-0 SegoeFont">Publicado por: </h3><br/><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h5>
             </li>
         	</c:if>
         	<li class="list-group-item">
-           		<h3>Precio: </h3><h5 class="descripcionAnuncio"><c:out value="${anuncio.precio} €"/></h5>
+           		<h3 class="mb-0 SegoeFont">Precio: </h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.precio} €"/></h5>
         	</li>
 	
        		<li class="list-group-item">
-           		<h3>Descripción: </h3><h5 class="descripcionAnuncio"><c:out value="${anuncio.descripcion}"/></h5>
+           		<h3 class="mb-0 SegoeFont">Descripción: </h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.descripcion}"/></h5>
         	</li>
         
 		<c:if test="${!anuncio.photo.isEmpty()}">
        		<li class="list-group-item">
-            	<h3>Imagen de ejemplo</h3>
+            	<h3 class="mb-0 SegoeFont">Imagen de ejemplo</h3>
             	<br/>
             		<img class ="img-thumbnail"src="${anuncio.photo}" width=217px height=250px alt="">
         	</li>
         </c:if>
         <c:if test="${anuncio.photo.isEmpty()}">
        		<li class="list-group-item">
-            	<h3>No hay imagen para mostrar</h3>
+            	<br/><h3 class="mb-0 SegoeFont">No hay imagen para mostrar</h3>
         	</li>
         </c:if>
         <li class="list-group-item">
-        	<h3>Categoría</h3>
+        	<h3 class="mb-0 SegoeFont">Categoría</h3>
         	<div class="text-center">
             	<h5><span class="badge badge-pill badge-categoria"><c:out value="${anuncio.especialidad}"/></span></h5>
         	</div>
