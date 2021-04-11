@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,6 +22,7 @@ import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.samples.petclinic.service.ValoracionService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -123,19 +125,36 @@ public class BeaverControllerTests {
         BDDMockito.given(this.beaverService.findBeaverByUsername("beaver1")).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByIntId(BeaverControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByIntId(12)).willReturn(this.beaver2);
+        BDDMockito.given(this.beaverService.calculatePuntuacion(beaver1)).willReturn(4.34554);
+        BDDMockito.given(this.beaverService.calculatePuntuacion(beaver2)).willReturn(null);
     }
 
 
     @WithMockUser(value = "beaver1")
     @Test
     public void testMostrarPerfilUsuario() throws Exception {
-
+        //Se mockean las valoraciones, este usuario SÍ tiene.
         System.out.println(this.beaver1.getFirstName());
 
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("beaver"))
             .andExpect(model().attributeExists("portfolio"))
+            .andExpect(model().attribute("puntuacionMedia", Math.round(4.34554*100.0)/100.0))
+            .andExpect(view().name("users/perfilBeaver"));
+    }
+
+    @WithMockUser(value = "beaver2")
+    @Test
+    public void testMostrarPerfilUsuario2() throws Exception {
+        //Se mockean las valoraciones, este usuario NO tiene.
+        System.out.println(this.beaver1.getFirstName());
+
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", 12))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("beaver"))
+            .andExpect(model().attributeExists("portfolio"))
+            .andExpect(model().attribute("puntuacionMedia", "Aún no hay valoraciones"))
             .andExpect(view().name("users/perfilBeaver"));
     }
 

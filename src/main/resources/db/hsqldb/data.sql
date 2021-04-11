@@ -299,9 +299,9 @@ INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, port
 
 -- Valoraciones Usuario 1
 INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (1, 4.5, 'Buen Vendedor, Mejor Persona', 1, 2);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (2, 4.5, 'Buen Vendedor, Mejor Persona', 1, 3);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (3, 4.5, 'Buen Vendedor, Mejor Persona', 1, 4);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (4, 4.5, 'Buen Vendedor, Mejor Persona', 1, 5);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (5, 4.5, 'Buen Vendedor, Mejor Persona', 1, 6);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (6, 4.5, 'Buen Vendedor, Mejor Persona', 1, 7);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (7, 4.5, 'Buen Vendedor, Mejor Persona', 1, 8);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (2, 3.5, 'Buen Vendedor, Mejor Persona', 1, 3);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (3, 2.1, 'Buen Vendedor, Mejor Persona', 1, 4);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (4, 1.0, 'Buen Vendedor, Mejor Persona', 1, 5);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (5, 3.3, 'Buen Vendedor, Mejor Persona', 1, 6);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (6, 5.0, 'Buen Vendedor, Mejor Persona', 1, 7);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (7, 1.2, 'Buen Vendedor, Mejor Persona', 1, 8);

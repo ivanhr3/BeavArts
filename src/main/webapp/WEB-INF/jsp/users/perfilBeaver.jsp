@@ -25,7 +25,7 @@
 	                    		<c:out value="${especialidad} "/>
 	                		</c:forEach></p>
 		<p style="font-weight:bold">Sobre mi: <c:out value="${beaver.portfolio.sobreMi}"/></p>
-		<p style="font-weight:bold">Valoración: 3/5 Estrellas - DECENTE</p>
+		<p style="font-weight:bold">Valoración: <c:out value="${puntuacionMedia}"/></p>
 		
 	</div>
 	
