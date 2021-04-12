@@ -79,4 +79,9 @@ public class BeaverService {
         return this.beaverRepository.findAll();
     }
 
+    @Transactional
+    public Integer getNumValoraciones(Beaver beaver){
+        return this.valoracionService.getNumValoracionesUsuario(beaver.getId());
+    }
+
 }

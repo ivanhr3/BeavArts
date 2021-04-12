@@ -324,3 +324,4 @@ INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES 
 INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (8, 3.8, 'Puntual y barato.', 2, 6);
 INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (9, 5.0, 'Su trabajo es increible, lo recomiendo.', 2, 7);
 INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (10, 1.0, 'Malisimo trabajo, nada satisfecho.', 2, 8);
+
