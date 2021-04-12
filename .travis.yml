@@ -22,7 +22,7 @@ branches:
   - master
   - develop
   - travis-configuration-sprint2
-  - CambiosValoracion-issue#106
+  - Ver_Anuncios-issue#84
  
 
 deploy:
