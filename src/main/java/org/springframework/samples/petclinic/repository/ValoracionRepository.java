@@ -16,4 +16,7 @@ public interface ValoracionRepository extends CrudRepository<Valoracion, String>
     @Query("select avg(v.puntuacion) from Valoracion v where v.beaver.id = ?1")
 	Double calcularPuntuacion(int id);
 
+    @Query("select count(v) from Valoracion v where v.beaver.id = ?1")
+    Integer getNumValoracionesUsuario(int id);
+
 }

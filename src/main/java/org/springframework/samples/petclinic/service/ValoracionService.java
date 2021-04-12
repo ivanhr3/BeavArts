@@ -64,5 +64,9 @@ public class ValoracionService {
         return this.valoracionRepository.calcularPuntuacion(beaverId);   
     }
 
+    public Integer getNumValoracionesUsuario (Integer beaverId){
+        return this.valoracionRepository.getNumValoracionesUsuario(beaverId);
+    }
+
 
 }

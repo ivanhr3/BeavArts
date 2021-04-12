@@ -150,7 +150,7 @@
                     	<c:out value = "${sinPuntuacionMedia}"/>
                     	</c:if>
 	                    	
-						(815)
+						<c:out value = " (${numValoraciones})"/>
                     </div>
                   </div>
         

@@ -56,11 +56,15 @@ public class BeaverController {
 
 		ModelAndView vista = new ModelAndView("users/perfilBeaver");
 		Double puntuacionMedia = beaverService.calculatePuntuacion(beaver);
+		Integer numeroDeValoraciones = beaverService.getNumValoraciones(beaver);
 		if(puntuacionMedia == null){
-			vista.addObject("sinPuntuacionMedia", "Aún no hay valoraciones");	
+			vista.addObject("sinPuntuacionMedia", "Aún no hay valoraciones");
+			vista.addObject("numValoraciones", 0);	
 		} else {
 			vista.addObject("puntuacionMedia", Math.round(puntuacionMedia*100.0)/100.0);
+			vista.addObject("numValoraciones", numeroDeValoraciones);
 		}
+
 		vista.addObject("beaver", beaver);
 		vista.addObject("portfolio", portfolio);
 
