@@ -186,34 +186,6 @@ public class AnuncioController {
         return vista;
     }
 
-    @GetMapping("/anuncios/listEspecialidad/{especialidades}")
-    public String listAnunciosPorEspecialidad(final ModelMap modelMap, @PathVariable List<Especialidad> especialidades) {
-
-        List<Anuncio> anunciosPorEspecialidad = new ArrayList<>();
-
-        for(Especialidad e: especialidades){
-            List<Anuncio> aux = this.anuncioService.findAnunciosByEspecialidad(e);
-            anunciosPorEspecialidad.addAll(aux); // se meten en una lista los anuncios ordenados por las especialidades seleccionadas
-        }
-        List<Anuncio> destacados = new ArrayList<>();
-        List<Anuncio> noDestacados = new ArrayList<>();
-        List<Anuncio> anuncios = new ArrayList<>();
-
-        for(Anuncio a: anunciosPorEspecialidad){
-            if(a.getDestacado() == true){
-                destacados.add(a); // se ordenan los anuncios dependiendo si son destacados o no
-            } else {
-                noDestacados.add(a);
-            }
-        }
-        anuncios.addAll(destacados);
-        anuncios.addAll(noDestacados);
-        String vista = "anuncios/listAnuncios";
-        modelMap.addAttribute("anuncios", anuncios);
-        return vista;
-    }
-
-
     // MOSTRAR LOS DETALLES DE UN ANUNCIO
 
     @GetMapping("/beavers/{beaverId}/anuncios/{anuncioId}")

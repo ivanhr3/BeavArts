@@ -312,15 +312,6 @@ public class AnuncioControllerTests {
 
     @WithMockUser(value = "testuser")
     @Test
-    public void testListAnunciosPorEspecialidad() throws Exception {
-        mockMvc.perform(get("/anuncios/listEspecialidad/{especialidades}", TEST_ESPECIALIDAD))
-            .andExpect(model().attributeExists("anuncios"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("anuncios/listAnuncios"));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
     public void testMostrarAnuncio() throws Exception {
         mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}", TEST_BEAVER_ID, TEST_ANUNCIO_ID))
             .andExpect(model().attributeExists("anuncio"))
