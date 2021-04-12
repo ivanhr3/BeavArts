@@ -22,6 +22,8 @@ public class BeaverService {
     private UserService userService;
     @Autowired
     private AuthoritiesService authoritiesService;
+    @Autowired
+    private ValoracionService valoracionService;
 
     @Autowired
     public BeaverService(BeaverRepository beaverRepository){
@@ -67,6 +69,11 @@ public class BeaverService {
     @Transactional
     public Beaver findBeaverByUsername(final String username) {
         return this.beaverRepository.findBeaverByUser(this.userService.findUserByUsername(username));
+    }
+
+    @Transactional
+    public Double calculatePuntuacion(final Beaver beaver){
+        return this.valoracionService.calcularValoracion(beaver.getId());
     }
 
     public Iterable<Beaver> findAllBeavers(){

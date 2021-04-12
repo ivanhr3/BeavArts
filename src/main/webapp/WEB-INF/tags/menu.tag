@@ -33,23 +33,16 @@
       	<li class="nav-item">
 				 <a class="nav-link" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
 		</li>
+		<li class="nav-item">
+        			<a class="nav-link" href="/anuncios/list">Anuncios</a>
+      	</li>	
         
         <sec:authorize access="isAuthenticated()">
       			<li class="nav-item">
         			<a class="nav-link" href="/solicitudes/list">Mis Solicitudes</a>
-      			</li>	
-      			<li class="nav-item">
-        			<a class="nav-link" href="/anuncios/list">Anuncios</a>
-      			</li>	
-      			<li class="nav-item">
-        			<a class="nav-link" href="/beavers/${myBeaverId}/misPublicaciones">Mis Publicaciones</a>
       			</li>		
-				<li class="nav-item dropdown">
-        			<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Mis Publicaciones</a>
-					 <div class="dropdown-menu">
-					 	<a class="dropdown-item" href="/beavers/${myBeaverId}/encargos/list">Encargos</a>
-					 	<a class="dropdown-item" href="/beavers/${myBeaverId}/anuncios/list">Anuncios</a>
-					</div>
+				<li class="nav-item">
+        			<a class="nav-link" href="/beavers/${myBeaverId}/misPublicaciones">Mis publicaciones</a>
 				</li>
 				<li class="nav-item">
         			<a class="nav-link" href="/beavers/beaverInfo/${myBeaverId}">Mi perfil</a>

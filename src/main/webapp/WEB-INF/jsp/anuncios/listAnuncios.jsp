@@ -12,7 +12,7 @@
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js%22%3E"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <beavarts:layout pageName="Lista de anuncios">
 
 
@@ -71,12 +71,7 @@
 
 <h1 class="SegoeFont">Anuncios</h1>
 <br/>
-
-
-<div class="main">
-
-
-
+<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 <c:if test="${anuncios.isEmpty()}">
 <br/>
 	 <h3 class="SegoeFont">Lo sentimos, no hay anuncios disponibles por el momento.</h3>
@@ -84,7 +79,6 @@
 
 
 <c:if test="${!anuncios.isEmpty()}">
-
 <b class="SegoeFont" style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto! </b>
 <br/>
 <br/>
@@ -101,23 +95,19 @@
   
 </div>
 
-
-<div class="row">
-
 <c:forEach items="${anuncios}" var="anuncio">
-
 	  <div class="column ${anuncio.especialidad}">
-	    <div style="word-wrap: break-word;" class="content">	      
-	      <h4 class="SegoeFont">${anuncio.titulo}</h4>
-	      <hr>
-	      <p >${anuncio.descripcion}</p>
-	      <h6 class="SegoeFont">Categoría: <span class="badge badge-pill badge-categoria">
+	    	<div class="row">
+	    	<div class="card" style="width: 20rem;" id="encargosCard">
+	    	<div class="card-header-publicaciones"><h4 class="card-title SegoeFont">${anuncio.titulo}</h4></div>  
+	    	<div class="card-body">
+	      	<p>${anuncio.descripcion}</p>
+	      	<h6 class="SegoeFont">Categoría: <span class="badge badge-pill badge-categoria">
 	      		<c:out value="${anuncio.especialidad}"/></span></h6>
 	      		<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
                	</spring:url>
 	     	<h6 class="SegoeFont">Publicado por:
-	     	
 			     <a href="${fn:escapeXml(beaverUrl)}">
 			     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
 			     <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
@@ -126,13 +116,14 @@
                 	</spring:url>
 			     <a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
 	    </div>
-	  </div>
+	    </div>
+	    </div>
+	    </div>
+	    <hr/>
 </c:forEach>
-</div>
 
 </c:if>
 </div>
-
 
 </jsp:body> 
 </beavarts:layout>

@@ -22,7 +22,6 @@ branches:
   - master
   - develop
   - travis-configuration-sprint2
-  - fixtestanuncios-issue#102
   - Ver_Anuncios-issue#84
  
 

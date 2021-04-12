@@ -31,7 +31,7 @@
   					<spring:url value="/beavers/${beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
                         <spring:param name="anuncioId" value="${anuncio.id}"/>
                 	</spring:url>   	
-  			<div class="card-header"><h4><c:out value="${anuncio.titulo}"/></h4></div>
+  			<div class="card-header-publicaciones"><h4><c:out value="${anuncio.titulo}"/></h4></div>
             <div class="card-body card-body-anuncios">
             	<h5><c:out value="${anuncio.descripcion}"/></h5>
             	<h6>Categoría: <span class="badge badge-pill badge-categoria"><c:out value="${anuncio.especialidad}"/></span></h6>
