@@ -36,6 +36,12 @@ public class ValoracionController {
         Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
         model.addAttribute("beaverId", beaverId);
 		model.addAttribute("beaver", beaver);
+		
+		//PARA QUE FUNCIONE EL BOTÓN MI PERFIL
+		Beaver current = this.beaverService.getCurrentBeaver();
+		if(current != null){
+	        model.put("myBeaverId", current.getId());
+	        }
 
         if (beaver.getValoraciones().isEmpty()) {
             model.addAttribute("hayValoraciones", false); //Control de falta de valoraciones

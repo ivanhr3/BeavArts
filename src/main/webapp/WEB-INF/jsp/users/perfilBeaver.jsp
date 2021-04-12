@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
@@ -53,9 +54,50 @@
                       <h6 class="mb-0 SegoeFont">Especialidades</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <c:forEach items="${beaver.especialidades}" var="especialidad">
-	                    		<c:out value="${especialidad} "/>
-	                	</c:forEach>
+                      
+	                	<c:forEach items="${beaver.especialidades}" var="especialidad">
+		                          <c:choose>
+	                      
+					                      	<c:when test="${especialidad == 'TEXTIL'}">
+					                      		<i class="fas fa-socks"></i>
+					                      	</c:when>
+				                     
+				                      		<c:when test="${especialidad == 'ESCULTURA'}">
+					                      		<i class="fas fa-chess-knight"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'ILUSTRACION'}">
+					                      		<i class="fas fa-portrait"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'ACRILICO'}">
+					                      		<i class="fas fa-paint-brush"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'OLEO'}">
+					                      		<i class="fas fa-palette"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'JOYERIA'}">
+					                      		<i class="fas fa-gem"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'RESINA'}">
+					                      		<i class="fas fa-prescription-bottle"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'FOTOGRAFIA'}">
+					                      		<i class="fas fa-camera-retro"></i>
+					                      	</c:when>
+				                      
+				                      
+				                      </c:choose>
+		                          
+	                    				<c:out value="${especialidad} "/> &nbsp;
+	                				</c:forEach>
+	                	
+	                	
+	                	
                     </div>
                   </div>
                   <hr>
@@ -150,7 +192,7 @@
                     	<c:out value = "${sinPuntuacionMedia}"/>
                     	</c:if>
 	                    	
-						<c:out value = " (${numValoraciones})"/>
+						(${numValoraciones})
                     </div>
                   </div>
         

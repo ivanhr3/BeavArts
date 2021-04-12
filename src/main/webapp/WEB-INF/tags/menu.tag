@@ -53,7 +53,7 @@
         
         <ul class="nav navbar-nav ml-auto">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a style="font-family:Segoe Print; font-weight:bold; color:#ffbb00" href="<c:url value="/login" />">Iniciar Sesiï¿½n</a></li>
+					<li><a style="font-family:Segoe Print; font-weight:bold; color:#ffbb00" href="<c:url value="/login" />">Iniciar Sesión</a></li>
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">

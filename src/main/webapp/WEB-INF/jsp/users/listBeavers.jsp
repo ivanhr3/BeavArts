@@ -6,6 +6,7 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="beavers">
 <h1 class="SegoeFont" style="text-align:center">Beavers</h1>
@@ -19,7 +20,7 @@
             <thead>
               <tr>
                 <th  class="SegoeFont">Nombre de Usuario</th>
-                <th class="text-center SegoeFont">Valoración</th>                
+                             
               </tr>
             </thead>
             <tbody>           
@@ -37,22 +38,58 @@
                     			</spring:url>
 		                        <h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username}</a></h5>
 		                      </div>
-		                      <div class="candidate-list-option">
-		                        <ul class="list-unstyled">
+		                      <div style="color:grey" class="candidate-list-option">
+		                        
 		                   
-		                          <li><i class="fas fa-filter pr-1"></i>
+		                          
 		                          <c:forEach items="${beaver.especialidades}" var="especialidad">
-	                    				<c:out value="${especialidad} "/>
-	                				</c:forEach></li>
-		                        </ul>
+		                          <c:choose>
+	                      
+					                      	<c:when test="${especialidad == 'TEXTIL'}">
+					                      		<i class="fas fa-socks"></i>
+					                      	</c:when>
+				                     
+				                      		<c:when test="${especialidad == 'ESCULTURA'}">
+					                      		<i class="fas fa-chess-knight"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'ILUSTRACION'}">
+					                      		<i class="fas fa-portrait"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'ACRILICO'}">
+					                      		<i class="fas fa-paint-brush"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'OLEO'}">
+					                      		<i class="fas fa-palette"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'JOYERIA'}">
+					                      		<i class="fas fa-gem"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'RESINA'}">
+					                      		<i class="fas fa-prescription-bottle"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${especialidad == 'FOTOGRAFIA'}">
+					                      		<i class="fas fa-camera-retro"></i>
+					                      	</c:when>
+				                      
+				                      
+				                      </c:choose>
+		                          
+	                    				<c:out value="${especialidad} "/> &nbsp;
+	                				</c:forEach>
+		                        
 		                      </div>
+		                      <br/>
+		                      <c:out value="${beaver.portfolio.sobreMi}"/>
 		                    </div>
 		                  </div>
 		                </td>
-		                <td class="candidate-list-favourite-time text-center">
-		                  <i style="color:orange" class="fas fa-star"></i>
-		                  <span class="candidate-list-time order-1">${beaver.valoracion}</span>
-		                </td>            
+		                            
 		              </tr>          
 	            </c:forEach>            
             </tbody>
