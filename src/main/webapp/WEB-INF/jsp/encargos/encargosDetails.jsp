@@ -5,68 +5,53 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 	
-<beavarts:layout pageName="encargosDetails">
+<beavarts:layout pageName="Detalles de encargos">
 
 	<spring:url value="/encargoInfo/{encargoId}" var="detailUrl">
         <spring:param name="encargoId" value="${encargo.id}"/>
     </spring:url>
    
-<div class="container justify-content-center" style="display:flex; flex-wrap:wrap;">
-<h1>Encargo: <c:out value="${encargo.titulo}"/></h1> 
-    <table class="table table-borderless">
-        <tr>
-        	<c:if test="${createdByUser== false}">
-            <th><h3>Publicado por: </h3></th>
-            <td style="text-align: justify;">
-            	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
+<div class="container">
+<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	</spring:url>
-               	<a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${encargo.beaver.user.username}"/></b></a>
-               	</td>
+            <div class="card-encargos">
+                <c:if test="${!encargo.photo.isEmpty()}">
+            		<img class="card-img-top" src="${encargo.photo}"  alt="">
+        		</c:if>
+			<div class="card-body">
+			<div class="row">
+			<div class="col">
+			<div class="card-title"><h1 class="mb-0 SegoeFont"><c:out value="${encargo.titulo}"/>&nbsp;<c:if test="${encargo.disponibilidad == false}">
+            				<span class="badge badge-pill badge-danger" style="font-size:24px;" id="badge-noDisponible">No disponible</span>
+        				</c:if>
+        				<c:if test="${encargo.disponibilidad == true}">
+            				<span class="badge badge-pill badge-success" style="font-size:24px;"id="badge-disponible">Disponible</span>
+        			</c:if></h1>
+			</div>
+			</div>
+			</div>
+        	<c:if test="${createdByUser== false}">
+            	<h3 class="mb-0 SegoeFont">Publicado por </h3><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h5>
         	</c:if>
-        
-        </tr>
-
-        <tr>
-            <th><h3>Precio:</h3></th>
-            <td style="text-align: justify;"><c:out value="${encargo.precio} €"/>
-            </td>
-        </tr>
-	
-        <tr>
-            <th><h3>Descripción: </h3></th>
-             
-            <td style="text-align: justify;"><c:out value="${encargo.descripcion}"/></td>
-        </tr>
-        
-		<c:if test="${!encargo.photo.isEmpty()}">
-       <tr>
-            <th><h3>Imágenes de ejemplo:</h3></th>
-            <td style="text-align: justify;"><img width=150px height=150px alt="" src="${encargo.photo}"/></td>
-        </tr>
-        </c:if>
-        <tr>
-            <th><h3>Disponibilidad:</h3></th>
-            <td style="text-align: justify;">
-            	<c:if test="${encargo.disponibilidad==true}">
-            		<dd>Disponible</dd>
+           	<br/><h3 class="mb-0 SegoeFont">Precio </h3><h5><c:out value="${encargo.precio} €"/></h5>
+           		<br/><h3 class="mb-0 SegoeFont">Descripción </h3><h5><c:out value="${encargo.descripcion}"/></h5>
+        	<div class="text-center">
+            	<c:if test="${encargo.photo.isEmpty()}">
+            	<br/><h3 class="mb-0 SegoeFont">No hay imagen para mostrar</h3>
         		</c:if>
-            	<c:if test="${encargo.disponibilidad==false}">
-            		<dd>No disponible</dd>
-        		</c:if>
-        	</td>
-        </tr>
-
-    </table>
-    
+        	</div>
+    </div>
+    </div>
+    </div>
+    <br/>
     <c:if test="${createdByUser == false}">
-    
     		<c:if test="${encargo.disponibilidad == true}">
-				<a class="btn btn-default" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
 			</c:if>
      </c:if>
-     <c:if test="${createdByUser == true}">
-        	<a class="btn btn-default" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
+    <br/>
+    <c:if test="${createdByUser == true}">
+        	<a class="btn btn-primary" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
     </c:if>
-</div>
 </beavarts:layout>

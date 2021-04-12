@@ -8,9 +8,12 @@ import org.springframework.samples.petclinic.model.Valoracion;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ValoracionRepository extends CrudRepository<Valoracion, String> {
+public interface ValoracionRepository extends CrudRepository<Valoracion, String>{
     
     @Query("select v from Valoracion v where v.beaver.id = ?1")
-   Collection<Valoracion> findValoracionesByBeaverId(int id);
+    Collection<Valoracion> findValoracionesByBeaverId(int id);
+
+    @Query("select avg(v.puntuacion) from Valoracion v where v.beaver.id = ?1")
+	Double calcularPuntuacion(int id);
 
 }

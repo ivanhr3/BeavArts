@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -7,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Valoracion;
+
 import org.springframework.samples.petclinic.repository.ValoracionRepository;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,9 @@ public class ValoracionService {
 		return this.valoracionRepository.save(valoracion);
 	}
 
+    public Double calcularValoracion(Integer beaverId){
+        return this.valoracionRepository.calcularPuntuacion(beaverId);   
+    }
 
-    
+
 }

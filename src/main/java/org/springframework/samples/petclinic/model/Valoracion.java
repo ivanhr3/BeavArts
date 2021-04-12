@@ -28,4 +28,9 @@ public class Valoracion extends BaseEntity{
     @ManyToOne
     @JoinColumn(name="beaver_id")
     private Beaver beaver;
+
+    @ManyToOne
+    @JoinColumn(name="author_id")
+    private Beaver valAuthor;
+
 }
