@@ -553,6 +553,46 @@ pre code {
   overflow-y: scroll;
 }
 
+.main {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.row {
+  margin: 10px -16px;
+}
+
+/* Add padding BETWEEN each column */
+.row,
+.row > .column {
+  padding: 8px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  display: none; /* Hide all elements by default */
+}
+
+/* Clear floats after rows */ 
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.content {
+  background-color: white;
+  padding: 10px;
+}
+
+/* The "show" class is added to the filtered elements */
+.show {
+  display: block;
+} 
+
+
 .container {
   width: 100%;
   padding-right: 15px;
@@ -9129,7 +9169,7 @@ font-family: "Segoe Print";
 .shadow-sm {
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }    
-}
+
 /* user-dashboard-info-box */
 .user-dashboard-info-box .candidates-list .thumb {
     margin-right: 20px;
@@ -9365,12 +9405,48 @@ align-items: center;
   border-radius: 0.25rem;
 align-items: center;
    }
+.card{
+	position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+	flex:wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+align-items: center;
+}
 }
 
 @media only screen and (max-width: 1200px) {
   .card-encargos img {
     width: 40%;
   }
+}
+
+.card-anuncios{
+	position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+	margin-right:2.5rem;
 }
 
 .tab-pane{
@@ -9624,3 +9700,4 @@ td {
 .imgBorderBlack {
   border: 1px solid #000;
 }
+

@@ -22,8 +22,6 @@ branches:
   - master
   - develop
   - travis-configuration-sprint2
-  - CrearValoracion-issue#87
-
  
 
 deploy:

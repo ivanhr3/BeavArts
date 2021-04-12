@@ -1,37 +1,48 @@
 --Usuarios
 --User1
-INSERT INTO users(username,password,enabled) VALUES ('user1', '$2a$10$92y/D.0vHcQtnBgATuJmPeMfCBYI08aNCcCxFV8gtKSyr/Y1zuIw.', TRUE);
-INSERT INTO authorities(id, username, authority) VALUES(1, 'user1', 'user');
-INSERT INTO portfolio(id, sobre_mi) VALUES (1, 'Soy un usuario que intenta un poco de todo');
-INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (1, 'Nombre', 'Apellidos', '12234321Q', 'emailprueba@email.com', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/doraemon-borracho-1532607482.jpg', 1 , 'user1');
+INSERT INTO users(username,password,enabled) VALUES ('Cib3r', '$2a$10$92y/D.0vHcQtnBgATuJmPeMfCBYI08aNCcCxFV8gtKSyr/Y1zuIw.', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(1, 'Cib3r', 'user');
+INSERT INTO portfolio(id, sobre_mi) VALUES (1, 'Soy un usuario que intenta un poco de todo. Apasionado del textil y la escultura, aunque de esta ultima solo de forma ocasional.');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (1, 'Manuel', 'Cifuentes', '12234321Q', 'Cib3r@email.com', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/doraemon-borracho-1532607482.jpg', 1 , 'Cib3r');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (1, 'TEXTIL');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (1, 'ESCULTURA');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://cflvdg.avoz.es/default/2014/05/13/0012_201405G13P57F1jpg/Foto/G13P57F1.jpg');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://estaticos-cdn.elperiodico.com/clip/36cd084f-1cf9-42f8-9db5-4b40ae199a92_alta-libre-aspect-ratio_default_0.jpg');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://d2lv662meabn0u.cloudfront.net/boing/dynamic/item/00000000/476/3faae11fcacba3706c378cabaaa2e06ef5259b8d_1586336013.jpg');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://media.nauticamilanonline.com/product/figura-articulada-doraemon-doraemon-movie-10cm-800x800.jpg');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://i.pinimg.com/originals/2a/37/ae/2a37aefdb88a497166da8e054058df52.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://cdn.pixabay.com/photo/2018/05/10/20/03/love-3388626_1280.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://cdn.pixabay.com/photo/2016/02/13/22/52/bracelet-1198740_1280.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://puntocruz.online/wp-content/uploads/2020/07/punto-de-cruz-denim-1.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://images-na.ssl-images-amazon.com/images/I/714fQvkhKaL._AC_SY450_.jpg');
 
 
 --User2
-INSERT INTO users(username,password,enabled) VALUES ('user2', '$2a$10$/h5dlN5Jmeimr/lkdzt/vel9l9YWftfHqI8Opwg75fih62m0cdJSi', TRUE);
-INSERT INTO authorities(id, username, authority) VALUES(2, 'user2', 'user');
-INSERT INTO portfolio(id, sobre_mi) VALUES (2, 'Soy un usuario que intenta un poco de todo');
-INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (2, 'Nombre', 'Apellidos', '12234321Q', 'emailprueba@email.com', 'https://cdn.pixabay.com/photo/2020/10/16/11/02/astronaut-5659227_960_720.png', 2 , 'user2');
+INSERT INTO users(username,password,enabled) VALUES ('Helmann', '$2a$10$/h5dlN5Jmeimr/lkdzt/vel9l9YWftfHqI8Opwg75fih62m0cdJSi', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(2, 'Helmann', 'user');
+INSERT INTO portfolio(id, sobre_mi) VALUES (2, 'Soy un usuario que intenta un poco de todo. Me encanta todo lo relacionado con el textil. Hago pulseras, bordados, punto de cruz, volantes, faldas. No temas en sugerir nuevas cosas, ¡lo intentaré!');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (2, 'Diffie', 'Helmann', '74234321Q', 'helmann@email.com', 'https://cdn.pixabay.com/photo/2020/10/16/11/02/astronaut-5659227_960_720.png', 2 , 'Helmann');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (2, 'TEXTIL');
-INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (2, 'ESCULTURA');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://cdn.pixabay.com/photo/2020/10/16/11/02/astronaut-5659227_960_720.png');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://cdn.pixabay.com/photo/2021/03/11/13/57/among-us-6087168_960_720.png');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://www.mercerialacostura.com/wp-content/uploads/2019/04/como-arreglar-roto-pantalon.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://puntocruz.online/wp-content/uploads/2020/07/sueters-punto-de-cruz-sweater-bordado-3.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://cdn.pixabay.com/photo/2020/11/22/17/28/cat-5767334_960_720.jpg');
 
---Admin user
-INSERT INTO users(username,password,enabled) VALUES ('adm','$2a$10$B4srWD5ejof0cIiI1CsvseKsIbg01bc9L/40aduSxL9vdKp1fSHKO',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (3,'adm','admin');
-INSERT INTO portfolio(id, sobre_mi) VALUES (3, 'Soy un administrador con todas las funcionalidades activas.');
-INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (3, 'Nombre', 'Apellidos', '92234321Q', 'adminprueba@email.com', 'https://cdn.pixabay.com/photo/2013/07/13/13/38/man-161282_960_720.png', 3 , 'adm');
+--User3
+INSERT INTO users(username,password,enabled) VALUES ('UtopiaArtistica', '$2a$10$/h5dlN5Jmeimr/lkdzt/vel9l9YWftfHqI8Opwg75fih62m0cdJSi', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(3, 'UtopiaArtistica', 'user');
+INSERT INTO portfolio(id, sobre_mi) VALUES (3, 'Me encantan los puzzles y eso me ha llevado a amar todo tipo de esculturas. Tambien practico con resina, haciendo todo tipo de figuras. Soy un apasionado del arte y las manualidades.');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (3, 'Andrés', 'Águila ', '42724321X', 'utopiaartistica@email.com', 'https://cdn.pixabay.com/photo/2015/10/09/08/56/utopia-978908_1280.jpg', 3 , 'UtopiaArtistica');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (3, 'RESINA');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (3, 'ESCULTURA');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (3, 'https://cdn.pixabay.com/photo/2013/03/29/13/39/system-97634_960_720.png');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (3, 'https://cdn.pixabay.com/photo/2013/07/13/01/15/preferences-155386_960_720.png');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (3, 'https://i.pinimg.com/474x/c8/dd/ce/c8ddcebcec868241443e5278b90d6422.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (3, 'https://laresinaepoxi.com/wp-content/uploads/2019/05/Elegir-resina-epoxi-para-joyer%C3%ADa-y-bisuter%C3%ADa.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (3, 'https://cdn.pixabay.com/photo/2018/10/11/17/37/angel-3740392_1280.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (3, 'https://cdn.pixabay.com/photo/2018/10/11/17/38/angel-3740393_1280.jpg');
+
+--Admin user
+INSERT INTO users(username,password,enabled) VALUES ('admin','$2a$10$B4srWD5ejof0cIiI1CsvseKsIbg01bc9L/40aduSxL9vdKp1fSHKO',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (455,'admin','admin');
+INSERT INTO portfolio(id, sobre_mi) VALUES (455, 'Soy un administrador con todas las funcionalidades activas.. También practico el arte y las manualidades en mi tiempo libre, es por eso que me considero un apasionado de disfrutar todo tipo de experiencia.');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (455, 'Nombre', 'Apellidos', '92234321Q', 'adminprueba@email.com', 'https://cdn.pixabay.com/photo/2013/07/13/13/38/man-161282_960_720.png', 455 , 'admin');
+INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (455, 'RESINA');
+INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (455, 'ESCULTURA');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (455, 'https://cdn.pixabay.com/photo/2017/06/15/17/22/sculpture-2406078_1280.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (455, 'https://cdn.pixabay.com/photo/2017/11/07/15/15/wing-2927254_1280.png');
 
 --Encargos
 
@@ -39,9 +50,8 @@ INSERT INTO encargos(id, descripcion, disponibilidad, photo, precio, titulo, bea
 
 --Solicitud
 
-INSERT INTO solicitud(id, descripcion, estado, precio, beaver_id, encargo_id) VALUES (1, 'Descripcion Solicitud', 'PENDIENTE', 30.0, 2, 1);
-INSERT INTO solicitud_fotos(solicitud_id, fotos) VALUES (1, 'https://i.imgur.com/V2Y5KIK.png');
-INSERT INTO solicitud_fotos(solicitud_id, fotos) VALUES (1, 'https://cdn.pixabay.com/photo/2019/08/28/15/56/anime-girl-4437093_960_720.png');
+INSERT INTO solicitud(id, descripcion, estado, precio, beaver_id, encargo_id) VALUES (1, 'Me gustaría tener un retrato a mano de mi hijo. Adjunto una foto en la que me gustaría que se basara.', 'PENDIENTE', 30.0, 2, 1);
+INSERT INTO solicitud_fotos(solicitud_id, fotos) VALUES (1, 'https://cdn.pixabay.com/photo/2015/06/22/08/40/child-817373_1280.jpg');
 
 --Usuarios Piloto
 
@@ -302,10 +312,16 @@ INSERT INTO portfolio(id, sobre_mi) VALUES (44, '');
 INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (44, 'Segio', 'Beaver', '12234321Q', '670540509', 'https://www.searchpng.com/wp-content/uploads/2019/02/Men-Profile-Image-715x657.png', 44, 'sergioBeaver');
 
 -- Valoraciones Usuario 1
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (1, 4.0, 'Buen Vendedor, Mejor Persona', 1, 2);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (2, 3.0, 'Buen Vendedor, Mejor Persona', 1, 3);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (3, 2.0, 'Buen Vendedor, Mejor Persona', 1, 4);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (4, 1.0, 'Buen Vendedor, Mejor Persona', 1, 5);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (5, 3.0, 'Buen Vendedor, Mejor Persona', 1, 6);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (6, 5.0, 'Buen Vendedor, Mejor Persona', 1, 7);
-INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (7, 1.0, 'Buen Vendedor, Mejor Persona', 1, 8);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (1, 4.5, 'Muy profesional, su trabajo ha sido perfecto y muy puntual.', 1, 2);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (2, 3.5, 'Profesional y puntual.', 1, 3);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (3, 2.1, 'Mucho arte, pero nada puntual con la entrega.', 1, 4);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (4, 1.0, 'Pésimo trabajo. Nada profesional.', 1, 5);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (5, 3.3, 'Puntual y barato.', 1, 6);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (6, 5.0, 'Su trabajo es increible, lo recomiendo.', 1, 7);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (7, 1.2, 'Malisimo trabajo, nada satisfecho.', 1, 8);
+
+-- Valoraciones Usuario 2
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (8, 3.8, 'Puntual y barato.', 2, 6);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (9, 5.0, 'Su trabajo es increible, lo recomiendo.', 2, 7);
+INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (10, 1.0, 'Malisimo trabajo, nada satisfecho.', 2, 8);
+
