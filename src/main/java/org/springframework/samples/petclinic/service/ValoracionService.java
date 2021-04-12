@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -31,14 +32,26 @@ public class ValoracionService {
     }
 
     @Transactional
-    public void crearValoracion(Valoracion val, Beaver reciever){
+    public void crearValoracion(Valoracion val, Beaver reciever, Beaver author){
         
         Collection<Valoracion> valcurrent = reciever.getValoraciones();
+        if(valcurrent == null){
+            valcurrent = new ArrayList<>();
+        }
         valcurrent.add(val);
         reciever.setValoraciones(valcurrent);
         val.setBeaver(reciever);
 
-        beaverService.saveBeaver(reciever);
+        Collection<Valoracion> valAuthor = author.getValoracionesCreadas();
+        if(valAuthor == null){
+            valAuthor = new ArrayList<>();
+        }
+        valAuthor.add(val);
+        author.setValoracionesCreadas(valAuthor);
+        val.setValAuthor(author);
+
+        beaverService.guardarUsuario(reciever);
+        beaverService.guardarUsuario(author);
         valoracionRepository.save(val);
     }
 

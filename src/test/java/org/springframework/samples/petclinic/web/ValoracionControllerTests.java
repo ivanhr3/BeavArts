@@ -199,7 +199,7 @@ public class ValoracionControllerTests {
 		beaver.setUser(user);
 
 		BDDMockito.given(beaverService.findBeaverByIntId(Mockito.anyInt())).willReturn(beaver);
-		BDDMockito.doNothing().when(this.valoracionService).crearValoracion(ArgumentMatchers.any(Valoracion.class), ArgumentMatchers.any(Beaver.class));
+		BDDMockito.doNothing().when(this.valoracionService).crearValoracion(ArgumentMatchers.any(Valoracion.class), ArgumentMatchers.any(Beaver.class), ArgumentMatchers.any(Beaver.class));
 
 		this.mockMvc.perform(
 			MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 98)
@@ -230,7 +230,7 @@ public class ValoracionControllerTests {
 		beaver.setUser(user);
 
 		BDDMockito.given(beaverService.findBeaverByIntId(Mockito.anyInt())).willReturn(beaver);
-		BDDMockito.doNothing().when(this.valoracionService).crearValoracion(ArgumentMatchers.any(Valoracion.class), ArgumentMatchers.any(Beaver.class));
+		BDDMockito.doNothing().when(this.valoracionService).crearValoracion(ArgumentMatchers.any(Valoracion.class), ArgumentMatchers.any(Beaver.class), ArgumentMatchers.any(Beaver.class));
 
 		this.mockMvc.perform(
 			MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 98)

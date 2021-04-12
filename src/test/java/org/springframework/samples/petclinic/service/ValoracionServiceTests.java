@@ -91,11 +91,16 @@ public class ValoracionServiceTests {
         Valoracion val = new Valoracion();
         val.setComentario("Hace muy buenas esculturas, tiempo de envío rápido");
         val.setPuntuacion(4.0);
-        valoracionService.crearValoracion(val, beaver1);
+        valoracionService.crearValoracion(val, beaver1, beaver2);
 
         Iterable<Valoracion> valoraciones = valoracionService.findValoracionesByBeaverId(beaver1.getId());
         assertThat(valoraciones).isNotEmpty();
+        assertThat(beaver1.getValoraciones()).isNotEmpty();
+        assertThat(beaver2.getValoracionesCreadas()).isNotEmpty();
 
+        assertThat(beaver1.getValoraciones().contains(val));
+        assertThat(beaver2.getValoraciones().contains(val));
+        
     }
 
 

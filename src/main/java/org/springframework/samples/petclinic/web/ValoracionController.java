@@ -75,7 +75,7 @@ public class ValoracionController {
         } else if(current  == null|| current == reciever){
             return "accesoNoAutorizado";
         } else {
-            valoracionService.crearValoracion(valoracion, reciever);
+            valoracionService.crearValoracion(valoracion, reciever, current);
             return "redirect:/beavers/beaverInfo/"+reciever.getId(); //TODO: FRONT: Añadir vista de lista de valoraciones o el Perfil del usuario valorado
         }
     }
