@@ -24,7 +24,7 @@
     <h2 class="SegoeFont">Descripción: </h2>
     <b><c:out value="${encargo.descripcion}"/></b>
     
-    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <br/>
  <div class="container">   
     <form:form modelAttribute="solicitud" class="form-horizontal" id="add-solicitud-form">

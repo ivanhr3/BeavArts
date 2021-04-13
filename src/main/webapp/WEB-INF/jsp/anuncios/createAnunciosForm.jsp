@@ -14,7 +14,7 @@
         <c:if test="${editando}">Editar </c:if> Anuncio
     </h2>
     
-    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="anuncio" class="form-horizontal" id="add-anuncio-form">
         <div class="form-group has-feedback">

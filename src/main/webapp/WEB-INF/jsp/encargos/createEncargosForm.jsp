@@ -14,7 +14,7 @@
         <c:if test="${editando}">Editar </c:if> Encargo
     </h2>
     
-    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
