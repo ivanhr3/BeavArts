@@ -47,5 +47,17 @@
 	</div>
     <c:if test="${createdByUser == true}">
         	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/edit" htmlEscape="true"/>'>Editar anuncio</a>
+        	<c:if test="${url == true}">
+        	<div class="alert alert-danger" role="alert">
+			<c:out value="${errorSolicitudesAceptadas}"/>
+			</div>
+			</c:if>
+			
+        	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
+        	<c:if test="${url == true}">
+        	<div class="alert alert-danger" role="alert">
+			<c:out value="${errorSolicitudesAceptadas}"/>
+			</div>
+			</c:if>
     </c:if>
 </beavarts:layout>
