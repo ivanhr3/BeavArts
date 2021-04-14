@@ -18,7 +18,7 @@
 
  
   <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: #824500;">
+  <div class="text-center p-3 footerColor">
   <!-- Twitter -->
       <a
         class="btn btn-link btn-floating btn-lg text-light m-1"

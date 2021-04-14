@@ -27,25 +27,38 @@
         <ul class="navbar-nav mr-auto">
         
         <li class="nav-item">
-        			<a class="nav-link" href="/beavers/list">Explora</a>
+        	<div class="buttonHeaderImageE aumentoHover">
+        			<a class="nav-link izqHover" href="/beavers/list">Explora</a>
+        	 </div>	
       	</li>
       	
       	<li class="nav-item">
-				 <a class="nav-link" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
+      		<div class="buttonHeaderImageSN aumentoHover">
+				 <a class="nav-link izqHover" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
+		    </div>	
 		</li>
 		<li class="nav-item">
-        			<a class="nav-link" href="/anuncios/list">Anuncios</a>
-      	</li>	
+			<div class="buttonHeaderImageA aumentoHover">
+				<a class="nav-link izqHover" href="/anuncios/list">Anuncios</a>
+			</div>	
+		</li>
+		
         
         <sec:authorize access="isAuthenticated()">
       			<li class="nav-item">
-        			<a class="nav-link" href="/solicitudes/list">Mis Solicitudes</a>
+      				<div class="buttonHeaderImageMS aumentoHover">
+        				<a class="nav-link izqHover" href="/solicitudes/list">Mis Solicitudes</a>
+        			</div>	
       			</li>		
 				<li class="nav-item">
-        			<a class="nav-link" href="/beavers/${myBeaverId}/misPublicaciones">Mis publicaciones</a>
+					<div class="buttonHeaderImageMP aumentoHover">
+        				<a class="nav-link izqHover" href="/beavers/${myBeaverId}/misPublicaciones">Mis publicaciones</a>
+        			</div>
 				</li>
 				<li class="nav-item">
-        			<a class="nav-link" href="/beavers/beaverInfo/${myBeaverId}">Mi perfil</a>
+					<div class="buttonHeaderImagePerfil aumentoHover">
+	        			<a class="nav-link izqHover" href="/beavers/beaverInfo/${myBeaverId}">Mi perfil</a>
+	        		</div>
       			</li>	
 				</sec:authorize>
             
@@ -53,7 +66,7 @@
         
         <ul class="nav navbar-nav ml-auto">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a style="font-family:Segoe Print; font-weight:bold; color:#ffbb00" href="<c:url value="/login" />">Iniciar Sesión</a></li>
+					<li><a style="font-family:SegoePrint; font-weight:bold; color:#9e4632" href="<c:url value="/login" />">Iniciar Sesión</a></li>
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">

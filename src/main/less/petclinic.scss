@@ -35,6 +35,14 @@
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+@font-face {
+font-family: "SegoePrint";
+src: url("/resources/fonts/SegoePrint.eot");
+src: url("/resources/fonts/SegoePrint.woff") format("woff"),
+url("/resources/fonts/SegoePrint.otf") format("opentype"),
+url("/resources/fonts/SegoePrint.svg#SegoePrint") format("svg");
+}
+
 *,
 *::before,
 *::after {
@@ -66,7 +74,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: justify;
-  background-color: #EFC58D; 
+  background-color: #fff1de; 
 }
 
 [tabindex="-1"]:focus {
@@ -9031,21 +9039,21 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* change the background color */
 .navbar-custom {
-    background-color: #824500;
-	
+   background: rgb(241,158,12);
+background: linear-gradient(0deg, rgba(241,158,12,1) 0%, rgba(255,200,103,1) 0%, rgba(249,212,148,1) 28%, rgba(255,255,255,1) 100%);
 }
 
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
-    color: #ffcc00;
+    color: #71392c;
 }
 
 /* change the link color */
 .navbar-custom .navbar-nav .nav-link {
-    color: #ffbb00;
-font-weight:bold;
-font-family: "Segoe Print";
+    color: #71392c;
+	font-weight:bold;
+	font-family: "SegoePrint";
 
   
 }
@@ -9054,7 +9062,7 @@ font-family: "Segoe Print";
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:focus .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: #56ff52;
+    color: #3c241f;
 }
 
 .navbar-custom .navbar-toggler {
@@ -9071,7 +9079,7 @@ font-family: "Segoe Print";
 .navbar-custom .navbar-nav .dropdown-menu {
     background-color: #ffbb00;
 	font-weight:bold;
-	font-family: "Segoe Print";
+	font-family: "SegoePrint";
 }
 
 /* dropdown item text color */
@@ -9086,7 +9094,7 @@ font-family: "Segoe Print";
     color: #000000;
     background-color: #56ff52;
 	font-weight:bold;
-	font-family: "Segoe Print";
+	font-family: "SegoePrint";
 }
 
 
@@ -9148,11 +9156,8 @@ font-family: "Segoe Print";
   border-color: #235ee7;
 }
 
-@import url(//db.onlinewebfonts.com/c/c455d94eee43dc4ceeb83c0c0fd0d4c8?family=Segoe+Print);
-@font-face {font-family: "Segoe Print"; src: url("//db.onlinewebfonts.com/t/c455d94eee43dc4ceeb83c0c0fd0d4c8.eot"); src: url("//db.onlinewebfonts.com/t/c455d94eee43dc4ceeb83c0c0fd0d4c8.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/c455d94eee43dc4ceeb83c0c0fd0d4c8.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/c455d94eee43dc4ceeb83c0c0fd0d4c8.woff") format("woff"), url("//db.onlinewebfonts.com/t/c455d94eee43dc4ceeb83c0c0fd0d4c8.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/c455d94eee43dc4ceeb83c0c0fd0d4c8.svg#Segoe Print") format("svg"); }
-
 .SegoeFont {
-	font-family:"Segoe Print"; 
+	font-family:"SegoePrint"; 
 	font-weight:bold;
 }
 
@@ -9695,5 +9700,110 @@ td {
 
 .imgBorderBlack {
   border: 1px solid #000;
+}
+
+.buttonHeaderImageA {
+	background-image : url("/resources/images/brushPng.png");
+	background-size: 90px 30px;
+    background-repeat: no-repeat;
+	background-position: center; 	
+}
+
+.buttonHeaderImageSN {
+	background-image : url("/resources/images/brushPng.png");
+	background-size: 134px 30px;
+    background-repeat: no-repeat;
+	background-position: center; 	
+}
+
+.buttonHeaderImageMS {
+	background-image : url("/resources/images/brushPng.png");
+	background-size: 134px 30px;
+    background-repeat: no-repeat;
+	background-position: center; 	
+}
+
+.buttonHeaderImageMP {
+	background-image : url("/resources/images/brushPng.png");
+	background-size: 155px 30px;
+    background-repeat: no-repeat;
+	background-position: center; 	
+}
+
+.buttonHeaderImagePerfil {
+	background-image : url("/resources/images/brushPng.png");
+	background-size: 90px 30px;
+    background-repeat: no-repeat;
+	background-position: center; 	
+}
+
+.buttonHeaderImageE {
+	background-image : url("/resources/images/brushPng.png");
+	background-size: 70px 30px;
+    background-repeat: no-repeat;
+	background-position: center;	
+}
+
+.aumentoHover:hover {
+    transform: scale(1.1);
+	text-shadow: 0.1px 0.1px 5px #fff;
+}
+
+@media (max-width: 993px) {
+	.buttonHeaderImageA {	
+		background-image : url("/resources/images/brushPng.png");
+		background-size: 90px 30px;
+	    background-repeat: no-repeat;
+		background-position: left;
+	 	
+	}
+	.buttonHeaderImageSN {	
+		background-image : url("/resources/images/brushPng.png");
+		background-size: 134px 30px;
+	    background-repeat: no-repeat;
+		background-position: left;
+	 	
+	}	
+	.buttonHeaderImageMS {	
+		background-image : url("/resources/images/brushPng.png");
+		background-size: 134px 30px;
+	    background-repeat: no-repeat;
+		background-position: left;
+	 	
+	}	
+	.buttonHeaderImageMP {	
+		background-image : url("/resources/images/brushPng.png");
+		background-size: 155px 30px;
+	    background-repeat: no-repeat;
+		background-position: left;
+	 	
+	}	
+	.buttonHeaderImagePerfil {	
+		background-image : url("/resources/images/brushPng.png");
+		background-size: 90px 30px;
+	    background-repeat: no-repeat;
+		background-position: left;	 	
+	}	
+	.buttonHeaderImageE {	
+		background-image : url("/resources/images/brushPng.png");
+		background-size: 70px 30px;
+	    background-repeat: no-repeat;
+		background-position: left;
+	 	
+	}	
+	.aumentoHover:hover {
+    transform: scale(1.0);
+	text-shadow: 0.1px 0.1px 5px #fff;
+}
+	.izqHover {
+	    margin-left:6px;
+	
+	}
+}
+
+.footerColor{
+	
+   background: rgb(255,175,34);
+background: linear-gradient(0deg, rgba(255,175,34,1) 0%, rgba(255,196,93,1) 40%, rgba(255,196,93,1) 60%, rgba(255,175,34,1) 100%);
 }
 
