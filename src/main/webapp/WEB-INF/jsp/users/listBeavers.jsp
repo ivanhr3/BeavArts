@@ -58,18 +58,18 @@
 			    this.className += " active";
 			  });
 			}
-		</script>
-		
-	</jsp:attribute>
-	
-	<jsp:body>
-	
+		</script>		
+</jsp:attribute>
+
+<jsp:body>
 <h1 class="SegoeFont" style="text-align:center">Beavers</h1>
 <br/>
-
 <div class="container mt-3 mb-4">
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
- 	<div id="myBtnContainer">
+<b class="SegoeFont" style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto!</b>
+<br/>
+<br/>
+<div id="myBtnContainer">
   <button style="background-color: orange; border-color: brown"class="btn active btn-primary" onclick="filterSelection('all')"> Mostrar todos</button>
   <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
   <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
@@ -79,26 +79,21 @@
   <button class="btn btn-primary" onclick="filterSelection('JOYERIA')"> Joyería</button>
   <button class="btn btn-primary" onclick="filterSelection('RESINA')"> Resina</button>
   <button class="btn btn-primary" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
-  
 </div>
+
     <div class="row">
       <div class="col-md-12">
         <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
           <table class="table manage-candidates-top mb-0">
-          
             <thead>
               <tr>
-                <th  class="SegoeFont">Nombre de Usuario</th>
-                             
+                <th  class="SegoeFont">Nombre de Usuario</th>   
               </tr>
             </thead>
             <tbody>           
 	            <c:forEach items="${beavers}" var="beaver" >
-	                     
 		            <tr class="candidates-list ${beaver.especialidades}">
-		          
 		             <td class="title">
-		                	
 		                  <div class="thumb">
 		                    <img class="img-fluid" src="${beaver.urlFotoPerfil}" alt="">
 		                  </div>
@@ -111,12 +106,8 @@
 		                        <h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username}</a></h5>
 		                      </div>
 		                      <div style="color:grey" class="candidate-list-option">
-		                        
-		                   
-		                          
 		                          <c:forEach items="${beaver.especialidades}" var="especialidad">
 		                          <c:choose>
-	                      
 					                      	<c:when test="${especialidad == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
 					                      	</c:when>
@@ -148,34 +139,24 @@
 					                      	<c:when test="${especialidad == 'FOTOGRAFIA'}">
 					                      		<i class="fas fa-camera-retro"></i>
 					                      	</c:when>
-				                      
-				                      
 				                      </c:choose>
-		                          
 	                    				<c:out value="${especialidad} "/> &nbsp;
 	                				</c:forEach>
-		                        
 		                      </div>
 		                      <br/>
 		                      <c:out value="${beaver.portfolio.sobreMi}"/>
 		                    </div>
 		                  </div>
-		                
-		                </td> 
-	                 
-		              </tr>  
-		                      
+		                </td>
+		              </tr>    
 	            </c:forEach>            
             </tbody>
-            
           </table>          
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
 </jsp:body> 
   
 </beavarts:layout>
