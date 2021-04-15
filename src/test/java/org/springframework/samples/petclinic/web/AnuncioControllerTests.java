@@ -1,4 +1,11 @@
+
 package org.springframework.samples.petclinic.web;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +17,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.*;
-import org.springframework.samples.petclinic.service.*;
+import org.springframework.samples.petclinic.model.Anuncio;
+import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Especialidad;
+import org.springframework.samples.petclinic.model.Estados;
+import org.springframework.samples.petclinic.model.Solicitud;
+import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.service.AnuncioService;
+import org.springframework.samples.petclinic.service.BeaverService;
+import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -19,315 +34,303 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 @WebMvcTest(value = AnuncioController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 @AutoConfigureMockMvc
 public class AnuncioControllerTests {
 
+	@Autowired
+	private MockMvc						mockMvc;
 
-    @Autowired
-    private MockMvc mockMvc;
+	@MockBean
+	private AnuncioService				anuncioService;
 
-    @MockBean
-    private AnuncioService anuncioService;
+	@MockBean
+	private BeaverService				beaverService;
 
-    @MockBean
-    private BeaverService beaverService;
+	@MockBean
+	private EncargoService				encargoService;
 
-    @MockBean
-    private EncargoService encargoService;
+	private static final int			TEST_BEAVER_ID		= 99;
+	private static final int			TEST_BEAVER_ID2		= 100;
+	private static final int			TEST_ANUNCIO_ID		= 90;
+	private static final int			TEST_ANUNCIO_ID2	= 91;
+	private static final int			TEST_ANUNCIO_ID3	= 92;
+	private static final Especialidad	TEST_ESPECIALIDAD	= Especialidad.ESCULTURA;
 
-    private static final int TEST_BEAVER_ID	= 99;
-    private static final int TEST_BEAVER_ID2 = 100;
-    private static final int TEST_ANUNCIO_ID = 90;
-    private static final int TEST_ANUNCIO_ID2 = 91;
-    private static final int TEST_ANUNCIO_ID3 = 92;
-    private static final Especialidad TEST_ESPECIALIDAD = Especialidad.ESCULTURA;
-
-    private Beaver beaver;
-    private Beaver beaver2;
-    private Anuncio anuncio;
-    private Anuncio anuncio2;
-    private Anuncio anuncio3;
-    private Solicitud solicitud;
-    private List<Anuncio> listaAnunciosPorEspecialidad;
-    private List<Anuncio> listaAnunciosDestacados;
-    private List<Anuncio> listaAnunciosNoDestacados;
-
-
-    @BeforeEach
-    public void setUp() {
-        beaver = new Beaver();
-        beaver.setFirstName("Nombre");
-        beaver.setLastName("Apellidos");
-        beaver.setEmail("valid@gmail.com");
-        beaver.setId(99);
-        Collection<Especialidad> espe = new HashSet<>();
-        espe.add(Especialidad.ESCULTURA);
-        beaver.setEspecialidades(espe);
-        beaver.setDni("12345678Q");
-        User user = new User();
-        user.setUsername("User123");
-        user.setPassword("supersecretpass");
-        user.setEnabled(true);
-        beaver.setUser(user);
-        beaver.setEncargos(new HashSet<>());
-
-        beaver2 = new Beaver();
-        beaver2.setFirstName("Nombre");
-        beaver2.setLastName("Apellidos");
-        beaver2.setEmail("valid@gmail.com");
-        Collection<Especialidad> espe2 = new HashSet<>();
-        espe2.add(Especialidad.ESCULTURA);
-        beaver2.setEspecialidades(espe2);
-        beaver2.setDni("12345678X");
-        beaver2.setId(100);
-
-        User user2 = new User();
-        user2.setUsername("User123456");
-        user2.setPassword("supersecretpass2");
-        user2.setEnabled(true);
-        beaver2.setUser(user2);
-
-        anuncio = new Anuncio();
-        anuncio.setBeaver(beaver);
-        anuncio.setDescripcion("Esto es una descripción");
-        anuncio.setPrecio(50.0);
-        anuncio.setTitulo("Esto es un título");
-        anuncio.setDestacado(false);
-        anuncio.setEspecialidad(Especialidad.ESCULTURA);
-        anuncio.setId(90);
-
-        anuncio2 = new Anuncio();
-        anuncio2.setBeaver(beaver);
-        anuncio2.setDescripcion("Esto es una descripción 2");
-        anuncio2.setPrecio(40.0);
-        anuncio2.setTitulo("Esto es un título 2");
-        anuncio2.setDestacado(true);
-        anuncio2.setEspecialidad(Especialidad.RESINA);
-        anuncio2.setId(91);
-
-        anuncio3 = new Anuncio();
-        anuncio3.setBeaver(beaver2);
-        anuncio3.setDescripcion("Esto es una descripción 2");
-        anuncio3.setPrecio(40.0);
-        anuncio3.setTitulo("Esto es un título 2");
-        anuncio3.setDestacado(false);
-        anuncio3.setEspecialidad(Especialidad.RESINA);
-        anuncio3.setId(92);
-
-        solicitud = new Solicitud();
-        solicitud.setPrecio(50.0);
-        solicitud.setAnuncio(anuncio2);
-        solicitud.setDescripcion("Esto es una descripción");
-        solicitud.setEstado(Estados.ACEPTADO);
-        Collection<Solicitud> solicitudes = new HashSet<>();
-        solicitudes.add(solicitud);
-        anuncio2.setSolicitud(solicitudes);
-
-        listaAnunciosPorEspecialidad = new ArrayList<>();
-        listaAnunciosPorEspecialidad.add(anuncio);
-
-        listaAnunciosDestacados = new ArrayList<>();
-        listaAnunciosDestacados.add(anuncio2);
-
-        listaAnunciosNoDestacados = new ArrayList<>();
-        listaAnunciosNoDestacados.add(anuncio);
-        listaAnunciosNoDestacados.add(anuncio3);
-
-        Collection<Anuncio> anunciosBeaver1 = new HashSet<>();
-        anunciosBeaver1.add(anuncio);
-        anunciosBeaver1.add(anuncio2);
-        beaver.setAnuncios(anunciosBeaver1);
-
-        BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID)).willReturn(anuncio);
-        BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID2)).willReturn(anuncio2);
-        BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID3)).willReturn(anuncio3);
-        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
-        BDDMockito.given(this.beaverService.findBeaverByIntId(TEST_BEAVER_ID)).willReturn(beaver);
-        BDDMockito.given(this.beaverService.findBeaverByIntId(TEST_BEAVER_ID2)).willReturn(beaver2);
-        BDDMockito.given(this.anuncioService.findAnunciosByEspecialidad(TEST_ESPECIALIDAD)).willReturn(listaAnunciosPorEspecialidad);
-        BDDMockito.given(this.anuncioService.findAnunciosDestacados()).willReturn(listaAnunciosDestacados);
-        BDDMockito.given(this.anuncioService.findAnunciosNoDestacados()).willReturn(listaAnunciosNoDestacados);
-
-    }
-
-    @WithMockUser(value = "User123")
-    @Test
-    public void testInitCreationSucces() throws Exception {
-
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"))
-            .andExpect(MockMvcResultMatchers.model().attributeExists("anuncio"));
-    }
-
-    @WithMockUser(value = "User123")
-    @Test
-    public void testPostCreationSucces() throws Exception {
-
-        this.mockMvc
-            .perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
-                .param("titulo", "AnuncioTest")
-                .param("id", "60")
-                .param("precio", "35.50")
-                .param("especialidad", "TEXTIL")
-                .param("descripcion", "Descripción del anuncio de prueba"))
-            .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-            .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/99/anuncios/60"));
-
-    }
-
-    @WithMockUser(value = "User123")
-    @Test
-    public void testPostCreationHasErrors() throws Exception {
-
-        this.mockMvc
-            .perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
-                .param("titulo", "AnuncioTest")
-                .param("id", "60")
-                .param("precio", "")
-                .param("especialidad", "TEXTIL")
-                .param("descripcion", "Descripción del anuncio de prueba"))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"));
-
-    }
-
-    @WithMockUser(value = "User123")
-    @Test
-    public void testPostCreationHasErrors2() throws Exception {
-
-        this.mockMvc
-            .perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
-                .param("titulo", "")
-                .param("id", "60")
-                .param("precio", "35.50")
-                .param("especialidad", "TEXTIL")
-                .param("descripcion", "Descripción del anuncio de prueba"))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"));
-
-    }
-
-    // TESTS DE EDITAR ANUNCIO
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testInitUpdateForm() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID)
-            .with(csrf()))
-            .andExpect(status().isOk())
-            .andExpect(model().attributeExists("anuncio"))
-            .andExpect(view().name("anuncios/createAnunciosForm"));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testInitUpdateFormHasErrors() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID2)
-            .with(csrf()))
-            .andExpect(status().isOk())
-            .andExpect(view().name("anuncios/anunciosDetails"));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testInitUpdateFormHasErrors2() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID3)
-            .with(csrf()))
-            .andExpect(status().isOk())
-            .andExpect(view().name("accesoNoAutorizado"));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testProcessUpdateForm() throws Exception {
-        mockMvc.perform(post("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID)
-            .with(csrf())
-            .param("titulo", "Cambio en el titulo")
-            .param("precio", "49.0")
-            .param("descripcion", "Cambio en la descripcion"))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/beavers/" + TEST_BEAVER_ID + "/anuncios/" + TEST_ANUNCIO_ID));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testProcessUpdateFormHasErrors() throws Exception {
-        mockMvc.perform(post("/beavers/{beaverId}/anuncios/{anuncioId}/edit", TEST_BEAVER_ID, TEST_ANUNCIO_ID2)
-            .with(csrf()))
-            .andExpect(model().attributeExists("anuncio"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("anuncios/createAnunciosForm"));
-    }
-
-    // TESTS PARA EL DELETE DE ANUNCIOS
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testDeleteAnuncio() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", TEST_BEAVER_ID, TEST_ANUNCIO_ID)
-            .with(csrf()))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/beavers/" + TEST_BEAVER_ID + "/encargos/list"));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testDeleteAnuncioHasErrors() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", TEST_BEAVER_ID, TEST_ANUNCIO_ID2)
-            .with(csrf()))
-            .andExpect(status().isOk())
-            .andExpect(view().name("anuncios/anunciosDetails"));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testDeleteHasErrors2() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", TEST_BEAVER_ID2, TEST_ANUNCIO_ID)
-            .with(csrf()))
-            .andExpect(status().isOk())
-            .andExpect(view().name("accesoNoAutorizado"));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testListAnuncios() throws Exception {
-        mockMvc.perform(get("/anuncios/list"))
-            .andExpect(model().attributeExists("anuncios"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("anuncios/listAnuncios"));
-    }
-
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testMostrarAnuncio() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}", TEST_BEAVER_ID, TEST_ANUNCIO_ID))
-            .andExpect(model().attributeExists("anuncio"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("anuncios/anunciosDetails"));
-    }
+	private Beaver						beaver;
+	private Beaver						beaver2;
+	private Anuncio						anuncio;
+	private Anuncio						anuncio2;
+	private Anuncio						anuncio3;
+	private Solicitud					solicitud;
+	private List<Anuncio>				listaAnunciosPorEspecialidad;
+	private List<Anuncio>				listaAnunciosDestacados;
+	private List<Anuncio>				listaAnunciosNoDestacados;
 
 
-    @WithMockUser(value = "testuser")
-    @Test
-    public void testListPublicaciones() throws Exception {
-        mockMvc.perform(get("/beavers/{beaverId}/misPublicaciones", TEST_BEAVER_ID))
-            .andExpect(model().attributeExists("anuncios"))
-            .andExpect(model().attributeDoesNotExist("encargos"))
-            .andExpect(status().isOk())
-            .andExpect(view().name("publicaciones/misPublicaciones"));
-    }
+	@BeforeEach
+	public void setUp() {
+		this.beaver = new Beaver();
+		this.beaver.setFirstName("Nombre");
+		this.beaver.setLastName("Apellidos");
+		this.beaver.setEmail("valid@gmail.com");
+		this.beaver.setId(99);
+		Collection<Especialidad> espe = new HashSet<>();
+		espe.add(Especialidad.ESCULTURA);
+		this.beaver.setEspecialidades(espe);
+		this.beaver.setDni("12345678Q");
+		User user = new User();
+		user.setUsername("User123");
+		user.setPassword("supersecretpass");
+		Authorities au = new Authorities();
+		Set<Authorities> col = new HashSet<>();
+		col.add(au);
+		au.setAuthority("user");
+		au.setUser(user);
+		user.setAuthorities(col);
+		user.setEnabled(true);
+		this.beaver.setUser(user);
+		this.beaver.setEncargos(new HashSet<>());
+
+		this.beaver2 = new Beaver();
+		this.beaver2.setFirstName("Nombre");
+		this.beaver2.setLastName("Apellidos");
+		this.beaver2.setEmail("valid@gmail.com");
+		Collection<Especialidad> espe2 = new HashSet<>();
+		espe2.add(Especialidad.ESCULTURA);
+		this.beaver2.setEspecialidades(espe2);
+		this.beaver2.setDni("12345678X");
+		this.beaver2.setId(100);
+
+		User user2 = new User();
+		user2.setUsername("User123456");
+		user2.setPassword("supersecretpass2");
+		Authorities au2 = new Authorities();
+		Set<Authorities> col2 = new HashSet<>();
+		col2.add(au2);
+		au2.setAuthority("user");
+		au2.setUser(user2);
+		user2.setAuthorities(col2);
+		user2.setEnabled(true);
+		this.beaver2.setUser(user2);
+
+		this.anuncio = new Anuncio();
+		this.anuncio.setBeaver(this.beaver);
+		this.anuncio.setDescripcion("Esto es una descripción");
+		this.anuncio.setPrecio(50.0);
+		this.anuncio.setTitulo("Esto es un título");
+		this.anuncio.setDestacado(false);
+		this.anuncio.setEspecialidad(Especialidad.ESCULTURA);
+		this.anuncio.setId(90);
+
+		this.anuncio2 = new Anuncio();
+		this.anuncio2.setBeaver(this.beaver);
+		this.anuncio2.setDescripcion("Esto es una descripción 2");
+		this.anuncio2.setPrecio(40.0);
+		this.anuncio2.setTitulo("Esto es un título 2");
+		this.anuncio2.setDestacado(true);
+		this.anuncio2.setEspecialidad(Especialidad.RESINA);
+		this.anuncio2.setId(91);
+
+		this.anuncio3 = new Anuncio();
+		this.anuncio3.setBeaver(this.beaver2);
+		this.anuncio3.setDescripcion("Esto es una descripción 2");
+		this.anuncio3.setPrecio(40.0);
+		this.anuncio3.setTitulo("Esto es un título 2");
+		this.anuncio3.setDestacado(false);
+		this.anuncio3.setEspecialidad(Especialidad.RESINA);
+		this.anuncio3.setId(92);
+
+		this.solicitud = new Solicitud();
+		this.solicitud.setPrecio(50.0);
+		this.solicitud.setAnuncio(this.anuncio2);
+		this.solicitud.setDescripcion("Esto es una descripción");
+		this.solicitud.setEstado(Estados.ACEPTADO);
+		Collection<Solicitud> solicitudes = new HashSet<>();
+		solicitudes.add(this.solicitud);
+		this.anuncio2.setSolicitud(solicitudes);
+
+		this.listaAnunciosPorEspecialidad = new ArrayList<>();
+		this.listaAnunciosPorEspecialidad.add(this.anuncio);
+
+		this.listaAnunciosDestacados = new ArrayList<>();
+		this.listaAnunciosDestacados.add(this.anuncio2);
+
+		this.listaAnunciosNoDestacados = new ArrayList<>();
+		this.listaAnunciosNoDestacados.add(this.anuncio);
+		this.listaAnunciosNoDestacados.add(this.anuncio3);
+
+		Collection<Anuncio> anunciosBeaver1 = new HashSet<>();
+		anunciosBeaver1.add(this.anuncio);
+		anunciosBeaver1.add(this.anuncio2);
+		this.beaver.setAnuncios(anunciosBeaver1);
+		List<Authorities> lista = new ArrayList<Authorities>();
+		lista.add(au);
+
+		BDDMockito.given(this.anuncioService.findAnuncioById(AnuncioControllerTests.TEST_ANUNCIO_ID)).willReturn(this.anuncio);
+		BDDMockito.given(this.anuncioService.findAnuncioById(AnuncioControllerTests.TEST_ANUNCIO_ID2)).willReturn(this.anuncio2);
+		BDDMockito.given(this.anuncioService.findAnuncioById(AnuncioControllerTests.TEST_ANUNCIO_ID3)).willReturn(this.anuncio3);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(AnuncioControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(AnuncioControllerTests.TEST_BEAVER_ID2)).willReturn(this.beaver2);
+		BDDMockito.given(this.anuncioService.findAnunciosByEspecialidad(AnuncioControllerTests.TEST_ESPECIALIDAD)).willReturn(this.listaAnunciosPorEspecialidad);
+		BDDMockito.given(this.anuncioService.findAnunciosDestacados()).willReturn(this.listaAnunciosDestacados);
+		BDDMockito.given(this.anuncioService.findAnunciosNoDestacados()).willReturn(this.listaAnunciosNoDestacados);
+		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+
+	}
+
+	@WithMockUser(value = "User123")
+	@Test
+	public void testInitCreationSucces() throws Exception {
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("anuncio"));
+	}
+
+	@WithMockUser(value = "User123")
+	@Test
+	public void testPostCreationSucces() throws Exception {
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "AnuncioTest").param("id", "60").param("precio", "35.50")
+			.param("especialidad", "TEXTIL").param("descripcion", "Descripción del anuncio de prueba")).andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/99/anuncios/60"));
+
+	}
+
+	@WithMockUser(value = "User123")
+	@Test
+	public void testPostCreationHasErrors() throws Exception {
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "AnuncioTest").param("id", "60").param("precio", "")
+			.param("especialidad", "TEXTIL").param("descripcion", "Descripción del anuncio de prueba")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"));
+
+	}
+
+	@WithMockUser(value = "User123")
+	@Test
+	public void testPostCreationHasErrors2() throws Exception {
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "").param("id", "60").param("precio", "35.50")
+			.param("especialidad", "TEXTIL").param("descripcion", "Descripción del anuncio de prueba")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"));
+
+	}
+
+	// TESTS DE EDITAR ANUNCIO
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testInitUpdateForm() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("anuncio")).andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testInitUpdateFormHasErrors() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID2).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/anunciosDetails"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testInitUpdateFormHasErrors2() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/edit", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID3).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testProcessUpdateForm() throws Exception {
+		this.mockMvc
+			.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/{anuncioId}/edit", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf())
+				.param("titulo", "Cambio en el titulo").param("precio", "49.0").param("descripcion", "Cambio en la descripcion"))
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + AnuncioControllerTests.TEST_BEAVER_ID + "/anuncios/" + AnuncioControllerTests.TEST_ANUNCIO_ID));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testProcessUpdateFormHasErrors() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/{anuncioId}/edit", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID2).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("anuncio")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"));
+	}
+
+	// TESTS PARA EL DELETE DE ANUNCIOS
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testDeleteAnuncio() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + AnuncioControllerTests.TEST_BEAVER_ID + "/encargos/list"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testDeleteAnuncioHasErrors() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID2).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/anunciosDetails"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testDeleteHasErrors2() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID2, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testListAnuncios() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/anuncios/list")).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios")).andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.view().name("anuncios/listAnuncios"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testMostrarAnuncio() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID)).andExpect(MockMvcResultMatchers.model().attributeExists("anuncio"))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/anunciosDetails"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testListPublicaciones() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/misPublicaciones", AnuncioControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios"))
+			.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("encargos")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("publicaciones/misPublicaciones"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testDeleteAnuncioAdmin() throws Exception {
+
+		Beaver beaver3 = new Beaver();
+		beaver3.setFirstName("Nombre");
+		beaver3.setLastName("Apellidos");
+		beaver3.setEmail("validx@gmail.com");
+		beaver3.setId(50);
+		Collection<Especialidad> espe = new HashSet<>();
+		espe.add(Especialidad.ESCULTURA);
+		beaver3.setEspecialidades(espe);
+		beaver3.setDni("12345672Q");
+		User user = new User();
+		user.setUsername("Admin123");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+		Authorities au = new Authorities();
+		Set<Authorities> col = new HashSet<>();
+		col.add(au);
+		au.setAuthority("admin");
+		au.setUser(user);
+		user.setAuthorities(col);
+		beaver3.setUser(user);
+		beaver3.setEncargos(new HashSet<>());
+		List<Authorities> lista = new ArrayList<Authorities>();
+		lista.add(au);
+
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
+		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + AnuncioControllerTests.TEST_BEAVER_ID + "/encargos/list"));
+	}
 
 }

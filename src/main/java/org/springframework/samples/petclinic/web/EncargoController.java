@@ -2,14 +2,17 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
@@ -90,11 +93,11 @@ public class EncargoController {
 	@GetMapping("/list")
 	public String listarEncargos(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
 
-		if(this.beaverService.getCurrentBeaver() != null) {
+		if (this.beaverService.getCurrentBeaver() != null) {
 			Beaver me = this.beaverService.getCurrentBeaver();
 			model.put("myBeaverId", me.getId()); //Añadido para usar las url del header
 		}
-		
+
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		model.addAttribute("beaverId", beaverId);
 		model.addAttribute("beaver", beaver);
@@ -126,6 +129,14 @@ public class EncargoController {
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();//Necesario para ver el id y usar las url
 		model.addAttribute("myBeaverId", beaver.getId());
+
+		User user = beaver.getUser();
+		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
+		Boolean esAdmin = auth.get(0).getAuthority() == "admin";
+
+		if (esAdmin) {
+			model.addAttribute("esAdmin", true); //Este parámetro es la condicion para ver el boton de delete sin ser el creador
+		}
 
 		if (this.beaverService.getCurrentBeaver() == encargo.getBeaver()) {
 			model.addAttribute("createdByUser", true); //TODO: Front: Sólo quien creó el encargo puede actualizarlo. Mostrad el botón sólo en este caso.
@@ -186,7 +197,13 @@ public class EncargoController {
 
 	@RequestMapping(value = "/{encargoId}/delete")
 	public String deleteEncargo(@PathVariable("beaverId") final int beaverId, @PathVariable("encargoId") final int encargoId, final ModelMap model) {
-		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
+
+		Beaver beav = this.beaverService.getCurrentBeaver();
+		User user = beav.getUser();
+		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
+		Boolean esAdmin = auth.get(0).getAuthority() == "admin";
+
+		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId) && !esAdmin) {
 			return "accesoNoAutorizado"; // Acceso no autorizado
 		} else {
 			this.encargoService.deleteEncargoById(encargoId);
