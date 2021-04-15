@@ -66,12 +66,20 @@
         
         <ul class="nav navbar-nav ml-auto">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a style="font-family:SegoePrint; font-weight:bold; color:#9e4632" href="<c:url value="/login" />">Iniciar Sesión</a></li>
+				
+					<li>
+					<div class="buttonHeaderImageLogin aumentoHover">
+					<a class="izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/login" />">Iniciar Sesión</a>
+					</div>
+					</li>
+					
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item dropdown">
+					
         				<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><strong><sec:authentication property="name" /></strong></a>
+					 	
 					 	<div class="dropdown-menu dropdown-menu-right">
 					 		<a class="dropdown-item" href="/logout">Desconectar</a>
 						</div>
