@@ -150,12 +150,6 @@
             <artifactId>commons-validator</artifactId>
             <version>1.2.0</version>
         </dependency>
-        <!-- Paypal payment -->
-        <dependency>
-            <groupId>com.paypal.sdk</groupId>
-            <artifactId>rest-api-sdk</artifactId>
-            <version>1.4.2</version>
-        </dependency>
         <!-- send email -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

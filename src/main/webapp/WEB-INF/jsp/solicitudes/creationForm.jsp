@@ -59,10 +59,11 @@
         </div>          
          </div>
          </div>         
-            
+         <br/>
+         <p class="SegoeFont" style="text-align:justify">Tu solicitud se creará tras haber finalizado el pago.</p>
             <body>
                 <script
-                  src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+                  src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9&currency=EUR"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
                 </script>
               
                 <div id="paypal-button-container"></div>
@@ -77,7 +78,7 @@
                         purchase_units: [{
                             amount: {
                             value: '${encargo.precio}',
-                            currency: 'EUR'
+                            currency: "EUR"
                             }
                         }]
                         });

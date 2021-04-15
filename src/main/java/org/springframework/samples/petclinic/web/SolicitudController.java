@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Estados;
+import org.springframework.samples.petclinic.model.Factura;
 import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -43,6 +45,9 @@ public class SolicitudController {
 
 	@Autowired
 	private EncargoService		encargoService;
+
+	@Autowired
+	private FacturaService		facturaService;
 
 	private static final String	VISTA_DE_ERROR		= "ErrorPermisos";
 	private static final String	SOLICITUD_DETAILS	= "testview";
@@ -119,7 +124,13 @@ public class SolicitudController {
 			}
 
 			else {
+				Factura factura = new Factura();
+				factura.setEmailBeaver(encargo.getBeaver().getEmail());
+				factura.setEmailPayer(beaver.getEmail());
+				
 				this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
+				factura.setSolicitud(solicitud);
+				this.facturaService.crearFactura(factura);
 				return "solicitudes/solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
 			}
 		}
