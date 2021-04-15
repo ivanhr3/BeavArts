@@ -9,14 +9,83 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="beavers">
+
+<jsp:attribute name="customScript">
+	
+	<!-- Script filtro %-->
+	
+		<script>
+			filterSelection("all")
+			function filterSelection(c) {
+			  var x, i;
+			  x = document.getElementsByClassName("candidates-list");
+			  if (c == "all") c = "";
+			  for (i = 0; i < x.length; i++) {
+			    w3RemoveClass(x[i], "show");
+			    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+			  }
+			}
+			
+			function w3AddClass(element, name) {
+			  var i, arr1, arr2;
+			  arr1 = element.className.split(" ");
+			  arr2 = name.split(" ");
+			  for (i = 0; i < arr2.length; i++) {
+			    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+			  }
+			}
+			
+			function w3RemoveClass(element, name) {
+			  var i, arr1, arr2;
+			  arr1 = element.className.split(" ");
+			  arr2 = name.split(" ");
+			  for (i = 0; i < arr2.length; i++) {
+			    while (arr1.indexOf(arr2[i]) > -1) {
+			      arr1.splice(arr1.indexOf(arr2[i]), 1);     
+			    }
+			  }
+			  element.className = arr1.join(" ");
+			}
+			
+			
+			// Add active class to the current button (highlight it)
+			var btnContainer = document.getElementById("myBtnContainer");
+			var btns = btnContainer.getElementsByClassName("btn");
+			for (var i = 0; i < btns.length; i++) {
+			  btns[i].addEventListener("click", function(){
+			    var current = document.getElementsByClassName("active");
+			    current[0].className = current[0].className.replace(" active", "");
+			    this.className += " active";
+			  });
+			}
+		</script>
+		
+	</jsp:attribute>
+	
+	<jsp:body>
+	
 <h1 class="SegoeFont" style="text-align:center">Beavers</h1>
 <br/>
+
 <div class="container mt-3 mb-4">
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
+ 	<div id="myBtnContainer">
+  <button style="background-color: orange; border-color: brown"class="btn active btn-primary" onclick="filterSelection('all')"> Mostrar todos</button>
+  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
+  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
+  <button class="btn btn-primary" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
+  <button class="btn btn-primary" onclick="filterSelection('ACRILICO')"> Acrílico</button>
+  <button class="btn btn-primary" onclick="filterSelection('OLEO')"> Óleo</button>
+  <button class="btn btn-primary" onclick="filterSelection('JOYERIA')"> Joyería</button>
+  <button class="btn btn-primary" onclick="filterSelection('RESINA')"> Resina</button>
+  <button class="btn btn-primary" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
+  
+</div>
     <div class="row">
       <div class="col-md-12">
         <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
           <table class="table manage-candidates-top mb-0">
+          
             <thead>
               <tr>
                 <th  class="SegoeFont">Nombre de Usuario</th>
@@ -24,9 +93,12 @@
               </tr>
             </thead>
             <tbody>           
-	            <c:forEach items="${beavers}" var="beaver" >	            
-		            <tr class="candidates-list">
-		                <td class="title">
+	            <c:forEach items="${beavers}" var="beaver" >
+	                     
+		            <tr class="candidates-list ${beaver.especialidades}">
+		          
+		             <td class="title">
+		                	
 		                  <div class="thumb">
 		                    <img class="img-fluid" src="${beaver.urlFotoPerfil}" alt="">
 		                  </div>
@@ -88,11 +160,14 @@
 		                      <c:out value="${beaver.portfolio.sobreMi}"/>
 		                    </div>
 		                  </div>
-		                </td>
-		                            
-		              </tr>          
+		                
+		                </td> 
+	                 
+		              </tr>  
+		                      
 	            </c:forEach>            
             </tbody>
+            
           </table>          
         </div>
       </div>
@@ -101,5 +176,6 @@
 </div>
 
 
+</jsp:body> 
   
 </beavarts:layout>
