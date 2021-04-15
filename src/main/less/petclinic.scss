@@ -4475,6 +4475,15 @@ tbody.collapse.show {
   color: #fff;
 }
 
+#myInput {
+  
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
+}
+
 .card {
   position: relative;
   display: -webkit-box;
@@ -9223,6 +9232,8 @@ background: linear-gradient(0deg, rgba(241,158,12,1) 0%, rgba(255,200,103,1) 0%,
 
 .table.manage-candidates-top {
     min-width: 650px;
+	border-collapse: collapse;
+	width: 100%;
 }
 
 .user-dashboard-info-box .candidate-list-details ul {

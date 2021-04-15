@@ -58,7 +58,52 @@
 			    this.className += " active";
 			  });
 			}
-		</script>		
+		</script>
+		
+		<script>
+		function w3AddClass(element, name) {
+			  var i, arr1, arr2;
+			  arr1 = element.className.split(" ");
+			  arr2 = name.split(" ");
+			  for (i = 0; i < arr2.length; i++) {
+			    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+			  }
+			}
+		function w3RemoveClass(element, name) {
+			  var i, arr1, arr2;
+			  arr1 = element.className.split(" ");
+			  arr2 = name.split(" ");
+			  for (i = 0; i < arr2.length; i++) {
+			    while (arr1.indexOf(arr2[i]) > -1) {
+			      arr1.splice(arr1.indexOf(arr2[i]), 1);     
+			    }
+			  }
+			  element.className = arr1.join(" ");
+			}
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("a")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      w3RemoveClass(tr[i], "show");
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+        w3AddClass(tr[i], "show");
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>	
 </jsp:attribute>
 
 <jsp:body>
@@ -84,13 +129,12 @@
     <div class="row">
       <div class="col-md-12">
         <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
-          <table class="table manage-candidates-top mb-0">
-            <thead>
-              <tr>
-                <th  class="SegoeFont">Nombre de Usuario</th>   
+        
+          <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar usuarios">
+          <table class="table manage-candidates-top mb-0" id="myTable">
+              <tr class="header">
+                <th class="SegoeFont">Usuario</th> 
               </tr>
-            </thead>
-            <tbody>           
 	            <c:forEach items="${beavers}" var="beaver" >
 		            <tr class="candidates-list ${beaver.especialidades}">
 		             <td class="title">
@@ -149,8 +193,7 @@
 		                  </div>
 		                </td>
 		              </tr>    
-	            </c:forEach>            
-            </tbody>
+	            </c:forEach>
           </table>          
         </div>
       </div>
