@@ -80,6 +80,7 @@
 			  }
 			  element.className = arr1.join(" ");
 			}
+
 function myFunction() {
   // Declare variables
   var input, filter, table, tr, td, i, txtValue;
@@ -107,23 +108,23 @@ function myFunction() {
 </jsp:attribute>
 
 <jsp:body>
-<h1 class="SegoeFont" style="text-align:center">Beavers</h1>
+<h1 class="SegoeFont" style="text-align:center">BEAVERS</h1>
 <br/>
 <div class="container mt-3 mb-4">
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
-<b class="SegoeFont" style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto!</b>
+<b class="SegoeFont" style="font-size:20px">¡Usa los filtros para encontrar beavers con tus gustos!</b>
 <br/>
 <br/>
 <div id="myBtnContainer">
-  <button style="background-color: orange; border-color: brown"class="btn active btn-primary" onclick="filterSelection('all')"> Mostrar todos</button>
+  <button style="background-color: orange; border-color: brown"class="btn active btn-primary SegoeFont" onclick="filterSelection('all')"> Mostrar todos</button>
   <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
   <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
-  <button class="btn btn-primary" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
-  <button class="btn btn-primary" onclick="filterSelection('ACRILICO')"> Acrílico</button>
-  <button class="btn btn-primary" onclick="filterSelection('OLEO')"> Óleo</button>
-  <button class="btn btn-primary" onclick="filterSelection('JOYERIA')"> Joyería</button>
-  <button class="btn btn-primary" onclick="filterSelection('RESINA')"> Resina</button>
-  <button class="btn btn-primary" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ACRILICO')"> Acrílico</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('OLEO')"> Óleo</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('JOYERIA')"> Joyería</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('RESINA')"> Resina</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
 </div>
 
     <div class="row">
