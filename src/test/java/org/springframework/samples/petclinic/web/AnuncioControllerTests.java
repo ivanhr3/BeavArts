@@ -280,7 +280,7 @@ public class AnuncioControllerTests {
         mockMvc.perform(get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", TEST_BEAVER_ID, TEST_ANUNCIO_ID)
             .with(csrf()))
             .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/beavers/" + TEST_BEAVER_ID + "/encargos/list"));
+            .andExpect(view().name("redirect:/beavers/" + TEST_BEAVER_ID + "/misPublicaciones"));
     }
 
     @WithMockUser(value = "testuser")

@@ -111,7 +111,8 @@ public class AnuncioController {
         } else {
             // Al darle al boton de editar anuncio, saldra un error si dicho anuncio tiene solicitudes aceptadas
             if(anunc.getSolicitud() != null && anunc.getSolicitud().stream().anyMatch(s -> s.getEstado()== Estados.ACEPTADO)) {
-                model.put("errorSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas.");
+            	model.put("url", true);
+            	model.put("errorSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas.");
                 return "anuncios/anunciosDetails";
 
             } else {
@@ -154,12 +155,13 @@ public class AnuncioController {
         } else {
             // SOLO SE PUEDE BORRAR UN ANUNCIO SI NO TIENE SOLICITUDES ACEPTADAS
             if(anuncio.getSolicitud() != null && anuncio.getSolicitud().stream().anyMatch(s -> s.getEstado()== Estados.ACEPTADO)) {
-                model.put("errorSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas.");
+            	model.put("url", true);
+            	model.put("errorSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas.");
                 return "anuncios/anunciosDetails";
 
             } else {
                 this.anuncioService.deleteAnuncio(anuncioId);
-                return "redirect:/beavers/" + beaverId + "/encargos/list";
+                return "redirect:/beavers/" + beaverId + "/misPublicaciones";
             }
 
         }

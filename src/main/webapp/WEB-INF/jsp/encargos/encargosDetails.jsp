@@ -53,5 +53,6 @@
     <br/>
     <c:if test="${createdByUser == true}">
         	<a class="btn btn-primary" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
+        	<a class="btn btn-primary" href='<spring:url value="${encargo.id}/delete" htmlEscape="true"/>'>Eliminar encargo</a>
     </c:if>
 </beavarts:layout>
