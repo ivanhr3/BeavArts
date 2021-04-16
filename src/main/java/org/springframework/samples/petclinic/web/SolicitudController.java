@@ -69,6 +69,7 @@ public class SolicitudController {
 			sol.setEncargo(encargo);
 			sol.setEstado(Estados.PENDIENTE);
 			sol.setPrecio(50.0);
+			model.put("esDeEncargo", true);
 			model.addAttribute("encargo", encargo);
 			model.addAttribute("solicitud", sol);
 			return "solicitudes/creationForm"; //TODO: FRONT: Formulario con los campos: Fotos (Varias URL, averiguad como pasarlas para que se almacenen) y Descripción
@@ -210,8 +211,10 @@ public class SolicitudController {
 		}
 
 		if(solicitud.getEncargo() != null) {
+		    vista.getModel().put("esDeEncargo", true);
             vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
         } else if(solicitud.getAnuncio() != null) {
+		    vista.getModel().put("esDeEncargo", false);
 		    vista.addObject("anuncio", solicitud.getAnuncio()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del anuncio para saber a cual se refiere.
         }
 
@@ -368,6 +371,7 @@ public class SolicitudController {
             solicitud.setBeaver(beaver);
             solicitud.setAnuncio(anuncio);
             solicitud.setEstado(Estados.PENDIENTE);
+            model.put("esDeEncargo", false);
             model.addAttribute("anuncio", anuncio);
             model.addAttribute("solicitud", solicitud);
             return "solicitudes/creationForm";
