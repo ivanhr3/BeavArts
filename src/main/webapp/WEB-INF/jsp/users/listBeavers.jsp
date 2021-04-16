@@ -58,53 +58,31 @@
 			    this.className += " active";
 			  });
 			}
+			
+			function myFunction() {
+				  // Declare variables
+				  var input, filter, table, tr, td, i, txtValue;
+				  input = document.getElementById("myInput");
+				  filter = input.value.toUpperCase();
+				  table = document.getElementById("myTable");
+				  tr = table.getElementsByTagName("tr");
+
+				  // Loop through all table rows, and hide those who don't match the search query
+				  for (i = 0; i < tr.length; i++) {
+				    td = tr[i].getElementsByTagName("a")[0];
+				    if (td) {
+				      txtValue = td.textContent || td.innerText;
+				      w3RemoveClass(tr[i], "show");
+				      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				        tr[i].style.display = "";
+				        w3AddClass(tr[i], "show");
+				      } else {
+				        tr[i].style.display = "none";
+				      }
+				    }
+				  }
+				}
 		</script>
-		
-		<script>
-		function w3AddClass(element, name) {
-			  var i, arr1, arr2;
-			  arr1 = element.className.split(" ");
-			  arr2 = name.split(" ");
-			  for (i = 0; i < arr2.length; i++) {
-			    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
-			  }
-			}
-		function w3RemoveClass(element, name) {
-			  var i, arr1, arr2;
-			  arr1 = element.className.split(" ");
-			  arr2 = name.split(" ");
-			  for (i = 0; i < arr2.length; i++) {
-			    while (arr1.indexOf(arr2[i]) > -1) {
-			      arr1.splice(arr1.indexOf(arr2[i]), 1);     
-			    }
-			  }
-			  element.className = arr1.join(" ");
-			}
-
-function myFunction() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("a")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      w3RemoveClass(tr[i], "show");
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-        w3AddClass(tr[i], "show");
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-}
-</script>	
 </jsp:attribute>
 
 <jsp:body>
@@ -117,14 +95,14 @@ function myFunction() {
 <br/>
 <div id="myBtnContainer">
   <button style="background-color: orange; border-color: brown"class="btn active btn-primary SegoeFont" onclick="filterSelection('all')"> Mostrar todos</button>
-  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
-  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ACRILICO')"> Acrílico</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('OLEO')"> Óleo</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('JOYERIA')"> Joyería</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('RESINA')"> Resina</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
+  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"style="margin-top:1%;"> Textil</button>
+  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"style="margin-top:1%;"> Escultura</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ILUSTRACION')"style="margin-top:1%;"> Ilustración</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ACRILICO')"style="margin-top:1%;"> Acrílico</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('OLEO')"style="margin-top:1%;"> Óleo</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('JOYERIA')"style="margin-top:1%;"> Joyería</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('RESINA')"style="margin-top:1%;"> Resina</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('FOTOGRAFIA')"style="margin-top:1%;"> Fotografía</button>
 </div>
 
     <div class="row">
@@ -134,7 +112,7 @@ function myFunction() {
           <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar usuarios">
           <table class="table manage-candidates-top mb-0" id="myTable">
               <tr class="header">
-                <th class="SegoeFont">Usuario</th> 
+                <th class="SegoeFont">Usuarios</th> 
               </tr>
 	            <c:forEach items="${beavers}" var="beaver" >
 		            <tr class="candidates-list ${beaver.especialidades}">
