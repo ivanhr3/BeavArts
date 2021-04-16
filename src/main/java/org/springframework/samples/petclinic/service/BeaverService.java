@@ -96,4 +96,9 @@ public class BeaverService {
         return this.beaverRepository.findAll();
     }
 
+    @Transactional
+    public Beaver findBeaverByEmail(final String email) {
+        return this.beaverRepository.findBeaverByEmail(email);
+    }
+
 }

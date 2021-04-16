@@ -31,6 +31,7 @@ import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.ConfirmationTokenService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -96,11 +97,22 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/users/new")
-	public String processCreationForm(@Valid final Beaver beaver, final BindingResult result) {
-		if (result.hasErrors()) {
+	public String processCreationForm(@Valid final Beaver beaver, final BindingResult result, ModelMap model) {
+
+		Boolean usernameExistente = this.userService.findUserByUsername(beaver.getUser().getUsername()).getUsername().equals(beaver.getUser().getUsername());
+		Boolean emailExistente = this.beaverService.findBeaverByEmail(beaver.getEmail()).getEmail().equals(beaver.getEmail());
+
+		if (result.hasErrors() || usernameExistente || emailExistente) {
+			if(usernameExistente) {
+				model.put(("usernameExistente"),"El nombre de usuario ya existe.");
+			} 
+			if(emailExistente) {
+				model.put(("emailExistente"),"Este correo ya existe.");
+			}
 			return UserController.VIEWS_BEAVER_CREATE_FORM;
+			
 		} else {
-			//creating owner, user, and authority
+			//creating owner, user, and authoritys
 			this.beaverService.registrarBeaver(beaver);
 			return "redirect:/";
 		}
