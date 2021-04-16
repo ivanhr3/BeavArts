@@ -77,15 +77,15 @@ public class BeaverController {
 		} else {
 			vista.addObject("isAuthenticated", false);
 		}
-
-		User user = me.getUser();
-		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
-		Boolean esAdmin = auth.get(0).getAuthority() == "admin";
-
-		if (esAdmin) {
-			vista.addObject("esAdmin", true); //Este parámetro es la condicion para ver el boton de delete sin ser el creador
-		}
-
+		/**
+		 * User user = me.getUser();
+		 * List<Authorities> auth = this.beaverService.findUserAuthorities(user);
+		 * Boolean esAdmin = auth.get(0).getAuthority() == "admin";
+		 * 
+		 * if (esAdmin) {
+		 * vista.addObject("esAdmin", true); //Este parámetro es la condicion para ver el boton de delete sin ser el creador
+		 * }
+		 **/
 		return vista;
 	}
 
@@ -206,7 +206,7 @@ public class BeaverController {
 
 	}
 
-	@PostMapping("/beaverInfo/{beaverId}/ban")
+	@RequestMapping("/beaverInfo/{beaverId}/ban")
 	public String banUser(@PathVariable("beaverId") final int beaverId, @Valid final User usr, final BindingResult result, final ModelMap model) {
 
 		final Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
@@ -215,7 +215,7 @@ public class BeaverController {
 		Beaver me = this.beaverService.getCurrentBeaver();
 		User user = me.getUser();
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
-		Boolean esAdmin = auth.get(0).getAuthority() == "admin";
+		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
 
 		if (esAdmin) {
 			banneduser.setEnabled(false);
