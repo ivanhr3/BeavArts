@@ -151,6 +151,7 @@ public class SolicitudController {
 		}
 
 		List<Solicitud> solicitudesRecibidas = new ArrayList<>();
+		List<Solicitud> solicitudesRecibidasAnuncios = new ArrayList<>();
 		Boolean hayEncargos = false;
         Boolean hayAnuncios = false;
 		Boolean haySolicitudes = false;
@@ -177,7 +178,7 @@ public class SolicitudController {
 		        Collection<Solicitud> solicitudes2 = a.getSolicitud();
 		        if(solicitudes2 != null) {
 		            for(Solicitud s2: solicitudes2) {
-		                solicitudesRecibidas.add(s2);
+		                solicitudesRecibidasAnuncios.add(s2);
                     }
                 }
             }
@@ -192,11 +193,11 @@ public class SolicitudController {
 		String vista = "solicitudes/listadoSolicitudes";
 		Iterable<Solicitud> solicitudes = this.solicitudService.findAll();
 		modelMap.addAttribute("hayEncargos", hayEncargos); //TODO: Front: Boolean para controlar si hay solicitudes recibidas que mostrar
-        modelMap.addAttribute("esDeEncargo", true);
 		modelMap.addAttribute("hayAnuncios", hayAnuncios);
 		modelMap.addAttribute("haySolicitudes", haySolicitudes); //TODO: Front: Boolean para controlar si hay solicitudes enviadas que mostrar
 		modelMap.addAttribute("listaSolicitudesRecibidas", solicitudesRecibidas); //TODO: Front: Ahora hay dos listados en esta vista: Lista de Solicitudes Recibidas y Lista de Solicitudes Enviadas
-		modelMap.addAttribute("listaSolicitudesEnviadas", solicitudesEnviadas);
+		modelMap.addAttribute("listaSolicitudesRecibidasAnuncios", solicitudesRecibidasAnuncios);
+        modelMap.addAttribute("listaSolicitudesEnviadas", solicitudesEnviadas);
 		return vista;
 	}
 
@@ -214,15 +215,18 @@ public class SolicitudController {
 
 		if(solicitud.getEncargo() != null) {
 		    vista.getModel().put("esDeEncargo", true);
-            vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
-        } else if(solicitud.getAnuncio() != null) {
+		    vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
+            vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
+        }
+
+		if(solicitud.getAnuncio() != null) {
 		    vista.getModel().put("esDeEncargo", false);
 		    vista.addObject("anuncio", solicitud.getAnuncio()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del anuncio para saber a cual se refiere.
+            vista.getModelMap().addAttribute("isAnuncioCreator", beaver == solicitud.getAnuncio().getBeaver());
         }
 
 		vista.addObject("solicitud", solicitud);
-		vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
-		//Para que el jsp muestre los datos del contacto, ha sido necesario añadir la línea de abajo
+        //Para que el jsp muestre los datos del contacto, ha sido necesario añadir la línea de abajo
 		vista.getModelMap().addAttribute("solicitudAceptada", solicitud.getEstado() == Estados.ACEPTADO);
 		vista.getModelMap().addAttribute("solicitudPendiente", solicitud.getEstado() == Estados.PENDIENTE);
 		return vista;
@@ -384,6 +388,7 @@ public class SolicitudController {
 	    Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
 	    Beaver beaver = this.beaverService.getCurrentBeaver();
 		model.put("esDeEncargo", false);
+		model.put("anuncio", anuncio);
 
 	    if(solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
             model.addAttribute("solicitud", solicitud);
