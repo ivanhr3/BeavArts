@@ -204,8 +204,6 @@ public class BeaverController {
 		modelMap.addAttribute("beavers", beavers);
 		return vista;
 
-		//HACER UN FILTRADO POR ESPECIALIDAD O ESPECIALIDADES (SE PUEDEN SELECCIONAR VARIAS) EN FRONT
-
 	}
 
 	@RequestMapping("/beaverInfo/{beaverId}/ban")
