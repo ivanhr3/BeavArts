@@ -13,7 +13,6 @@ import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -47,7 +46,7 @@ public class EncargoController {
 		model.put("myBeaverId", beaver.getId()); //Añadido para usar las url del header
 
 		if (beaver.getEspecialidades().isEmpty()) { //DEBE COMPROBARSE QUE ESTA VACÍO, NO SI ES NULO
-
+			model.put("url", true);
 			model.put("errorEspecialidades", "*No se puede crear un encargo sin tener especialidades asignadas.");
 			model.addAttribute("hayEncargos", false); //Se ha añadido para que no muestre los datos si hay error
 
@@ -172,7 +171,8 @@ public class EncargoController {
 		} else if (enC.isDisponibilidad() == true && encargo.isDisponibilidad() == true) {
 			model.addAttribute("encargo", encargo);
 			result.rejectValue("disponibilidad", "No se puede editar un encargo que esté disponible.");
-			model.put("errorDisponibilidad", "No se puede editar un encargo que esté disponible.");
+			model.put("url", true);
+			model.put("errorDisponibilidad", "No se puede editar un encargo que esté 'Disponible'. Primero cámbielo a 'No disponible' y luego actualice el encargo.");
 			return EncargoController.VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM;
 		} else {
 			BeanUtils.copyProperties(encargo, enC, "id", "beaver");

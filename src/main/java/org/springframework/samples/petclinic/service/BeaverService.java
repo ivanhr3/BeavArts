@@ -25,7 +25,8 @@ public class BeaverService {
     private AuthoritiesService authoritiesService;
     @Autowired
     private PortfolioService portfolioService;
-
+    @Autowired
+    private ValoracionService valoracionService;
 
     @Autowired
     public BeaverService(BeaverRepository beaverRepository){
@@ -92,6 +93,11 @@ public class BeaverService {
         return this.beaverRepository.findBeaverByUser(this.userService.findUserByUsername(username));
     }
 
+    @Transactional
+    public Double calculatePuntuacion(final Beaver beaver){
+        return this.valoracionService.calcularValoracion(beaver.getId());
+    }
+
     public Iterable<Beaver> findAllBeavers(){
         return this.beaverRepository.findAll();
     }
@@ -99,6 +105,10 @@ public class BeaverService {
     @Transactional
     public Beaver findBeaverByEmail(final String email) {
         return this.beaverRepository.findBeaverByEmail(email);
+    }
+        @Transactional
+        public Integer getNumValoraciones(Beaver beaver){
+        return this.valoracionService.getNumValoracionesUsuario(beaver.getId());
     }
 
 }

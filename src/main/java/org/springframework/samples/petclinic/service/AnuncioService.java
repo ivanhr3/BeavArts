@@ -66,4 +66,14 @@ public class AnuncioService {
         return this.anuncioRepository.findAnunciosByEspecialidad(especialidad);
     }
 
+    @Transactional
+    public List<Anuncio> findAnunciosDestacados() {
+        return this.anuncioRepository.findAnunciosDestacados();
+    }
+
+    @Transactional
+    public List<Anuncio> findAnunciosNoDestacados() {
+        return this.anuncioRepository.findAnunciosNoDestacados();
+    }
+
 }

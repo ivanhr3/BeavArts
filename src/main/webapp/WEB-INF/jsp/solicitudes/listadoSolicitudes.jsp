@@ -9,68 +9,67 @@
 <beavarts:layout pageName="solicitudesList">
 
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==true}">
-	<h2>No hay solicitudes recibidas.</h2>
+	<h2 class="SegoeFont">No hay solicitudes recibidas.</h2>
 </c:if>
 
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==false}">
 	
-    <h2>Mis solicitudes recibidas: </h2>
-<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
+    <h2 class="SegoeFont">Mis solicitudes recibidas: </h2>
+    <br/>
+<ul class="list-group">
     <c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
-	<table id="solicitudesRecibidas" class ="table table-responsive" style="margin-left:2%; border: black 1px solid">
-        <tbody>
-            <tr>
-            <td>
-                <h3><c:out value="${solicitud.encargo.titulo}"/></h3>
+	<li class="list-group-item">
+		<div id=izquierda style="text-align: left;">
+                <h4 class="list-group-item-heading SegoeFont"><c:out value="${solicitud.encargo.titulo}"/>&nbsp;<span class="badge badge-info"><c:out value="${solicitud.estado}"/></span></h4>
+                
+                
+                
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
-                    <b style="color:#34302D;">Realizada por: 
-                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b>
-            </td>
-            <td>
-                	<p><c:out value="${solicitud.estado}"/></p>
-            </td>
-            <td>
+                    
+                    <p class="list-group-item-text" style="color:#34302D;">Realizada por: 
+                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+        </div>  
+        <div id="derecha" style="text-align: right;"> 
+                	
+           
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-default" href="${solicitudUrl}"> Ver solicitud</a>
-    		</td>
-    		</tr>
-        </tbody>
-    </table>
+    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    	</div>
+    </li>
    	</c:forEach>
-</div>
+</ul>
 </c:if>
-
+<br/>
 <c:if test="${haySolicitudes==false}">
-	<h2>No hay solicitudes enviadas.</h2>
+	<h2 class="SegoeFont">No hay solicitudes enviadas.</h2>
 </c:if>
 
 <c:if test="${haySolicitudes==true}">
-    <h2>Mis solicitudes enviadas</h2>
-<div class="container justify-content-center" style="display:flex; flex-wrap: wrap;">
+    <h2 class="SegoeFont">Mis solicitudes enviadas</h2>
+<ul class="list-group">
 	<c:forEach items="${listaSolicitudesEnviadas}" var="solicitud">
-	<table id="solicitudesEnviadas" class ="table table-responsive" style="margin-left:2%; border: black 1px solid">
-        <tbody>
-            <tr>
-            <td>
-                <h3><c:out value="${solicitud.encargo.titulo}"/></h3>
-            </td>
-            <td>
-                	<p><c:out value="${solicitud.estado}"/></p>
-            </td>
-            <td>
+	<li id="solicitudesEnviadas" class="list-group-item">
+                <div id=izquierda style="text-align: left;">
+                <h4 class="list-group-item-heading"><c:out value="${solicitud.encargo.titulo}"/></h4>
+                <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
+                        <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
+                    </spring:url>
+                    
+        </div>  
+        <div id="derecha" style="text-align: right;"> 
+                	<h5 class="badge badge-info"><c:out value="${solicitud.estado}"/></h5>
+           
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-default" href="${solicitudUrl}"> Ver solicitud</a>
-    		</td>
-    		</tr>
-        </tbody>
-    </table>
+    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    	</div>
+    </li>
     </c:forEach>
-</div>
+</ul>
 </c:if>
 </beavarts:layout>

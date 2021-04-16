@@ -3,10 +3,8 @@ package org.springframework.samples.petclinic.web;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,14 +14,12 @@ import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.Portfolio;
 import org.springframework.samples.petclinic.service.PortfolioService;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -31,7 +27,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Collection;
 import java.util.HashSet;
 
-import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -124,19 +119,40 @@ public class BeaverControllerTests {
         BDDMockito.given(this.beaverService.findBeaverByIntId(BeaverControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByIntId(12)).willReturn(this.beaver2);
 
+        BDDMockito.given(this.beaverService.calculatePuntuacion(beaver1)).willReturn(4.34554);
+        BDDMockito.given(this.beaverService.calculatePuntuacion(beaver2)).willReturn(null);
+        BDDMockito.given(this.beaverService.getNumValoraciones(beaver1)).willReturn(17);
+        BDDMockito.given(this.beaverService.getNumValoraciones(beaver2)).willReturn(0);
     }
 
 
     @WithMockUser(value = "beaver1")
     @Test
     public void testMostrarPerfilUsuario() throws Exception {
-
+        //Se mockean las valoraciones, este usuario SÍ tiene.
         System.out.println(this.beaver1.getFirstName());
 
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("beaver"))
             .andExpect(model().attributeExists("portfolio"))
+            .andExpect(model().attribute("puntuacionMedia", Math.round(4.34554*100.0)/100.0))
+            .andExpect(model().attribute("numValoraciones", 17))
+            .andExpect(view().name("users/perfilBeaver"));
+    }
+
+    @WithMockUser(value = "beaver2")
+    @Test
+    public void testMostrarPerfilUsuario2() throws Exception {
+        //Se mockean las valoraciones, este usuario NO tiene.
+        System.out.println(this.beaver1.getFirstName());
+
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", 12))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("beaver"))
+            .andExpect(model().attributeExists("portfolio"))
+            .andExpect(model().attribute("sinPuntuacionMedia", "Aún no hay valoraciones"))
+            .andExpect(model().attribute("numValoraciones", 0))
             .andExpect(view().name("users/perfilBeaver"));
     }
 

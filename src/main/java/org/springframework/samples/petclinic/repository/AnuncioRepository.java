@@ -19,4 +19,10 @@ public interface AnuncioRepository extends CrudRepository<Anuncio, Integer> {
 
     @Query("select a from Anuncio a where a.especialidad = ?1")
     List<Anuncio> findAnunciosByEspecialidad(Especialidad especialidad);
+
+    @Query("select a from Anuncio a where a.destacado = true")
+    List<Anuncio> findAnunciosDestacados();
+
+    @Query("select a from Anuncio a where a.destacado = false")
+    List<Anuncio> findAnunciosNoDestacados();
 }
