@@ -9,10 +9,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Encargo;
-import org.springframework.samples.petclinic.model.Estados;
-import org.springframework.samples.petclinic.model.Solicitud;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.repository.SolicitudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +26,7 @@ public class SolicitudService {
     "^((((https?|ftps?|gopher|telnet|nntp)://)|(mailto:|news:))" +
             "(%{2}|[-()_.!~*';/?:@&=+$, A-Za-z0-9])+)" + "([).!';/?:, ][[:blank:]])?$";
     private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);
-    
+
     @Autowired
     public SolicitudService(SolicitudRepository solicitudRepository){
         this.solicitudRepository = solicitudRepository;
@@ -42,12 +39,21 @@ public class SolicitudService {
     }
 
     @Transactional
-    public void crearSolicitud(Solicitud solicitud, Encargo encargo, Beaver beaver) throws DataAccessException{      
+    public void crearSolicitud(Solicitud solicitud, Encargo encargo, Beaver beaver) throws DataAccessException{
       solicitud.setEstado(Estados.PENDIENTE);
       solicitud.setPrecio(50.0);
       solicitud.setEncargo(encargo);
       solicitud.setBeaver(beaver);
       solicitudRepository.save(solicitud);
+    }
+
+    @Transactional
+    public void crearSolicitudAnuncio(Solicitud solicitud, Anuncio anuncio, Beaver beaver) throws DataAccessException{
+        solicitud.setEstado(Estados.PENDIENTE);
+        solicitud.setPrecio(50.0);
+        solicitud.setAnuncio(anuncio);
+        solicitud.setBeaver(beaver);
+        solicitudRepository.save(solicitud);
     }
 
     @Transactional
@@ -82,7 +88,7 @@ public class SolicitudService {
     public int solicitudCount() {
       return (int) this.solicitudRepository.count();
     }
-  
+
     @Transactional
     public Iterable<Solicitud> findAll() {
       return this.solicitudRepository.findAll();
@@ -125,6 +131,22 @@ public class SolicitudService {
       }
     }
       return res;
+    }
+
+    public Boolean existSolicitudAnuncioByBeaver(Beaver beaver, Anuncio anuncio) {
+        Collection<Solicitud> solicitudes = this.solicitudRepository.findSolicitudAnuncioByBeaver(beaver.getId(), anuncio.getId());
+        Boolean res = null;
+        if(solicitudes.isEmpty()) {
+            res = false; //Si no hay solicitud previa no existe
+        } else {
+            for (Solicitud solicitud: solicitudes) {
+                if (solicitud.getEstado() == Estados.PENDIENTE) {
+                    res = true;
+                    break;
+                }
+            }
+        }
+        return res;
     }
 
     public Boolean isCollectionAllURL(Solicitud solicitud){
