@@ -89,6 +89,7 @@
 <h1 class="SegoeFont" style="text-align:center">BEAVERS</h1>
 <br/>
 <div class="container mt-3 mb-4">
+
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
 <b class="SegoeFont" style="font-size:20px">¡Usa los filtros para encontrar beavers con tus gustos!</b>
 <br/>
@@ -107,8 +108,7 @@
 
     <div class="row">
       <div class="col-md-12">
-        <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
-        
+        <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">     
           <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar usuarios">
           <table class="table manage-candidates-top mb-0" id="myTable">
               <tr class="header">
@@ -118,7 +118,7 @@
 		            <tr class="candidates-list ${beaver.especialidades}">
 		             <td class="title">
 		                  <div class="thumb">
-		                    <img class="img-fluid" src="${beaver.urlFotoPerfil}" alt="">
+		                    <img class="rounded-circle " src="${beaver.urlFotoPerfil}" width="80" height="80">
 		                  </div>
 		                  <div class="candidate-list-details">
 		                    <div class="candidate-list-info">
