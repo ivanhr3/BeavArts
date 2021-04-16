@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +21,8 @@ public class BeaverService {
     private UserService userService;
     @Autowired
     private AuthoritiesService authoritiesService;
+    @Autowired
+    private ValoracionService valoracionService;
 
     @Autowired
     public BeaverService(BeaverRepository beaverRepository){
@@ -69,8 +70,18 @@ public class BeaverService {
         return this.beaverRepository.findBeaverByUser(this.userService.findUserByUsername(username));
     }
 
+    @Transactional
+    public Double calculatePuntuacion(final Beaver beaver){
+        return this.valoracionService.calcularValoracion(beaver.getId());
+    }
+
     public Iterable<Beaver> findAllBeavers(){
         return this.beaverRepository.findAll();
+    }
+
+    @Transactional
+    public Integer getNumValoraciones(Beaver beaver){
+        return this.valoracionService.getNumValoracionesUsuario(beaver.getId());
     }
 
 }

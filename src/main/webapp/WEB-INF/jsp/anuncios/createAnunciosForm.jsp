@@ -24,10 +24,8 @@
             <beavarts:inputField label="*Título:" name="titulo"/>
 			<beavarts:inputNumberField label="*Precio:" name="precio" placeholder="0.00"/>
 			<beavarts:inputField label="*Descripción:" name="descripcion"/>
-            <div class="control-group" style="padding: 10px">
-            	<p style= margin-left:7%>Seleccione una categoría</p>
-            	<br/>
-            	<beavarts:selectField name="especialidad" label="Categoría" names="${types}" size="8"/>
+            <div class="control-group">
+            	<beavarts:selectField name="especialidad" label="*Seleccione una categoría" names="${types}" size="8"/>
             </div>
             <beavarts:inputField label="Introduce URL de la foto:" name="photo"/>
            </div>
@@ -36,10 +34,10 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${!editando}">
-                        <button class="btn btn-default" type="submit">Crear anuncio</button>
+                        <button class="btn btn-primary" type="submit">Crear anuncio</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Actualizar anuncio</button>
+                        <button class="btn btn-primary" type="submit">Actualizar anuncio</button>
                     </c:otherwise>
                 </c:choose>
             </div>
