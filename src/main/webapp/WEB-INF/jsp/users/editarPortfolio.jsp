@@ -8,13 +8,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <petclinic:layout pageName="perfil">
-    <h2 class="SegoeFont"> Datos de portfolio: </h2>
+    <h2 class="SegoeFont"> Datos de Portfolio: </h2>
     <br/>
+
+    
     <form:form modelAttribute="portfolio" class="form-horizontal" id="add-owner-form">
+    
         <div class="form-group has-feedback">
+          <b class="SegoeFont" style="margin-left:15px"> Foto de perfil:</b>
+             <petclinic:inputField label="" name= "beaver.urlFotoPerfil"/> 
+              
             <b class="SegoeFont" style="margin-left:15px"> Sobre mi:</b>
-            <petclinic:inputField label="" name="sobreMi"/>           
-            
+            <petclinic:inputField label="" name="sobreMi"/>
+                   
             <b class="SegoeFont" style="margin-left:15px"> Portfolio:</b>
             <petclinic:inputField label="" name="photos"/>                       
              <c:if test="${errorUrl != null}">
