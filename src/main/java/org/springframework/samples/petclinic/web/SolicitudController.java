@@ -82,6 +82,7 @@ public class SolicitudController {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
+		model.put("esDeEncargo", true);
 		model.addAttribute("encargo", encargo);
 		if (beaver != null) {
 			model.put("myBeaverId", beaver.getId());
@@ -191,7 +192,8 @@ public class SolicitudController {
 		String vista = "solicitudes/listadoSolicitudes";
 		Iterable<Solicitud> solicitudes = this.solicitudService.findAll();
 		modelMap.addAttribute("hayEncargos", hayEncargos); //TODO: Front: Boolean para controlar si hay solicitudes recibidas que mostrar
-        modelMap.addAttribute("hayAnuncios", hayAnuncios);
+        modelMap.addAttribute("esDeEncargo", true);
+		modelMap.addAttribute("hayAnuncios", hayAnuncios);
 		modelMap.addAttribute("haySolicitudes", haySolicitudes); //TODO: Front: Boolean para controlar si hay solicitudes enviadas que mostrar
 		modelMap.addAttribute("listaSolicitudesRecibidas", solicitudesRecibidas); //TODO: Front: Ahora hay dos listados en esta vista: Lista de Solicitudes Recibidas y Lista de Solicitudes Enviadas
 		modelMap.addAttribute("listaSolicitudesEnviadas", solicitudesEnviadas);
@@ -381,6 +383,7 @@ public class SolicitudController {
     public String processCrearSolicitudAnuncios(@PathVariable("anuncioId") int anuncioId, final Solicitud solicitud, final BindingResult result, final ModelMap model) {
 	    Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
 	    Beaver beaver = this.beaverService.getCurrentBeaver();
+		model.put("esDeEncargo", false);
 
 	    if(solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
             model.addAttribute("solicitud", solicitud);

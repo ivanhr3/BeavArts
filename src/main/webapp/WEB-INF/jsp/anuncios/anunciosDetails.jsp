@@ -40,9 +40,10 @@
   </div>
   </div>
   <br/>
+  
     <div class="text-center">
     <c:if test="${createdByUser == false}">
-				<a class="btn btn-primary" href='<spring:url value="#" htmlEscape="true"/>'>Responder al anuncio</a>
+				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
 	</c:if>
 	</div>
     <c:if test="${createdByUser == true}">

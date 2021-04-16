@@ -14,6 +14,7 @@
 
 <beavarts:layout pageName="solicitudDetails">
 
+<c:if test="${esDeEncargo==true}">
 <h2 class="SegoeFont"> Encargo: </h2>
 <br/>
 <div class= "container">
@@ -46,6 +47,51 @@
 </div>
 </div>
 </div>
+</c:if>
+<br/>
+
+<c:if test="${esDeEncargo==false}">
+<h2 class="SegoeFont"> Anuncio: </h2>
+<br/>
+<div class= "container">
+<div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0 SegoeFont">Título </h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="beaverUrl">
+                			<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
+               	    		<spring:param name="anuncioId" value="${anuncio.id}"/>
+                	  </spring:url>
+               		  <a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${anuncio.titulo}"/></b></a>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0 SegoeFont">Especialidad</h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <c:out value="${anuncio.especialidad}"/>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0 SegoeFont">Precio</h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <c:out value="${anuncio.precio} €"/>
+                    </div>
+                  </div>
+
+</div>
+</div>
+</div>
+</div>
+</c:if>
 <br/>
 
 
@@ -71,7 +117,7 @@
                       <h5 class="mb-0 SegoeFont">Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <c:out value="${encargo.precio} €"/>
+                      <c:out value="${solicitud.precio} €"/>
                     </div>
                   </div>
                   <hr>
