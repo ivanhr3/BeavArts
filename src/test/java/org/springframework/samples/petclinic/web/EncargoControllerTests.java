@@ -22,10 +22,12 @@ import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Especialidad;
+import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -54,6 +56,9 @@ public class EncargoControllerTests {
 
 	@MockBean
 	private AuthoritiesService	authoritiesService;
+
+	@MockBean
+	private SolicitudService	solicitudService;
 
 	private static final int	TEST_BEAVER_ID		= 99;
 	private static final int	TEST_ENCARGO_ID		= 1;
@@ -563,6 +568,51 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"));
+	}
+
+	@WithMockUser(value = "User123")
+	@Test
+	public void testEncargoAdminDeleteSucces() throws Exception {
+
+		Beaver beaver = new Beaver();
+		beaver.setFirstName("Nombre2");
+		beaver.setLastName("Apellidos");
+		beaver.setEmail("vali2d@gmail.com");
+		beaver.setDni("12345678Q");
+		beaver.setId(7);
+		User user = new User();
+		user.setUsername("User12");
+		user.setPassword("supersecretpass");
+		Authorities au = new Authorities();
+		Set<Authorities> col = new HashSet<>();
+		col.add(au);
+		au.setAuthority("admin");
+		au.setUser(user);
+		user.setAuthorities(col);
+		user.setEnabled(true);
+		beaver.setUser(user);
+
+		Encargo e = new Encargo();
+		e.setId(55);
+		e.setBeaver(beaver);
+		Set<Encargo> s = new HashSet<>();
+		s.add(e);
+		beaver.setEncargos(s);
+		this.beaverService.saveBeaver(beaver);
+		Solicitud sol = new Solicitud();
+		Collection<Solicitud> sols = new ArrayList<>();
+		sols.add(sol);
+		e.setSolicitud(sols);
+		List<Authorities> lista = new ArrayList<Authorities>();
+		lista.add(au);
+
+		BDDMockito.given(this.encargoService.findEncargoById(55)).willReturn(e);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 7, 55)).andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+			.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/7/encargos/list"));
 	}
 
 }

@@ -166,7 +166,7 @@ public class AnuncioController {
 		Beaver beav = this.beaverService.getCurrentBeaver();
 		User user = beav.getUser();
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
-		Boolean esAdmin = auth.get(0).getAuthority() == "admin";
+		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
 
 		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId) && !esAdmin) {
 			return "accesoNoAutorizado"; // Acceso no autorizado
@@ -219,7 +219,7 @@ public class AnuncioController {
 
 		User user = beaver.getUser();
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
-		Boolean esAdmin = auth.get(0).getAuthority() == "admin";
+		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
 
 		if (esAdmin) {
 			model.addAttribute("esAdmin", true); //Este parámetro es la condicion para ver el boton de delete sin ser el creador
