@@ -178,15 +178,15 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
  </script>
 
 <beavarts:layout pageName="beavers">
-    <h2>
+    <h2 class="SegoeFont text-center">
         <c:if test="${beaver['new']}">
             ¡Registrarse como beaver! 
         </c:if>
     </h2>
-   
-
+    <br/>
+<div class="container justify-content-center" style="display:block;">
     <!-- ############################################################################3 -->
-    <form:form modelAttribute="beaver" class="form-horizontal" id="add-owner-form">
+    <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form">
         <div class="form-group has-feedback">
 
             <!-- *First name group -->
@@ -201,12 +201,9 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <label class="sr-only">{% trans "Last name" %}</label>
             <input type="text" id="id_last_name" name="lastName" class="form-control" 
     value="" placeholder="Last name" maxlength="100">
-          </div>
-            
-             
-            	<p style="margin-left:210px">Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
-           
-            
+          </div> 
+          
+ 		   <p class="SegoeFont">Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
             <div class="control-group" style="padding: 10px">
             	<beavarts:selectField name="especialidades" label="Especialidades" names="${types}" size="8"/>
             </div>
@@ -252,13 +249,14 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${beaver['new']}">
-                        <button class="btn btn-default" type="submit">¡Convertirme en Beaver!</button>
+                        <button class="btn btn-primary" type="submit">¡Convertirme en Beaver!</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Actualizar Beaver</button>
+                        <button class="btn btn-primary" type="submit">Actualizar Beaver</button>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
     </form:form>
+    </div>
 </beavarts:layout>
