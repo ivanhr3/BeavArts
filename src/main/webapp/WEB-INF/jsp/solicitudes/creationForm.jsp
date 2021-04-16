@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 
 <beavarts:layout pageName="solicitud">
@@ -37,7 +38,51 @@
                   <br/> 
     <b class="SegoeFont">Publicado por: </b><a href="${fn:escapeXml(beaverUrl)}"><c:out value=" ${anuncio.beaver.user.username}"/></a>
     <br/>
-    <b class="SegoeFont">Especialidad: </b><c:out value="${anuncio.especialidad}"/>
+    <b class="SegoeFont">Especialidad: </b>
+    
+    <div style="color:black" class="candidate-list-option">
+		                          
+		                          <c:choose>
+	                      
+					                      	<c:when test="${anuncio.especialidad == 'TEXTIL'}">
+					                      		<i class="fas fa-socks"></i>
+					                      	</c:when>
+				                     
+				                      		<c:when test="${anuncio.especialidad == 'ESCULTURA'}">
+					                      		<i class="fas fa-chess-knight"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'ILUSTRACION'}">
+					                      		<i class="fas fa-portrait"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'ACRILICO'}">
+					                      		<i class="fas fa-paint-brush"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'OLEO'}">
+					                      		<i class="fas fa-palette"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'JOYERIA'}">
+					                      		<i class="fas fa-gem"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'RESINA'}">
+					                      		<i class="fas fa-prescription-bottle"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'FOTOGRAFIA'}">
+					                      		<i class="fas fa-camera-retro"></i>
+					                      	</c:when>
+				                      
+				                      
+				                      </c:choose>
+		                          
+	                    				<c:out value="${anuncio.especialidad} "/> &nbsp;
+		                        
+		                      </div>
+    
     <br/>
     <b class="SegoeFont">Precio: </b><c:out value="${anuncio.precio}"/>€
     <br/>

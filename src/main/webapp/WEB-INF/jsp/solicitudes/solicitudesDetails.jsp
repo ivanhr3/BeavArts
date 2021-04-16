@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="solicitudDetails">
 
@@ -74,9 +75,51 @@
                     <div class="col-sm-3">
                       <h5 class="mb-0 SegoeFont">Especialidad</h5>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      <c:out value="${anuncio.especialidad}"/>
-                    </div>
+                    
+                     <div style="color:grey" class="candidate-list-option">
+		                          
+		                          <c:choose>
+	                      
+					                      	<c:when test="${anuncio.especialidad == 'TEXTIL'}">
+					                      		<i class="fas fa-socks"></i>
+					                      	</c:when>
+				                     
+				                      		<c:when test="${anuncio.especialidad == 'ESCULTURA'}">
+					                      		<i class="fas fa-chess-knight"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'ILUSTRACION'}">
+					                      		<i class="fas fa-portrait"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'ACRILICO'}">
+					                      		<i class="fas fa-paint-brush"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'OLEO'}">
+					                      		<i class="fas fa-palette"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'JOYERIA'}">
+					                      		<i class="fas fa-gem"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'RESINA'}">
+					                      		<i class="fas fa-prescription-bottle"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'FOTOGRAFIA'}">
+					                      		<i class="fas fa-camera-retro"></i>
+					                      	</c:when>
+				                      
+				                      
+				                      </c:choose>
+		                          
+	                    				<c:out value="${anuncio.especialidad} "/> &nbsp;
+		                        
+		                      </div>
+                    
+                   
                   </div>
                   <div class="row">
                     <div class="col-sm-3">
@@ -106,8 +149,26 @@
                       <h5 class="mb-0 SegoeFont">Estado </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                       <h3 class="badge badge-info">
-           				<c:out value="${solicitud.estado}"/>
+                       <h3>
+           				<c:choose>
+	                      
+					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
+					               <span class="badge badge-success"><c:out value="${solicitud.estado}"/></span>
+					       </c:when>
+					                      	
+					       <c:when test="${solicitud.estado == 'PENDIENTE'}">
+					               <span class="badge badge-warning"><c:out value="${solicitud.estado}"/></span>
+					       </c:when>
+					       
+					       <c:when test="${solicitud.estado == 'RECHAZADO'}">
+					              <span class="badge badge-danger"><c:out value="${solicitud.estado}"/></span>
+					       </c:when>
+					       
+					       <c:when test="${solicitud.estado == 'FINALIZADO'}">
+					               <span class="badge badge-primary"><c:out value="${solicitud.estado}"/></span>
+					       </c:when>
+					       
+					 </c:choose>
         			   </h3>
                     </div>
                   </div>
@@ -117,7 +178,7 @@
                       <h5 class="mb-0 SegoeFont">Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <c:out value="${solicitud.precio} €"/>
+                      <c:out value="${anuncio.precio} €"/>
                     </div>
                   </div>
                   <hr>
@@ -222,6 +283,24 @@
 <br/>
 <br/>
 <c:if test= "${isEncargoCreator==true}"> 
+<c:if test= "${solicitudPendiente==true}">
+   <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">
+   </spring:url>
+    <a class="btn btn-primary" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
+	
+	<spring:url value="/solicitudes/decline/${solicitud.id}" var="rechazarUrl">
+	</spring:url>
+    <a class="btn btn-primary" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
+</c:if>
+<c:if test= "${solicitudAceptada == true}">
+    <spring:url value="/solicitudes/finish/${solicitud.id}" var="finishUrl">
+    </spring:url>
+    <a class="btn btn-primary" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
+</c:if>
+</c:if>
+
+
+<c:if test= "${isAnuncioCreator==true}"> 
 <c:if test= "${solicitudPendiente==true}">
    <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">
    </spring:url>
