@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
         classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 public class UserControllerTests {
-    
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -77,6 +77,7 @@ public class UserControllerTests {
 
     }
 
+    @WithMockUser(value = "testuser")
     @Test
     public void testInitCreationForm() throws Exception {
 
@@ -87,18 +88,46 @@ public class UserControllerTests {
 
     }
 
+    @WithMockUser(value = "testuser")
     @Test
     public void testProcessCreationForm() throws Exception {
         this.mockMvc.perform(post("/users/new").with(csrf())
             .param("firstName", "First Name")
-            .param("lastName", "Last Name",
-                "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg")
-                .param("dni", "11111111A")
-                .param("email", "email@email.com")
-                .param("user.username", "User123")
-                .param("user.password", "2345"))
+            .param("lastName", "Last Name")
+            .param("dni", "11111111A")
+            .param("email", "email@email.com")
+            .param("user.username", "User123")
+            .param("user.password", "2345"))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testProcessCreationFormHasError() throws Exception {
+        this.mockMvc.perform(post("/users/new").with(csrf())
+            .param("firstName", "First Name")
+            .param("lastName", "Last Name")
+            .param("dni", "11111111A")
+            .param("email", "email@email.com")
+            .param("user.username", "beaver1")
+            .param("user.password", "2345"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("users/createBeaverForm"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testProcessCreationFormHasErrors2() throws Exception {
+        this.mockMvc.perform(post("/users/new").with(csrf())
+            .param("firstName", "First Name")
+            .param("lastName", "Last Name")
+            .param("dni", "11111111A")
+            .param("email", "valid@gmail.com")
+            .param("user.username", "User123")
+            .param("user.password", "2345"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("users/createBeaverForm"));
     }
 
 }

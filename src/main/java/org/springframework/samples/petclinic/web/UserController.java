@@ -99,18 +99,24 @@ public class UserController {
 	@PostMapping(value = "/users/new")
 	public String processCreationForm(@Valid final Beaver beaver, final BindingResult result, ModelMap model) {
 
-		Boolean usernameExistente = this.userService.findUserByUsername(beaver.getUser().getUsername()).getUsername().equals(beaver.getUser().getUsername());
-		Boolean emailExistente = this.beaverService.findBeaverByEmail(beaver.getEmail()).getEmail().equals(beaver.getEmail());
+		Boolean usernameExistente = true;
+		if(this.userService.findUserByUsername(beaver.getUser().getUsername()) == null){
+		    usernameExistente = false;
+        }
+		Boolean emailExistente = true;
+		if(this.beaverService.findBeaverByEmail(beaver.getEmail()) == null) {
+		    emailExistente = false;
+        }
 
 		if (result.hasErrors() || usernameExistente || emailExistente) {
 			if(usernameExistente) {
 				model.put(("usernameExistente"),"El nombre de usuario ya existe.");
-			} 
+			}
 			if(emailExistente) {
 				model.put(("emailExistente"),"Este correo ya existe.");
 			}
 			return UserController.VIEWS_BEAVER_CREATE_FORM;
-			
+
 		} else {
 			//creating owner, user, and authoritys
 			this.beaverService.registrarBeaver(beaver);
