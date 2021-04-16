@@ -74,7 +74,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: justify;
-  background-color: #fff6e9; 
+  background-color: #fff1de; 
 }
 
 [tabindex="-1"]:focus {
@@ -2551,14 +2551,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #000;
-  background-color: #08f984;
-  border-color: #12b867;
+  background-color: #56ff52;
+  border-color: #49A947;
   font-weight:bold;
 }
 
 .btn-primary:hover {
   color: #000;
-  background-color: #07c86b;
+  background-color: #4ED04B;
   border-color: #49A947;
 	font-weight:bold;
 }
@@ -2569,14 +2569,14 @@ fieldset:disabled a.btn {
 
 .btn-primary.disabled, .btn-primary:disabled {
   color: #000;
-  background-color: #07c86b;
+  background-color: #4ED04B;
   border-color: #49A947;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #000;
-  background-color: #07c86b;
+  background-color: #4ED04B;
   border-color: #49A947;
 }
 
@@ -4473,6 +4473,17 @@ tbody.collapse.show {
 
 .navbar-dark .navbar-text a:hover, .navbar-dark .navbar-text a:focus {
   color: #fff;
+}
+
+#myInput {
+  background-image: url('/resources/images/search.svg'); /* Add a search icon to input */
+  background-position: 10px 14px; /* Position the search icon */
+  background-repeat: no-repeat; /* Do not repeat the icon image */
+  width: 100%; /* Full-width */
+  font-size: 16px; /* Increase font-size */
+  padding: 12px 20px 12px 40px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a grey border */
+  margin-bottom: 12px; /* Add some space below the input */
 }
 
 .card {
@@ -9039,17 +9050,19 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* change the background color */
 .navbar-custom {
-   background-color: #ffe6c2;
+   background: rgb(241,158,12);
+background: linear-gradient(0deg, rgba(241,158,12,1) 0%, rgba(255,200,103,1) 0%, rgba(249,212,148,1) 28%, rgba(255,255,255,1) 100%);
 }
+
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
-    color: #000;
+    color: #71392c;
 }
 
 /* change the link color */
 .navbar-custom .navbar-nav .nav-link {
-    color: #000;
+    color: #71392c;
 	font-weight:bold;
 	font-family: "SegoePrint";
 
@@ -9060,7 +9073,7 @@ a.text-dark:hover, a.text-dark:focus {
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:focus .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: #000;
+    color: #3c241f;
 }
 
 .navbar-custom .navbar-toggler {
@@ -9075,7 +9088,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* for dropdowns only */
 .navbar-custom .navbar-nav .dropdown-menu {
-    background-color: #ffc96c;
+    background-color: #ffbb00;
 	font-weight:bold;
 	font-family: "SegoePrint";
 }
@@ -9090,7 +9103,7 @@ a.text-dark:hover, a.text-dark:focus {
 .navbar-custom .navbar-nav .dropdown-item:hover,
 .navbar-custom .navbar-nav .dropdown-item:focus {
     color: #000000;
-    background-color: #01fa82;
+    background-color: #56ff52;
 	font-weight:bold;
 	font-family: "SegoePrint";
 }
@@ -9199,6 +9212,9 @@ a.text-dark:hover, a.text-dark:focus {
 .user-dashboard-info-box .candidates-list td {
     vertical-align: middle;
 }
+.candidates-list{
+	display:none;
+}
 
 .user-dashboard-info-box td li {
     margin: 0 4px;
@@ -9218,6 +9234,8 @@ a.text-dark:hover, a.text-dark:focus {
 
 .table.manage-candidates-top {
     min-width: 650px;
+	border-collapse: collapse;
+	width: 100%;
 }
 
 .user-dashboard-info-box .candidate-list-details ul {
@@ -9338,19 +9356,8 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .centerContainer {
+	
 	margin: auto;	
-}
-
-.centerContainerVal {
-	width:70%;
-	margin: auto;	
-}
-
-@media (max-width: 516px) {
-  .centerContainerVal {
-    width:100%;
-	margin: auto;
-  }
 }
 
 /* LISTA DE USUARIOS FIN*/
@@ -9611,7 +9618,13 @@ input.star:checked ~ .rev-box{
 } 
 
 .cardVal {
-    
+    border-radius: 5px;
+    background-color: #fff;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 width:70%;
 }
 
@@ -9621,8 +9634,7 @@ width:70%;
     margin-right: auto;
     margin-left: auto;
     background-color: #FBC02D;
-    color: #fff;
-	margin-top: 20px;
+    color: #fff
 }
 
 .rating-label {
@@ -9818,8 +9830,5 @@ td {
 }
 
 .footerColor{
-	
    background: #ffe6c2;
-
 }
-
