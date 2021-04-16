@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <%-- Placed at the end of the document so the pages load faster --%>
 <spring:url value="/webjars/jquery/2.2.4/jquery.min.js" var="jQuery"/>
@@ -25,7 +26,7 @@
         href="https://twitter.com/beavarts"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fa fa-twitter"></i
+        ><i style="color: #000000;" class="fab fa-twitter"></i
       ></a>
 
       <!-- Instagram -->
@@ -34,7 +35,7 @@
         href="https://www.instagram.com/beavarts_/"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fa fa-instagram"></i
+        ><i style="color: #000000;" class="fab fa-instagram"></i
       ></a>
 
       <!-- Github -->
@@ -43,8 +44,7 @@
         href="https://github.com/ivanhr3/BeavArts"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fa fa-github"></i
-      ></a>
+        ><i style="color: #000000;" class="fab fa-github"></i></a>
     <p style="color: #000000;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
   </div>
   <!-- Copyright -->

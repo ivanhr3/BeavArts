@@ -9621,7 +9621,8 @@ width:70%;
     margin-right: auto;
     margin-left: auto;
     background-color: #FBC02D;
-    color: #fff
+    color: #fff;
+	margin-top: 20px;
 }
 
 .rating-label {
@@ -9734,16 +9735,16 @@ td {
 }
 
 .buttonHeaderImagePerfil {
-	background-image : url("/resources/images/brushGreyPng.png");
-	background-size: 90px 30px;
+	background-image : url("/resources/images/brushGrey2Png.png");
+	background-size: 110px 30px;
     background-repeat: no-repeat;
 	background-position: center; 
 	
 }
 
 .buttonHeaderImageE {
-	background-image : url("/resources/images/brushPurplePng.png");
-	background-size: 70px 30px;
+	background-image : url("/resources/images/brushYellow2Png.png");
+	background-size: 105px 30px;
     background-repeat: no-repeat;
 	background-position: center;	
 }
@@ -9790,14 +9791,14 @@ td {
 	 	
 	}	
 	.buttonHeaderImagePerfil {	
-		background-image : url("/resources/images/brushGreyPng.png");
-		background-size: 90px 30px;
+		background-image : url("/resources/images/brushGrey2Png.png");
+		background-size: 110px 30px;
 	    background-repeat: no-repeat;
 		background-position: left;	 	
 	}	
 	.buttonHeaderImageE {	
-		background-image : url("/resources/images/brushPurplePng.png");
-		background-size: 70px 30px;
+		background-image : url("/resources/images/brushYellow2Png.png");
+		background-size: 105px 30px;
 	    background-repeat: no-repeat;
 		background-position: left;	 	
 	}	

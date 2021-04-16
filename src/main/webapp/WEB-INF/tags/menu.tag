@@ -9,6 +9,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="//db.onlinewebfonts.com/c/c455d94eee43dc4ceeb83c0c0fd0d4c8?family=Segoe+Print" rel="stylesheet" type="text/css"/>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <nav class="navbar navbar-custom navbar-expand-lg sticky-top">
       <a class="navbar-brand" href="<spring:url value="/" htmlEscape="true" />"><img src="/resources/images/v22.png"  class="d-inline-block align-top" alt="/"></a>
@@ -28,7 +29,7 @@
         
         <li class="nav-item">
         	<div class="buttonHeaderImageE aumentoHover">
-        			<a class="nav-link izqHover" href="/beavers/list">Explora</a>
+        			<a class="nav-link izqHover" href="/beavers/list"><i class="fas fa-users"></i> Explora</a>
         	 </div>	
       	</li>
       	
@@ -47,7 +48,7 @@
         <sec:authorize access="isAuthenticated()">
       			<li class="nav-item">
       				<div class="buttonHeaderImageMS aumentoHover">
-        				<a class="nav-link izqHover" href="/solicitudes/list">Mis Solicitudes</a>
+        				<a class="nav-link izqHover" href="/solicitudes/list"> Mis solicitudes</a>
         			</div>	
       			</li>		
 				<li class="nav-item">
@@ -57,7 +58,7 @@
 				</li>
 				<li class="nav-item">
 					<div class="buttonHeaderImagePerfil aumentoHover">
-	        			<a class="nav-link izqHover" href="/beavers/beaverInfo/${myBeaverId}">Mi perfil</a>
+	        			<a class="nav-link izqHover" href="/beavers/beaverInfo/${myBeaverId}"><i class="fas fa-user"></i> Mi perfil</a>
 	        		</div>
       			</li>	
 				</sec:authorize>
