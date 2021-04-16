@@ -17,14 +17,15 @@
 <h1 class="SegoeFont" style="text-align:center">Beavers</h1>
 <br/>
 <div class="container mt-3 mb-4">
+
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
     <div class="row">
       <div class="col-md-12">
         <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
-          <table class="table manage-candidates-top mb-0">
-            <thead>
-              <tr>
-                <th  class="SegoeFont">Nombre de Usuario</th>
+			<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar usuarios">
+			<table class="table manage-candidates-top mb-0" id="myTable">
+				<tr class="header">
+					<th class="SegoeFont">Usuarios</th> 
                              
               </tr>
             </thead>
@@ -34,7 +35,8 @@
             	<c:set var="isAdmin1" value="true"></c:set>
             </security:authorize>
                 
-	            <c:forEach items="${beavers}" var="beaver" >	
+	            <c:forEach items="${beavers}" var="beaver" >
+					<tr class="candidates-list ${beaver.especialidades}"></tr>	
 	            	
 	            	<c:choose>
 	            	
@@ -46,7 +48,7 @@
 		            	<tr class="candidates-list">
 			                <td class="title">
 			                  <div class="thumb">
-			                    <img class="img-fluid" src="${beaver.urlFotoPerfil}" alt="">
+			                    <img class="rounded-circle " src="${beaver.urlFotoPerfil}" width="80" height="80">
 			                  </div>
 			                  <div class="candidate-list-details">
 			                    <div class="candidate-list-info">

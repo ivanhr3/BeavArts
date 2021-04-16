@@ -125,6 +125,7 @@ public class AnuncioController {
 		} else {
 			// Al darle al boton de editar anuncio, saldra un error si dicho anuncio tiene solicitudes aceptadas
 			if (anunc.getSolicitud() != null && anunc.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO)) {
+				model.put("url", true);
 				model.put("errorSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas.");
 				return "anuncios/anunciosDetails";
 
@@ -173,6 +174,7 @@ public class AnuncioController {
 		} else {
 			// SOLO SE PUEDE BORRAR UN ANUNCIO SI NO TIENE SOLICITUDES ACEPTADAS
 			if (anuncio.getSolicitud() != null && anuncio.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO)) {
+				model.put("url", true);
 				model.put("errorSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas.");
 				return "anuncios/anunciosDetails";
 
@@ -181,6 +183,24 @@ public class AnuncioController {
 				return "redirect:/beavers/" + beaverId + "/encargos/list";
 			}
 
+		}
+	}
+
+	@PostMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/promote")
+	public String promoteAnuncio(@PathVariable("beaverId") final int beaverId, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
+
+		Beaver beaver = this.beaverService.getCurrentBeaver();
+		model.put("myBeaverId", beaver.getId()); //Añadido para usar las url del header
+
+		Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
+
+		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
+			return "accesoNoAutorizado"; // FRONT: No debe aparecer el botón para los usuarios que no crearon el anuncio. 
+										// Esta vista solo debe redirigirse si se intenta un acceso ilegal por url.
+		} else {
+			anuncio.setDestacado(true);
+			this.anuncioService.saveAnuncio(anuncio);
+			return "anuncios/listAnuncios";
 		}
 	}
 

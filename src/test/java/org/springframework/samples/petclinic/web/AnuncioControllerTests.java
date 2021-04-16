@@ -279,6 +279,22 @@ public class AnuncioControllerTests {
 
 	@WithMockUser(value = "testuser")
 	@Test
+	public void testPromocionarAnuncio() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/{anuncioId}/promote", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/listAnuncios"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testPromocionarAnuncioNoAutorizado() throws Exception {
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver2);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/{anuncioId}/promote", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
 	public void testListAnuncios() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/anuncios/list")).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios")).andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.view().name("anuncios/listAnuncios"));

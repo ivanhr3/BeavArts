@@ -217,7 +217,7 @@ public class EncargoController {
 			return "redirect:/beavers/" + beaverId + "/encargos/list";
 		} else {
 			this.encargoService.deleteEncargoById(encargoId);
-			return "redirect:/beavers/" + beaverId + "/encargos/list";
+			return "redirect:/beavers/" + beaverId + "/misPublicaciones";
 		}
 	} //TODO: Falta la regla de Negocio 11
 

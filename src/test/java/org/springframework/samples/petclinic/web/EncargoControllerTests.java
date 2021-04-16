@@ -500,7 +500,7 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 7, 55)).andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-			.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/7/encargos/list"));
+			.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/7/misPublicaciones"));
 	}
 
 	@WithMockUser(value = "User123")

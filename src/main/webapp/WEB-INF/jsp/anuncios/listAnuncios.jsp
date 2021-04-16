@@ -1,6 +1,3 @@
-
-
-
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,11 +5,13 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <beavarts:layout pageName="Lista de anuncios">
 
 
@@ -96,10 +95,35 @@
 </div>
 
 <c:forEach items="${anuncios}" var="anuncio">
+
+	<c:if test="${anuncio.destacado == true}">
+		<c:set var="destacado" value="destacado"></c:set>
+	</c:if>
+	
+	<c:if test="${anuncio.destacado == false}">
+		<c:set var="destacado" value="destacadoNo"></c:set>
+	</c:if>
+
 	  <div class="column ${anuncio.especialidad}">
 	    	<div class="row">
-	    	<div class="card" style="width: 20rem;" id="encargosCard">
-	    	<div class="card-header-publicaciones"><h4 class="card-title SegoeFont">${anuncio.titulo}</h4></div>  
+	    	
+	    	<div class="card ${destacado}" style="width: 20rem;" id="encargosCard">
+	    	
+	    	
+	    	<div class="card-header-publicaciones"><h4 class="card-title SegoeFont">${anuncio.titulo}
+	    	
+	    	<c:if test="${anuncio.destacado == true}">
+			<i style="color: orange; float: right" class="fas fa-star"></i>
+			
+			</c:if>
+	    	
+	    	
+	    	</h4>
+	    	
+	    	
+	    	
+	    	</div>  
+	    	
 	    	<div class="card-body">
 	      	<p>${anuncio.descripcion}</p>
 	      	<h6 class="SegoeFont">Categoría: <span class="badge badge-pill badge-categoria">
