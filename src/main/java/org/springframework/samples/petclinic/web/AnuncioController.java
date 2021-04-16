@@ -177,7 +177,7 @@ public class AnuncioController {
 		}
 	}
 
-	@RequestMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/promote")
+	@PostMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/promote")
 	public String promoteAnuncio(@PathVariable("beaverId") final int beaverId, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
@@ -191,7 +191,7 @@ public class AnuncioController {
 		} else {
 			anuncio.setDestacado(true);
 			this.anuncioService.saveAnuncio(anuncio);
-			return null;
+			return "anuncios/listAnuncios";
 		}
 	}
 
