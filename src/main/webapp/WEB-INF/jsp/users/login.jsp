@@ -12,13 +12,13 @@
             Iniciar sesión    
     </h2>
     <div class="container justify-content-center" style="display:block;">
-      <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form">
+      <form:form class="form-horizontal" id="add-user-form" action="/login">
         <div class="form-group has-feedback">
     
     <!-- Username -->
             <div class="form-group">
                 <label class="sr-only">{% trans "Username" %}</label>
-                <input type="text" id="id_username" name="user.username" class="form-control"
+                <input type="text" id="id_username" name="username" class="form-control"
                 value="" placeholder="Username" required>
               </div>
 
@@ -28,7 +28,7 @@
             <label class="sr-only">{% trans "Password" %}</label>
             <!-- password input -->
             <div class="input-group">
-              <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
+              <input type="password" id="id_password1" name="password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
       data-html="true" value="" placeholder="Password" required>
        </div>
       </div>
