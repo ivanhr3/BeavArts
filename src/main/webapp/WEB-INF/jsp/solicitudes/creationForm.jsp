@@ -103,8 +103,14 @@
     <b><c:out value="${anuncio.descripcion}"/></b>
  
  </c:if>
- 
+
+ <c:if test="${pendiente}">
+            <div class="alert alert-danger col-sm-10" role="alert">
+            	<p><c:out value="${error}"/></p>
+            </div>
+            </c:if> 
     
+  <c:if test="${!pendiente}">           
     <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <br/>
  <div class="container">   
@@ -179,12 +185,11 @@
               </body>
 
             <br/>
-            <c:if test="${pendiente}">
-            <div class="alert alert-danger col-sm-10" role="alert">
-            	<p><c:out value="${error}"/></p>
             </div>
-            </c:if>
+           
         </div>
     </form:form>
+  
 </div>
+</c:if> 
 </beavarts:layout>

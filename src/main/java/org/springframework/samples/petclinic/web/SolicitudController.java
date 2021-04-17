@@ -52,6 +52,7 @@ public class SolicitudController {
 	public String crearSolicitudInit(@PathVariable("engId") final int encargoId, final ModelMap model) {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
+		Boolean pendiente = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
 
 		if (beaver != null) {
 			model.put("myBeaverId", beaver.getId());
@@ -73,6 +74,8 @@ public class SolicitudController {
 			sol.setEstado(Estados.PENDIENTE);
 			sol.setPrecio(50.0);
 			model.put("esDeEncargo", true);
+			model.addAttribute("pendiente", pendiente);
+			model.put("error", "Tu anterior solicitud a este encargo se encuentra pendiente de aceptación.");
 			model.addAttribute("encargo", encargo);
 			model.addAttribute("solicitud", sol);
 			return "solicitudes/creationForm"; //TODO: FRONT: Formulario con los campos: Fotos (Varias URL, averiguad como pasarlas para que se almacenen) y Descripción
