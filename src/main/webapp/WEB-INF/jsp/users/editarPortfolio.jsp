@@ -15,9 +15,7 @@
     <form:form modelAttribute="portfolio" class="form-horizontal" id="add-owner-form">
     
         <div class="form-group has-feedback">
-          <b class="SegoeFont" style="margin-left:15px"> Foto de perfil:</b>
-             <petclinic:inputField label="" name= "beaver.urlFotoPerfil"/> 
-              
+                 
             <b class="SegoeFont" style="margin-left:15px"> Sobre mi:</b>
             <petclinic:inputField label="" name="sobreMi"/>
                    

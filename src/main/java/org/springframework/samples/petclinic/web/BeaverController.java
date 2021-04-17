@@ -55,13 +55,13 @@ public class BeaverController {
 		Portfolio portfolio = beaver.getPortfolio();
 
 		ModelAndView vista = new ModelAndView("users/perfilBeaver");
-		Double puntuacionMedia = beaverService.calculatePuntuacion(beaver);
-		Integer numeroDeValoraciones = beaverService.getNumValoraciones(beaver);
-		if(puntuacionMedia == null){
+		Double puntuacionMedia = this.beaverService.calculatePuntuacion(beaver);
+		Integer numeroDeValoraciones = this.beaverService.getNumValoraciones(beaver);
+		if (puntuacionMedia == null) {
 			vista.addObject("sinPuntuacionMedia", "Aún no hay valoraciones");
 			vista.addObject("numValoraciones", 0);
 		} else {
-			vista.addObject("puntuacionMedia", Math.round(puntuacionMedia*100.0)/100.0);
+			vista.addObject("puntuacionMedia", Math.round(puntuacionMedia * 100.0) / 100.0);
 			vista.addObject("numValoraciones", numeroDeValoraciones);
 		}
 
@@ -196,81 +196,82 @@ public class BeaverController {
 
 	}
 
-    @GetMapping("/beaverInfo/{beaverId}/editPhoto")
+	@GetMapping("/beaverInfo/{beaverId}/editPhoto")
 	public String initEditPhoto(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
-        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication1.getName();
-        User user = this.userService.findUserByUsername(currentPrincipalName);
+		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication1.getName();
+		User user = this.userService.findUserByUsername(currentPrincipalName);
 
-        //Si el usuario no esta logueado tb salta el no autorizado
-        if (user == null) {
-            return "accesoNoAutorizado";
-        }
+		//Si el usuario no esta logueado tb salta el no autorizado
+		if (user == null) {
+			return "accesoNoAutorizado";
+		}
 
-        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
-        String vista;
-        Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
-        if (me != null) {//añadido el if para los tests
-            model.put("myBeaverId", me.getId()); //añadimos el id a la vista
-        }
+		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+		String vista;
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		if (me != null) {//añadido el if para los tests
+			model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
 
-        //compruebo si el usuario logeado es el mismo que quiere editar su foto perfil
-        if (user.getUsername().equals(beaver.getUser().getUsername())) {
-            if (beaver.getUrlFotoPerfil() == null){
-                beaver.setUrlFotoPerfil("");
-            }
-            model.addAttribute("beaver", beaver);
+		//compruebo si el usuario logeado es el mismo que quiere editar su foto perfil
+		if (user.getUsername().equals(beaver.getUser().getUsername())) {
+			if (beaver.getUrlFotoPerfil() == null) {
+				beaver.setUrlFotoPerfil("");
+			}
+			model.addAttribute("beaver", beaver);
 
-            //FRONT: MOSTRAR SOLO EL ATRIBUTO DE LA FOTO EN EL FORM
-            vista = "users/editarFotoPerfil";
-            return vista;
+			//FRONT: MOSTRAR SOLO EL ATRIBUTO DE LA FOTO EN EL FORM
+			vista = "users/editarFotoPerfil";
+			return vista;
 
-        } else {
+		} else {
 
-            vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
-        }
-        return vista;
-    }
+			vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
+		}
+		return vista;
+	}
 
-    @PostMapping("/beaverInfo/{beaverId}/editPhoto")
-    public String processEditPhoto(@PathVariable("beaverId") final int beaverId, @Valid final Beaver beaver, final BindingResult result, final ModelMap model){
-        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication1.getName();
-        User user = this.userService.findUserByUsername(currentPrincipalName);
+	@PostMapping("/beaverInfo/{beaverId}/editPhoto")
+	public String processEditPhoto(@PathVariable("beaverId") final int beaverId, @Valid final Beaver beaver, final BindingResult result, final ModelMap model) {
+		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication1.getName();
+		User user = this.userService.findUserByUsername(currentPrincipalName);
 
-        String vista;
-        Beaver beaver1 = this.beaverService.findBeaverByIntId(beaverId);
+		String vista;
+		Beaver beaver1 = this.beaverService.findBeaverByIntId(beaverId);
 
-        Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
-        if (me != null) { //añadido el if para los tests
-            model.put("myBeaverId", me.getId()); //añadimos el id a la vista
-        }
-        //compruebo si el usuario logeado es el mismo que el usuario del perfil a editar
-        if (user.getUsername().equals(beaver1.getUser().getUsername())) {
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		if (me != null) { //añadido el if para los tests
+			model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
+		//compruebo si el usuario logeado es el mismo que el usuario del perfil a editar
+		if (user.getUsername().equals(beaver1.getUser().getUsername())) {
 
-            UrlValidator validar = new UrlValidator();
-            Boolean compruebaUrl = validar.isValid(beaver.getUrlFotoPerfil());
+			UrlValidator validar = new UrlValidator();
+			Boolean compruebaUrl = validar.isValid(beaver.getUrlFotoPerfil());
 
-            if (result.hasErrors() || !compruebaUrl) {
-                model.put("errorUrl", "Las foto añadida debe ser una Url");
-                model.put("beaver", beaver);
-                vista = "users/editarFotoPerfil"; //si hay algún error de campos se redirige a la misma vista
+			if (result.hasErrors() || !compruebaUrl) {
+				model.put("errorUrl", "Las foto añadida debe ser una Url");
+				model.put("beaver", beaver);
+				vista = "users/editarFotoPerfil"; //si hay algún error de campos se redirige a la misma vista
 
-            } else {
+			} else {
 
-                BeanUtils.copyProperties(beaver, beaver1, "id", "user");
+				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", 
+					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud", 
+					"anuncios", "valoraciones", "valoracionesCreadas");
 
-                this.beaverService.saveBeaver(beaver1);
-                model.put("beaver", beaver);
-                return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
-            }
+				this.beaverService.saveBeaver(beaver1);
+				model.put("beaver", beaver);
+				return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
+			}
 
-        } else {
-            vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
-        }
+		} else {
+			vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
+		}
 
-        return vista;
-    }
-
+		return vista;
+	}
 
 }
