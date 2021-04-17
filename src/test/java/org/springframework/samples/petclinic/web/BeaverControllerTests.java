@@ -130,6 +130,7 @@ public class BeaverControllerTests {
         BDDMockito.given(this.beaverService.findBeaverByUsername("beaver1")).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByIntId(BeaverControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByIntId(12)).willReturn(this.beaver2);
+
         BDDMockito.given(this.beaverService.calculatePuntuacion(beaver1)).willReturn(4.34554);
         BDDMockito.given(this.beaverService.calculatePuntuacion(beaver2)).willReturn(null);
         BDDMockito.given(this.beaverService.getNumValoraciones(beaver1)).willReturn(17);
