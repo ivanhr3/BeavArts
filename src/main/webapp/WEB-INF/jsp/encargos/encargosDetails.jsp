@@ -67,13 +67,4 @@
 		<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteEncargoUrl)}"><i class="fas fa-trash-alt"></i> Borrar Encargo</a>
               
     </security:authorize>
-    
-    
-    
-    
-    
-    
-    
-    
-    
 </beavarts:layout>

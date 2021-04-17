@@ -129,14 +129,13 @@ public class AnuncioController {
 		} else {
 			// Al darle al boton de editar anuncio, saldra un error si dicho anuncio tiene solicitudes aceptadas
 			if (anunc.getSolicitud() != null && anunc.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO)) {
-				model.put("url", true);
-				model.put("errorSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas.");
-				return "anuncios/anunciosDetails";
-
-			} else {
-
 				model.addAttribute("anuncio", anunc);
-
+				model.addAttribute("createdByUser", true); 
+				model.put("urlEdit", true);
+				model.put("errorEditarSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de editar.");
+				return "anuncios/anunciosDetails";
+			} else {
+				model.addAttribute("anuncio", anunc);
 				return AnuncioController.VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM;
 			}
 		}
@@ -167,8 +166,9 @@ public class AnuncioController {
 	public String deleteAnuncio(@PathVariable("beaverId") final int beaverId, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
 
 		Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
-
+		
 		Beaver beav = this.beaverService.getCurrentBeaver();
+		model.put("myBeaverId", beav.getId());
 		User user = beav.getUser();
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
 		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
@@ -178,9 +178,11 @@ public class AnuncioController {
 		} else {
 			// SOLO SE PUEDE BORRAR UN ANUNCIO SI NO TIENE SOLICITUDES ACEPTADAS
 			if (anuncio.getSolicitud() != null && anuncio.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO) && !esAdmin) {
-				model.put("url", true);
-				model.put("anuncio", anuncio);
-				model.put("errorSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas.");
+				
+				model.addAttribute("anuncio", anuncio);
+				model.addAttribute("createdByUser", true); 
+				model.put("urlEliminar", true);
+				model.put("errorEliminarSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de eliminar.");
 				return "anuncios/anunciosDetails";
 
 			} else {

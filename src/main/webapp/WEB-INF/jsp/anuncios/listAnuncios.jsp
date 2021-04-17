@@ -126,8 +126,40 @@
 	    	
 	    	<div class="card-body">
 	      	<p>${anuncio.descripcion}</p>
-	      	<h6 class="SegoeFont">Categoría: <span class="badge badge-pill badge-categoria">
-	      		<c:out value="${anuncio.especialidad}"/></span></h6>
+	      	<h6 class="SegoeFont">Categoría:
+					                      	<c:if test="${anuncio.especialidad == 'TEXTIL'}">
+					                      		<i class="fas fa-socks"></i>
+					                      	</c:if>
+				                     
+				                      		<c:if test="${anuncio.especialidad == 'ESCULTURA'}">
+					                      		<i class="fas fa-chess-knight"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'ILUSTRACION'}">
+					                      		<i class="fas fa-portrait"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'ACRILICO'}">
+					                      		<i class="fas fa-paint-brush"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'OLEO'}">
+					                      		<i class="fas fa-palette"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'JOYERIA'}">
+					                      		<i class="fas fa-gem"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'RESINA'}">
+					                      		<i class="fas fa-prescription-bottle"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'FOTOGRAFIA'}">
+					                      		<i class="fas fa-camera-retro"></i>
+					                      	</c:if>
+	                    				<c:out value="${anuncio.especialidad} "/>
+	                				</h6>
 	      		<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
                	</spring:url>
@@ -135,8 +167,8 @@
 			     <a href="${fn:escapeXml(beaverUrl)}">
 			     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
 			     <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
-                        <spring:param name="anuncioId" value="${anuncio.id}"/>
                         <spring:param name="beaverId" value="${anuncio.beaver.id}"/>
+                        <spring:param name="anuncioId" value="${anuncio.id}"/>
                 	</spring:url>
 			     <a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
 	    </div>
@@ -145,9 +177,7 @@
 	    </div>
 	    <hr/>
 </c:forEach>
-
 </c:if>
 </div>
-
 </jsp:body> 
 </beavarts:layout>
