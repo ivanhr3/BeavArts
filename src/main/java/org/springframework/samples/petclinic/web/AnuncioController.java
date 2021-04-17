@@ -17,10 +17,12 @@ import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.Estados;
+import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -38,14 +40,16 @@ public class AnuncioController {
 	private final EncargoService	encargoService;
 	private final AnuncioService	anuncioService;
 	private final BeaverService		beaverService;
+	private final SolicitudService	solicitudService;
 	private static final String		VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM	= "anuncios/createAnunciosForm";
 
 
 	@Autowired
-	public AnuncioController(final EncargoService encargoService, final AnuncioService anuncioService, final BeaverService beaverService) throws ClassNotFoundException {
+	public AnuncioController(final EncargoService encargoService, final AnuncioService anuncioService, final BeaverService beaverService, final SolicitudService solicitudService) throws ClassNotFoundException {
 		this.encargoService = encargoService;
 		this.anuncioService = anuncioService;
 		this.beaverService = beaverService;
+		this.solicitudService = solicitudService;
 	}
 
 	//Añadido para usarlo en el jsp
@@ -126,14 +130,13 @@ public class AnuncioController {
 		} else {
 			// Al darle al boton de editar anuncio, saldra un error si dicho anuncio tiene solicitudes aceptadas
 			if (anunc.getSolicitud() != null && anunc.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO)) {
-				model.put("url", true);
-				model.put("errorSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas.");
-				return "anuncios/anunciosDetails";
-
-			} else {
-
 				model.addAttribute("anuncio", anunc);
-
+				model.addAttribute("createdByUser", true); 
+				model.put("urlEdit", true);
+				model.put("errorEditarSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de editar.");
+				return "anuncios/anunciosDetails";
+			} else {
+				model.addAttribute("anuncio", anunc);
 				return AnuncioController.VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM;
 			}
 		}
@@ -164,8 +167,9 @@ public class AnuncioController {
 	public String deleteAnuncio(@PathVariable("beaverId") final int beaverId, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
 
 		Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
-
+		
 		Beaver beav = this.beaverService.getCurrentBeaver();
+		model.put("myBeaverId", beav.getId());
 		User user = beav.getUser();
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
 		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
@@ -174,16 +178,25 @@ public class AnuncioController {
 			return "accesoNoAutorizado"; // Acceso no autorizado
 		} else {
 			// SOLO SE PUEDE BORRAR UN ANUNCIO SI NO TIENE SOLICITUDES ACEPTADAS
-			if (anuncio.getSolicitud() != null && anuncio.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO)) {
-				model.put("url", true);
-				model.put("errorSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas.");
+			if (anuncio.getSolicitud() != null && anuncio.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO) && !esAdmin) {
+				
+				model.addAttribute("anuncio", anuncio);
+				model.addAttribute("createdByUser", true); 
+				model.put("urlEliminar", true);
+				model.put("errorEliminarSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de eliminar.");
 				return "anuncios/anunciosDetails";
 
 			} else {
+				for (Solicitud s : anuncio.getSolicitud()) {
+					this.solicitudService.deleteSolicitud(s);
+				}
 				this.anuncioService.deleteAnuncio(anuncioId);
-				return "redirect:/beavers/" + beaverId + "/encargos/list";
+				if (esAdmin) {
+					return "redirect:/anuncios/list";
+				} else {
+					return "redirect:/beavers/" + beav.getId() + "/misPublicaciones";
+				}
 			}
-
 		}
 	}
 

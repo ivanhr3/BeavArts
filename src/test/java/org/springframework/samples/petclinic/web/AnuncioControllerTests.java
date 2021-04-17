@@ -27,6 +27,7 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -49,6 +50,9 @@ public class AnuncioControllerTests {
 
 	@MockBean
 	private EncargoService				encargoService;
+
+	@MockBean
+	private SolicitudService			solicitudService;
 
 	private static final int			TEST_BEAVER_ID		= 99;
 	private static final int			TEST_BEAVER_ID2		= 100;
@@ -259,8 +263,13 @@ public class AnuncioControllerTests {
 	@WithMockUser(value = "testuser")
 	@Test
 	public void testDeleteAnuncio() throws Exception {
+		Solicitud sol = new Solicitud();
+		Collection<Solicitud> col = new ArrayList();
+		col.add(sol);
+		this.anuncio.setSolicitud(col);
+
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
-			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + AnuncioControllerTests.TEST_BEAVER_ID + "/encargos/list"));
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + AnuncioControllerTests.TEST_BEAVER_ID + "/misPublicaciones"));
 	}
 
 	@WithMockUser(value = "testuser")
@@ -333,9 +342,9 @@ public class AnuncioControllerTests {
 		user.setEnabled(true);
 		Authorities au = new Authorities();
 		Set<Authorities> col = new HashSet<>();
-		col.add(au);
 		au.setAuthority("admin");
 		au.setUser(user);
+		col.add(au);
 		user.setAuthorities(col);
 		beaver3.setUser(user);
 		beaver3.setEncargos(new HashSet<>());
@@ -345,8 +354,8 @@ public class AnuncioControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
 		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
-			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + AnuncioControllerTests.TEST_BEAVER_ID + "/encargos/list"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID2).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/anuncios/list"));
 	}
 
 }
