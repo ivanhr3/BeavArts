@@ -3,7 +3,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	
 <beavarts:layout pageName="Detalles de encargos">
 
@@ -53,5 +55,25 @@
     <br/>
     <c:if test="${createdByUser == true}">
         	<a class="btn btn-primary" href='<spring:url value="${encargo.id}/edit" htmlEscape="true"/>'>Editar encargo</a>
+        	<a class="btn btn-primary" href='<spring:url value="${encargo.id}/delete" htmlEscape="true"/>'>Eliminar encargo</a>
     </c:if>
+    
+    <security:authorize access="hasAuthority('admin')">
+                  
+	    &nbsp;              
+	    <spring:url value="{encargoId}/delete" var="deleteEncargoUrl">
+		<spring:param name="encargoId" value="${encargo.id}"/>              
+		</spring:url>
+		<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteEncargoUrl)}"><i class="fas fa-trash-alt"></i> Borrar Encargo</a>
+              
+    </security:authorize>
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </beavarts:layout>

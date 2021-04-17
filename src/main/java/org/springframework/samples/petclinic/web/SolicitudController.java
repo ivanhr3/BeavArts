@@ -8,16 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Encargo;
-import org.springframework.samples.petclinic.model.Estados;
-import org.springframework.samples.petclinic.model.Factura;
-import org.springframework.samples.petclinic.model.Solicitud;
-import org.springframework.samples.petclinic.service.BeaverService;
-import org.springframework.samples.petclinic.service.EncargoService;
-import org.springframework.samples.petclinic.service.FacturaService;
-import org.springframework.samples.petclinic.service.SolicitudService;
-import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.samples.petclinic.model.*;
+import org.springframework.samples.petclinic.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -48,6 +40,8 @@ public class SolicitudController {
 
 	@Autowired
 	private FacturaService		facturaService;
+	@Autowired
+	private AnuncioService anuncioService;
 
 	private static final String	VISTA_DE_ERROR		= "ErrorPermisos";
 	private static final String	SOLICITUD_DETAILS	= "testview";
@@ -66,7 +60,7 @@ public class SolicitudController {
 		//model.addAttribute("encargo", encargo);
 
 		if (encargo.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
-			return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo. 
+			return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo.
 		} else if (!encargo.isDisponibilidad()) {
 			return "accesoNoAutorizado";
 		} else if (beaver == null) {
@@ -77,6 +71,7 @@ public class SolicitudController {
 			sol.setEncargo(encargo);
 			sol.setEstado(Estados.PENDIENTE);
 			sol.setPrecio(50.0);
+			model.put("esDeEncargo", true);
 			model.addAttribute("encargo", encargo);
 			model.addAttribute("solicitud", sol);
 			return "solicitudes/creationForm"; //TODO: FRONT: Formulario con los campos: Fotos (Varias URL, averiguad como pasarlas para que se almacenen) y Descripción
@@ -89,6 +84,7 @@ public class SolicitudController {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
+		model.put("esDeEncargo", true);
 		model.addAttribute("encargo", encargo);
 		if (beaver != null) {
 			model.put("myBeaverId", beaver.getId());
@@ -118,7 +114,7 @@ public class SolicitudController {
 				//El result.rejectValue me genera un error500 que no hemos sido capaces de controlar. Comentandolo y mandando el siguiente return se controla que lo de la solicitud pendiente
 				//return "solicitudes/solicitudPendiente"
 
-				return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario 
+				return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
 			} else if (beaver == null) {
 				return "accesoNoAutorizado"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
 			}
@@ -147,9 +143,15 @@ public class SolicitudController {
 		modelMap.put("myBeaverId", beaver.getId());
 
 		Collection<Encargo> encargos = new ArrayList<>();
+		Collection<Anuncio> anuncios = new ArrayList<>();
+
 		if (!(beaver.getEncargos() == null)) {
 			encargos = beaver.getEncargos();
 		}
+
+		if(beaver.getAnuncios() != null) {
+		    anuncios = beaver.getAnuncios();
+        }
 
 		Collection<Solicitud> solicitudesEnviadas = new ArrayList<>();
 		if (!(beaver.getSolicitud() == null)) {
@@ -157,7 +159,9 @@ public class SolicitudController {
 		}
 
 		List<Solicitud> solicitudesRecibidas = new ArrayList<>();
+		List<Solicitud> solicitudesRecibidasAnuncios = new ArrayList<>();
 		Boolean hayEncargos = false;
+        Boolean hayAnuncios = false;
 		Boolean haySolicitudes = false;
 
 		if (encargos.isEmpty()) {
@@ -174,6 +178,20 @@ public class SolicitudController {
 			}
 		}
 
+		if (anuncios.isEmpty()) {
+		    hayAnuncios = false;
+        } else {
+		    hayAnuncios = true;
+		    for(Anuncio a: anuncios) {
+		        Collection<Solicitud> solicitudes2 = a.getSolicitud();
+		        if(solicitudes2 != null) {
+		            for(Solicitud s2: solicitudes2) {
+		                solicitudesRecibidasAnuncios.add(s2);
+                    }
+                }
+            }
+        }
+
 		if (solicitudesEnviadas.isEmpty()) {
 			haySolicitudes = false;
 		} else {
@@ -183,9 +201,11 @@ public class SolicitudController {
 		String vista = "solicitudes/listadoSolicitudes";
 		Iterable<Solicitud> solicitudes = this.solicitudService.findAll();
 		modelMap.addAttribute("hayEncargos", hayEncargos); //TODO: Front: Boolean para controlar si hay solicitudes recibidas que mostrar
+		modelMap.addAttribute("hayAnuncios", hayAnuncios);
 		modelMap.addAttribute("haySolicitudes", haySolicitudes); //TODO: Front: Boolean para controlar si hay solicitudes enviadas que mostrar
 		modelMap.addAttribute("listaSolicitudesRecibidas", solicitudesRecibidas); //TODO: Front: Ahora hay dos listados en esta vista: Lista de Solicitudes Recibidas y Lista de Solicitudes Enviadas
-		modelMap.addAttribute("listaSolicitudesEnviadas", solicitudesEnviadas);
+		modelMap.addAttribute("listaSolicitudesRecibidasAnuncios", solicitudesRecibidasAnuncios);
+        modelMap.addAttribute("listaSolicitudesEnviadas", solicitudesEnviadas);
 		return vista;
 	}
 
@@ -201,10 +221,20 @@ public class SolicitudController {
 			solicitud = s.get();
 		}
 
-		vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
+		if(solicitud.getEncargo() != null) {
+		    vista.getModel().put("esDeEncargo", true);
+		    vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
+            vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
+        }
+
+		if(solicitud.getAnuncio() != null) {
+		    vista.getModel().put("esDeEncargo", false);
+		    vista.addObject("anuncio", solicitud.getAnuncio()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del anuncio para saber a cual se refiere.
+            vista.getModelMap().addAttribute("isAnuncioCreator", beaver == solicitud.getAnuncio().getBeaver());
+        }
+
 		vista.addObject("solicitud", solicitud);
-		vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
-		//Para que el jsp muestre los datos del contacto, ha sido necesario añadir la línea de abajo
+        //Para que el jsp muestre los datos del contacto, ha sido necesario añadir la línea de abajo
 		vista.getModelMap().addAttribute("solicitudAceptada", solicitud.getEstado() == Estados.ACEPTADO);
 		vista.getModelMap().addAttribute("solicitudPendiente", solicitud.getEstado() == Estados.PENDIENTE);
 		return vista;
@@ -218,23 +248,41 @@ public class SolicitudController {
 		Solicitud sol = this.solicitudService.findById(solId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		int beaverId = beaver.getId();
+        Encargo encargo = new Encargo();
+        Anuncio anuncio = new Anuncio();
+        String res = null;
 
 		model.put("myBeaverId", beaverId);
 
-		Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
+		//Si la solicitud pertenece a encargo
+        if(sol.getEncargo() != null) {
+            encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
+            if(beaverId != encargo.getBeaver().getId()) {
+                res = "solicitudes/errorAceptar";
+            } else {
+                sol.setEstado(Estados.ACEPTADO);
+                this.solicitudService.saveSolicitud(sol);
+                //Email de Notification
+                String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
+                //emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
+                res = "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+            }
 
-		if (beaverId != encargo.getBeaver().getId()) {
-			return "solicitudes/errorAceptar"; //TODO: Front: Poned las redirecciones
-		} else {
-			//solicitudService.aceptarSolicitud(sol, beaver);
-			sol.setEstado(Estados.ACEPTADO);
-			this.solicitudService.saveSolicitud(sol);
-			//Email de Notification
-			String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
-			//emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
-			return "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
-		}
-
+            //Si la solicitud pertenece a anuncio
+        } else if (sol.getAnuncio() != null) {
+            anuncio = this.anuncioService.findAnuncioById(sol.getAnuncio().getId());
+            if (beaverId != anuncio.getBeaver().getId()) {
+                res = "solicitudes/errorAceptar";
+            } else {
+                sol.setEstado(Estados.ACEPTADO);
+                this.solicitudService.saveSolicitud(sol);
+                //Email de Notification
+                String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
+                //emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
+                res = "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+            }
+        }
+        return res;
 	}
 
 	//Rechaza Solicitudes cuando se pulsa en el botón en los detalles de una solicitud
@@ -243,20 +291,41 @@ public class SolicitudController {
 		Solicitud sol = this.solicitudService.findById(solId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		int beaverId = beaver.getId();
+        Encargo encargo = new Encargo();
+        Anuncio anuncio = new Anuncio();
+        String res = null;
 
-		Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
-		model.put("myBeaverId", beaverId);
-		if (beaverId != encargo.getBeaver().getId()) {
-			return "solicitudes/errorRechazar";
-		} else {
-			//solicitudService.rechazarSolicitud(sol, beaver);
-			sol.setEstado(Estados.RECHAZADO);
-			this.solicitudService.saveSolicitud(sol);
-			//Email de Notificacion
-			String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada";
-			//emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
-			return "solicitudes/rechazarSuccess"; //TODO: Front: Poned las redirecciones
-		}
+        model.put("myBeaverId", beaverId);
+
+        //Si la solicitud pertenece a encargo
+        if(sol.getEncargo() != null) {
+            encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
+            if(beaverId != encargo.getBeaver().getId()) {
+                res = "solicitudes/errorRechazar";
+            } else {
+                sol.setEstado(Estados.RECHAZADO);
+                this.solicitudService.saveSolicitud(sol);
+                //Email de Notification
+                String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada.";
+                //emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
+                res = "solicitudes/rechazarSuccess"; //TODO: Front: Poned las redirecciones
+            }
+
+            //Si la solicitud pertenece a anuncio
+        } else if (sol.getAnuncio() != null) {
+            anuncio = this.anuncioService.findAnuncioById(sol.getAnuncio().getId());
+            if (beaverId != anuncio.getBeaver().getId()) {
+                res = "solicitudes/errorRechazar";
+            } else {
+                sol.setEstado(Estados.RECHAZADO);
+                this.solicitudService.saveSolicitud(sol);
+                //Email de Notification
+                String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido rechazada.";
+                //emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
+                res = "solicitudes/rechazarSuccess"; //TODO: Front: Poned las redirecciones
+            }
+        }
+        return res;
 	}
 
 	//Acepta Solicitudes cuando se pulsa en el botón en los detalles de una solicitud
@@ -265,22 +334,99 @@ public class SolicitudController {
 		Solicitud sol = this.solicitudService.findById(solId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
 		int beaverId = beaver.getId();
+        Encargo encargo = new Encargo();
+        Anuncio anuncio = new Anuncio();
+        String res = null;
 
-		model.put("myBeaverId", beaverId);
+        model.put("myBeaverId", beaverId);
 
-		Encargo encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
+        //Si la solicitud pertenece a encargo
+        if(sol.getEncargo() != null) {
+            encargo = this.encargoService.findEncargoById(sol.getEncargo().getId());
+            if(beaverId != encargo.getBeaver().getId()) {
+                res = "solicitudes/errorAceptar";
+            } else if(sol.getEstado() == Estados.ACEPTADO){
+                sol.setEstado(Estados.FINALIZADO);
+                this.solicitudService.saveSolicitud(sol);
+                res = "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+            } else {
+                res = "accesoNoAutorizado";
+            }
 
-		if (beaverId != encargo.getBeaver().getId()) {
-			return "solicitudes/errorAceptar"; //TODO: Front: Poned las redirecciones
-		} else if (sol.getEstado() == Estados.ACEPTADO) {
-			//solicitudService.aceptarSolicitud(sol, beaver);
-			sol.setEstado(Estados.FINALIZADO);
-			this.solicitudService.saveSolicitud(sol);
-			return "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
-		} else {
-			return "accessNotAuthorized";
-		}
-
+            //Si la solicitud pertenece a anuncio
+        } else if (sol.getAnuncio() != null) {
+            anuncio = this.anuncioService.findAnuncioById(sol.getAnuncio().getId());
+            if (beaverId != anuncio.getBeaver().getId()) {
+                res = "solicitudes/errorAceptar";
+            } else if(sol.getEstado() == Estados.ACEPTADO){
+                sol.setEstado(Estados.FINALIZADO);
+                this.solicitudService.saveSolicitud(sol);
+                res = "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+            } else {
+                res = "accesoNoAutorizado";
+            }
+        }
+        return res;
 	}
+
+
+
+	@GetMapping("/{anuncioId}/new")
+	public String initCrearSolicitudAnuncios(@PathVariable("anuncioId") int anuncioId, final ModelMap model) {
+        Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
+        Beaver beaver = this.beaverService.getCurrentBeaver();
+
+        if (anuncio.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
+            return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo.
+        } else if (beaver == null) {
+            return "accesoNoAutorizado";
+        } else {
+            Solicitud solicitud = new Solicitud();
+            solicitud.setBeaver(beaver);
+            solicitud.setAnuncio(anuncio);
+            solicitud.setEstado(Estados.PENDIENTE);
+            model.put("esDeEncargo", false);
+            model.addAttribute("anuncio", anuncio);
+            model.addAttribute("solicitud", solicitud);
+            return "solicitudes/creationForm";
+        }
+    }
+    @PostMapping("/{anuncioId}/new")
+    public String processCrearSolicitudAnuncios(@PathVariable("anuncioId") int anuncioId, final Solicitud solicitud, final BindingResult result, final ModelMap model) {
+	    Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
+	    Beaver beaver = this.beaverService.getCurrentBeaver();
+		model.put("esDeEncargo", false);
+		model.put("anuncio", anuncio);
+
+	    if(solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
+            model.addAttribute("solicitud", solicitud);
+            model.put("vacia", true);
+            model.put("descripcion", "La descripción no puede estar vacía");
+
+            if (!this.solicitudService.isCollectionAllURL(solicitud)) { //Mensaje SÓLO cuando la url esta mal escrita
+                model.put("url", true);
+                model.put("errorUrl", "Las fotos añadidas a la solicitud deben ser Urls");
+            }
+
+            return "solicitudes/creationForm";
+
+        } else {
+	        if (anuncio.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
+	            return "accesoNoAutorizado";
+            } else if (this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio)) { //Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
+                model.addAttribute("solicitud", solicitud);
+                model.put("pendiente", true);
+                model.put("error", "Tu solicitud se encuentra pendiente de aceptación");
+
+                return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
+            } else if (beaver == null) {
+	            return "accesoNoAutorizado"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
+            } else {
+	            this.solicitudService.crearSolicitudAnuncio(solicitud, anuncio, beaver);
+	            return "solicitudes/solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
+            }
+
+        }
+    }
 
 }

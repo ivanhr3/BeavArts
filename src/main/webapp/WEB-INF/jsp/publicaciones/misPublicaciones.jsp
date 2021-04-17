@@ -16,10 +16,10 @@
 <div class="card-header">
 <ul class="nav nav-tabs card-header-tabs" id="publicaciones-list">
     			<li class="nav-item">
-        			<a class="nav-link active" href="#listAnuncios" data-toggle="tab">Anuncios</a>
+        			<a style="color:#824500" class="nav-link active SegoeFont" href="#listAnuncios" data-toggle="tab">Anuncios</a>
       			</li>
       			<li class="nav-item">
-              		<a class="nav-link" href="#listEncargos" data-toggle="tab">Encargos</a></li>
+              		<a style="color:#824500" class="nav-link SegoeFont" href="#listEncargos" data-toggle="tab">Encargos</a></li>
     		</ul></div>
     		
     <div class="card-body tab-content justify-content-center">	
@@ -31,10 +31,10 @@
   					<spring:url value="/beavers/${beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
                         <spring:param name="anuncioId" value="${anuncio.id}"/>
                 	</spring:url>   	
-  			<div class="card-header-publicaciones"><h4><c:out value="${anuncio.titulo}"/></h4></div>
+  			<div class="card-header-publicaciones"><h4 class="SegoeFont"><c:out value="${anuncio.titulo}"/></h4></div>
             <div class="card-body card-body-anuncios">
-            	<h5><c:out value="${anuncio.descripcion}"/></h5>
-            	<h6>Categoría: <span class="badge badge-pill badge-categoria"><c:out value="${anuncio.especialidad}"/></span></h6>
+            	<h5 class="SegoeFont"><c:out value="${anuncio.descripcion}"/></h5>
+            	<h6 class="SegoeFont">Categoría: <span class="badge badge-pill badge-categoria"><c:out value="${anuncio.especialidad}"/></span></h6>
         		<br/>
         		<a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
         	</div>
@@ -55,7 +55,7 @@
                 	<c:if test="${!encargo.photo.isEmpty()}">
             		<img class="card-img-top-publicacion rounded" src="${encargo.photo}" alt="Card image cap">
             		<div class="card-body">
-            		<h4 class="card-title"><c:out value="${encargo.titulo}"/></h4>
+            		<h4 class="card-title SegoeFont"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
             				<h5><span class="badge badge-danger">No disponible</span></h5>
         				</c:if>
