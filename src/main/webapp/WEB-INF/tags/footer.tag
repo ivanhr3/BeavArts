@@ -15,7 +15,7 @@
 
 
 <!-- Footer -->
-<footer class="bg-light text-center text-lg-start">
+<footer class="footerBot">
 
  
   <!-- Copyright -->

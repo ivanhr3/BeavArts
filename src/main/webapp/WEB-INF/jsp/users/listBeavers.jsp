@@ -96,15 +96,14 @@
 <h1 class="SegoeFont" style="text-align:center">BEAVERS</h1>
 <br/>
 <div class="container mt-3 mb-4">
+<div style="font-size:20px; text-align:center">
+<b class="SegoeFont" style="font-size:20px; text-align:center">¡Usa los filtros para encontrar beavers con tus gustos!</b>
+</div>
 
-<div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
-<b class="SegoeFont" style="font-size:20px">¡Usa los filtros para encontrar beavers con tus gustos!</b>
-<br/>
-<br/>
-<div id="myBtnContainer">
-  <button style="background-color: orange; border-color: brown"class="btn active btn-primary SegoeFont" onclick="filterSelection('all')"> Mostrar todos</button>
-  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"style="margin-top:1%;"> Textil</button>
-  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"style="margin-top:1%;"> Escultura</button>
+<div style="text-align:center"class="centerContainer" id="myBtnContainer">
+  <button style="background-color: orange; border-color: brown; margin-top:1%;"class="btn active btn-primary SegoeFont" onclick="filterSelection('all')" > Mostrar todos</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('TEXTIL')"style="margin-top:1%;"> Textil</button>
+  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ESCULTURA')"style="margin-top:1%;"> Escultura</button>
   <button class="btn btn-primary SegoeFont" onclick="filterSelection('ILUSTRACION')"style="margin-top:1%;"> Ilustración</button>
   <button class="btn btn-primary SegoeFont" onclick="filterSelection('ACRILICO')"style="margin-top:1%;"> Acrílico</button>
   <button class="btn btn-primary SegoeFont" onclick="filterSelection('OLEO')"style="margin-top:1%;"> Óleo</button>
@@ -112,6 +111,11 @@
   <button class="btn btn-primary SegoeFont" onclick="filterSelection('RESINA')"style="margin-top:1%;"> Resina</button>
   <button class="btn btn-primary SegoeFont" onclick="filterSelection('FOTOGRAFIA')"style="margin-top:1%;"> Fotografía</button>
 </div>
+
+<div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
+
+
+
 
     <div class="row">
       <div class="col-md-12">

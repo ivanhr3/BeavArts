@@ -119,7 +119,7 @@
  		<div class="card centerContainerVal">
                 <div class="row justify-content-left d-flex">
                     <div class="col-md-4 d-flex flex-column">
-                        <div style="text-align:center"class="rating-box">
+                        <div style="text-align:center; margin-top:20px" class="rating-box">
                             <h1 class="pt-4">${valoracionMedia}</h1>
                             <p class="">de 5</p>
                         </div>
