@@ -13,6 +13,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+</head>
+
+<body>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+  </script>
+</body>
+
+
 <beavarts:layout pageName="solicitudDetails">
 
 <c:if test="${esDeEncargo==true}">
@@ -210,7 +222,7 @@
                   
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Descripción </h5>
+                      <h5 class="mb-0 SegoeFont">Condiciones propuestas </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       
@@ -302,9 +314,40 @@
 
 <c:if test= "${isAnuncioCreator==true}"> 
 <c:if test= "${solicitudPendiente==true}">
-   <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">
-   </spring:url>
-    <a class="btn btn-primary" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
+   
+    <p class="SegoeFont" style="text-align:justify">Para aceptar esta solicitud debes realizar el pago con una de las siguientes opciones. Cuando se acepte esta solicitud usted estará aceptando las condiciones descritas en la solicitud, así como la contraoferta propuesta.</p>
+    <body>
+        <script
+          src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9&currency=EUR"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+        </script>
+      
+        <div id="paypal-button-container"></div>
+        <script>
+
+            paypal.Buttons({
+            createOrder: function(data, actions) {
+                // This function sets up the details of the transaction, including the amount and line item details.
+                return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                    value: '${solicitud.precio}',
+                    currency: "EUR"
+                    }
+                }]
+                });
+            },
+            onApprove: function(data, actions) {
+                // This function captures the funds from the transaction.
+                return actions.order.capture().then(function(details) {
+                // This function shows a transaction success message to your buyer.
+                alert('Transaction completed by ' + details.payer.name.given_name);
+                window.location.replace("/solicitudes/accept/${solicitud.id}")
+                });
+            }
+            }).render('#paypal-button-container');
+            //This function displays Smart Payment Buttons on your web page.
+        </script>
+      </body>
 	
 	<spring:url value="/solicitudes/decline/${solicitud.id}" var="rechazarUrl">
 	</spring:url>

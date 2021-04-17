@@ -290,7 +290,7 @@ public class AnuncioControllerTests {
 	@Test
 	public void testPromocionarAnuncio() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/{anuncioId}/promote", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
-			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/listAnuncios"));
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/anuncios/list"));
 	}
 
 	@WithMockUser(value = "testuser")

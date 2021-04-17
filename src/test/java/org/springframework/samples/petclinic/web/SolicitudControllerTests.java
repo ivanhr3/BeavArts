@@ -55,6 +55,9 @@ public class SolicitudControllerTests {
     @MockBean
     private AuthoritiesService	authoritiesService;
 
+    @MockBean
+    private FacturaService facturaService;
+
     @Autowired
     private MockMvc				mockMvc;
 
@@ -163,6 +166,7 @@ public class SolicitudControllerTests {
         BDDMockito.given(this.userService.findUserByUsername("spring")).willReturn(this.user);
         BDDMockito.given(this.userService.findUserByUsername("spring2")).willReturn(this.user2);
         BDDMockito.given(this.anuncioService.findAnuncioById(TEST_ANUNCIO_ID)).willReturn(anuncio);
+        BDDMockito.doNothing().when(this.facturaService).crearFactura(Mockito.any(Factura.class));
     }
 
     @WithMockUser(value = "spring")
