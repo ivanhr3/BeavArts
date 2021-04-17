@@ -1,15 +1,18 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Portfolio;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -69,7 +72,7 @@ public class BeaverService {
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
 
-		if(principal instanceof UserDetails){
+		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
 		} else {
 			username = principal.toString();
@@ -110,5 +113,10 @@ public class BeaverService {
         public Integer getNumValoraciones(Beaver beaver){
         return this.valoracionService.getNumValoracionesUsuario(beaver.getId());
     }
+
+    @Transactional
+	public List<Authorities> findUserAuthorities(final User user) {
+		return this.beaverRepository.findUserAuthorities(user);
+	}
 
 }

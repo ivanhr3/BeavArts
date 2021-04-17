@@ -2,17 +2,22 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
+import org.springframework.samples.petclinic.model.Solicitud;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,13 +33,15 @@ public class EncargoController {
 
 	private final EncargoService	encargoService;
 	private final BeaverService		beaverService;
+	private final SolicitudService	solicitudService;
 	private static final String		VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
 
 
 	@Autowired
-	public EncargoController(final EncargoService encargoService, final BeaverService beaverService, final AuthoritiesService authoritiesService) throws ClassNotFoundException {
+	public EncargoController(final EncargoService encargoService, final BeaverService beaverService, final SolicitudService solicitudService, final AuthoritiesService authoritiesService) throws ClassNotFoundException {
 		this.encargoService = encargoService;
 		this.beaverService = beaverService;
+		this.solicitudService = solicitudService;
 	}
 
 	//Create
@@ -90,11 +97,11 @@ public class EncargoController {
 	@GetMapping("/list")
 	public String listarEncargos(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
 
-		if(this.beaverService.getCurrentBeaver() != null) {
+		if (this.beaverService.getCurrentBeaver() != null) {
 			Beaver me = this.beaverService.getCurrentBeaver();
 			model.put("myBeaverId", me.getId()); //Añadido para usar las url del header
 		}
-		
+
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		model.addAttribute("beaverId", beaverId);
 		model.addAttribute("beaver", beaver);
@@ -126,6 +133,14 @@ public class EncargoController {
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();//Necesario para ver el id y usar las url
 		model.addAttribute("myBeaverId", beaver.getId());
+
+		User user = beaver.getUser();
+		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
+		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
+
+		if (esAdmin) {
+			model.addAttribute("esAdmin", true); //Este parámetro es la condicion para ver el boton de delete sin ser el creador
+		}
 
 		if (this.beaverService.getCurrentBeaver() == encargo.getBeaver()) {
 			model.addAttribute("createdByUser", true); //TODO: Front: Sólo quien creó el encargo puede actualizarlo. Mostrad el botón sólo en este caso.
@@ -186,11 +201,23 @@ public class EncargoController {
 
 	@RequestMapping(value = "/{encargoId}/delete")
 	public String deleteEncargo(@PathVariable("beaverId") final int beaverId, @PathVariable("encargoId") final int encargoId, final ModelMap model) {
-		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
+
+		Beaver beav = this.beaverService.getCurrentBeaver();
+		User user = beav.getUser();
+		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
+		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
+
+		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId) && !esAdmin) {
 			return "accesoNoAutorizado"; // Acceso no autorizado
-		} else {
+		} else if (esAdmin) {
+			for (Solicitud s : this.encargoService.findEncargoById(encargoId).getSolicitud()) {
+				this.solicitudService.deleteSolicitud(s);
+			}
 			this.encargoService.deleteEncargoById(encargoId);
 			return "redirect:/beavers/" + beaverId + "/encargos/list";
+		} else {
+			this.encargoService.deleteEncargoById(encargoId);
+			return "redirect:/beavers/" + beaverId + "/misPublicaciones";
 		}
 	} //TODO: Falta la regla de Negocio 11
 

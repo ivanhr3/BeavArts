@@ -2,9 +2,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
-	
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 <beavarts:layout pageName="Detalles de anuncios">
 
 	<spring:url value="/anuncios/{anuncioId}" var="detailUrl">
@@ -40,12 +42,35 @@
   </div>
   </div>
   <br/>
+  
     <div class="text-center">
     <c:if test="${createdByUser == false}">
-				<a class="btn btn-primary" href='<spring:url value="#" htmlEscape="true"/>'>Responder al anuncio</a>
+				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
 	</c:if>
 	</div>
     <c:if test="${createdByUser == true}">
         	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/edit" htmlEscape="true"/>'>Editar anuncio</a>
+        	<c:if test="${url == true}">
+        	<div class="alert alert-danger" role="alert">
+			<c:out value="${errorSolicitudesAceptadas}"/>
+			</div>
+			</c:if>
+			
+        	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
+        	<c:if test="${url == true}">
+        	<div class="alert alert-danger" role="alert">
+			<c:out value="${errorSolicitudesAceptadas}"/>
+			</div>
+			</c:if>
     </c:if>
+    
+    <security:authorize access="hasAuthority('admin')">
+                  
+	    &nbsp;              
+	    <spring:url value="{anuncioId}/delete" var="deleteAnuncioUrl">
+		<spring:param name="anuncioId" value="${anuncio.id}"/>              
+		</spring:url>
+		<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteAnuncioUrl)}"><i class="fas fa-trash-alt"></i> Borrar Anuncio</a>
+        <p class="SegoeFont"style="color:red; margin-top:10px"><c:out value="${errorSolicitudesAceptadas}"/></p>    
+    </security:authorize>
 </beavarts:layout>

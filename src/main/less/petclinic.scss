@@ -74,7 +74,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: justify;
-  background-color: #fff1de; 
+  background-color: #fbf3e7; 
 }
 
 [tabindex="-1"]:focus {
@@ -2551,14 +2551,14 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #000;
-  background-color: #56ff52;
+  background-color: #00fa82;
   border-color: #49A947;
   font-weight:bold;
 }
 
 .btn-primary:hover {
   color: #000;
-  background-color: #4ED04B;
+  background-color: #03d36f;
   border-color: #49A947;
 	font-weight:bold;
 }
@@ -2569,20 +2569,56 @@ fieldset:disabled a.btn {
 
 .btn-primary.disabled, .btn-primary:disabled {
   color: #000;
-  background-color: #4ED04B;
+  background-color: #03d36f;
   border-color: #49A947;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #000;
-  background-color: #4ED04B;
+  background-color: #03d36f;
   border-color: #49A947;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
 .show > .btn-primary.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(73, 169, 71, 0.5);
+}
+
+.btn-red {
+  color: #fff;
+  background-color: red;
+  border-color: #991825;
+  font-weight:bold;
+}
+
+.btn-red:hover {
+  color: #fff;
+  background-color: #eb0606;
+  border-color: #991825;
+	font-weight:bold;
+}
+
+.btn-red:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem #ff000078;
+}
+
+.btn-red.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #eb0606;
+  border-color: #991825;
+}
+
+.btn-red:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #eb0606;
+  border-color: #991825;
+}
+
+.btn-red:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem #ff000078;
 }
 
 .btn-secondary {
@@ -9050,19 +9086,19 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* change the background color */
 .navbar-custom {
-   background: rgb(241,158,12);
-background: linear-gradient(0deg, rgba(241,158,12,1) 0%, rgba(255,200,103,1) 0%, rgba(249,212,148,1) 28%, rgba(255,255,255,1) 100%);
+   background: #ffe9c1;
+
 }
 
 /* change the brand and text color */
 .navbar-custom .navbar-brand,
 .navbar-custom .navbar-text {
-    color: #71392c;
+    color: #000;
 }
 
 /* change the link color */
 .navbar-custom .navbar-nav .nav-link {
-    color: #71392c;
+    color: #000;
 	font-weight:bold;
 	font-family: "SegoePrint";
 
@@ -9073,7 +9109,7 @@ background: linear-gradient(0deg, rgba(241,158,12,1) 0%, rgba(255,200,103,1) 0%,
 .navbar-custom .nav-item.active .nav-link,
 .navbar-custom .nav-item:focus .nav-link,
 .navbar-custom .nav-item:hover .nav-link {
-    color: #3c241f;
+    color: #000;
 }
 
 .navbar-custom .navbar-toggler {
@@ -9502,6 +9538,7 @@ align-items: center;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 	border-top: 1px solid rgba(0, 0, 0, 0.125);
+	width:100%;
 }
 
 .center {
@@ -9534,7 +9571,11 @@ align-items: center;
   overflow: hidden;
 }
 
-
+hr{
+  margin: 20px;
+  border: none;
+  border-bottom: thin solid rgba(255,255,255,.1);
+}
 
 div.title{
   font-size: 2em;
@@ -9719,21 +9760,21 @@ td {
 }
 
 .buttonHeaderImageA {
-	background-image : url("/resources/images/brushPng.png");
+	background-image : url("/resources/images/brushRedPng.png");
 	background-size: 90px 30px;
     background-repeat: no-repeat;
-	background-position: center; 	
+	background-position: center;	 	
 }
 
 .buttonHeaderImageSN {
-	background-image : url("/resources/images/brushPng.png");
+	background-image : url("/resources/images/brushBluePng.png");
 	background-size: 134px 30px;
     background-repeat: no-repeat;
 	background-position: center; 	
 }
 
 .buttonHeaderImageMS {
-	background-image : url("/resources/images/brushPng.png");
+	background-image : url("/resources/images/brushGreenPng.png");
 	background-size: 134px 30px;
     background-repeat: no-repeat;
 	background-position: center; 	
@@ -9747,41 +9788,49 @@ td {
 }
 
 .buttonHeaderImagePerfil {
-	background-image : url("/resources/images/brushPng.png");
-	background-size: 90px 30px;
+	background-image : url("/resources/images/brushGrey2Png.png");
+	background-size: 110px 30px;
     background-repeat: no-repeat;
-	background-position: center; 	
+	background-position: center; 
+	
 }
 
 .buttonHeaderImageE {
-	background-image : url("/resources/images/brushPng.png");
-	background-size: 70px 30px;
+	background-image : url("/resources/images/brushYellow2Png.png");
+	background-size: 105px 30px;
+    background-repeat: no-repeat;
+	background-position: center;	
+}
+
+.buttonHeaderImageLogin {
+	background-image : url("/resources/images/brushPinkPng.png");
+	background-size: 112px 30px;
     background-repeat: no-repeat;
 	background-position: center;	
 }
 
 .aumentoHover:hover {
     transform: scale(1.1);
-	text-shadow: 0.1px 0.1px 5px #fff;
+	
 }
 
 @media (max-width: 993px) {
 	.buttonHeaderImageA {	
-		background-image : url("/resources/images/brushPng.png");
+		background-image : url("/resources/images/brushRedPng.png");
 		background-size: 90px 30px;
 	    background-repeat: no-repeat;
 		background-position: left;
 	 	
 	}
 	.buttonHeaderImageSN {	
-		background-image : url("/resources/images/brushPng.png");
+		background-image : url("/resources/images/brushBluePng.png");
 		background-size: 134px 30px;
 	    background-repeat: no-repeat;
 		background-position: left;
 	 	
 	}	
 	.buttonHeaderImageMS {	
-		background-image : url("/resources/images/brushPng.png");
+		background-image : url("/resources/images/brushGreenPng.png");
 		background-size: 134px 30px;
 	    background-repeat: no-repeat;
 		background-position: left;
@@ -9795,22 +9844,26 @@ td {
 	 	
 	}	
 	.buttonHeaderImagePerfil {	
-		background-image : url("/resources/images/brushPng.png");
-		background-size: 90px 30px;
+		background-image : url("/resources/images/brushGrey2Png.png");
+		background-size: 110px 30px;
 	    background-repeat: no-repeat;
 		background-position: left;	 	
 	}	
 	.buttonHeaderImageE {	
-		background-image : url("/resources/images/brushPng.png");
-		background-size: 70px 30px;
+		background-image : url("/resources/images/brushYellow2Png.png");
+		background-size: 105px 30px;
 	    background-repeat: no-repeat;
-		background-position: left;
-	 	
+		background-position: left;	 	
 	}	
+	.buttonHeaderImageLogin {
+	background-image : url("/resources/images/brushPinkPng.png");
+	background-size: 112px 30px;
+    background-repeat: no-repeat;
+	background-position: LEFT;	
+	}
 	.aumentoHover:hover {
     transform: scale(1.0);
-	text-shadow: 0.1px 0.1px 5px #fff;
-}
+	}
 	.izqHover {
 	    margin-left:6px;
 	
@@ -9818,9 +9871,36 @@ td {
 }
 
 .footerColor{
-	
-   background: rgb(255,175,34);
-background: linear-gradient(0deg, rgba(255,175,34,1) 0%, rgba(255,196,93,1) 40%, rgba(255,196,93,1) 60%, rgba(255,175,34,1) 100%);
+   background: #ffe6c2;
+}
+
+.destacado{
+	border-color: orange;
+	border-width: medium;
+}
+
+.centerContainerVal{
+	width:70%;
+	margin: auto;
+}
+
+@media (max-width:773px){
+	.centerContainerVal{
+	width:100%;
+	}
+}
+
+.footerBot {
+   bottom:0px;
+   width:100%;
+}
+
+.minAlto {
+	min-height:322px;
+}
+
+.carTam{
+	width:100%;
 }
 
 .center-login{
@@ -9828,5 +9908,3 @@ background: linear-gradient(0deg, rgba(255,175,34,1) 0%, rgba(255,196,93,1) 40%,
   margin-left: auto;
   margin-right: auto;
 }
-
-

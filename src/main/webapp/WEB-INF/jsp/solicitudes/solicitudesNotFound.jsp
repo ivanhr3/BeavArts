@@ -8,9 +8,9 @@
     uri="http://www.springframework.org/security/tags%22%%3E" %> --%>
 
 <beavarts:layout pageName="noHaySolicitudes">
-
+<div class="minAlto">
     <h2>No se han encontrado solicitudes disponibles</h2>
 
 	<a class="btn btn-default" href="/">Volver al inicio</a>
-
+</div>
 </beavarts:layout>

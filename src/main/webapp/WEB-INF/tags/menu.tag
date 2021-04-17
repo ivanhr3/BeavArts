@@ -9,6 +9,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="//db.onlinewebfonts.com/c/c455d94eee43dc4ceeb83c0c0fd0d4c8?family=Segoe+Print" rel="stylesheet" type="text/css"/>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <nav class="navbar navbar-custom navbar-expand-lg sticky-top">
       <a class="navbar-brand" href="<spring:url value="/" htmlEscape="true" />"><img src="/resources/images/v22.png"  class="d-inline-block align-top" alt="/"></a>
@@ -27,25 +28,38 @@
         <ul class="navbar-nav mr-auto">
         
         <li class="nav-item">
-        			<a class="nav-link" href="/beavers/list">Explora</a>
+        	<div class="buttonHeaderImageE aumentoHover">
+        			<a class="nav-link izqHover" href="/beavers/list"><i class="fas fa-users"></i> Explora</a>
+        	 </div>	
       	</li>
       	
       	<li class="nav-item">
-				 <a class="nav-link" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
+      		<div class="buttonHeaderImageSN aumentoHover">
+				 <a class="nav-link izqHover" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
+		    </div>	
 		</li>
 		<li class="nav-item">
-        			<a class="nav-link" href="/anuncios/list">Anuncios</a>
-      	</li>	
+			<div class="buttonHeaderImageA aumentoHover">
+				<a class="nav-link izqHover" href="/anuncios/list">Anuncios</a>
+			</div>	
+		</li>
+		
         
         <sec:authorize access="isAuthenticated()">
       			<li class="nav-item">
-        			<a class="nav-link" href="/solicitudes/list">Mis Solicitudes</a>
+      				<div class="buttonHeaderImageMS aumentoHover">
+        				<a class="nav-link izqHover" href="/solicitudes/list"> Mis solicitudes</a>
+        			</div>	
       			</li>		
 				<li class="nav-item">
-        			<a class="nav-link" href="/beavers/${myBeaverId}/misPublicaciones">Mis publicaciones</a>
+					<div class="buttonHeaderImageMP aumentoHover">
+        				<a class="nav-link izqHover" href="/beavers/${myBeaverId}/misPublicaciones">Mis publicaciones</a>
+        			</div>
 				</li>
 				<li class="nav-item">
-        			<a class="nav-link" href="/beavers/beaverInfo/${myBeaverId}">Mi perfil</a>
+					<div class="buttonHeaderImagePerfil aumentoHover">
+	        			<a class="nav-link izqHover" href="/beavers/beaverInfo/${myBeaverId}"><i class="fas fa-user"></i> Mi perfil</a>
+	        		</div>
       			</li>	
 				</sec:authorize>
             
@@ -53,12 +67,20 @@
         
         <ul class="nav navbar-nav ml-auto">
 				<sec:authorize access="!isAuthenticated()">
-					<li><a style="font-family:Segoe Print; font-weight:bold; color:#ffbb00" href="<c:url value="/login" />">Iniciar Sesión</a></li>
+				
+					<li>
+					<div class="buttonHeaderImageLogin aumentoHover">
+					<a class="izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/login" />">Iniciar Sesión</a>
+					</div>
+					</li>
+					
 				</sec:authorize>
 				
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item dropdown">
+					
         				<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"><strong><sec:authentication property="name" /></strong></a>
+					 	
 					 	<div class="dropdown-menu dropdown-menu-right">
 					 		<a class="dropdown-item" href="/logout">Desconectar</a>
 						</div>
