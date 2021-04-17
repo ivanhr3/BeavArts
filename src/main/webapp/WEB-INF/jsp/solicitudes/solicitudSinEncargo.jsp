@@ -8,10 +8,10 @@
     uri="http://www.springframework.org/security/tags%22%%3E" %> --%>
 
 <beavarts:layout pageName="errorNoEncargo">
-
+<div class="minAlto">
     <h2>Lo sentimos, no hay ningun encargo al que poder hacerle una solicitud</h2>
 
 	<a class="btn btn-default" href="/">Volver al inicio</a>
 
-
+</div>
 </beavarts:layout>

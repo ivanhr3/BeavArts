@@ -8,7 +8,9 @@
 
 <beavarts:layout pageName="solicitudesList">
 
+<div class="minAlto">                              
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==true && listaSolicitudesRecibidasAnuncios.isEmpty()==true}">
+
 	<h2 class="SegoeFont">No hay solicitudes recibidas.</h2>
 </c:if>
 
@@ -295,4 +297,5 @@
     </c:forEach>
 </ul>
 </c:if>
+</div>
 </beavarts:layout>
