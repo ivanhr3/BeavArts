@@ -7,12 +7,14 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="solicitudesList">
-<div class="minAlto">
-<c:if test="${listaSolicitudesRecibidas.isEmpty()==true}">
+
+<div class="minAlto">                              
+<c:if test="${listaSolicitudesRecibidas.isEmpty()==true && listaSolicitudesRecibidasAnuncios.isEmpty()==true}">
+
 	<h2 class="SegoeFont">No hay solicitudes recibidas.</h2>
 </c:if>
 
-<c:if test="${listaSolicitudesRecibidas.isEmpty()==false}">
+<c:if test="${listaSolicitudesRecibidas.isEmpty()==false || listaSolicitudesRecibidasAnuncios.isEmpty()==false}">
 	
     <h2 class="SegoeFont">Mis solicitudes recibidas: </h2>
     <br/>

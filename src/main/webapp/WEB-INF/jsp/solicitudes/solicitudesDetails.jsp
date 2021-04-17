@@ -178,7 +178,7 @@
                       <h5 class="mb-0 SegoeFont">Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <c:out value="${anuncio.precio} €"/>
+                      <c:out value="${solicitud.precio} €"/>
                     </div>
                   </div>
                   <hr>
