@@ -42,6 +42,9 @@ public class SolicitudController {
     @Autowired
     private AnuncioService anuncioService;
 
+    @Autowired
+    private FacturaService facturaService;
+
     private static final String	VISTA_DE_ERROR		= "ErrorPermisos";
     private static final String	SOLICITUD_DETAILS	= "testview";
 
@@ -115,8 +118,14 @@ public class SolicitudController {
             }
 
             else {
-                this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
-                return "solicitudes/solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
+                Factura factura = new Factura();
+				factura.setEmailBeaver(encargo.getBeaver().getEmail());
+				factura.setEmailPayer(beaver.getEmail());
+				
+				this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
+				factura.setSolicitud(solicitud);
+				this.facturaService.crearFactura(factura);
+				return "solicitudes/solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
             }
         }
 
@@ -264,7 +273,14 @@ public class SolicitudController {
                 res = "solicitudes/errorAceptar";
             } else {
                 sol.setEstado(Estados.ACEPTADO);
-                this.solicitudService.saveSolicitud(sol);
+                Factura factura = new Factura();
+				factura.setEmailBeaver(anuncio.getBeaver().getEmail());
+				factura.setEmailPayer(beaver.getEmail());
+
+				this.solicitudService.saveSolicitud(sol);
+				
+                factura.setSolicitud(sol);
+				this.facturaService.crearFactura(factura);
                 //Email de Notification
                 String subject = "Tu Solicitud para el Encargo" + encargo.getTitulo() + " ha sido aceptada.";
                 //emailSender.sendEmail(beaver.getEmail(), subject); Email de momento quitado
