@@ -396,7 +396,7 @@ public class SolicitudController {
             } else if (this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio)) { //Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
                 model.addAttribute("solicitud", solicitud);
                 model.put("pendiente", true);
-                model.put("error", "Tu solicitud se encuentra pendiente de aceptación");
+                model.put("error", "Tu anterior solicitud se encuentra pendiente de aceptación o ha sido aceptada. No podrás realizar una solicitud hasta que se rechaze o finalice");
 
                 return "solicitudes/creationFormAnuncios"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
             } else if (beaver == null) {

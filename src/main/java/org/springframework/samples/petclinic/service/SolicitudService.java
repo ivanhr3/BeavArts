@@ -139,7 +139,9 @@ public class SolicitudService {
             res = false; //Si no hay solicitud previa no existe
         } else {
             for (Solicitud solicitud: solicitudes) {
-                if (solicitud.getEstado() == Estados.PENDIENTE) {
+                if(solicitud.getEstado() == Estados.RECHAZADO || solicitud.getEstado() == Estados.FINALIZADO){ //Si la solicitud esta RECHAZADA o FINALIZADA falso
+                    res = false;
+                } else {
                     res = true;
                     break;
                 }
