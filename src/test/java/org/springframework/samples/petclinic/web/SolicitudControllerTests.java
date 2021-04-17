@@ -449,7 +449,7 @@ public class SolicitudControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/{anuncioId}/new", TEST_ANUNCIO_ID))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.model().attributeExists("anuncio"))
-            .andExpect(MockMvcResultMatchers.view().name("solicitudes/creationForm"));
+            .andExpect(MockMvcResultMatchers.view().name("solicitudes/creationFormAnuncios"));
     }
 
     @Test
@@ -480,6 +480,8 @@ public class SolicitudControllerTests {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/{anuncioId}/new", TEST_ANUNCIO_ID)
             .with(csrf())
+            .param("estado", "PENDIENTE")
+            .param("precio", "11.0")
             .param("descripcion", "Esta es la descripcion"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("solicitudes/solicitudSuccess"));
@@ -495,6 +497,8 @@ public class SolicitudControllerTests {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/{anuncioId}/new", TEST_ANUNCIO_ID)
             .with(csrf())
+            .param("estado", "PENDIENTE")
+            .param("precio", "11.0")
             .param("descripcion", "Esta es la descripcion"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
@@ -513,7 +517,7 @@ public class SolicitudControllerTests {
             .param("descripcion", "Esta es la descripcion"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.model().attributeExists("solicitud"))
-            .andExpect(MockMvcResultMatchers.view().name("solicitudes/creationForm"));
+            .andExpect(MockMvcResultMatchers.view().name("solicitudes/creationFormAnuncios"));
     }
 
     @Test
@@ -526,6 +530,8 @@ public class SolicitudControllerTests {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/{anuncioId}/new", TEST_ANUNCIO_ID)
             .with(csrf())
+            .param("estado", "PENDIENTE")
+            .param("precio", "11.0")
             .param("descripcion", "Esta es la descripcion"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
@@ -542,7 +548,7 @@ public class SolicitudControllerTests {
             .param("descripcion", ""))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.model().attributeExists("solicitud"))
-            .andExpect(MockMvcResultMatchers.view().name("solicitudes/creationForm"));
+            .andExpect(MockMvcResultMatchers.view().name("solicitudes/creationFormAnuncios"));
     }
 
 }

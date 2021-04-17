@@ -99,23 +99,31 @@
     <form:form modelAttribute="solicitud" class="form-horizontal" id="add-solicitud-form">
         <div class="form-group has-feedback">
         <div class="form-group" >
+            <div class="control-group hidden" style="display: none">
+                <label class = "col-sm-2 control-label" for="estado"></label>
+                <div class="col-sm-3">
+                    <select class="form-control" name="estado">
+                        <option value='PENDIENTE'>Pendiente</option>
+                    </select>
+                </div>
+            </div>
         
- <%--      
+
         <c:if test="${esDeEncargo==false}">
         <b class="SegoeFont" style="margin-left:15px"> *Precio:</b>
             <beavarts:inputNumberField label="" name="precio"/> 
             <br/>
         </c:if>
         
-      --%>    
+
          
         <b class="SegoeFont" style="margin-left:15px"> *Descripción:</b>
-            <beavarts:inputField label="" name="descripcion"/> 
-            <c:if test="${vacia}">
+            <beavarts:inputField label="" name="descripcion"/>
+        <%--    <c:if test="${vacia}">
             <div class="alert alert-danger col-sm-10" role="alert">
             	<p><c:out value="${descripcion}"/></p>
             </div>
-            </c:if>
+            </c:if> --%>
             <br/>
          <div>
          <b class="SegoeFont" style="margin-left:15px"> Fotos:</b>

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/solicitudes")
 public class SolicitudController {
@@ -73,7 +75,7 @@ public class SolicitudController {
     }
 
     @PostMapping("{engId}/create")
-    public String crearSolicitud(@PathVariable("engId") final int encargoId, final Solicitud solicitud, final BindingResult result, final ModelMap model) {
+    public String crearSolicitud(@PathVariable("engId") final int encargoId, @Valid Solicitud solicitud, final BindingResult result, final ModelMap model) {
         Encargo encargo = this.encargoService.findEncargoById(encargoId);
 
         Beaver beaver = this.beaverService.getCurrentBeaver();
@@ -372,37 +374,31 @@ public class SolicitudController {
             model.put("esDeEncargo", false);
             model.addAttribute("anuncio", anuncio);
             model.addAttribute("solicitud", solicitud);
-            return "solicitudes/creationForm";
+            return "solicitudes/creationFormAnuncios";
         }
     }
     @PostMapping("/{anuncioId}/new")
-    public String processCrearSolicitudAnuncios(@PathVariable("anuncioId") int anuncioId, final Solicitud solicitud, final BindingResult result, final ModelMap model) {
+    public String processCrearSolicitudAnuncios(@PathVariable("anuncioId") int anuncioId, @Valid Solicitud solicitud, final BindingResult result, final ModelMap model) {
         Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
         Beaver beaver = this.beaverService.getCurrentBeaver();
-        model.put("esDeEncargo", false);
         model.put("anuncio", anuncio);
 
-        if(solicitud.getDescripcion().isEmpty() || !this.solicitudService.isCollectionAllURL(solicitud)) {
+        if(result.hasErrors() || !this.solicitudService.isCollectionAllURL(solicitud)) {
             model.addAttribute("solicitud", solicitud);
-            model.put("vacia", true);
-            model.put("descripcion", "La descripción no puede estar vacía");
-
-            if (!this.solicitudService.isCollectionAllURL(solicitud)) { //Mensaje SÓLO cuando la url esta mal escrita
+            if(!this.solicitudService.isCollectionAllURL(solicitud)) {
                 model.put("url", true);
                 model.put("errorUrl", "Las fotos añadidas a la solicitud deben ser Urls");
             }
+            return "solicitudes/creationFormAnuncios";
 
-            return "solicitudes/creationForm";
-
-        } else {
-            if (anuncio.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
+        } else if (anuncio.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
                 return "accesoNoAutorizado";
             } else if (this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio)) { //Excepcion: Un usuario que tiene abierta una solicitud PENDIENTE o ACEPTADA para dicho encargo NO puede hacer otra solicitud
                 model.addAttribute("solicitud", solicitud);
                 model.put("pendiente", true);
                 model.put("error", "Tu solicitud se encuentra pendiente de aceptación");
 
-                return "solicitudes/creationForm"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
+                return "solicitudes/creationFormAnuncios"; //FRONT: Ya existe una solicitud para este encargo por parte de este usuario
             } else if (beaver == null) {
                 return "accesoNoAutorizado"; //FRONT: No se puede solicitar un encargo si el usuario no está registrado
             } else {
@@ -410,7 +406,7 @@ public class SolicitudController {
                 return "solicitudes/solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
             }
 
-        }
+
     }
 
 }
