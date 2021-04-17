@@ -12,10 +12,12 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Anuncio;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.Estados;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
@@ -162,7 +164,12 @@ public class AnuncioController {
 
 		Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
 
-		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
+		Beaver beav = this.beaverService.getCurrentBeaver();
+		User user = beav.getUser();
+		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
+		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
+
+		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId) && !esAdmin) {
 			return "accesoNoAutorizado"; // Acceso no autorizado
 		} else {
 			// SOLO SE PUEDE BORRAR UN ANUNCIO SI NO TIENE SOLICITUDES ACEPTADAS
@@ -230,6 +237,14 @@ public class AnuncioController {
 		Beaver beaver = this.beaverService.getCurrentBeaver(); //Necesario para ver el id y usar las url
 		model.addAttribute("myBeaverId", beaver.getId());
 
+		User user = beaver.getUser();
+		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
+		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
+
+		if (esAdmin) {
+			model.addAttribute("esAdmin", true); //Este parámetro es la condicion para ver el boton de delete sin ser el creador
+		}
+
 		if (this.beaverService.getCurrentBeaver() == anuncio.getBeaver()) {
 			model.addAttribute("createdByUser", true); //TODO: Front: Sólo quien creó el anuncio puede actualizarlo. Mostrad el botón sólo en este caso.
 		} else {
@@ -280,5 +295,7 @@ public class AnuncioController {
 			return "publicaciones/misPublicaciones";
 
 		}
+
 	}
+
 }

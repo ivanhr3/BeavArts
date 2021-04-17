@@ -2,9 +2,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
-	
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 <beavarts:layout pageName="Detalles de anuncios">
 
 	<spring:url value="/anuncios/{anuncioId}" var="detailUrl">
@@ -61,4 +63,14 @@
 			</div>
 			</c:if>
     </c:if>
+    
+    <security:authorize access="hasAuthority('admin')">
+                  
+	    &nbsp;              
+	    <spring:url value="{anuncioId}/delete" var="deleteAnuncioUrl">
+		<spring:param name="anuncioId" value="${anuncio.id}"/>              
+		</spring:url>
+		<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteAnuncioUrl)}"><i class="fas fa-trash-alt"></i> Borrar Anuncio</a>
+        <p class="SegoeFont"style="color:red; margin-top:10px"><c:out value="${errorSolicitudesAceptadas}"/></p>    
+    </security:authorize>
 </beavarts:layout>

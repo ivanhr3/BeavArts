@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Anuncio;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.Estados;
@@ -80,6 +82,12 @@ public class AnuncioControllerTests {
 		User user = new User();
 		user.setUsername("User123");
 		user.setPassword("supersecretpass");
+		Authorities au = new Authorities();
+		Set<Authorities> col = new HashSet<>();
+		col.add(au);
+		au.setAuthority("user");
+		au.setUser(user);
+		user.setAuthorities(col);
 		user.setEnabled(true);
 		this.beaver.setUser(user);
 		this.beaver.setEncargos(new HashSet<>());
@@ -97,6 +105,12 @@ public class AnuncioControllerTests {
 		User user2 = new User();
 		user2.setUsername("User123456");
 		user2.setPassword("supersecretpass2");
+		Authorities au2 = new Authorities();
+		Set<Authorities> col2 = new HashSet<>();
+		col2.add(au2);
+		au2.setAuthority("user");
+		au2.setUser(user2);
+		user2.setAuthorities(col2);
 		user2.setEnabled(true);
 		this.beaver2.setUser(user2);
 
@@ -150,6 +164,8 @@ public class AnuncioControllerTests {
 		anunciosBeaver1.add(this.anuncio);
 		anunciosBeaver1.add(this.anuncio2);
 		this.beaver.setAnuncios(anunciosBeaver1);
+		List<Authorities> lista = new ArrayList<Authorities>();
+		lista.add(au);
 
 		BDDMockito.given(this.anuncioService.findAnuncioById(AnuncioControllerTests.TEST_ANUNCIO_ID)).willReturn(this.anuncio);
 		BDDMockito.given(this.anuncioService.findAnuncioById(AnuncioControllerTests.TEST_ANUNCIO_ID2)).willReturn(this.anuncio2);
@@ -160,6 +176,7 @@ public class AnuncioControllerTests {
 		BDDMockito.given(this.anuncioService.findAnunciosByEspecialidad(AnuncioControllerTests.TEST_ESPECIALIDAD)).willReturn(this.listaAnunciosPorEspecialidad);
 		BDDMockito.given(this.anuncioService.findAnunciosDestacados()).willReturn(this.listaAnunciosDestacados);
 		BDDMockito.given(this.anuncioService.findAnunciosNoDestacados()).willReturn(this.listaAnunciosNoDestacados);
+		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
 
 	}
 
@@ -295,6 +312,41 @@ public class AnuncioControllerTests {
 	public void testListPublicaciones() throws Exception {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/misPublicaciones", AnuncioControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios"))
 			.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("encargos")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("publicaciones/misPublicaciones"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testDeleteAnuncioAdmin() throws Exception {
+
+		Beaver beaver3 = new Beaver();
+		beaver3.setFirstName("Nombre");
+		beaver3.setLastName("Apellidos");
+		beaver3.setEmail("validx@gmail.com");
+		beaver3.setId(50);
+		Collection<Especialidad> espe = new HashSet<>();
+		espe.add(Especialidad.ESCULTURA);
+		beaver3.setEspecialidades(espe);
+		beaver3.setDni("12345672Q");
+		User user = new User();
+		user.setUsername("Admin123");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+		Authorities au = new Authorities();
+		Set<Authorities> col = new HashSet<>();
+		col.add(au);
+		au.setAuthority("admin");
+		au.setUser(user);
+		user.setAuthorities(col);
+		beaver3.setUser(user);
+		beaver3.setEncargos(new HashSet<>());
+		List<Authorities> lista = new ArrayList<Authorities>();
+		lista.add(au);
+
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
+		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID).with(SecurityMockMvcRequestPostProcessors.csrf()))
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/" + AnuncioControllerTests.TEST_BEAVER_ID + "/encargos/list"));
 	}
 
 }

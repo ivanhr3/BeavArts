@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
@@ -9,6 +10,8 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="beavers">
+
+
 
 <jsp:attribute name="customScript">
 	
@@ -66,7 +69,6 @@
 				  filter = input.value.toUpperCase();
 				  table = document.getElementById("myTable");
 				  tr = table.getElementsByTagName("tr");
-
 				  // Loop through all table rows, and hide those who don't match the search query
 				  for (i = 0; i < tr.length; i++) {
 				    td = tr[i].getElementsByTagName("a")[0];
@@ -86,6 +88,11 @@
 </jsp:attribute>
 
 <jsp:body>
+
+	<c:if test="${baneado==true}">
+		<h1 class="SegoeFont" style="text-align:center; color:red">Usuario ${userBanned} suspendido con éxito</h1>
+		</c:if>
+
 <h1 class="SegoeFont" style="text-align:center">BEAVERS</h1>
 <br/>
 <div class="container mt-3 mb-4">
@@ -114,7 +121,16 @@
               <tr class="header">
                 <th class="SegoeFont">Usuarios</th> 
               </tr>
+			  <security:authorize access="hasAuthority('admin')">
+            	<c:set var="isAdmin1" value="true"></c:set>
+            </security:authorize>
 	            <c:forEach items="${beavers}" var="beaver" >
+					<c:choose>
+	            	
+	            	<c:when test="${!isAdmin1 && beaver.user.enabled == false}">	            	
+	            	</c:when>
+	            	
+	            	<c:otherwise>
 		            <tr class="candidates-list ${beaver.especialidades}">
 		             <td class="title">
 		                  <div class="thumb">
@@ -126,7 +142,21 @@
 		                      	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                        		 		<spring:param name="beaverId" value="${beaver.id}"/>
                     			</spring:url>
-		                        <h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username}</a></h5>
+								<h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
+			                         
+									<security:authorize access="hasAuthority('admin')">
+													
+										   <c:if test="${beaver.user.enabled == true}">
+											   <p style="color:Green">Activo</p>
+										   </c:if>
+										   
+										   <c:if test="${beaver.user.enabled == false}">
+											   <p style="color:red">Suspendido</p>
+										   </c:if>
+   
+									</security:authorize>
+									
+								   </h5>
 		                      </div>
 		                      <div style="color:grey" class="candidate-list-option">
 		                          <c:forEach items="${beaver.especialidades}" var="especialidad">
@@ -171,7 +201,10 @@
 		                    </div>
 		                  </div>
 		                </td>
-		              </tr>    
+		              </tr>  
+					</c:otherwise>
+	            	           	
+				</c:choose>    
 	            </c:forEach>
           </table>          
         </div>
