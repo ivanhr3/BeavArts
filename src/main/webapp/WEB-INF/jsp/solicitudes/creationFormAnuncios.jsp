@@ -93,7 +93,7 @@
         
 
          
-        <b class="SegoeFont" style="margin-left:15px"> *Descripción:</b>
+        <b class="SegoeFont" style="margin-left:15px"> *Condiciones Propuestas:</b>
             <beavarts:inputField label="" name="descripcion"/>
         <%--    <c:if test="${vacia}">
             <div class="alert alert-danger col-sm-10" role="alert">
