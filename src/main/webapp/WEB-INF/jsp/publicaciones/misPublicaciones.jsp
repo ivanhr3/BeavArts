@@ -11,6 +11,7 @@
 	</security:authorize>
 
 <beavarts:layout pageName="Mis publicaciones">
+<div class="minAlto">
 <div class="container">
 <div class="card">
 <div class="card-header">
@@ -101,6 +102,7 @@
 		</div>
 		</c:if>
 </c:if>
+</div>
 </div>
 </div>
 </beavarts:layout>
