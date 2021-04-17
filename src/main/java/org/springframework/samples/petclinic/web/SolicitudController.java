@@ -40,6 +40,7 @@ public class SolicitudController {
 
 	@Autowired
 	private FacturaService		facturaService;
+	
 	@Autowired
 	private AnuncioService anuncioService;
 

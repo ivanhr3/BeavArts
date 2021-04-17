@@ -3,8 +3,21 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+  </head>
+  
+  <body>
+    <script
+      src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+    </script>
+  </body>
+
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="Detalles de anuncios">
@@ -51,14 +64,37 @@
     <c:if test="${createdByUser == true}">
         	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/edit" htmlEscape="true"/>'>Editar anuncio</a>
 
-			<form:form modelAttribute="solicitud" class="form-horizontal" id="promocionar-anuncio" action="/">
+			
+        	<c:if test="${url == true}">
+        	<div class="alert alert-danger" role="alert">
+			<c:out value="${errorSolicitudesAceptadas}"/>
+			</div>
+			</c:if>
+			
+        	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
+        	<c:if test="${url == true}">
+        	<div class="alert alert-danger" role="alert">
+			<c:out value="${errorSolicitudesAceptadas}"/>
+			</div>
+			</c:if>
 
+			<br/>
+			<br/>
+			<br/>
+
+			<form:form modelAttribute="anuncio" class="form-horizontal" id="promocionar-anuncio" action="/beavers/${anuncio.beaver.id}/anuncios/${anuncio.id}/promote">
+			<p class="SegoeFont" style="text-align:justify">Puedes destacar tu anuncio por sólo 4.99 Euros, para ello realiza el pago con una de las siguientes opciones.</p>
+			<div class="form-group has-feedback">
+				<div class="form-group" >
 			<!-- Pasarela de Pago Promoción -->
 			<script
             src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9&currency=EUR"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
             </script>
 
+			<div id="paypal-button-container">
 			<script>
+				var form = document.getElementById("promocionar-anuncio");
+
 				paypal.Buttons({
 				  createOrder: function(data, actions) {
 					// This function sets up the details of the transaction, including the amount and line item details.
@@ -75,26 +111,17 @@
 					return actions.order.capture().then(function(details) {
 					  // This function shows a transaction success message to your buyer.
 					  alert('Transaction completed by ' + details.payer.name.given_name);
+					  form.submit();
 					});
 				  }
 				}).render('#paypal-button-container');
+
 				//This function displays Smart Payment Buttons on your web page.
 			  </script>
-
+			           </div>
+					</div>  
+				</div>
 			</form:form>
-
-        	<c:if test="${url == true}">
-        	<div class="alert alert-danger" role="alert">
-			<c:out value="${errorSolicitudesAceptadas}"/>
-			</div>
-			</c:if>
-			
-        	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
-        	<c:if test="${url == true}">
-        	<div class="alert alert-danger" role="alert">
-			<c:out value="${errorSolicitudesAceptadas}"/>
-			</div>
-			</c:if>
     </c:if>
     
     <security:authorize access="hasAuthority('admin')">

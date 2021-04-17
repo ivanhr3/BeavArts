@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -186,7 +187,7 @@ public class AnuncioController {
 		}
 	}
 
-	@PostMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/promote")
+	@RequestMapping(value = "/beavers/{beaverId}/anuncios/{anuncioId}/promote", method = RequestMethod.POST)
 	public String promoteAnuncio(@PathVariable("beaverId") final int beaverId, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
 
 		Beaver beaver = this.beaverService.getCurrentBeaver();
@@ -200,7 +201,7 @@ public class AnuncioController {
 		} else {
 			anuncio.setDestacado(true);
 			this.anuncioService.saveAnuncio(anuncio);
-			return "anuncios/listAnuncios";
+			return "redirect:/anuncios/list";
 		}
 	}
 
