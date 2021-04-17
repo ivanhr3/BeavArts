@@ -23,7 +23,7 @@ public class SolicitudService {
     private SolicitudRepository solicitudRepository;
 
     private static final String URL_REGEX =
-    "^((((https?|ftps?|gopher|telnet|nntp)://)|(mailto:|news:))" +
+        "^((((https?|ftps?|gopher|telnet|nntp)://)|(mailto:|news:))" +
             "(%{2}|[-()_.!~*';/?:@&=+$, A-Za-z0-9])+)" + "([).!';/?:, ][[:blank:]])?$";
     private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);
 
@@ -40,17 +40,16 @@ public class SolicitudService {
 
     @Transactional
     public void crearSolicitud(Solicitud solicitud, Encargo encargo, Beaver beaver) throws DataAccessException{
-      solicitud.setEstado(Estados.PENDIENTE);
-      solicitud.setPrecio(50.0);
-      solicitud.setEncargo(encargo);
-      solicitud.setBeaver(beaver);
-      solicitudRepository.save(solicitud);
+        solicitud.setEstado(Estados.PENDIENTE);
+        solicitud.setEncargo(encargo);
+        solicitud.setBeaver(beaver);
+        solicitud.setPrecio(encargo.getPrecio());
+        solicitudRepository.save(solicitud);
     }
 
     @Transactional
     public void crearSolicitudAnuncio(Solicitud solicitud, Anuncio anuncio, Beaver beaver) throws DataAccessException{
         solicitud.setEstado(Estados.PENDIENTE);
-        solicitud.setPrecio(50.0);
         solicitud.setAnuncio(anuncio);
         solicitud.setBeaver(beaver);
         solicitudRepository.save(solicitud);
@@ -86,51 +85,51 @@ public class SolicitudService {
 
     @Transactional
     public int solicitudCount() {
-      return (int) this.solicitudRepository.count();
+        return (int) this.solicitudRepository.count();
     }
 
     @Transactional
     public Iterable<Solicitud> findAll() {
-      return this.solicitudRepository.findAll();
+        return this.solicitudRepository.findAll();
     }
 
     @Transactional
     public Optional<Solicitud> findSolicitudById(final int id) {
-      return this.solicitudRepository.findById(id);
+        return this.solicitudRepository.findById(id);
     }
 
     public List<Solicitud> findSolicitudByEncargoId(final int id) {
-      return this.solicitudRepository.findSolicitudByEncargoId(id);
+        return this.solicitudRepository.findSolicitudByEncargoId(id);
     }
 
     @Transactional
     public void deleteSolicitud(final Solicitud s) {
-      this.solicitudRepository.delete(s);
+        this.solicitudRepository.delete(s);
     }
 
     @Transactional
     public void deleteSolicitudById(final int id) {
-      this.solicitudRepository.deleteById(id);
+        this.solicitudRepository.deleteById(id);
     }
 
     //Comprueba si un Beaver ha realizado una solicitud para un encargo y si dicha solicitud sigue PENDIENTE o ACEPTADA
     @Transactional
     public Boolean existSolicitudByBeaver(Beaver beaver, Encargo encargo){
-      Collection<Solicitud> sols = this.solicitudRepository.findSolicitudByBeaver(beaver.getId(), encargo.getId());
-      Boolean res = null;
-      if(sols.isEmpty()){
-        res = false; //Si no hay solicitud previa no existe
-      } else {
-        for(Solicitud sol: sols){
-        if(sol.getEstado() == Estados.RECHAZADO || sol.getEstado() == Estados.FINALIZADO){ //Si la solicitud esta RECHAZADA o FINALIZADA falso
-          res = false;
+        Collection<Solicitud> sols = this.solicitudRepository.findSolicitudByBeaver(beaver.getId(), encargo.getId());
+        Boolean res = null;
+        if(sols.isEmpty()){
+            res = false; //Si no hay solicitud previa no existe
         } else {
-        res = true;
-        break; //Existe solicitud PENDIENTE
+            for(Solicitud sol: sols){
+                if(sol.getEstado() == Estados.RECHAZADO || sol.getEstado() == Estados.FINALIZADO){ //Si la solicitud esta RECHAZADA o FINALIZADA falso
+                    res = false;
+                } else {
+                    res = true;
+                    break; //Existe solicitud PENDIENTE
+                }
+            }
         }
-      }
-    }
-      return res;
+        return res;
     }
 
     public Boolean existSolicitudAnuncioByBeaver(Beaver beaver, Anuncio anuncio) {
@@ -150,16 +149,16 @@ public class SolicitudService {
     }
 
     public Boolean isCollectionAllURL(Solicitud solicitud){
-      Boolean res = false;
-      if(solicitud.getFotos().isEmpty() || solicitud.getFotos() == null){ //No hay fotos adjuntas
-        res = true;
-      }
-      for(String s: solicitud.getFotos()){
-       if(urlValidator(s)){
-         res = true;
-       }
-      }
-      return res;
+        Boolean res = false;
+        if(solicitud.getFotos().isEmpty() || solicitud.getFotos() == null){ //No hay fotos adjuntas
+            res = true;
+        }
+        for(String s: solicitud.getFotos()){
+            if(urlValidator(s)){
+                res = true;
+            }
+        }
+        return res;
     }
 
 
@@ -172,4 +171,4 @@ public class SolicitudService {
         return matcher.matches();
     }
 
-  }
+}
