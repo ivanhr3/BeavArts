@@ -23,6 +23,9 @@ public interface BeaverRepository extends CrudRepository<Beaver, String> {
 	@Query("SELECT b from Beaver b where b.user = :user")
 	Beaver findBeaverByUser(User user) throws DataAccessException;
 
+	@Query("select b from Beaver b where b.email = ?1")
+	Beaver findBeaverByEmail(String email);
+	
 	@Query("SELECT a from Authorities a where a.user = ?1")
 	List<Authorities> findUserAuthorities(User user);
 
