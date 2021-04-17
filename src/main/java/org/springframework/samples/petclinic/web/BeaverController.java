@@ -81,7 +81,7 @@ public class BeaverController {
 		 * User user = me.getUser();
 		 * List<Authorities> auth = this.beaverService.findUserAuthorities(user);
 		 * Boolean esAdmin = auth.get(0).getAuthority() == "admin";
-		 * 
+		 *
 		 * if (esAdmin) {
 		 * vista.addObject("esAdmin", true); //Este parámetro es la condicion para ver el boton de delete sin ser el creador
 		 * }
@@ -211,13 +211,15 @@ public class BeaverController {
 
 		final Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		User banneduser = beaver.getUser();
+		List<Authorities> targetAuth = this.beaverService.findUserAuthorities(banneduser);
+		Boolean targetEsAdmin = targetAuth.get(0).getAuthority().equals("admin");
 
 		Beaver me = this.beaverService.getCurrentBeaver();
 		User user = me.getUser();
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
 		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
 
-		if (esAdmin) {
+		if (esAdmin && !targetEsAdmin) {
 			banneduser.setEnabled(false);
 			this.userService.save(banneduser);
 			return "redirect:/beavers/list/"; //FRONT: Aqui deberia ir un mensaje de "El usuario ha sido baneado", haced la redirección que veais optima.

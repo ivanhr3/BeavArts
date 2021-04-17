@@ -15,9 +15,42 @@
    
 <div class="container">
 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
-                	<spring:param name="beaverId" value="${encargo.beaver.id}"/>
+                	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
                	</spring:url>
-     <h1 class="mb-0 SegoeFont"><c:out value="${anuncio.titulo}"/>&nbsp;<span style="font-size:22px"class="badge badge-pill badge-categoria"><c:out value="${anuncio.especialidad}"/></span></h1>
+     <h1 class="mb-0 SegoeFont"><c:out value="${anuncio.titulo}"/>&nbsp;
+     							<c:if test="${anuncio.especialidad == 'TEXTIL'}">
+					                      		<i class="fas fa-socks"></i>
+					                      	</c:if>
+				                     
+				                      		<c:if test="${anuncio.especialidad == 'ESCULTURA'}">
+					                      		<i class="fas fa-chess-knight"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'ILUSTRACION'}">
+					                      		<i class="fas fa-portrait"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'ACRILICO'}">
+					                      		<i class="fas fa-paint-brush"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'OLEO'}">
+					                      		<i class="fas fa-palette"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'JOYERIA'}">
+					                      		<i class="fas fa-gem"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'RESINA'}">
+					                      		<i class="fas fa-prescription-bottle"></i>
+					                      	</c:if>
+					                      	
+					                      	<c:if test="${anuncio.especialidad == 'FOTOGRAFIA'}">
+					                      		<i class="fas fa-camera-retro"></i>
+					                      	</c:if>
+	                    				<c:out value="${anuncio.especialidad} "/>
+	                				</h1>
 	 <br/>
 	 <div class="card">
 	 	<div class="card-body">
@@ -42,35 +75,32 @@
   </div>
   </div>
   <br/>
-  
     <div class="text-center">
     <c:if test="${createdByUser == false}">
 				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
 	</c:if>
 	</div>
     <c:if test="${createdByUser == true}">
-        	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/edit" htmlEscape="true"/>'>Editar anuncio</a>
-        	<c:if test="${url == true}">
+        	<a class="btn btn-primary" href='<spring:url value="/beavers/${anuncio.beaver.id}/anuncios/${anuncio.id}/edit" htmlEscape="true"/>'>Editar anuncio</a>
+        	<c:if test="${urlEdit == true}">
         	<div class="alert alert-danger" role="alert">
-			<c:out value="${errorSolicitudesAceptadas}"/>
+			<c:out value="${errorEditarSolicitudesAceptadas}"/>
 			</div>
 			</c:if>
 			
-        	<a class="btn btn-primary" href='<spring:url value="${anuncio.id}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
-        	<c:if test="${url == true}">
+        	<a class="btn btn-primary" href='<spring:url value="/beavers/${anuncio.beaver.id}/anuncios/${anuncio.id}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
+        	<c:if test="${urlEliminar == true}">
         	<div class="alert alert-danger" role="alert">
-			<c:out value="${errorSolicitudesAceptadas}"/>
+			<c:out value="${errorEliminarSolicitudesAceptadas}"/>
 			</div>
 			</c:if>
     </c:if>
     
     <security:authorize access="hasAuthority('admin')">
-                  
 	    &nbsp;              
 	    <spring:url value="{anuncioId}/delete" var="deleteAnuncioUrl">
 		<spring:param name="anuncioId" value="${anuncio.id}"/>              
 		</spring:url>
-		<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteAnuncioUrl)}"><i class="fas fa-trash-alt"></i> Borrar Anuncio</a>
-        <p class="SegoeFont"style="color:red; margin-top:10px"><c:out value="${errorSolicitudesAceptadas}"/></p>    
+		<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteAnuncioUrl)}"><i class="fas fa-trash-alt"></i>Borrar Anuncio</a>
     </security:authorize>
 </beavarts:layout>
