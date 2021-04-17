@@ -99,7 +99,7 @@
 <div style="font-size:20px; text-align:center">
 <b class="SegoeFont" style="font-size:20px; text-align:center">¡Usa los filtros para encontrar beavers con tus gustos!</b>
 </div>
-
+<br/>
 <div style="text-align:center"class="centerContainer" id="myBtnContainer">
   <button style="background-color: orange; border-color: brown; margin-top:1%;"class="btn active btn-primary SegoeFont" onclick="filterSelection('all')" > Mostrar todos</button>
   <button class="btn btn-primary SegoeFont" onclick="filterSelection('TEXTIL')"style="margin-top:1%;"> Textil</button>

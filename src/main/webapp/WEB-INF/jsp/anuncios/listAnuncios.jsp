@@ -79,9 +79,10 @@
 	
 	<c:if test="${!anuncios.isEmpty()}">
 	<b class="SegoeFont" style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto! </b>
-	<br/>
-	<br/>
+	
+	
 	<div id="myBtnContainer">
+	
 	  <button style="background-color: orange; border-color: brown"class="btn active btn-primary" onclick="filterSelection('all')"> Mostrar todos</button>
 	  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
 	  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
@@ -93,6 +94,10 @@
 	  <button class="btn btn-primary" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
 	  
 	</div>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
 	
 	<c:forEach items="${anuncios}" var="anuncio">
 	
@@ -103,17 +108,21 @@
 		<c:if test="${anuncio.destacado == false}">
 			<c:set var="destacado" value="destacadoNo"></c:set>
 		</c:if>
-	
-		  <div class="column ${anuncio.especialidad}">
-		    	<div class="row">
+		<div class="mb-3 centerContainerVal">
+		  <div class="carTam column ${anuncio.especialidad}">
 		    	
-		    	<div class="card ${destacado}" style="width: 20rem;" id="encargosCard">
+		    	
+		    	<div class="card ${destacado}"  id="encargosCard">
 		    	
 		    	
 		    	<div class="card-header-publicaciones"><h4 class="card-title SegoeFont">${anuncio.titulo}
 		    	
 		    	<c:if test="${anuncio.destacado == true}">
-				<i style="color: orange; float: right" class="fas fa-star"></i>
+		    	
+		    	<div style="float: right;">
+		    	<i style="color: orange; " class="fas fa-star"> </i>
+				<p style="color: black; float: right; font-style: italic; margin-top: 5px;font-size: medium;"> &nbsp;Promocionado</p>
+		    	</div>
 				
 				</c:if>
 		    	
@@ -141,9 +150,10 @@
 				     <a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
 		    </div>
 		    </div>
+		    
 		    </div>
 		    </div>
-		    <hr/>
+		    
 	</c:forEach>
 	
 	</c:if>

@@ -9538,6 +9538,7 @@ align-items: center;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 	border-top: 1px solid rgba(0, 0, 0, 0.125);
+	width:100%;
 }
 
 .center {
@@ -9896,4 +9897,8 @@ td {
 
 .minAlto {
 	min-height:322px;
+}
+
+.carTam{
+	width:100%;
 }
