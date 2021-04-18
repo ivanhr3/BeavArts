@@ -87,6 +87,7 @@ public class BeaverControllerTests {
         this.beaver1.setId(TEST_BEAVER_ID);
         this.beaver1.setFirstName("Nombre");
         this.beaver1.setId(11);
+        this.beaver1.setUrlFotoPerfil("");
         this.beaver1.setLastName("Apellidos");
         this.beaver1.setEmail("valid@gmail.com");
         Collection<Especialidad> esP = new HashSet<>();
@@ -292,5 +293,63 @@ public class BeaverControllerTests {
     		.andExpect(status().isOk())
     		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
     }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testInitEditPhoto() throws Exception {
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("beaver"))
+            .andExpect(view().name("users/editarFotoPerfil"));
+    }
+
+    @WithMockUser(value = "beaver2")
+    @Test
+    public void testInitEditPhotoHasErrors() throws Exception {
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID))
+            .andExpect(status().isOk())
+            .andExpect(view().name("accesoNoAutorizado"));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditPhoto() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("urlFotoPerfil", "https://cdn.domestika.org/c_fill,dpr_1.0,h_1200,t_base_params.format_jpg,w_1200/v1589759117/project-covers/000/721/921/721921-original.png?1589759117"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/beavers/beaverInfo/"+TEST_BEAVER_ID));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditPhtoHasErrors() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}//editPhoto", TEST_BEAVER_ID).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("urlFotoPerfil", "fotillo"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("users/editarFotoPerfil"));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditPhotoHasError2() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editPhoto", 12).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("urlFotoPerfil", "https://cdn.domestika.org/c_fill,dpr_1.0,h_1200,t_base_params.format_jpg,w_1200/v1589759117/project-covers/000/721/921/721921-original.png?1589759117"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("accesoNoAutorizado"));
+    }
+
 
 }

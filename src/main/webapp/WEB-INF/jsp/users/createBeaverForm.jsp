@@ -219,6 +219,11 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <input type="email" id="id_email" required name="email" class="form-control" 
               value="" placeholder="email@dominio.com" maxlength="254">
           </div>
+          <c:if test="${urlEmail == true}">
+                        	<div class="alert alert-danger" role="alert">
+								<c:out value="${emailExistente}"/>
+							</div>
+						</c:if>
 
             <!-- Username -->
             <div class="form-group">
@@ -226,6 +231,11 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
                 <input type="text" id="id_username" name="user.username" class="form-control"
                 value="" placeholder="Username" required>
               </div>
+              <c:if test="${urlUsername == true}">
+                        	<div class="alert alert-danger" role="alert">
+								<c:out value="${usernameExistente}"/>
+							</div>
+						</c:if>
 
             <!-- password group -->
             <div class="form-group">
