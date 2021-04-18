@@ -99,7 +99,7 @@
             		</c:if>
             		
             		<c:if test="${encargo.photo.isEmpty()}">
-            		<img class="card-img-top-publicacion rounded" src="/resources/images/sadbeaver.png" alt="No hay imagen">
+            		<img class="card-img-top-publicacion rounded" src="/resources/images/no-pictures.png" alt="No hay imagen">
             			<div class="card-body" id ="card-body">
             			<h4 class="card-title"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">

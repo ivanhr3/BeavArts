@@ -67,6 +67,12 @@
 	 <br/>
 	 <div class="card">
 	 	<div class="card-body">
+	 		<c:if test="${anuncio.destacado == true}">
+		    	<div class="SegoeFont" style="float: right;">
+		    	<i style="color: orange; " class="fas fa-star"> </i>
+				<p style="color: black; float: right; font-style: italic; font-size:15px;"> &nbsp;Promocionado</p>
+		    	</div>
+				</c:if>
         	<c:if test="${createdByUser== false}">
             	<h3 class="mb-0 SegoeFont">Publicado por: </h3><br/><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h5><br/>
             </c:if>
