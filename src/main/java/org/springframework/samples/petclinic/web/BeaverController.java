@@ -282,6 +282,7 @@ public class BeaverController {
 		}
 
 		return vista;
+	}
 
 	@RequestMapping("/beaverInfo/{beaverId}/ban")
 	public String banUser(@PathVariable("beaverId") final int beaverId, @Valid final User usr, final BindingResult result, final ModelMap model) {
@@ -304,5 +305,4 @@ public class BeaverController {
 			return "accesoNoAutorizado";
 		}
 	}
-
-}
+}	

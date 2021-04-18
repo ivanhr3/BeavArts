@@ -36,9 +36,9 @@
                 
                   <div class="d-flex flex-column align-items-center text-center">
 
-                  <div class="ImgDiv" style="width:150px; height:150px">
                   
-                  <a href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editPhoto" htmlEscape="true"/>'><img width="150px" height="150px" src="${beaver.urlFotoPerfil}" alt="Admin" class="rounded-circle" width="150"></i></a>		
+                  
+                  		
                                
                     <c:if test="${beaver.user.username == principalUsername}">
 	                    <div style="position: absolute; bottom: 105px; ">
@@ -47,7 +47,7 @@
 						</div>				
                       </c:if> 
                       
-                      </div>
+                      
 
                   
                   <security:authorize access="hasAuthority('admin')">
