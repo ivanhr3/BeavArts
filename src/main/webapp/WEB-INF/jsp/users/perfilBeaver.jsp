@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
+
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
@@ -34,6 +35,20 @@
                 <div class="card-body">
                 
                   <div class="d-flex flex-column align-items-center text-center">
+
+                  
+                  
+                  		
+                               
+                    <c:if test="${beaver.user.username == principalUsername}">
+	                    <div style="position: absolute; bottom: 105px; ">
+								<a style="border-radius: 50%; height: 43px;"class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editPhoto" htmlEscape="true"/>'>
+									<i style="margin-left: 2px; margin-top: 5px;" class="fas fa-edit"></i></a>		
+						</div>				
+                      </c:if> 
+                      
+                      
+
                   
                   <security:authorize access="hasAuthority('admin')">
                   
@@ -58,6 +73,7 @@
                   </security:authorize>
                   
                     <img width="150px" height="150px" src="${beaver.urlFotoPerfil}" alt="Admin" class="rounded-circle" width="150">
+
                     <div class="mt-3">
                       <h4 class="SegoeFont">${beaver.user.username}</h4> 
                       <c:if test="${beaver.user.username != principalUsername}">                    
