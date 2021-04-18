@@ -89,6 +89,7 @@
   </div>
   <br/>
     <div class="text-center">
+	<c:if test = "${authenticated}">
     <c:if test="${createdByUser == false}">
 				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
 	</c:if>
@@ -112,6 +113,7 @@
 			<br/>
 			<br/>
 
+	<c:if test="${!promocionado}">
 			<form:form modelAttribute="anuncio" class="form-horizontal" id="promocionar-anuncio" action="/beavers/${anuncio.beaver.id}/anuncios/${anuncio.id}/promote">
 			<p class="SegoeFont" style="text-align:justify">Puedes destacar tu anuncio por sólo 4.99 Euros, para ello realiza el pago con una de las siguientes opciones.</p>
 			<div class="form-group has-feedback">
@@ -152,8 +154,9 @@
 					</div>  
 				</div>
 			</form:form>
+		</c:if>
     </c:if>
-    
+</c:if>
     <security:authorize access="hasAuthority('admin')">
 	    &nbsp;              
 	    <spring:url value="{anuncioId}/delete" var="deleteAnuncioUrl">

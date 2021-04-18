@@ -249,20 +249,29 @@ public class AnuncioController {
 		model.addAttribute("anuncio", anuncio);
 
 		Beaver beaver = this.beaverService.getCurrentBeaver(); //Necesario para ver el id y usar las url
+		Boolean esAdmin = false;
+
+		if(beaver != null){
 		model.addAttribute("myBeaverId", beaver.getId());
 
 		User user = beaver.getUser();
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
-		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
-
+		esAdmin = auth.get(0).getAuthority().equals("admin");
+		}
 		if (esAdmin) {
 			model.addAttribute("esAdmin", true); //Este parámetro es la condicion para ver el boton de delete sin ser el creador
 		}
 
+		model.addAttribute("promocionado", anuncio.getDestacado());
+
 		if (this.beaverService.getCurrentBeaver() == anuncio.getBeaver()) {
 			model.addAttribute("createdByUser", true); //TODO: Front: Sólo quien creó el anuncio puede actualizarlo. Mostrad el botón sólo en este caso.
+			model.addAttribute("authenticated", true);
+		} else if(beaver == null){
+			model.addAttribute("authenticated", false);
 		} else {
-			model.addAttribute("createdByUser", false); //TODO: Front: Controla que el usuario que está viendo la vista es el mismo que creó el anuncio.
+			model.addAttribute("createdByUser", false);
+			model.addAttribute("authenticated", true); //TODO: Front: Controla que el usuario que está viendo la vista es el mismo que creó el anuncio.
 			//TODO: Front: El creador del anuncio NO puede crear solicitudes, mostrad el botón si este atributo es false.
 		}
 		return vista;
@@ -285,6 +294,7 @@ public class AnuncioController {
 		if (this.beaverService.getCurrentBeaver() == null || !beaver.equals(this.beaverService.getCurrentBeaver())) {
 			return "accesoNoAutorizado"; //Acceso no autorizado
 		} else {
+			model.addAttribute("noHayEspecialidades", beaver.getEspecialidades().isEmpty());
 			if (beaver.getEncargos().isEmpty() && beaver.getAnuncios().isEmpty()) {
 				model.addAttribute("hayEncargos", false);
 				model.addAttribute("hayAnuncios", false);

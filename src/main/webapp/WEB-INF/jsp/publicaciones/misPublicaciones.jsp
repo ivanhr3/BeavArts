@@ -124,7 +124,9 @@
 <div class="container row" style="display:flex; flex-wrap: wrap;">
 <div class="col">
 <c:if test="${beaver.user.username == principalUsername}">
+		<c:if test="${noHayEspecialidades == false}">
 		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/encargos/new" htmlEscape="true"/>'>Nuevo encargo</a>
+		</c:if>
 		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/anuncios/new" htmlEscape="true"/>'>Nuevo anuncio</a>
 		<br/>
     	<c:if test="${url == true}">
