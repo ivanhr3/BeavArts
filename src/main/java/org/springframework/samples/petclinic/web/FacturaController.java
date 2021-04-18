@@ -37,6 +37,11 @@ public class FacturaController {
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
 		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
 
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		if (me != null) {//añadido el if para los tests
+			modelMap.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
+
 		if (!esAdmin) {
 			return "accesoNoAutorizado";
 
@@ -61,6 +66,11 @@ public class FacturaController {
 		User user = beav.getUser();
 		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
 		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
+
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		if (me != null) {//añadido el if para los tests
+			model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
 
 		if (!esAdmin) {
 			return new ModelAndView("accesoNoAutorizado");

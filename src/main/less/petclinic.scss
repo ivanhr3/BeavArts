@@ -433,6 +433,7 @@ hr {
   margin-bottom: 1rem;
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color:#d3d3d3ab;
 }
 
 small,
@@ -2576,7 +2577,7 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #000;
-  background-color: #03d36f;
+  background-color: #06a458;
   border-color: #49A947;
 }
 
@@ -2599,25 +2600,25 @@ fieldset:disabled a.btn {
 	font-weight:bold;
 }
 
-.btn-red:focus, .btn-primary.focus {
+.btn-red:focus, .btn-red.focus {
   box-shadow: 0 0 0 0.2rem #ff000078;
 }
 
-.btn-red.disabled, .btn-primary:disabled {
+.btn-red.disabled, .btn-red:disabled {
   color: #fff;
   background-color: #eb0606;
   border-color: #991825;
 }
 
-.btn-red:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
-.show > .btn-primary.dropdown-toggle {
+.btn-red:not(:disabled):not(.disabled):active, .btn-red:not(:disabled):not(.disabled).active,
+.show > .btn-red.dropdown-toggle {
   color: #fff;
   background-color: #eb0606;
   border-color: #991825;
 }
 
-.btn-red:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
-.show > .btn-primary.dropdown-toggle:focus {
+.btn-red:not(:disabled):not(.disabled):active:focus, .btn-red:not(:disabled):not(.disabled).active:focus,
+.show > .btn-red.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem #ff000078;
 }
 
@@ -6232,7 +6233,7 @@ button.bg-danger:focus {
 }
 
 .bg-light {
-  background-color: #f8f9fa !important;
+  background-color: #ffc053 !important;
 }
 
 a.bg-light:hover, a.bg-light:focus,
@@ -9124,7 +9125,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* for dropdowns only */
 .navbar-custom .navbar-nav .dropdown-menu {
-    background-color: #ffbb00;
+    background-color: #ffe9c1;
 	font-weight:bold;
 	font-family: "SegoePrint";
 }
@@ -9139,7 +9140,7 @@ a.text-dark:hover, a.text-dark:focus {
 .navbar-custom .navbar-nav .dropdown-item:hover,
 .navbar-custom .navbar-nav .dropdown-item:focus {
     color: #000000;
-    background-color: #56ff52;
+    background-color: #fdd07f;
 	font-weight:bold;
 	font-family: "SegoePrint";
 }
@@ -9907,4 +9908,56 @@ td {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.card-header-publicaciones2{
+  text-align: center;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+  width:100%;
+}
+
+.btn-invoice {
+  color: #000;
+  background-color: #c8c8c8;
+  border-color: #646464;
+  font-weight:bold;
+}
+
+.btn-invoice:hover {
+  color: #000;
+  background-color: #a7a7a7;
+  border-color: #646464;
+	font-weight:bold;
+}
+
+.btn-invoice:focus, .btn-invoice.focus {
+  box-shadow: 0 0 0 0.2rem #9f9f9f7a;
+}
+
+.btn-invoice.disabled, .btn-invoice:disabled {
+  color: #000;
+  background-color: #a7a7a7;
+  border-color: #646464;
+}
+
+.btn-invoice:not(:disabled):not(.disabled):active, .btn-invoice:not(:disabled):not(.disabled).active,
+.show > .btn-invoice.dropdown-toggle {
+  color: #000;
+  background-color: #a7a7a7;
+  border-color: #646464;
+}
+
+.btn-invoice:not(:disabled):not(.disabled):active:focus, .btn-invoice:not(:disabled):not(.disabled).active:focus,
+.show > .btn-invoice.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem #9f9f9f7a;
+}
+
+.margin20{
+	margin-left:20px;
+	margin-right:20px;
+	margin-top:20px;
+	margin-bottom:20px;
 }

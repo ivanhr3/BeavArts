@@ -19,10 +19,7 @@
         <span class="icon-bar"></span> 
         <span class="icon-bar"></span> 
         <span class="icon-bar"></span>
-      </button>
-      
-      
-      
+      </button>     
       
       <div class="collapse navbar-collapse" id="navbarsExample05">
         <ul class="navbar-nav mr-auto">
@@ -60,8 +57,21 @@
 					<div class="buttonHeaderImagePerfil aumentoHover">
 	        			<a class="nav-link izqHover" href="/beavers/beaverInfo/${myBeaverId}"><i class="fas fa-user"></i> Mi perfil</a>
 	        		</div>
-      			</li>	
+      			</li>		
 				</sec:authorize>
+				<sec:authorize access="hasAuthority('admin')">
+				<li class="nav-item dropdown">
+					<div class="buttonHeaderImageAdmin">
+			        <a class="nav-link dropdown-toggle izqHover" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          <i class="fas fa-user-cog"></i> Administrador
+			        </a>
+			        
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			          <a class="dropdown-item" href="/facturas/list">Facturas</a>
+			        </div>
+			        </div>
+      			</li>
+      			</sec:authorize>
             
         </ul>
         
@@ -90,5 +100,6 @@
 		
       </div>
     </nav>
+
 <br/>
 <br/>
