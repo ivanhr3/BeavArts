@@ -61,6 +61,7 @@ public class SolicitudController {
         //De esta forma si al crear la solicitud falla no se desaparecen los datos del encargo, haciendo
         //que haya que recargar la pagina para verlos
         //model.addAttribute("encargo", encargo);
+        //comentario
 
         if (encargo.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
             return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo.
