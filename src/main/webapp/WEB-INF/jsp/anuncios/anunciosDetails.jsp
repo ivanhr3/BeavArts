@@ -94,8 +94,8 @@
   </div>
   </div>
   <br/>
+  <c:if test = "${authenticated}">
     <div class="text-center">
-	<c:if test = "${authenticated}">
     <c:if test="${createdByUser == false}">
 				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
 	</c:if>
