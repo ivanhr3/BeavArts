@@ -11,9 +11,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+</head>
+
+<body>
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+  </script>
+</body>
+
 
 <beavarts:layout pageName="solicitudDetails">
 
+<c:if test="${esDeEncargo==true}">
 <h2 class="SegoeFont"> Encargo: </h2>
 <br/>
 <div class= "container">
@@ -46,6 +60,93 @@
 </div>
 </div>
 </div>
+</c:if>
+<br/>
+
+<c:if test="${esDeEncargo==false}">
+<h2 class="SegoeFont"> Anuncio: </h2>
+<br/>
+<div class= "container">
+<div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0 SegoeFont">Título </h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="beaverUrl">
+                			<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
+               	    		<spring:param name="anuncioId" value="${anuncio.id}"/>
+                	  </spring:url>
+               		  <a href="${fn:escapeXml(beaverUrl)}"><b><c:out value="${anuncio.titulo}"/></b></a>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0 SegoeFont">Especialidad</h5>
+                    </div>
+                    
+                     <div style="color:grey" class="candidate-list-option">
+		                          
+		                          <c:choose>
+	                      
+					                      	<c:when test="${anuncio.especialidad == 'TEXTIL'}">
+					                      		<i class="fas fa-socks"></i>
+					                      	</c:when>
+				                     
+				                      		<c:when test="${anuncio.especialidad == 'ESCULTURA'}">
+					                      		<i class="fas fa-chess-knight"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'ILUSTRACION'}">
+					                      		<i class="fas fa-portrait"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'ACRILICO'}">
+					                      		<i class="fas fa-paint-brush"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'OLEO'}">
+					                      		<i class="fas fa-palette"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'JOYERIA'}">
+					                      		<i class="fas fa-gem"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'RESINA'}">
+					                      		<i class="fas fa-prescription-bottle"></i>
+					                      	</c:when>
+					                      	
+					                      	<c:when test="${anuncio.especialidad == 'FOTOGRAFIA'}">
+					                      		<i class="fas fa-camera-retro"></i>
+					                      	</c:when>
+				                      
+				                      
+				                      </c:choose>
+		                          
+	                    				<c:out value="${anuncio.especialidad} "/> &nbsp;
+		                        
+		                      </div>
+                    
+                   
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5 class="mb-0 SegoeFont">Precio</h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      <c:out value="${anuncio.precio} €"/>
+                    </div>
+                  </div>
+
+</div>
+</div>
+</div>
+</div>
+</c:if>
 <br/>
 
 
@@ -60,8 +161,26 @@
                       <h5 class="mb-0 SegoeFont">Estado </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                       <h3 class="badge badge-info">
-           				<c:out value="${solicitud.estado}"/>
+                       <h3>
+           				<c:choose>
+	                      
+					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
+					               <span class="badge badge-success"><c:out value="${solicitud.estado}"/></span>
+					       </c:when>
+					                      	
+					       <c:when test="${solicitud.estado == 'PENDIENTE'}">
+					               <span class="badge badge-warning"><c:out value="${solicitud.estado}"/></span>
+					       </c:when>
+					       
+					       <c:when test="${solicitud.estado == 'RECHAZADO'}">
+					              <span class="badge badge-danger"><c:out value="${solicitud.estado}"/></span>
+					       </c:when>
+					       
+					       <c:when test="${solicitud.estado == 'FINALIZADO'}">
+					               <span class="badge badge-primary"><c:out value="${solicitud.estado}"/></span>
+					       </c:when>
+					       
+					 </c:choose>
         			   </h3>
                     </div>
                   </div>
@@ -71,7 +190,7 @@
                       <h5 class="mb-0 SegoeFont">Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <c:out value="${encargo.precio} €"/>
+                      <c:out value="${solicitud.precio} €"/>
                     </div>
                   </div>
                   <hr>
@@ -103,7 +222,7 @@
                   
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Descripción </h5>
+                      <h5 class="mb-0 SegoeFont">Condiciones propuestas </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       
@@ -180,6 +299,55 @@
    <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">
    </spring:url>
     <a class="btn btn-primary" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
+	
+	<spring:url value="/solicitudes/decline/${solicitud.id}" var="rechazarUrl">
+	</spring:url>
+    <a class="btn btn-primary" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
+</c:if>
+<c:if test= "${solicitudAceptada == true}">
+    <spring:url value="/solicitudes/finish/${solicitud.id}" var="finishUrl">
+    </spring:url>
+    <a class="btn btn-primary" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
+</c:if>
+</c:if>
+
+
+<c:if test= "${isAnuncioCreator==true}"> 
+<c:if test= "${solicitudPendiente==true}">
+   
+    <p class="SegoeFont" style="text-align:justify">Para aceptar esta solicitud debes realizar el pago con una de las siguientes opciones. Cuando se acepte esta solicitud usted estará aceptando las condiciones descritas en la solicitud, así como la contraoferta propuesta.</p>
+    <body>
+        <script
+          src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9&currency=EUR"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+        </script>
+      
+        <div id="paypal-button-container"></div>
+        <script>
+
+            paypal.Buttons({
+            createOrder: function(data, actions) {
+                // This function sets up the details of the transaction, including the amount and line item details.
+                return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                    value: '${solicitud.precio}',
+                    currency: "EUR"
+                    }
+                }]
+                });
+            },
+            onApprove: function(data, actions) {
+                // This function captures the funds from the transaction.
+                return actions.order.capture().then(function(details) {
+                // This function shows a transaction success message to your buyer.
+                alert('Transaction completed by ' + details.payer.name.given_name);
+                window.location.replace("/solicitudes/accept/${solicitud.id}")
+                });
+            }
+            }).render('#paypal-button-container');
+            //This function displays Smart Payment Buttons on your web page.
+        </script>
+      </body>
 	
 	<spring:url value="/solicitudes/decline/${solicitud.id}" var="rechazarUrl">
 	</spring:url>

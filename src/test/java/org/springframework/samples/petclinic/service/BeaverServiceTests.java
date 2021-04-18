@@ -33,14 +33,15 @@ public class BeaverServiceTests {
         espe.add(Especialidad.ACRILICO);
         beaver.setEspecialidades(espe);
         beaver.setDni("12345678Q");
-            User user = new User();
-            user.setUsername("User");
-            user.setPassword("supersecretpass");
-            user.setEnabled(true);
-            beaver.setUser(user);
-        
-            this.beaverService.saveBeaver(beaver);
-            assertThat(beaver.getId().longValue()).isNotEqualTo(0);
+
+        User user = new User();
+        user.setUsername("User");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        beaver.setUser(user);
+    
+        this.beaverService.saveBeaver(beaver);
+        assertThat(beaver.getId().longValue()).isNotEqualTo(0);
     }
 
     

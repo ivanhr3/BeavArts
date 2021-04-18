@@ -116,10 +116,10 @@
 	
 
  		
- 		<div class="cardVal centerContainer">
+ 		<div class="card centerContainerVal">
                 <div class="row justify-content-left d-flex">
                     <div class="col-md-4 d-flex flex-column">
-                        <div style="text-align:center"class="rating-box">
+                        <div style="text-align:center; margin-top:20px" class="rating-box">
                             <h1 class="pt-4">${valoracionMedia}</h1>
                             <p class="">de 5</p>
                         </div>
@@ -191,18 +191,19 @@
 
 
 <c:forEach items="${valoraciones}" var="valoracion">
-	<div style="width:70%"class="cardVal centerContainer">
-	    <div class="d-flex row">
-	    
-	    
-	            <div class="d-flex flex-column comment-section">
-	                <div class="bg-white p-2">
-	                    <div class="d-flex flex-row user-info "><img class="rounded-circle imgBorderBlack" src="${valoracion.valAuthor.urlFotoPerfil}" width="80" height="80">
+
+
+			<div class="card mb-3 centerContainerVal">
+                <div class="card-body">
+                  <div style="word-break: break-all;"class="row">
+                        
+                        
+                     <div style="margin-left:20px" class="d-flex flex-row user-info "><img class="rounded-circle" src="${valoracion.valAuthor.urlFotoPerfil}" width="80" height="80">
 	                        <div class="d-flex flex-column justify-content-start ml-2">
 	                        <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrlAuthor">
                        		 		<spring:param name="beaverId" value="${valoracion.valAuthor.id}"/>
                     		</spring:url>
-                    		<h5 style="font-size:22px" class="mb-0 SegoeFont"><a style="color:b14900;" class="customHover" href="${fn:escapeXml(beaverUrlAuthor)}">${valoracion.valAuthor.user.username}</a></h5>
+                    		<h5 style="font-size:22px" class="mb-0 SegoeFont"><a  href="${fn:escapeXml(beaverUrlAuthor)}">${valoracion.valAuthor.user.username}</a></h5>
 	                       
 	                        <span class="date text-black-50 SegoeFont">Puntuación: 
 	                                        
@@ -234,21 +235,32 @@
 					                      		<span class="fa fa-star checked"></span>
 					                      		
 					                      	</c:when>
-				                      
-				                      
-				                      </c:choose>
-	                        
-	                        </span></div>
-	                    </div>
-	                    <div class="mt-2">
-	                    <br/>
-	                        <p class="comment-text">${valoracion.comentario}</p>
-                    </div>
+		                      
+				                      </c:choose>	                        
+	                        	</span>
+	                        </div>
+	                    </div>                  
+                  </div>
+                  
+                  <div class="row">
+                    
+                    <p style="margin-left:20px" class="comment-text">${valoracion.comentario}</p>
+                    
+                  </div>
+                  
+                               
                 </div>
-               
-            </div>
-        </div>
-   </div>
+              </div> 
+
+
+
+
+
+
+
+
+	
+   <br/>
 </c:forEach>
 
 </c:if>

@@ -17,9 +17,14 @@
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
 	</security:authorize>
-	
+	<c:set var ="authority" value = ""/>
+	<c:forEach items="${beaver.user.authorities}" var="autoridad">
+	<c:if test="${autoridad.authority == 'admin'}">
+		<c:set var ="authority" value = "admin"/>
+	</c:if>
+    
+</c:forEach>
 <beavarts:layout pageName="perfil">
-	
 
 <div class="container">
     <div class="main-body">
@@ -28,7 +33,9 @@
             <div class="col-md-4 mb-3">
               <div class="card">
                 <div class="card-body">
+                
                   <div class="d-flex flex-column align-items-center text-center">
+
                   <div class="ImgDiv" style="width:150px; height:150px">
                   
                   <a href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editPhoto" htmlEscape="true"/>'><img width="150px" height="150px" src="${beaver.urlFotoPerfil}" alt="Admin" class="rounded-circle" width="150"></i></a>		
@@ -41,6 +48,32 @@
                       </c:if> 
                       
                       </div>
+
+                  
+                  <security:authorize access="hasAuthority('admin')">
+                  
+	                  <c:if test="${beaver.user.enabled == true and authority!='admin'}">
+	                  
+	                  	  <spring:url value="/beavers/beaverInfo/{beaverId}/ban" var="banUserUrl">
+						  <spring:param name="beaverId" value="${beaver.id}"/>              
+						  </spring:url>
+		                  <a style="color:white"class="btn btn-red" href="${fn:escapeXml(banUserUrl)}"><i class="fas fa-ban"></i> Suspender Usuario</a>
+	                  		
+	                  </c:if>
+	                  <c:if test="${beaver.user.enabled == true and authority == 'admin'}">
+	                  	
+	                  </c:if>
+	                  <c:if test="${beaver.user.enabled == false}">
+	                                    	 
+		                  <b style="color:red">USUARIO SUSPENDIDO</b>
+	                  
+	                  </c:if>
+          
+	              <br/>  
+                  </security:authorize>
+                  
+                    <img width="150px" height="150px" src="${beaver.urlFotoPerfil}" alt="Admin" class="rounded-circle" width="150">
+
                     <div class="mt-3">
                       <h4 class="SegoeFont">${beaver.user.username}</h4> 
                       <c:if test="${beaver.user.username != principalUsername}">                    

@@ -28,24 +28,21 @@
                 	<c:if test="${!encargo.photo.isEmpty()}">
             		<img class="card-img-top" src="${encargo.photo}" width=217px height=250px alt="Card image cap">
             		<div class="card-body">
-            		<h4 class="card-title"><c:out value="${encargo.titulo}"/></h4>
+            		<h4 class="card-title SegoeFont text-center"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
             				<h5 style="text-align:center"><span class="badge badge-danger">No disponible</span></h5>
         				</c:if>
         				<c:if test="${encargo.disponibilidad == true}">
             				<h5 style="text-align:center"><span class="badge badge-success">Disponible</span></h5>
         				</c:if></p>
-        				
         				<a href="${encargoUrl}" class="btn btn-primary" id="verMas">Ver más</a>
-        				
-        				
         			</div>
             		</c:if>
             		
             		<c:if test="${encargo.photo.isEmpty()}">
             		<img class="card-img-top" src="/resources/images/sadbeaver.png" width=217px height=250px alt="No hay imagen">
             			<div class="card-body" id ="card-body">
-            			<h4 class="card-title"><c:out value="${encargo.titulo}"/></h4>
+            			<h4 class="card-title SegoeFont"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
             				<h5><span class="badge badge-pill badge-danger" id="badge-noDisponible">No disponible</span></h5>
         				</c:if>

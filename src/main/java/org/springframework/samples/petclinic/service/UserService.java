@@ -20,8 +20,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.ConfirmationToken;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
+import org.springframework.samples.petclinic.web.EmailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,15 +45,58 @@ public class UserService {
 	private PasswordEncoder PasswordEncoder;
 
 	@Autowired
+	private ConfirmationTokenService confirmationTokenService;
+
+	@Autowired
+	private EmailSenderService emailSenderService;
+
+	@Autowired
+	private AuthoritiesService authoritiesService;
+
+	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
+	//Método para registrar usuarios
 	@Transactional
-	public void saveUser(User user) throws DataAccessException {
+	public void registrarUser(User user, Beaver beaver) throws DataAccessException {
+		user.setEnabled(false);
+		user.setPassword(PasswordEncoder.encode(user.getPassword()));
+		userRepository.save(user);
+		authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "user");
+		
+		final ConfirmationToken confirmationToken = new ConfirmationToken(beaver.getUser());
+		confirmationTokenService.saveConfirmationToken(confirmationToken);
+		sendConfirmationEmail(beaver.getEmail(), confirmationToken.getConfirmationToken());
+	}
+
+	//MUY IMPORTANTE: SÓLO SE VA A USAR EN TESTS, ES IGUAL QUE EL REGISTRO PERO SIN CONFIRMACION DE EMAIL
+	@Transactional
+	public void saveUser(User user, Beaver beaver) throws DataAccessException {
 		user.setEnabled(true);
 		user.setPassword(PasswordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
+		authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "user");
+		
+	}
+
+	@Transactional
+	public void confirmUser(ConfirmationToken confirmationToken){
+		final User user = confirmationToken.getUser();
+		user.setEnabled(true);
+		userRepository.save(user);
+		confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
+
+	}
+
+	public void sendConfirmationEmail(String userMail, String token){
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(userMail);
+		mailMessage.setSubject("Email de Confirmación para Beavarts");
+		mailMessage.setFrom("beavartsispp@gmail.com");
+		mailMessage.setText("Gracias por registrarse en Beavarts, por favor acceda la siguiente URL para activar su cuenta." + "http://localhost:8080/confirmar?token=" + token);
+		emailSenderService.sendEmail(mailMessage);
 	}
 
 	@Transactional
