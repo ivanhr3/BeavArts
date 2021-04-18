@@ -19,7 +19,8 @@
         <span class="icon-bar"></span> 
         <span class="icon-bar"></span> 
         <span class="icon-bar"></span>
-      </button>
+      </button>     
+
       
       <div class="collapse navbar-collapse" id="navbarsExample05">
         <ul class="navbar-nav mr-auto">
@@ -48,11 +49,27 @@
 				</li>
 
 				</sec:authorize>
-            <li class="nav-item">
+        
+         <li class="nav-item">
       		<div class="buttonHeaderImageSN aumentoHover">
-				 <a class="nav-link izqHover" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
-		    </div>	
-			</li>
+				        <a class="nav-link izqHover" href="https://beavartsispp.wixsite.com/home">Sobre nosotros</a>
+		      </div>	
+			   </li>
+         
+         <sec:authorize access="hasAuthority('admin')">
+				  <li class="nav-item dropdown">
+					<div class="buttonHeaderImageAdmin">
+			        <a class="nav-link dropdown-toggle izqHover" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          <i class="fas fa-user-cog"></i> Administrador
+			        </a>
+			        
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+			          <a class="dropdown-item" href="/facturas/list">Facturas</a>
+			        </div>
+			        </div>
+      			</li>
+      	</sec:authorize>
+
         </ul>
         
         <ul class="nav navbar-nav ml-auto">
@@ -60,13 +77,13 @@
 				
 					<li>
 					<div class="buttonHeaderImagePerfil aumentoHover">
-					<a class="nav-link izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/users/new" />">¡Regístrate!</a>
+					<a class="nav-link izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/users/new" />">Â¡RegÃ­strate!</a>
 					</div>
 					</li>
 					
 					<li>
 					<div class="buttonHeaderImageLogin aumentoHover">
-					<a class="nav-link izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/login" />">Iniciar Sesión</a>
+					<a class="nav-link izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/login" />">Iniciar SesiÃ³n</a>
 					</div>
 					</li>
 					
@@ -87,5 +104,6 @@
 		
       </div>
     </nav>
+
 <br/>
 <br/>
