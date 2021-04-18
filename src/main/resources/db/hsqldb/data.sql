@@ -8,7 +8,6 @@ INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (1, 'TEXTIL');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (1, 'ESCULTURA');
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://cdn.pixabay.com/photo/2018/05/10/20/03/love-3388626_1280.jpg');
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://cdn.pixabay.com/photo/2016/02/13/22/52/bracelet-1198740_1280.jpg');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://puntocruz.online/wp-content/uploads/2020/07/punto-de-cruz-denim-1.jpg');
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (1, 'https://images-na.ssl-images-amazon.com/images/I/714fQvkhKaL._AC_SY450_.jpg');
 
 
@@ -19,7 +18,6 @@ INSERT INTO portfolio(id, sobre_mi) VALUES (2, 'Soy un usuario que intenta un po
 INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (2, 'Diffie', 'Helmann', '74234321Q', 'helmann@email.com', 'https://cdn.pixabay.com/photo/2020/10/16/11/02/astronaut-5659227_960_720.png', 2 , 'Helmann');
 INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (2, 'TEXTIL');
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://www.mercerialacostura.com/wp-content/uploads/2019/04/como-arreglar-roto-pantalon.jpg');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://puntocruz.online/wp-content/uploads/2020/07/sueters-punto-de-cruz-sweater-bordado-3.jpg');
 INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (2, 'https://cdn.pixabay.com/photo/2020/11/22/17/28/cat-5767334_960_720.jpg');
 
 --User3
