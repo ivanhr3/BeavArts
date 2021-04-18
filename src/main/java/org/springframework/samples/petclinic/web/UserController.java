@@ -110,9 +110,11 @@ public class UserController {
 
 		if (result.hasErrors() || usernameExistente || emailExistente) {
 			if(usernameExistente) {
+				model.put("urlUsername", true);
 				model.put(("usernameExistente"),"El nombre de usuario ya existe.");
 			}
 			if(emailExistente) {
+				model.put("urlEmail", true);
 				model.put(("emailExistente"),"Este correo ya existe.");
 			}
 			return UserController.VIEWS_BEAVER_CREATE_FORM;

@@ -53,6 +53,7 @@ public class SolicitudController {
     public String crearSolicitudInit(@PathVariable("engId") final int encargoId, final ModelMap model) {
         Encargo encargo = this.encargoService.findEncargoById(encargoId);
         Beaver beaver = this.beaverService.getCurrentBeaver();
+        Boolean exists = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
 
         if (beaver != null) {
             model.put("myBeaverId", beaver.getId());
@@ -69,6 +70,8 @@ public class SolicitudController {
             return "accesoNoAutorizado";
         } else {
             final Solicitud sol = new Solicitud();
+            model.addAttribute("pendiente", exists);
+            model.put("error", "Tu solicitud se encuentra pendiente de aceptación");
             model.put("esDeEncargo", true);
             model.addAttribute("encargo", encargo);
             model.addAttribute("solicitud", sol);

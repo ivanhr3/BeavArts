@@ -67,6 +67,12 @@
 	 <br/>
 	 <div class="card">
 	 	<div class="card-body">
+	 		<c:if test="${anuncio.destacado == true}">
+		    	<div class="SegoeFont" style="float: right;">
+		    	<i style="color: orange; " class="fas fa-star"> </i>
+				<p style="color: black; float: right; font-style: italic; font-size:15px;"> &nbsp;Promocionado</p>
+		    	</div>
+				</c:if>
         	<c:if test="${createdByUser== false}">
             	<h3 class="mb-0 SegoeFont">Publicado por: </h3><br/><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h5><br/>
             </c:if>
@@ -88,6 +94,7 @@
   </div>
   </div>
   <br/>
+  <c:if test = "${authenticated}">
     <div class="text-center">
     <c:if test="${createdByUser == false}">
 				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
@@ -112,6 +119,7 @@
 			<br/>
 			<br/>
 
+	<c:if test="${!promocionado}">
 			<form:form modelAttribute="anuncio" class="form-horizontal" id="promocionar-anuncio" action="/beavers/${anuncio.beaver.id}/anuncios/${anuncio.id}/promote">
 			<p class="SegoeFont" style="text-align:justify">Puedes destacar tu anuncio por sólo 4.99 Euros, para ello realiza el pago con una de las siguientes opciones.</p>
 			<div class="form-group has-feedback">
@@ -152,8 +160,9 @@
 					</div>  
 				</div>
 			</form:form>
+		</c:if>
     </c:if>
-    
+</c:if>
     <security:authorize access="hasAuthority('admin')">
 	    &nbsp;              
 	    <spring:url value="{anuncioId}/delete" var="deleteAnuncioUrl">
