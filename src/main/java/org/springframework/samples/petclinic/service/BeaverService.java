@@ -1,13 +1,18 @@
 
 package org.springframework.samples.petclinic.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Encargo;
+import org.springframework.samples.petclinic.model.Portfolio;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.BeaverRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +27,8 @@ public class BeaverService {
     @Autowired
     private AuthoritiesService authoritiesService;
     @Autowired
+    private PortfolioService portfolioService;
+    @Autowired
     private ValoracionService valoracionService;
 
     @Autowired
@@ -30,10 +37,29 @@ public class BeaverService {
     }
 
     @Transactional
+    public void registrarBeaver(Beaver beaver) throws DataAccessException{
+        beaverRepository.save(beaver);
+
+        Portfolio port = new Portfolio();
+        port.setBeaver(beaver);
+        
+        beaver.setPortfolio(port);
+        portfolioService.savePortfolio(port);
+
+        userService.registrarUser(beaver.getUser(), beaver);
+    }
+    //MUY IMPORTANTE: Esto es una copia del Registro pero sólo para Tests, es para evitar que se envíen emails.
+    @Transactional
     public void saveBeaver(Beaver beaver) throws DataAccessException{
         beaverRepository.save(beaver);
-        userService.saveUser(beaver.getUser());
-        authoritiesService.saveAuthorities(beaver.getUser().getUsername(), "admin");
+
+        Portfolio port = new Portfolio();
+        port.setBeaver(beaver);
+        
+        beaver.setPortfolio(port);
+        portfolioService.savePortfolio(port);
+
+        userService.saveUser(beaver.getUser(), beaver);
     }
 
     @Transactional
@@ -46,7 +72,7 @@ public class BeaverService {
 		final Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username;
 
-		if(principal instanceof UserDetails){
+		if (principal instanceof UserDetails) {
 			username = ((UserDetails) principal).getUsername();
 		} else {
 			username = principal.toString();
@@ -80,8 +106,17 @@ public class BeaverService {
     }
 
     @Transactional
-    public Integer getNumValoraciones(Beaver beaver){
+    public Beaver findBeaverByEmail(final String email) {
+        return this.beaverRepository.findBeaverByEmail(email);
+    }
+        @Transactional
+        public Integer getNumValoraciones(Beaver beaver){
         return this.valoracionService.getNumValoracionesUsuario(beaver.getId());
     }
+
+    @Transactional
+	public List<Authorities> findUserAuthorities(final User user) {
+		return this.beaverRepository.findUserAuthorities(user);
+	}
 
 }

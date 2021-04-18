@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <%-- Placed at the end of the document so the pages load faster --%>
 <spring:url value="/webjars/jquery/2.2.4/jquery.min.js" var="jQuery"/>
@@ -14,41 +15,37 @@
 
 
 <!-- Footer -->
-<footer class="bg-light text-center text-lg-start">
+<footer class="footerBot">
 
  
   <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: #824500;">
+  <div class="text-center p-3 footerColor">
   <!-- Twitter -->
       <a
-        class="btn btn-link btn-floating btn-lg text-light m-1"
-        style="color: #FFFFFF;"
+        class="btn btn-link btn-floating btn-lg text-light m-1"        
         href="https://twitter.com/beavarts"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i class="fa fa-twitter"></i
+        ><i style="color: #000000;" class="fab fa-twitter"></i
       ></a>
 
       <!-- Instagram -->
       <a
-        class="btn btn-link btn-floating btn-lg text-light m-1"
-        style="color: #FFFFFF;"
+        class="btn btn-link btn-floating btn-lg text-light m-1"        
         href="https://www.instagram.com/beavarts_/"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i class="fa fa-instagram"></i
+        ><i style="color: #000000;" class="fab fa-instagram"></i
       ></a>
 
       <!-- Github -->
       <a
-        class="btn btn-link btn-floating btn-lg text-light m-1"
-        style="color: #FFFFFF;"
+        class="btn btn-link btn-floating btn-lg text-light m-1"       
         href="https://github.com/ivanhr3/BeavArts"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i class="fa fa-github"></i
-      ></a>
-    <p style="color: #FFFFFF;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
+        ><i style="color: #000000;" class="fab fa-github"></i></a>
+    <p style="color: #000000;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
   </div>
   <!-- Copyright -->
 </footer>

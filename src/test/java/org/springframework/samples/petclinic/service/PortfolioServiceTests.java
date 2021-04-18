@@ -70,10 +70,8 @@ public class PortfolioServiceTests {
     @Transactional
     public void findPortfolioByBeaverId(){
         Beaver beaver = this.dummyBeaver();
-        Portfolio portfolio = this.dummyPerfil(beaver);
-        this.portfolioService.savePortfolio(portfolio);
         int beaverId = beaver.getId();
-        assertTrue(this.portfolioService.findPortfolioByBeaverId(beaverId).equals(portfolio));
+        assertTrue(this.portfolioService.findPortfolioByBeaverId(beaverId).equals(beaver.getPortfolio()));
     }
 
 }
