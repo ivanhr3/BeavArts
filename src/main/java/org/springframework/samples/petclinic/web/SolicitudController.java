@@ -125,6 +125,7 @@ public class SolicitudController {
                 Factura factura = new Factura();
 				factura.setEmailBeaver(encargo.getBeaver().getEmail());
 				factura.setEmailPayer(beaver.getEmail());
+                factura.setPrecio(encargo.getPrecio());
 				
 				this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
 				factura.setSolicitud(solicitud);
@@ -278,8 +279,9 @@ public class SolicitudController {
             } else {
                 sol.setEstado(Estados.ACEPTADO);
                 Factura factura = new Factura();
-				factura.setEmailBeaver(anuncio.getBeaver().getEmail());
+				factura.setEmailBeaver(sol.getBeaver().getEmail());
 				factura.setEmailPayer(beaver.getEmail());
+                factura.setPrecio(sol.getPrecio());
 
 				this.solicitudService.saveSolicitud(sol);
 				

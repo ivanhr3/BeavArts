@@ -160,7 +160,7 @@ public class AnuncioController {
 			model.addAttribute("anuncio", anuncio);
 			return AnuncioController.VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM; //Si hay algún error de campo se redirige a la misma vista
 		} else {
-			BeanUtils.copyProperties(anuncio, anunc, "id", "beaver");
+			BeanUtils.copyProperties(anuncio, anunc, "id", "beaver", "destacado");
 			this.anuncioService.saveAnuncio(anunc);
 			return "redirect:/beavers/" + beaver.getId() + "/anuncios/" + anuncioId;
 		}

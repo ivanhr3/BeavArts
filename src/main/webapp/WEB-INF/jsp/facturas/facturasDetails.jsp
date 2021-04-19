@@ -81,7 +81,7 @@
 										Anuncio: ${factura.solicitud.anuncio.titulo}">	
 									</c:if>
 									<br/>
-									<b>Precio:</b> ${factura.solicitud.precio} €	
+									<b>Precio:</b> ${factura.precio} €	
 									</div>	
 										
 										
