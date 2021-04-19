@@ -22,8 +22,7 @@ branches:
   - master
   - develop
   - travis-configuration-sprint2
-  - fixtestanuncios-issue#102
- 
+  - SolicitudAnuncios-issue#116
 
 deploy:
   provider: heroku

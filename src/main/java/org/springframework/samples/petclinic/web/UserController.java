@@ -19,20 +19,26 @@ package org.springframework.samples.petclinic.web;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.ConfirmationToken;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.service.BeaverService;
+import org.springframework.samples.petclinic.service.ConfirmationTokenService;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Juergen Hoeller
@@ -47,10 +53,16 @@ public class UserController {
 
 	private final BeaverService	beaverService;
 
+	private final ConfirmationTokenService confirmationTokenService;
+
+	private final UserService userService;
+
 
 	@Autowired
-	public UserController(final BeaverService beavartsService) {
+	public UserController(final BeaverService beavartsService, final ConfirmationTokenService confirmationTokenService, final UserService userService) {
 		this.beaverService = beavartsService;
+		this.confirmationTokenService = confirmationTokenService;
+		this.userService = userService;
 	}
 
 	@InitBinder
@@ -85,14 +97,40 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/users/new")
-	public String processCreationForm(@Valid final Beaver beaver, final BindingResult result) {
-		if (result.hasErrors()) {
+	public String processCreationForm(@Valid final Beaver beaver, final BindingResult result, ModelMap model) {
+
+		Boolean usernameExistente = true;
+		if(this.userService.findUserByUsername(beaver.getUser().getUsername()) == null){
+		    usernameExistente = false;
+        }
+		Boolean emailExistente = true;
+		if(this.beaverService.findBeaverByEmail(beaver.getEmail()) == null) {
+		    emailExistente = false;
+        }
+
+		if (result.hasErrors() || usernameExistente || emailExistente) {
+			if(usernameExistente) {
+				model.put("urlUsername", true);
+				model.put(("usernameExistente"),"El nombre de usuario ya existe.");
+			}
+			if(emailExistente) {
+				model.put("urlEmail", true);
+				model.put(("emailExistente"),"Este correo ya existe.");
+			}
 			return UserController.VIEWS_BEAVER_CREATE_FORM;
+
 		} else {
-			//creating owner, user, and authority
-			this.beaverService.saveBeaver(beaver);
+			//creating owner, user, and authoritys
+			this.beaverService.registrarBeaver(beaver);
 			return "redirect:/";
 		}
+	}
+
+	@GetMapping("/confirmar")
+	String confirmarEmail(@RequestParam("token") String token){
+		Optional<ConfirmationToken> optToken = confirmationTokenService.findConfirmationTokenByToken(token);
+		optToken.ifPresent(userService::confirmUser);
+		return "redirect:/login";
 	}
 
 }

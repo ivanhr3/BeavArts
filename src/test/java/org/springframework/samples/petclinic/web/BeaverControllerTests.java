@@ -3,35 +3,34 @@ package org.springframework.samples.petclinic.web;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.Portfolio;
 import org.springframework.samples.petclinic.service.PortfolioService;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -76,12 +75,19 @@ public class BeaverControllerTests {
         final User user = new User();
         user.setUsername("beaver1");
         user.setPassword("supersecretpass");
+        Authorities au = new Authorities();
+		Set<Authorities> col = new HashSet<>();
+		col.add(au);
+		au.setAuthority("user");
+		au.setUser(user);
+		user.setAuthorities(col);
         user.setEnabled(true);
 
         this.beaver1 = new Beaver();
         this.beaver1.setId(TEST_BEAVER_ID);
         this.beaver1.setFirstName("Nombre");
         this.beaver1.setId(11);
+        this.beaver1.setUrlFotoPerfil("");
         this.beaver1.setLastName("Apellidos");
         this.beaver1.setEmail("valid@gmail.com");
         Collection<Especialidad> esP = new HashSet<>();
@@ -116,26 +122,55 @@ public class BeaverControllerTests {
         this.beaver2.setEspecialidades(esp);
         this.beaver2.setDni("12345978Q");
         this.beaver2.setUser(user2);
-
+        
+        List<Authorities> lista = new ArrayList<Authorities>();
+		lista.add(au);
 
         BDDMockito.given(this.userService.findUserByUsername("beaver2")).willReturn(user2);
         BDDMockito.given(this.userService.findUserByUsername("beaver1")).willReturn(user);
         BDDMockito.given(this.beaverService.findBeaverByUsername("beaver1")).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByIntId(BeaverControllerTests.TEST_BEAVER_ID)).willReturn(this.beaver1);
         BDDMockito.given(this.beaverService.findBeaverByIntId(12)).willReturn(this.beaver2);
+
+        BDDMockito.given(this.beaverService.calculatePuntuacion(beaver1)).willReturn(4.34554);
+        BDDMockito.given(this.beaverService.calculatePuntuacion(beaver2)).willReturn(null);
+        BDDMockito.given(this.beaverService.getNumValoraciones(beaver1)).willReturn(17);
+        BDDMockito.given(this.beaverService.getNumValoraciones(beaver2)).willReturn(0);
+        BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+        BDDMockito.given(this.beaverService.findUserAuthorities(user2)).willReturn(lista);
     }
 
 
     @WithMockUser(value = "beaver1")
     @Test
     public void testMostrarPerfilUsuario() throws Exception {
-
+        //Se mockean las valoraciones, este usuario SÍ tiene.
         System.out.println(this.beaver1.getFirstName());
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver1);
+
 
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("beaver"))
             .andExpect(model().attributeExists("portfolio"))
+            .andExpect(model().attribute("puntuacionMedia", Math.round(4.34554*100.0)/100.0))
+            .andExpect(model().attribute("numValoraciones", 17))
+            .andExpect(view().name("users/perfilBeaver"));
+    }
+
+    @WithMockUser(value = "beaver2")
+    @Test
+    public void testMostrarPerfilUsuario2() throws Exception {
+        //Se mockean las valoraciones, este usuario NO tiene.
+        System.out.println(this.beaver1.getFirstName());
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver2);
+
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", 12))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("beaver"))
+            .andExpect(model().attributeExists("portfolio"))
+            .andExpect(model().attribute("sinPuntuacionMedia", "Aún no hay valoraciones"))
+            .andExpect(model().attribute("numValoraciones", 0))
             .andExpect(view().name("users/perfilBeaver"));
     }
 
@@ -144,6 +179,7 @@ public class BeaverControllerTests {
     public void testMostrarPerfilUsuarioPortfolioNulo() throws Exception {
 
         System.out.println(this.beaver1.getFirstName());
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver2);
 
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}", 12))
             .andExpect(status().isOk())
@@ -210,5 +246,110 @@ public class BeaverControllerTests {
             .andExpect(MockMvcResultMatchers.model().attributeExists("beavers"));
 
     }
+    
+    @WithMockUser(value = "beaveradmin")
+    @Test
+    public void banBeaver() throws Exception {
+    	
+    	 final User user = new User();
+         user.setUsername("beaver3");
+         user.setPassword("supersecretpass");
+         Authorities au = new Authorities();
+ 		Set<Authorities> col = new HashSet<>();
+ 		col.add(au);
+ 		au.setAuthority("admin");
+ 		au.setUser(user);
+ 		user.setAuthorities(col);
+         user.setEnabled(true);
+
+         Beaver beaver3 = new Beaver();
+         beaver3.setId(34);
+         beaver3.setFirstName("Nombre");
+         beaver3.setId(11);
+         beaver3.setLastName("Apellidos");
+         beaver3.setEmail("valid@gmail.com");
+         Collection<Especialidad> esP = new HashSet<>();
+         esP.add(Especialidad.ILUSTRACION);
+         beaver3.setEspecialidades(esP);
+         beaver3.setDni("12145678Q");
+         beaver3.setUser(user);
+         List<Authorities> lista = new ArrayList<Authorities>();
+ 		 lista.add(au);
+ 		 BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
+    	
+    	this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/beaverInfo/{beaverId}/ban", TEST_BEAVER_ID).with(csrf()))
+    		.andExpect(status().is3xxRedirection())
+    		.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/list/"));
+    }
+    
+    @WithMockUser(value = "beaveradmin")
+    @Test
+    public void banBeaverNotAuthorized() throws Exception {
+
+         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver1);
+    	
+    	this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/beaverInfo/{beaverId}/ban", TEST_BEAVER_ID).with(csrf()))
+    		.andExpect(status().isOk())
+    		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testInitEditPhoto() throws Exception {
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("beaver"))
+            .andExpect(view().name("users/editarFotoPerfil"));
+    }
+
+    @WithMockUser(value = "beaver2")
+    @Test
+    public void testInitEditPhotoHasErrors() throws Exception {
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID))
+            .andExpect(status().isOk())
+            .andExpect(view().name("accesoNoAutorizado"));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditPhoto() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("urlFotoPerfil", "https://cdn.domestika.org/c_fill,dpr_1.0,h_1200,t_base_params.format_jpg,w_1200/v1589759117/project-covers/000/721/921/721921-original.png?1589759117"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/beavers/beaverInfo/"+TEST_BEAVER_ID));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditPhtoHasErrors() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}//editPhoto", TEST_BEAVER_ID).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("urlFotoPerfil", "fotillo"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("users/editarFotoPerfil"));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditPhotoHasError2() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editPhoto", 12).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("urlFotoPerfil", "https://cdn.domestika.org/c_fill,dpr_1.0,h_1200,t_base_params.format_jpg,w_1200/v1589759117/project-covers/000/721/921/721921-original.png?1589759117"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("accesoNoAutorizado"));
+    }
+
 
 }

@@ -14,7 +14,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.URL;
 
 
 import lombok.Getter;
@@ -30,9 +29,9 @@ public class Solicitud extends BaseEntity{
     private Estados estado;
 
     @Min(0)
-    @Digits(fraction=2,integer=6)
-    @NotNull
-    private double precio;
+    @NotNull(message = "no puede estar vacío")
+    @Digits(fraction = 2,integer = 6, message = "Debe contener 6 dígitos y 2 decimales")
+    private Double precio;
 
     @ElementCollection(targetClass = String.class)
     @CollectionTable(name = "solicitud_fotos", joinColumns = {@JoinColumn(name="solicitud_id")})

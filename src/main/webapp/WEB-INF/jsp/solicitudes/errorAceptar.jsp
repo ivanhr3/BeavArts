@@ -8,9 +8,9 @@
     uri="http://www.springframework.org/security/tags%22%%3E" %>
  --%>
 <beavarts:layout pageName="errorAceptar">
-
-    <h2>Ha ocurrido un error al intentar aceptar la solicitud</h2>
-
-	<a class="btn btn-default" href="/">Volver al inicio</a>
-
+<div class="minAlto">
+    <h2 class="SegoeFont">Ha ocurrido un error al intentar aceptar la solicitud</h2>
+	<br/>
+	<a class="btn btn-primary" href="/">Volver al inicio</a>
+</div>
 </beavarts:layout>

@@ -1,8 +1,9 @@
 package org.springframework.samples.petclinic.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Set;
 
@@ -89,5 +90,56 @@ public class ValoracionValidatorTests {
 		ConstraintViolation<Valoracion> con = c.iterator().next();
 		assertThat(con.getPropertyPath().toString()).isEqualTo("comentario");
 		assertThat(con.getMessage()).isEqualTo("size must be between 10 and 300");
+	}
+
+	@Test
+	@DisplayName("Validar las relaciones del modelo")
+	void entityRelationsTests() {
+		
+		LocaleContextHolder.setLocale(Locale.ENGLISH);
+
+		//ARRANGE
+		Beaver beaver = new Beaver();
+        beaver.setFirstName("Nombre");
+        beaver.setLastName("Apellidos");
+        beaver.setEmail("valid@gmail.com");
+        Collection<Especialidad> espe = new ArrayList<>();
+        espe.add(Especialidad.ACRILICO);
+        beaver.setEspecialidades(espe);
+        beaver.setDni("12345678Q");
+            User user = new User();
+            user.setUsername("User");
+            user.setPassword("supersecretpass");
+            user.setEnabled(true);
+            beaver.setUser(user);
+		
+		Beaver beaver2 = new Beaver();
+		beaver2.setFirstName("Nombre");
+		beaver2.setLastName("Apellidos");
+		beaver2.setEmail("valid2@gmail.com");
+		Collection<Especialidad> espe2 = new ArrayList<>();
+		espe2.add(Especialidad.ACRILICO);
+		beaver2.setEspecialidades(espe2);
+		beaver2.setDni("12345678Q");
+			User user2 = new User();
+			user2.setUsername("User2");
+			user2.setPassword("supersecretpass");
+			user2.setEnabled(true);
+			beaver2.setUser(user2);
+        
+
+		Valoracion val = new Valoracion();
+		val.setComentario("Gran Escultor, Mejor persona");
+        val.setPuntuacion(4.50);
+		val.setBeaver(beaver);
+		val.setValAuthor(beaver2);
+				
+				
+		//ACT
+		Validator v = createValidator();
+		Set<ConstraintViolation<Valoracion>> c = v.validate(val);
+				
+		//ASSERT
+		assertThat(c.size()).isEqualTo(0);
 	}
 }
