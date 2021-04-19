@@ -77,13 +77,13 @@
 				
 					<li>
 					<div class="buttonHeaderImagePerfil aumentoHover">
-					<a class="nav-link izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/users/new" />">¡Regístrate!</a>
+					<a class="nav-link izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/users/new" />">Â¡RegÃ­strate!</a>
 					</div>
 					</li>
 					
 					<li>
 					<div class="buttonHeaderImageLogin aumentoHover">
-					<a class="nav-link izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/login" />">Iniciar Sesión</a>
+					<a class="nav-link izqHover"style="font-family:SegoePrint; font-weight:bold; color:#000" href="<c:url value="/login" />">Iniciar SesiÃ³n</a>
 					</div>
 					</li>
 					
