@@ -78,7 +78,7 @@
 										<b>Encargo:</b> ${factura.solicitud.encargo.titulo} 
 									</c:if>
 									<c:if test="${factura.solicitud.anuncio != null}">
-										Anuncio: ${factura.solicitud.anuncio.titulo}">	
+									<b>Anuncio:</b> ${factura.solicitud.anuncio.titulo}	
 									</c:if>
 									<br/>
 									<b>Precio:</b> ${factura.precio} €	
