@@ -56,9 +56,15 @@
 									</div>
 									<div style="width: 50%;"class="col-xs-6 text-right">
 										<address>
+											<c:if test="${factura.solicitud.encargo != null || factura.solicitud.anuncio != null}">
 											<strong>Estado de la solicitud:</strong><br>
 											${factura.solicitud.estado}<br>
-										
+										</c:if>
+
+										<c:if test="${factura.solicitud.encargo == null && factura.solicitud.anuncio == null}">
+											<strong>Estado de la solicitud:</strong><br>
+											Solicitud Eliminada, reembolsar pago.<br>
+										</c:if>
 										</address>
 									</div>
 								</div>

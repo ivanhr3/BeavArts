@@ -17,11 +17,13 @@ import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.Estados;
+import org.springframework.samples.petclinic.model.Factura;
 import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,15 +43,17 @@ public class AnuncioController {
 	private final AnuncioService	anuncioService;
 	private final BeaverService		beaverService;
 	private final SolicitudService	solicitudService;
+	private final FacturaService	facturaService;
 	private static final String		VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM	= "anuncios/createAnunciosForm";
 
 
 	@Autowired
-	public AnuncioController(final EncargoService encargoService, final AnuncioService anuncioService, final BeaverService beaverService, final SolicitudService solicitudService) throws ClassNotFoundException {
+	public AnuncioController(final EncargoService encargoService, final AnuncioService anuncioService, final BeaverService beaverService, final SolicitudService solicitudService, final FacturaService facturaService) throws ClassNotFoundException {
 		this.encargoService = encargoService;
 		this.anuncioService = anuncioService;
 		this.beaverService = beaverService;
 		this.solicitudService = solicitudService;
+		this.facturaService = facturaService;
 	}
 
 	//Añadido para usarlo en el jsp
@@ -182,12 +186,17 @@ public class AnuncioController {
 				
 				model.addAttribute("anuncio", anuncio);
 				model.addAttribute("createdByUser", true); 
-				model.put("urlEliminar", true);
-				model.put("errorEliminarSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de eliminar.");
+				model.addAttribute("urlEliminar", true);
+				model.addAttribute("errorEliminarSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de eliminar.");
 				return "anuncios/anunciosDetails";
 
 			} else {
 				for (Solicitud s : anuncio.getSolicitud()) {
+					Factura factura = this.facturaService.findFacturaBySolicitud(s);
+					if(factura != null){
+						factura.setSolicitud(null);
+						this.facturaService.saveFactura(factura);
+					}
 					this.solicitudService.deleteSolicitud(s);
 				}
 				this.anuncioService.deleteAnuncio(anuncioId);

@@ -11,4 +11,7 @@ public interface FacturaRepository extends CrudRepository<Factura, Integer> {
 
 	@Query("select f from Factura f where f.id = ?1")
 	Factura findFacturaByIntId(int id);
+
+	@Query("select f from Factura f where f.solicitud.id = ?1")
+	Factura findFacturayBySolicitud(int id);
 }
