@@ -384,6 +384,9 @@ public class SolicitudController {
     public String initCrearSolicitudAnuncios(@PathVariable("anuncioId") int anuncioId, final ModelMap model) {
         Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
         Beaver beaver = this.beaverService.getCurrentBeaver();
+        if (beaver != null) {
+            model.put("myBeaverId", beaver.getId());
+        }
 
         if (anuncio.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
             return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo.
@@ -402,7 +405,9 @@ public class SolicitudController {
         Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
         Beaver beaver = this.beaverService.getCurrentBeaver();
         model.put("anuncio", anuncio);
-
+        if (beaver != null) {
+            model.put("myBeaverId", beaver.getId());
+        }
         if(result.hasErrors() || !this.solicitudService.isCollectionAllURL(solicitud)) {
             model.addAttribute("solicitud", solicitud);
             if(!this.solicitudService.isCollectionAllURL(solicitud)) {

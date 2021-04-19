@@ -168,6 +168,9 @@
 					                      		<i class="fas fa-camera-retro"></i>
 					                      	</c:if>
 	                    				<c:out value="${anuncio.especialidad} "/>
+	                    				<c:if test="${anuncio.especialidad==null}">
+					                      		Sin categoría
+					                      	</c:if>
 	                				</h6>           
 		      		<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
 	                	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>

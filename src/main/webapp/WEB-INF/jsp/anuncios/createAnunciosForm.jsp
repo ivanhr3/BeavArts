@@ -26,7 +26,7 @@
 			<b class="SegoeFont" style="margin-left:15px">*Descripción:</b>
 			<beavarts:inputField label="" name="descripcion"/>
             <div class="control-group">
-            <b class="SegoeFont" style="margin-left:15px">*Seleccione una categoría</b>
+            <b class="SegoeFont" style="margin-left:15px">Seleccione una categoría</b>
             	<beavarts:selectField name="especialidad" label="" names="${types}" size="8"/>
             </div>
             <b class="SegoeFont" style="margin-left:15px">Introduce URL de la foto:</b>

@@ -128,7 +128,9 @@
 				                      
 				                      
 				                      </c:choose>
-		                          
+		                          <c:if test="${solicitud.anuncio.especialidad==null}">
+					                      		Sin especialidad
+					                      	</c:if>
 	                    				<c:out value="${solicitud.anuncio.especialidad} "/> &nbsp;
 		                        
 		                      </div>
@@ -271,7 +273,9 @@
 				                      
 				                      
 				                      </c:choose>
-		                          
+		                          <c:if test="${solicitud.anuncio.especialidad==null}">
+					                      		Sin especialidad
+					                      	</c:if>
 	                    				<c:out value="${solicitud.anuncio.especialidad} "/> &nbsp;
 		                        
 		                      </div>

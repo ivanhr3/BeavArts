@@ -66,7 +66,10 @@
 					                      	<c:if test="${anuncio.especialidad == 'FOTOGRAFIA'}">
 					                      		<i class="fas fa-camera-retro"></i>
 					                      	</c:if>
-	                    				<c:out value="${anuncio.especialidad} "/></h6>
+	                    				<c:out value="${anuncio.especialidad} "/>
+	                    				<c:if test="${anuncio.especialidad==null}">
+					                      		Sin categoría
+					                      	</c:if></h6>
         		<br/>
         		<a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
         	</div>
