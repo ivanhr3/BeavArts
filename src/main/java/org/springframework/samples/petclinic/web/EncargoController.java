@@ -12,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
+import org.springframework.samples.petclinic.model.Factura;
 import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -34,14 +36,16 @@ public class EncargoController {
 	private final EncargoService	encargoService;
 	private final BeaverService		beaverService;
 	private final SolicitudService	solicitudService;
+	private final FacturaService 	facturaService;
 	private static final String		VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
 
 
 	@Autowired
-	public EncargoController(final EncargoService encargoService, final BeaverService beaverService, final SolicitudService solicitudService, final AuthoritiesService authoritiesService) throws ClassNotFoundException {
+	public EncargoController(final EncargoService encargoService, final BeaverService beaverService, final SolicitudService solicitudService, final AuthoritiesService authoritiesService, final FacturaService facturaService) throws ClassNotFoundException {
 		this.encargoService = encargoService;
 		this.beaverService = beaverService;
 		this.solicitudService = solicitudService;
+		this.facturaService = facturaService;
 	}
 
 	//Create
@@ -211,6 +215,11 @@ public class EncargoController {
 			return "accesoNoAutorizado"; // Acceso no autorizado
 		} else if (esAdmin) {
 			for (Solicitud s : this.encargoService.findEncargoById(encargoId).getSolicitud()) {
+				Factura factura = this.facturaService.findFacturaBySolicitud(s);
+				if(factura != null){
+					factura.setSolicitud(null);
+					this.facturaService.saveFactura(factura);
+				}
 				this.solicitudService.deleteSolicitud(s);
 			}
 			this.encargoService.deleteEncargoById(encargoId);

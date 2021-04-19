@@ -28,5 +28,7 @@ public class Factura extends BaseEntity{
 
     @OneToOne
     private Solicitud solicitud;
+
+    private Double precio;
     
 }

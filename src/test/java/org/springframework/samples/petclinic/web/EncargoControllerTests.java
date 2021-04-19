@@ -10,6 +10,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,6 +28,7 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -59,6 +61,9 @@ public class EncargoControllerTests {
 
 	@MockBean
 	private SolicitudService	solicitudService;
+
+	@MockBean
+	private FacturaService		facturaService;
 
 	private static final int	TEST_BEAVER_ID		= 99;
 	private static final int	TEST_ENCARGO_ID		= 1;
@@ -95,6 +100,7 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+		BDDMockito.doNothing().when(this.facturaService).saveFactura(ArgumentMatchers.any());
 	}
 
 	@WithMockUser(value = "User123")

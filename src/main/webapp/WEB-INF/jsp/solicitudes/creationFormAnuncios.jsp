@@ -58,7 +58,9 @@
 				                      
 				                      
 				                      </c:choose>
-		                          
+		                          			<c:if test="${anuncio.especialidad==null}">
+					                      		Sin especialidad
+					                      	</c:if>
 	                    				<c:out value="${anuncio.especialidad} "/> &nbsp;
 		                        
 		                      </div>

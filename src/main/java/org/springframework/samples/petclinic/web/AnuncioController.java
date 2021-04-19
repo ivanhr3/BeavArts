@@ -17,11 +17,13 @@ import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.Estados;
+import org.springframework.samples.petclinic.model.Factura;
 import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
+import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,15 +43,17 @@ public class AnuncioController {
 	private final AnuncioService	anuncioService;
 	private final BeaverService		beaverService;
 	private final SolicitudService	solicitudService;
+	private final FacturaService	facturaService;
 	private static final String		VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM	= "anuncios/createAnunciosForm";
 
 
 	@Autowired
-	public AnuncioController(final EncargoService encargoService, final AnuncioService anuncioService, final BeaverService beaverService, final SolicitudService solicitudService) throws ClassNotFoundException {
+	public AnuncioController(final EncargoService encargoService, final AnuncioService anuncioService, final BeaverService beaverService, final SolicitudService solicitudService, final FacturaService facturaService) throws ClassNotFoundException {
 		this.encargoService = encargoService;
 		this.anuncioService = anuncioService;
 		this.beaverService = beaverService;
 		this.solicitudService = solicitudService;
+		this.facturaService = facturaService;
 	}
 
 	//Añadido para usarlo en el jsp
@@ -132,6 +136,7 @@ public class AnuncioController {
 			if (anunc.getSolicitud() != null && anunc.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO)) {
 				model.addAttribute("anuncio", anunc);
 				model.addAttribute("createdByUser", true); 
+				model.addAttribute("promocionado", anunc.getDestacado());
 				model.put("urlEdit", true);
 				model.put("errorEditarSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de editar.");
 				return "anuncios/anunciosDetails";
@@ -155,7 +160,7 @@ public class AnuncioController {
 			model.addAttribute("anuncio", anuncio);
 			return AnuncioController.VIEWS_ANUNCIO_CREATE_OR_UPDATE_FORM; //Si hay algún error de campo se redirige a la misma vista
 		} else {
-			BeanUtils.copyProperties(anuncio, anunc, "id", "beaver");
+			BeanUtils.copyProperties(anuncio, anunc, "id", "beaver", "destacado");
 			this.anuncioService.saveAnuncio(anunc);
 			return "redirect:/beavers/" + beaver.getId() + "/anuncios/" + anuncioId;
 		}
@@ -183,11 +188,17 @@ public class AnuncioController {
 				model.addAttribute("anuncio", anuncio);
 				model.addAttribute("createdByUser", true); 
 				model.put("urlEliminar", true);
+				model.addAttribute("promocionado", anuncio.getDestacado());
 				model.put("errorEliminarSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de eliminar.");
 				return "anuncios/anunciosDetails";
 
 			} else {
 				for (Solicitud s : anuncio.getSolicitud()) {
+					Factura factura = this.facturaService.findFacturaBySolicitud(s);
+					if(factura != null){
+						factura.setSolicitud(null);
+						this.facturaService.saveFactura(factura);
+					}
 					this.solicitudService.deleteSolicitud(s);
 				}
 				this.anuncioService.deleteAnuncio(anuncioId);

@@ -61,6 +61,7 @@ public class SolicitudController {
         //De esta forma si al crear la solicitud falla no se desaparecen los datos del encargo, haciendo
         //que haya que recargar la pagina para verlos
         //model.addAttribute("encargo", encargo);
+        //comentario
 
         if (encargo.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
             return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo.
@@ -124,6 +125,7 @@ public class SolicitudController {
                 Factura factura = new Factura();
 				factura.setEmailBeaver(encargo.getBeaver().getEmail());
 				factura.setEmailPayer(beaver.getEmail());
+                factura.setPrecio(encargo.getPrecio());
 				
 				this.solicitudService.crearSolicitud(solicitud, encargo, beaver);
 				factura.setSolicitud(solicitud);
@@ -277,8 +279,9 @@ public class SolicitudController {
             } else {
                 sol.setEstado(Estados.ACEPTADO);
                 Factura factura = new Factura();
-				factura.setEmailBeaver(anuncio.getBeaver().getEmail());
+				factura.setEmailBeaver(sol.getBeaver().getEmail());
 				factura.setEmailPayer(beaver.getEmail());
+                factura.setPrecio(sol.getPrecio());
 
 				this.solicitudService.saveSolicitud(sol);
 				
@@ -383,6 +386,9 @@ public class SolicitudController {
     public String initCrearSolicitudAnuncios(@PathVariable("anuncioId") int anuncioId, final ModelMap model) {
         Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
         Beaver beaver = this.beaverService.getCurrentBeaver();
+        if (beaver != null) {
+            model.put("myBeaverId", beaver.getId());
+        }
 
         if (anuncio.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
             return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo.
@@ -401,7 +407,9 @@ public class SolicitudController {
         Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
         Beaver beaver = this.beaverService.getCurrentBeaver();
         model.put("anuncio", anuncio);
-
+        if (beaver != null) {
+            model.put("myBeaverId", beaver.getId());
+        }
         if(result.hasErrors() || !this.solicitudService.isCollectionAllURL(solicitud)) {
             model.addAttribute("solicitud", solicitud);
             if(!this.solicitudService.isCollectionAllURL(solicitud)) {

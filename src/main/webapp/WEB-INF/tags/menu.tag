@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="//db.onlinewebfonts.com/c/c455d94eee43dc4ceeb83c0c0fd0d4c8?family=Segoe+Print" rel="stylesheet" type="text/css"/>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<%@tag pageEncoding="UTF-8" %>
+<meta charset="UTF-8">
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 
 <nav class="navbar navbar-custom navbar-expand-lg sticky-top">
       <a class="navbar-brand" href="<spring:url value="/" htmlEscape="true" />"><img src="/resources/images/v22.png"  class="d-inline-block align-top" alt="/"></a>
