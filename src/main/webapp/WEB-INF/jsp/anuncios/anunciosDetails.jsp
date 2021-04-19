@@ -94,7 +94,7 @@
   </div>
   </div>
   <br/>
-  <c:if test = "${authenticated}">
+
     <div class="text-center">
     <c:if test="${createdByUser == false}">
 				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
@@ -162,7 +162,6 @@
 			</form:form>
 		</c:if>
     </c:if>
-</c:if>
     <security:authorize access="hasAuthority('admin')">
 	    &nbsp;              
 	    <spring:url value="{anuncioId}/delete" var="deleteAnuncioUrl">

@@ -136,6 +136,7 @@ public class AnuncioController {
 			if (anunc.getSolicitud() != null && anunc.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO)) {
 				model.addAttribute("anuncio", anunc);
 				model.addAttribute("createdByUser", true); 
+				model.addAttribute("promocionado", anunc.getDestacado());
 				model.put("urlEdit", true);
 				model.put("errorEditarSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de editar.");
 				return "anuncios/anunciosDetails";
@@ -186,8 +187,9 @@ public class AnuncioController {
 				
 				model.addAttribute("anuncio", anuncio);
 				model.addAttribute("createdByUser", true); 
-				model.addAttribute("urlEliminar", true);
-				model.addAttribute("errorEliminarSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de eliminar.");
+				model.put("urlEliminar", true);
+				model.addAttribute("promocionado", anuncio.getDestacado());
+				model.put("errorEliminarSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de eliminar.");
 				return "anuncios/anunciosDetails";
 
 			} else {
