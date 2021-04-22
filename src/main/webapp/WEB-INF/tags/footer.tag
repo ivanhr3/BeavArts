@@ -45,7 +45,7 @@
         role="button"
         data-mdb-ripple-color="dark"
         ><i style="color: #000000;" class="fab fa-github"></i></a>
-    <p style="color: #000000;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
+    <p class="responsiveFontSmartphoneTexto" style="color: #000000;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
   </div>
   <!-- Copyright -->
 </footer>
