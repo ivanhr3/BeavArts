@@ -123,16 +123,9 @@
 		    	<i style="color: orange; " class="fas fa-star"> </i>
 				<p style="color: black; float: right; font-style: italic; margin-top: 5px;font-size: medium;"> &nbsp;Promocionado</p>
 		    	</div>
-				
 				</c:if>
-		    	
-		    	
 		    	</h4>
-		    	
-		    	
-		    	
-		    	</div>  
-		    	
+		    	</div>
 		    	<div class="card-body">
 		      	<p>${anuncio.descripcion}</p>
 		      	<div class="row">
@@ -187,20 +180,50 @@
 	                        <spring:param name="anuncioId" value="${anuncio.id}"/>
 	                        <spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	                	</spring:url>
-				     <a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
-		    	
+	                	<div class="text-center">
+				     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${anuncio.id}">Ver más
+						</button>
+						</div>
 		    </div>
 		    </div>
-		    
 		    </div>
 		    </div>
-		    
+						<div class="modal fade" id="myModal${anuncio.id}">
+  						<div class="modal-dialog modal-dialog-centered modal-lg">
+    					<div class="modal-content">
+    					
+    					<!-- Modal Header -->
+    					<div class="modal-header">
+        					<h4 class="modal-title col-11 text-center">${anuncio.titulo}</h4>
+        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+     						 </div>
+     						 
+     						 <!-- Modal Body -->
+     						 <div class="modal-body">
+        						<p>${anuncio.descripcion}</p>
+        						<p>Precio: ${anuncio.precio}€</p>
+				     		<c:if test="${!anuncio.photo.isEmpty()}">
+            					<p class="mb-0">Imagen de ejemplo</p>
+            						<br/>
+            					<img class ="img-thumbnail" src="${anuncio.photo}" alt="">
+        					</c:if>
+        					
+        					<c:if test="${anuncio.photo.isEmpty()}">
+            				<p class="mb-0">No hay imagen para mostrar</p>
+        					</c:if>	
+      						</div>
+      						
+      						<!-- Modal Footer -->
+     						 <div class="modal-footer justify-content-center">
+     						 
+        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+      							</div>
+    					</div>
+    					</div>
+    					</div>
 	</c:forEach>
-	
 	</c:if>
-
 	</div>
-
 </div>
 </jsp:body> 
 </beavarts:layout>
