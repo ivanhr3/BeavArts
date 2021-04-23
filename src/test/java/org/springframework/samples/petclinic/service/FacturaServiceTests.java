@@ -115,4 +115,17 @@ public class FacturaServiceTests {
 		Assertions.assertEquals(id, this.solicitud1.getId());
 	}
 
+	@Test
+	@Transactional
+	void testSaveFactura() {
+		this.factura1 = new Factura();
+		this.factura1.setId(90);
+		this.factura1.setEmailBeaver("emailejemplo1@gmail.com");
+		this.factura1.setEmailPayer("emailejemplo2@gmail.com");
+		this.factura1.setSolicitud(this.solicitud1);
+		this.solicitudService.saveSolicitud(this.solicitud1);
+		this.facturaService.saveFactura(this.factura1);
+
+		Assertions.assertEquals(this.factura1.getId(), 90);
+	}
 }
