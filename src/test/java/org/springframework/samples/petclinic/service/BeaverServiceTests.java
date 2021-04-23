@@ -20,12 +20,15 @@ import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.Valoracion;
 
 
 @SpringBootTest
 public class BeaverServiceTests {
     @Autowired
     protected BeaverService beaverService;
+    @Autowired
+    protected ValoracionService valoracionService;
     
 
 
@@ -77,6 +80,7 @@ public class BeaverServiceTests {
 		Beaver beaver1 = this.beaverService.findBeaverByIntId(beaverId);
 		Assertions.assertEquals(beaver1.getId(), beaver.getId());
 	}
+    
     
     @Test
 	@Transactional
@@ -194,6 +198,91 @@ public class BeaverServiceTests {
 		String res1 = a1.getAuthority();
 		String res2 = a2.getAuthority();
 		Assertions.assertEquals(res1, res2);
+	}
+    
+    @Test
+	@Transactional
+	void testCalcularValoracion() {
+    	Beaver beaver = new Beaver();
+        beaver.setFirstName("Nombre");
+        beaver.setLastName("Apellidos");
+        beaver.setEmail("valid2@gmail.com");
+        Collection<Especialidad> espe = new ArrayList<>();
+        espe.add(Especialidad.ACRILICO);
+        beaver.setEspecialidades(espe);
+        beaver.setDni("12345678A");
+        beaver.setId(20);
+        
+        Valoracion val = new Valoracion();
+        val.setPuntuacion(3);
+        val.setBeaver(beaver);
+        Valoracion val2 = new Valoracion();
+        val2.setPuntuacion(5);
+        val2.setBeaver(beaver);
+        Set<Valoracion> num = new HashSet<>();
+        beaver.setValoraciones(num);
+
+        User user = new User();
+        user.setUsername("User");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        Authorities au2 = new Authorities();
+		Set<Authorities> col2 = new HashSet<>();
+		col2.add(au2);
+		au2.setAuthority("user");
+		au2.setUser(user);
+		user.setAuthorities(col2);
+        beaver.setUser(user);
+    
+        this.beaverService.saveBeaver(beaver);
+        this.valoracionService.saveValoracion(val);
+        this.valoracionService.saveValoracion(val2);
+
+        Double res = this.beaverService.calculatePuntuacion(beaver);
+		Assertions.assertEquals(res, 4);
+	}
+    
+    @Test
+	@Transactional
+	void testNumValoraciones() {
+    	Beaver beaver = new Beaver();
+        beaver.setFirstName("Nombre");
+        beaver.setLastName("Apellidos");
+        beaver.setEmail("valid2@gmail.com");
+        Collection<Especialidad> espe = new ArrayList<>();
+        espe.add(Especialidad.ACRILICO);
+        beaver.setEspecialidades(espe);
+        beaver.setDni("12345678A");
+        beaver.setId(20);
+        
+        Valoracion val = new Valoracion();
+        val.setPuntuacion(3);
+        val.setBeaver(beaver);
+        Valoracion val2 = new Valoracion();
+        val2.setPuntuacion(5);
+        val2.setBeaver(beaver);
+        Set<Valoracion> num = new HashSet<>();
+        beaver.setValoraciones(num);
+
+        User user = new User();
+        user.setUsername("User");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        Authorities au2 = new Authorities();
+		Set<Authorities> col2 = new HashSet<>();
+		col2.add(au2);
+		au2.setAuthority("user");
+		au2.setUser(user);
+		user.setAuthorities(col2);
+        beaver.setUser(user);
+    
+        this.beaverService.saveBeaver(beaver);
+        this.beaverService.guardarUsuario(beaver);
+        this.valoracionService.saveValoracion(val);
+        this.valoracionService.saveValoracion(val2);
+
+        Integer res = this.beaverService.getNumValoraciones(beaver);
+		Assertions.assertEquals(res, 2);
 	}
 
     
