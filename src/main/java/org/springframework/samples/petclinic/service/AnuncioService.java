@@ -1,6 +1,10 @@
 package org.springframework.samples.petclinic.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.samples.petclinic.model.Anuncio;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
@@ -8,6 +12,7 @@ import org.springframework.samples.petclinic.repository.AnuncioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -74,6 +79,20 @@ public class AnuncioService {
     @Transactional
     public List<Anuncio> findAnunciosNoDestacados() {
         return this.anuncioRepository.findAnunciosNoDestacados();
+    }
+
+    @Transactional
+    public List<Anuncio> getAllAnuncios(Integer pageNo, Integer pageSize, String sortBy)
+    {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+
+        Page<Anuncio> pagedResult = anuncioRepository.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<Anuncio>();
+        }
     }
 
 }

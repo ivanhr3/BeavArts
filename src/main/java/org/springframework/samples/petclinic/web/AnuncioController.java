@@ -28,12 +28,7 @@ import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -135,7 +130,7 @@ public class AnuncioController {
 			// Al darle al boton de editar anuncio, saldra un error si dicho anuncio tiene solicitudes aceptadas
 			if (anunc.getSolicitud() != null && anunc.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO)) {
 				model.addAttribute("anuncio", anunc);
-				model.addAttribute("createdByUser", true); 
+				model.addAttribute("createdByUser", true);
 				model.addAttribute("promocionado", anunc.getDestacado());
 				model.put("urlEdit", true);
 				model.put("errorEditarSolicitudesAceptadas", "No se puede editar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de editar.");
@@ -172,7 +167,7 @@ public class AnuncioController {
 	public String deleteAnuncio(@PathVariable("beaverId") final int beaverId, @PathVariable("anuncioId") final int anuncioId, final ModelMap model) {
 
 		Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
-		
+
 		Beaver beav = this.beaverService.getCurrentBeaver();
 		model.put("myBeaverId", beav.getId());
 		User user = beav.getUser();
@@ -184,9 +179,9 @@ public class AnuncioController {
 		} else {
 			// SOLO SE PUEDE BORRAR UN ANUNCIO SI NO TIENE SOLICITUDES ACEPTADAS
 			if (anuncio.getSolicitud() != null && anuncio.getSolicitud().stream().anyMatch(s -> s.getEstado() == Estados.ACEPTADO) && !esAdmin) {
-				
+
 				model.addAttribute("anuncio", anuncio);
-				model.addAttribute("createdByUser", true); 
+				model.addAttribute("createdByUser", true);
 				model.put("urlEliminar", true);
 				model.addAttribute("promocionado", anuncio.getDestacado());
 				model.put("errorEliminarSolicitudesAceptadas", "No se puede eliminar un anuncio con solicitudes aceptadas. Por favor, finalice dichas solicitudes antes de eliminar.");
@@ -220,7 +215,7 @@ public class AnuncioController {
 		Anuncio anuncio = this.anuncioService.findAnuncioById(anuncioId);
 
 		if (this.beaverService.getCurrentBeaver() != this.beaverService.findBeaverByIntId(beaverId)) {
-			return "accesoNoAutorizado"; // FRONT: No debe aparecer el botón para los usuarios que no crearon el anuncio. 
+			return "accesoNoAutorizado"; // FRONT: No debe aparecer el botón para los usuarios que no crearon el anuncio.
 										// Esta vista solo debe redirigirse si se intenta un acceso ilegal por url.
 		} else {
 			anuncio.setDestacado(true);
@@ -231,7 +226,10 @@ public class AnuncioController {
 
 	// LISTAR TODOS LOS ANUNCIOS EN EL MENÚ
 	@GetMapping("/anuncios/list")
-	public String listAnuncios(final ModelMap modelMap) {
+	public String listAnuncios(final ModelMap modelMap,
+                               @RequestParam(defaultValue = "0") Integer pageNo,
+                               @RequestParam(defaultValue = "10") Integer pageSize,
+                               @RequestParam(defaultValue = "destacado") String sortBy) {
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
 
@@ -240,13 +238,15 @@ public class AnuncioController {
 		}
 
 		String vista = "anuncios/listAnuncios";
-		List<Anuncio> anuncios = new ArrayList<>();
-		List<Anuncio> destacados = this.anuncioService.findAnunciosDestacados();
-		List<Anuncio> noDestacados = this.anuncioService.findAnunciosNoDestacados();
-		anuncios.addAll(destacados);
-		anuncios.addAll(noDestacados);
+        //List<Anuncio> anuncios = new ArrayList<>();
+        //List<Anuncio> destacados = this.anuncioService.findAnunciosDestacados();
+        //List<Anuncio> noDestacados = this.anuncioService.findAnunciosNoDestacados();
+        //anuncios.addAll(destacados);
+        //anuncios.addAll(noDestacados);
+        //modelMap.addAttribute("anuncios", anuncios);
 
-		modelMap.addAttribute("anuncios", anuncios);
+		List<Anuncio> listaAnuncios = this.anuncioService.getAllAnuncios(pageNo, pageSize, sortBy);
+		modelMap.addAttribute("anuncios", listaAnuncios);
 		return vista;
 	}
 

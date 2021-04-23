@@ -1,11 +1,7 @@
 
 package org.springframework.samples.petclinic.web;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,6 +72,7 @@ public class AnuncioControllerTests {
 	private List<Anuncio>				listaAnunciosPorEspecialidad;
 	private List<Anuncio>				listaAnunciosDestacados;
 	private List<Anuncio>				listaAnunciosNoDestacados;
+	private List<Anuncio>               listaAnunciosPaginacion;
 
 
 	@BeforeEach
@@ -169,6 +166,11 @@ public class AnuncioControllerTests {
 		this.listaAnunciosNoDestacados = new ArrayList<>();
 		this.listaAnunciosNoDestacados.add(this.anuncio);
 		this.listaAnunciosNoDestacados.add(this.anuncio3);
+
+		this.listaAnunciosPaginacion = new ArrayList<>();
+		this.listaAnunciosPaginacion.add(this.anuncio);
+		this.listaAnunciosPaginacion.add(this.anuncio2);
+		this.listaAnunciosPaginacion.add(this.anuncio3);
 
 		Collection<Anuncio> anunciosBeaver1 = new HashSet<>();
 		anunciosBeaver1.add(this.anuncio);
@@ -312,6 +314,8 @@ public class AnuncioControllerTests {
 	@WithMockUser(value = "testuser")
 	@Test
 	public void testListAnuncios() throws Exception {
+	    BDDMockito.given(this.anuncioService.getAllAnuncios(0, 10, "destacado")).willReturn(listaAnunciosPaginacion);
+
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/anuncios/list")).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios")).andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.view().name("anuncios/listAnuncios"));
 	}
