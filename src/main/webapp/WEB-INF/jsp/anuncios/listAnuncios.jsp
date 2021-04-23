@@ -115,11 +115,11 @@
 		    	<div class="card ${destacado}"  id="encargosCard">
 		    	
 		    	
-		    	<div class="card-header-publicaciones"><h4 class="card-title SegoeFont">${anuncio.titulo}
+		    	<div class="card-header-publicaciones"><h4 class="card-title">${anuncio.titulo}
 		    	
 		    	<c:if test="${anuncio.destacado == true}">
 		    	
-		    	<div style="float: right;">
+		    	<div class="SegoeFont" style="float: right;">
 		    	<i style="color: orange; " class="fas fa-star"> </i>
 				<p style="color: black; float: right; font-style: italic; margin-top: 5px;font-size: medium;"> &nbsp;Promocionado</p>
 		    	</div>
@@ -135,7 +135,9 @@
 		    	
 		    	<div class="card-body">
 		      	<p>${anuncio.descripcion}</p>
-		      	<h6 class="SegoeFont">Categoría:      
+		      	<div class="row">
+		      	<h6>Categoría:&nbsp;</h6>
+		      	<h6 class="SegoeFont">      
 					                      	<c:if test="${anuncio.especialidad == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
 					                      	</c:if>
@@ -171,18 +173,22 @@
 	                    				<c:if test="${anuncio.especialidad==null}">
 					                      		Sin categoría
 					                      	</c:if>
-	                				</h6>           
+	                				</h6>
+	                </div>           
 		      		<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
 	                	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	               	</spring:url>
-		     	<h6 class="SegoeFont">Publicado por:
-				     <a href="${fn:escapeXml(beaverUrl)}">
+	            <div class="row">
+		     	<h6>Publicado por:&nbsp;</h6>
+				     <h6 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">
 				     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
+				</div>
 				     <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
 	                        <spring:param name="anuncioId" value="${anuncio.id}"/>
 	                        <spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	                	</spring:url>
 				     <a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
+		    	
 		    </div>
 		    </div>
 		    
