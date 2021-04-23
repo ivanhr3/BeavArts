@@ -36,7 +36,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Título </h5>
+                      <h5>Título </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="beaverUrl">
@@ -49,7 +49,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Precio</h5>
+                      <h5>Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       <c:out value="${encargo.precio} €"/>
@@ -85,7 +85,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Especialidad</h5>
+                      <h5>Especialidad</h5>
                     </div>
                     
                      <div style="color:grey" class="candidate-list-option">
@@ -137,7 +137,7 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Precio</h5>
+                      <h5>Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       <c:out value="${anuncio.precio} €"/>
@@ -160,7 +160,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Estado </h5>
+                      <h5>Estado </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
                        <h3>
@@ -189,7 +189,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Precio</h5>
+                      <h5>Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       <c:out value="${solicitud.precio} €"/>
@@ -198,9 +198,9 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Realizado por </h5>
+                      <h5>Realizado por </h5>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="col-sm-9 SegoeFont text-secondary">
                       <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 		<spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                		  </spring:url>
@@ -212,7 +212,7 @@
                     <hr>
     				<div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0 SegoeFont">Contacto: </h6>
+                      <h6>Contacto: </h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
            				<c:out value="${solicitud.beaver.email}"/>
@@ -224,7 +224,7 @@
                   
                   <div class="row">
                     <div class="col-sm-3">
-                      <h5 class="mb-0 SegoeFont">Condiciones propuestas </h5>
+                      <h5>Condiciones propuestas </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
                       

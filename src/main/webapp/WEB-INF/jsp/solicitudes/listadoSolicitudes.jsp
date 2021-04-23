@@ -23,7 +23,7 @@
     <c:if test="${solicitud.encargo != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading SegoeFont">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading ">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -48,9 +48,13 @@
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
+                  <div class="row">  
+                    <p class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</p>
+                    <div class="SegoeFont">
+                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a>
                     
-                    <p class="list-group-item-text" style="color:#34302D;">Realizada por: 
-                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+        			</div>
+        		</div>
         </div>  
         <div id="derecha" style="text-align: right;"> 
                 	
@@ -68,7 +72,7 @@
     <c:if test="${solicitud.anuncio != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading SegoeFont">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading ">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -138,9 +142,12 @@
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
-                    
-                    <p class="list-group-item-text" style="color:#34302D;">Realizada por: 
-                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+                    <div class="row">
+                    <p class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;<p>
+                    <div class="SegoeFont">
+                    <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+        			</div>
+        			</div>
         </div>  
         <div id="derecha" style="text-align: right;"> 
                 	
@@ -168,7 +175,7 @@
 	<c:if test="${solicitud.encargo != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading SegoeFont">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -195,9 +202,12 @@
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
-                    
-                    <p class="list-group-item-text" style="color:#34302D;">Realizada por: 
-                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+                 <div class="row">
+                    <p class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;<p>
+                    <div class="SegoeFont"> 
+                    <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+        		</div>
+        		</div>
         </div>  
         <div id="derecha" style="text-align: right;"> 
                 	
@@ -213,7 +223,7 @@
     <c:if test="${solicitud.anuncio != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading SegoeFont">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -235,7 +245,7 @@
 					 </c:choose>
                 </h4>
                 
-                <div style="color:grey" class="candidate-list-option">
+                <div class="SegoeFont" style="color:black" class="candidate-list-option">
 		                          
 		                          <c:choose>
 	                      
@@ -283,9 +293,12 @@
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
-                    
-                    <p class="list-group-item-text" style="color:#34302D;">Realizada por: 
-                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+                 <div class="row">   
+                    <p class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</p>
+                    <div class="SegoeFont">
+                    <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+        		 	</div>
+        		 </div>
         </div>  
         <div id="derecha" style="text-align: right;"> 
                 	

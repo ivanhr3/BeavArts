@@ -74,11 +74,13 @@
 		    	</div>
 				</c:if>
         	<c:if test="${createdByUser== false}">
-            	<h3 class="mb-0 SegoeFont">Publicado por: </h3><br/><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h5><br/>
+        	<div class="row">
+            	<h3 class="mb-0 ">Publicado por:&nbsp; </h3><br/><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
+            </div>
             </c:if>
-           		<h3 class="mb-0 SegoeFont">Precio: </h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.precio} €"/></h5>
+           		<h3 class="mb-0 ">Precio: </h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.precio} €"/></h5>
         	<br/>
-           		<h3 class="mb-0 SegoeFont">Descripción: </h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.descripcion}"/></h5>
+           		<h3 class="mb-0 "></h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.descripcion}"/></h5>
         	
 		<c:if test="${!anuncio.photo.isEmpty()}">
             	<h3 class="mb-0 SegoeFont">Imagen de ejemplo</h3>
