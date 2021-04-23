@@ -179,12 +179,18 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
 
 <beavarts:layout pageName="beavers">
 <div class="formulario">
-    <h2 class="SegoeFont text-center responsiveFontSmartphoneTitulo">
-        <c:if test="${beaver['new']}">
-            ¡Hazte beaver! 
-        </c:if>
-    </h2>
+	
+	<div style="position: relative; text-align: center; margin-bottom:30px">
+		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
+	                                             
+	    <h2 class="SegoeFont text-center responsiveFontSmartphoneTitulo2" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">
+	        <c:if test="${beaver['new']}">
+	            ¡Hazte beaver! 
+	        </c:if>
+	    </h2>
+    </div>
     <br/>
+    
 <div class="container justify-content-center" style="display:block;">
     <!-- ############################################################################3 -->
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form">

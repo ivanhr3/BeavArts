@@ -10,7 +10,7 @@
     	<h1 class="SegoeFont responsiveFontSmartphoneTitulo">¡Bienvenido al portal BeavArts!</h1>
     	<br>
         <h2 class="SegoeFont responsiveFontSmartphoneTituloMediano">Para ver todas las funcionalidades, <i>inicia sesión.</i></h2>
-        <h2 class="SegoeFont responsiveFontSmartphoneTituloMediano">Y si aún no formas parte de esta gran comunidad, <i> <a href="/users/new"><b  class="SegoeFont" style="color:#5e8a58"> ¡regístrate!</b></a></i></h2>
+        <h2 class="SegoeFont responsiveFontSmartphoneTituloMediano">Y si aún no formas parte de esta gran comunidad, <i>¡regístrate!</i></h2>
        
         <div class="col-12 text-center imagenResponsive">
             <img src="<spring:url value="/resources/images/emblema.png" htmlEscape="true" />"

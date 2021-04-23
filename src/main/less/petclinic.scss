@@ -9964,6 +9964,16 @@ td {
 	margin-bottom:20px;
 }
 
+.SignBoardRegister {
+	display: block; 
+    margin-left: auto; 
+    margin-right: auto; 
+    -webkit-filter: drop-shadow(5px 5px 5px #222 ); 
+    filter: drop-shadow(5px 5px 5px #222);
+	width:300px;
+	 height:150px;
+}
+
 @media (max-width:415px) {
 	
 	.responsiveFontSmartphoneTexto{
@@ -10095,6 +10105,20 @@ td {
 		text-align: center;
 	}
 	
+	.SignBoardRegister {
+		display: block; 
+    	margin-left: auto; 
+   	 	margin-right: auto; 
+    	-webkit-filter: drop-shadow(5px 5px 5px #222 ); 
+    	filter: drop-shadow(5px 5px 5px #222);
+		width:200px;
+	 	height:150px;
+	}
+	
+	.responsiveFontSmartphoneTitulo2{
+		font-size:20px;
+	}
+	
 }
 
 @media (max-width:355px) {
@@ -10105,3 +10129,5 @@ td {
 		
 	}	
 }
+
+
