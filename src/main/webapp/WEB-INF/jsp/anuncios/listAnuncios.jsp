@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -17,7 +17,7 @@
 
 <jsp:attribute name="customScript">
 	
-	<!-- Script filtro %-->
+	<%-- Script filtro  --%>
 	
 		<script>
 			filterSelection("all")
@@ -109,13 +109,13 @@
 			<c:set var="destacado" value="destacadoNo"></c:set>
 		</c:if>
 		<div class="mb-3 centerContainerVal">
-		  <div class="carTam column ${anuncio.especialidad}">
+		  <div class="carTam column ${fn:escapeXml(anuncio.especialidad)}">
 		    	
 		    	
-		    	<div class="card ${destacado}"  id="encargosCard">
+		    	<div class="card ${fn:escapeXml(destacado)}"  id="encargosCard">
 		    	
 		    	
-		    	<div class="card-header-publicaciones"><h4 class="card-title SegoeFont">${anuncio.titulo}
+		    	<div class="card-header-publicaciones"><h4 class="card-title SegoeFont">${fn:escapeXml(anuncio.titulo)}
 		    	
 		    	<c:if test="${anuncio.destacado == true}">
 		    	
@@ -134,7 +134,7 @@
 		    	</div>  
 		    	
 		    	<div class="card-body">
-		      	<p>${anuncio.descripcion}</p>
+		      	<p>${fn:escapeXml(anuncio.descripcion)}</p>
 		      	<h6 class="SegoeFont">Categoría:      
 					                      	<c:if test="${anuncio.especialidad == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
@@ -182,7 +182,7 @@
 	                        <spring:param name="anuncioId" value="${anuncio.id}"/>
 	                        <spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	                	</spring:url>
-				     <a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
+				     <a href="${fn:escapeXml(anuncioUrl)}" class="btn btn-primary" id="verMas">Ver más</a>
 		    </div>
 		    </div>
 		    
