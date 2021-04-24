@@ -73,12 +73,12 @@
 	<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 	<c:if test="${anuncios.isEmpty()}">
 	<br/>
-		 <h3 class="SegoeFont">Lo sentimos, no hay anuncios disponibles por el momento.</h3>
+		 <h3>Lo sentimos, no hay anuncios disponibles por el momento.</h3>
 	</c:if>
 	
 	
 	<c:if test="${!anuncios.isEmpty()}">
-	<b class="SegoeFont" style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto! </b>
+	<b style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto! </b>
 	
 	
 	<div id="myBtnContainer">
@@ -127,10 +127,11 @@
 		    	</h4>
 		    	</div>
 		    	<div class="card-body">
-		      	<p>${anuncio.descripcion}</p>
+		    		<div class="row">
+		      	<h6>${anuncio.descripcion}</h6></div>
 		      	<div class="row">
 		      	<h6>Categoría:&nbsp;</h6>
-		      	<h6 class="SegoeFont">      
+		      	<h6 style="color:grey" >      
 					                      	<c:if test="${anuncio.especialidad == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
 					                      	</c:if>

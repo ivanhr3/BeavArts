@@ -12,8 +12,24 @@
 
 <beavarts:layout pageName="Mis publicaciones">
 <div class="minAlto">
-<div class="container">
-<div class="card">
+<div class="mb-3 centerContainerVal">
+<div class="container row" style="display:flex; flex-wrap: wrap;">
+<div class="col">
+<c:if test="${beaver.user.username == principalUsername}">
+		<c:if test="${noHayEspecialidades == false}">
+		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/encargos/new" htmlEscape="true"/>'>Nuevo encargo</a>
+		</c:if>
+		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/anuncios/new" htmlEscape="true"/>'>Nuevo anuncio</a>
+		<br/>
+    	<c:if test="${url == true}">
+    	<div class="alert alert-danger" role="alert">
+			<c:out value="${errorEspecialidades}"/>
+		</div>
+		</c:if>
+</c:if>
+</div>
+</div>
+<div class="card" style="width:43rem;">
 <div class="card-header">
 <ul class="nav nav-tabs card-header-tabs" id="publicaciones-list">
     			<li class="nav-item">
@@ -32,10 +48,13 @@
   					<spring:url value="/beavers/${beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
                         <spring:param name="anuncioId" value="${anuncio.id}"/>
                 	</spring:url>   	
-  			<div class="card-header-publicaciones"><h4 class="SegoeFont"><c:out value="${anuncio.titulo}"/></h4></div>
+  			<div class="card-header-publicaciones"><h4><c:out value="${anuncio.titulo}"/></h4></div>
             <div class="card-body card-body-anuncios">
-            	<h5 class="SegoeFont"><c:out value="${anuncio.descripcion}"/></h5>
-            	<h6 class="SegoeFont">Categoría: <c:if test="${anuncio.especialidad == 'TEXTIL'}">
+            	<h5><c:out value="${anuncio.descripcion}"/></h5>
+            	<div class="row justify-content-center">
+            	<h5>Categoría:&nbsp;</h5>
+            	<h5 style="color:grey">  
+            								<c:if test="${anuncio.especialidad == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
 					                      	</c:if>
 				                     
@@ -69,7 +88,9 @@
 	                    				<c:out value="${anuncio.especialidad} "/>
 	                    				<c:if test="${anuncio.especialidad==null}">
 					                      		Sin categoría
-					                      	</c:if></h6>
+					                      	</c:if>
+				</h5>
+				</div>
         		<br/>
         		<a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
         	</div>
@@ -90,7 +111,7 @@
                 	<c:if test="${!encargo.photo.isEmpty()}">
             		<img class="card-img-top-publicacion rounded" src="${encargo.photo}" alt="Card image cap">
             		<div class="card-body">
-            		<h4 class="card-title SegoeFont"><c:out value="${encargo.titulo}"/></h4>
+            		<h4 class="card-title"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
             				<h5><span class="badge badge-danger">No disponible</span></h5>
         				</c:if>
@@ -121,24 +142,6 @@
   			</div>
   </div>
   </div>
-</div>
-<br/>
-
-<div class="container row" style="display:flex; flex-wrap: wrap;">
-<div class="col">
-<c:if test="${beaver.user.username == principalUsername}">
-		<c:if test="${noHayEspecialidades == false}">
-		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/encargos/new" htmlEscape="true"/>'>Nuevo encargo</a>
-		</c:if>
-		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/anuncios/new" htmlEscape="true"/>'>Nuevo anuncio</a>
-		<br/>
-    	<c:if test="${url == true}">
-    	<div class="alert alert-danger" role="alert">
-			<c:out value="${errorEspecialidades}"/>
-		</div>
-		</c:if>
-</c:if>
-</div>
-</div>
+  </div>
 </div>
 </beavarts:layout>

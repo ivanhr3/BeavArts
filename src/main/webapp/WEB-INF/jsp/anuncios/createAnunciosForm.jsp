@@ -14,22 +14,22 @@
         <c:if test="${editando}">Editar </c:if> Anuncio
     </h2>
     
-    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="anuncio" class="form-horizontal" id="add-anuncio-form">
         <div class="form-group has-feedback">
         <div class="form-group">
-        	<b class="SegoeFont" style="margin-left:15px">*Título:</b>
+        	<b style="margin-left:15px">*Título:</b>
             <beavarts:inputField label="" name="titulo"/>
-            <b class="SegoeFont" style="margin-left:15px">*Precio:</b>
+            <b style="margin-left:15px">*Precio:</b>
 			<beavarts:inputNumberField label="" name="precio" placeholder="0.00"/>
-			<b class="SegoeFont" style="margin-left:15px">*Descripción:</b>
+			<b style="margin-left:15px">*Descripción:</b>
 			<beavarts:inputField label="" name="descripcion"/>
             <div class="control-group">
-            <b class="SegoeFont" style="margin-left:15px">Seleccione una categoría</b>
+            <b style="margin-left:15px">Seleccione una categoría</b>
             	<beavarts:selectField name="especialidad" label="" names="${types}" size="8"/>
             </div>
-            <b class="SegoeFont" style="margin-left:15px">Introduce URL de la foto:</b>
+            <b style="margin-left:15px">Introduce URL de la foto:</b>
             <beavarts:inputField label="" name="photo"/>
            </div>
         </div>
