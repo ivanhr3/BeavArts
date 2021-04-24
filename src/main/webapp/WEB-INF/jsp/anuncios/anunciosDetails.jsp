@@ -78,9 +78,11 @@
             	<h3 class="mb-0 ">Publicado por:&nbsp; </h3><br/><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
             </div>
             </c:if>
-           		<h3 class="mb-0 ">Precio: </h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.precio} €"/></h5>
-        	<br/>
-           		<h3 class="mb-0 "></h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.descripcion}"/></h5>
+            <br/>
+            <br/>
+           		<h4><c:out value="${anuncio.descripcion}"/></h4><br/>
+           		<h5>Precio: <c:out value="${anuncio.precio} €"/></h5><br/>
+        	
         	
 		<c:if test="${!anuncio.photo.isEmpty()}">
             	<h3 class="mb-0 SegoeFont">Imagen de ejemplo</h3>
@@ -92,6 +94,7 @@
             	<br/><h3 class="mb-0 SegoeFont">No hay imagen para mostrar</h3>
         	
         </c:if>
+        
   </div>
   </div>
   </div>
