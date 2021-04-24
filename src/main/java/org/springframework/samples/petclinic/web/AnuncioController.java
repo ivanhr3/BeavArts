@@ -225,10 +225,10 @@ public class AnuncioController {
 	}
 
 	// LISTAR TODOS LOS ANUNCIOS EN EL MENÚ
-	@GetMapping("/anuncios/list")
+	@GetMapping("/anuncios/list/{pageNo}/{pageSize}")
 	public String listAnuncios(final ModelMap modelMap,
-                               @RequestParam(defaultValue = "0") Integer pageNo,
-                               @RequestParam(defaultValue = "10") Integer pageSize,
+                               @PathVariable Integer pageNo,
+                               @PathVariable Integer pageSize,
                                @RequestParam(defaultValue = "destacado") String sortBy) {
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
