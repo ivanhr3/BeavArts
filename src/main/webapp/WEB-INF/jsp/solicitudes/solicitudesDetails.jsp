@@ -187,6 +187,17 @@
                     </div>
                   </div>
                   <hr>
+                  
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h5>Condiciones propuestas </h5>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      
+               	      <c:out value="${solicitud.descripcion}"/>
+                    </div>
+                  </div>
+                  <hr>
                   <div class="row">
                     <div class="col-sm-3">
                       <h5>Precio</h5>
@@ -219,18 +230,7 @@
                     </div>
                     </div>
 				</c:if>
-                  <hr>
              
-                  
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h5>Condiciones propuestas </h5>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      
-               	      <c:out value="${solicitud.descripcion}"/>
-                    </div>
-                  </div>
 </div>
 </div>
 </div>

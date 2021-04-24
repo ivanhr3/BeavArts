@@ -38,8 +38,10 @@
             	<h3 class="mb-0">Publicado por&nbsp;</h3><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h3>
         	</div>
         	</c:if>
-           	<br/><h3 class="mb-0">Precio </h3><h5><c:out value="${encargo.precio} €"/></h5>
-           		<br/><h5><c:out value="${encargo.descripcion}"/></h5>
+        	<br/><h4><c:out value="${encargo.descripcion}"/></h4>
+        	<div class="row">
+           	<br/><h5 class="mb-0">Precio <c:out value="${encargo.precio} €"/></h5>
+           	</div>
         	<div class="text-center">
             	<c:if test="${encargo.photo.isEmpty()}">
             	<br/><h3 class="mb-0">No hay imagen para mostrar</h3>
