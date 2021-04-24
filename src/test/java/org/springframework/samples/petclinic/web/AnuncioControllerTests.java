@@ -315,9 +315,8 @@ public class AnuncioControllerTests {
 	@Test
 	public void testListAnuncios() throws Exception {
 	    BDDMockito.given(this.anuncioService.getAllAnuncios(0, 10, "destacado")).willReturn(listaAnunciosPaginacion);
-        Integer pageNo = 0;
-        Integer pageSize = 10;
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/anuncios/list/{pageNo}/{pageSize}", pageNo, pageSize)).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios")).andExpect(MockMvcResultMatchers.status().isOk())
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/anuncios/list")).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios")).andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.view().name("anuncios/listAnuncios"));
 	}
 
