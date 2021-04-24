@@ -13,12 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Encargo;
-import org.springframework.samples.petclinic.model.Especialidad;
-import org.springframework.samples.petclinic.model.Estados;
-import org.springframework.samples.petclinic.model.Solicitud;
-import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,11 +39,14 @@ public class SolicitudServiceTests {
     @Autowired
     protected EncargoService encargoService;
     @Autowired
+    protected AnuncioService anuncioService;
+    @Autowired
     private UserService	userService;
 
 
     Beaver beaver;
     Encargo encargo;
+    Anuncio anuncio;
     User user;
     Beaver beaveralt;
     User useralt;
@@ -90,6 +88,14 @@ public class SolicitudServiceTests {
         encargo.setPrecio(199.0);
         encargo.setBeaver(beaveralt);
         this.encargoService.saveEncargo(encargo);
+
+        anuncio = new Anuncio();
+        anuncio.setTitulo("Titulo 1");
+        anuncio.setDescripcion("Descripcion de ejemplo");
+        anuncio.setDestacado(true);
+        anuncio.setPrecio(100.0);
+        anuncio.setBeaver(beaver);
+        this.anuncioService.saveAnuncio(anuncio);
     }
 
     public Beaver createDummyBeaver() {
@@ -253,6 +259,22 @@ public class SolicitudServiceTests {
 
     @Test
     @Transactional
+    void finalizarSolicitudTest() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setEstado(Estados.PENDIENTE);
+        solicitud.setEncargo(encargo);
+        solicitud.setBeaver(beaver);
+        solicitud.setDescripcion("descripcion");
+        solicitud.setPrecio(35.0);
+        solicitudService.saveSolicitud(solicitud);
+
+        solicitudService.finalizarSolicitud(solicitud, beaver);
+
+        assertThat(solicitud.getEstado()).isEqualTo(Estados.FINALIZADO);
+    }
+
+    @Test
+    @Transactional
     void shouldFindById(){
         Solicitud solicitud = new Solicitud();
         solicitud.setEstado(Estados.PENDIENTE);
@@ -396,6 +418,13 @@ public class SolicitudServiceTests {
 
     @Test
     @Transactional
+    void findAllTest() {
+        List<Solicitud> solicitudes = (List) this.solicitudService.findAll();
+        Assertions.assertNotNull(solicitudes);
+    }
+
+    @Test
+    @Transactional
     public void addNewSolicitudForEncargo() {
         Encargo encargo = this.createDummyEncargo();
         Collection<Solicitud> listaSolicitudes = encargo.getSolicitud();
@@ -526,5 +555,126 @@ public class SolicitudServiceTests {
         Boolean res = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
         assertThat(res).isTrue(); //RN: No pueden existir solicitudes previas Aceptadas para un encargo
     }
+
+    @Test
+    @Transactional
+    public void existSolicitudAnuncioByBeaverTest() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+        solicitud.setBeaver(beaveralt);
+        solicitud.setPrecio(90.0);
+        solicitud.setAnuncio(anuncio);
+        this.solicitudService.crearSolicitudAnuncio(solicitud, anuncio, beaver);
+        solicitud.setEstado(Estados.ACEPTADO);
+        this.solicitudService.saveSolicitud(solicitud);
+
+        Boolean res = this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio);
+        Assertions.assertTrue(res);
+    }
+
+    @Test
+    @Transactional
+    public void existDeclinedSolicitudAnuncioByBeaverTest() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+        solicitud.setBeaver(beaveralt);
+        solicitud.setPrecio(90.0);
+        solicitud.setAnuncio(anuncio);
+        this.solicitudService.crearSolicitudAnuncio(solicitud, anuncio, beaver);
+        solicitud.setEstado(Estados.RECHAZADO);
+        this.solicitudService.saveSolicitud(solicitud);
+
+        Boolean res = this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio);
+        Assertions.assertFalse(res);
+    }
+
+    @Test
+    @Transactional
+    public void existFinishedSolicitudAnuncioByBeaverTest() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+        solicitud.setBeaver(beaveralt);
+        solicitud.setPrecio(90.0);
+        solicitud.setAnuncio(anuncio);
+        this.solicitudService.crearSolicitudAnuncio(solicitud, anuncio, beaver);
+        solicitud.setEstado(Estados.FINALIZADO);
+        this.solicitudService.saveSolicitud(solicitud);
+
+        Boolean res = this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio);
+        Assertions.assertFalse(res);
+    }
+
+    @Test
+    @Transactional
+    public void dontExistSolicitudAnuncioByBeaverTest() {
+        Boolean res = this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio);
+        Assertions.assertFalse(res);
+    }
+
+    @Test
+    @Transactional
+    public void isCollectionAllURLTest() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+        solicitud.setBeaver(beaveralt);
+        solicitud.setPrecio(90.0);
+        solicitud.setAnuncio(anuncio);
+        Collection<String> fotos = new ArrayList<>();
+        fotos.add("http://1.jpg");
+        fotos.add("http://2.jpg");
+        solicitud.setFotos(fotos);
+
+        Boolean res = this.solicitudService.isCollectionAllURL(solicitud);
+        Assertions.assertTrue(res);
+    }
+
+    @Test
+    @Transactional
+    public void isntCollectionAllURLTest() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+        solicitud.setBeaver(beaveralt);
+        solicitud.setPrecio(90.0);
+        solicitud.setAnuncio(anuncio);
+        Collection<String> fotos = new ArrayList<>();
+        fotos.add("hola");
+        solicitud.setFotos(fotos);
+
+        Boolean res = this.solicitudService.isCollectionAllURL(solicitud);
+        Assertions.assertFalse(res);
+    }
+
+    @Test
+    @Transactional
+    public void isEmptyCollectionAllURLTest() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+        solicitud.setBeaver(beaveralt);
+        solicitud.setPrecio(90.0);
+        solicitud.setAnuncio(anuncio);
+        Collection<String> fotos = new ArrayList<>();
+        solicitud.setFotos(fotos);
+
+        Boolean res = this.solicitudService.isCollectionAllURL(solicitud);
+        Assertions.assertTrue(res);
+    }
+
+    @Test
+    @Transactional
+    public void isCollectionAllURLNullTest() {
+        Solicitud solicitud = new Solicitud();
+        solicitud.setDescripcion("muy largaesta descripcion eeeeeeeee");
+        solicitud.setBeaver(beaveralt);
+        solicitud.setPrecio(90.0);
+        solicitud.setAnuncio(anuncio);
+        Collection<String> fotos = new ArrayList<>();
+        fotos.add(null);
+        solicitud.setFotos(fotos);
+
+        Boolean res = this.solicitudService.isCollectionAllURL(solicitud);
+        Assertions.assertFalse(res);
+    }
+
+
 
 }
