@@ -26,7 +26,7 @@
         href="https://twitter.com/beavarts"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fab fa-twitter"></i
+        ><i style="color: #ffffff;" class="fab fa-twitter"></i
       ></a>
 
       <!-- Instagram -->
@@ -35,7 +35,7 @@
         href="https://www.instagram.com/beavarts_/"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fab fa-instagram"></i
+        ><i style="color: #ffffff;" class="fab fa-instagram"></i
       ></a>
 
       <!-- Github -->
@@ -44,8 +44,8 @@
         href="https://github.com/ivanhr3/BeavArts"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fab fa-github"></i></a>
-    <p class="responsiveFontSmartphoneTexto" style="color: #000000;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
+        ><i style="color: #ffffff;" class="fab fa-github"></i></a>
+    <p class="responsiveFontSmartphoneTexto" style="color: #ffffff;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
   </div>
   <!-- Copyright -->
 </footer>

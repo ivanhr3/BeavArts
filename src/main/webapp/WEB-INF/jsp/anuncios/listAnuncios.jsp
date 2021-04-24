@@ -68,8 +68,11 @@
 
 <jsp:body>
 <div class="minAlto">
-	<h1 style="text-align:center" class="SegoeFont">ANUNCIOS</h1>
-	<br/>
+	<div style="position: relative; text-align: center; margin-bottom:30px">
+		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
+	                                             
+	    <h1 class="SegoeFont text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">ANUNCIOS</h1>
+    </div>
 	<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 	<c:if test="${anuncios.isEmpty()}">
 	<br/>
@@ -78,26 +81,24 @@
 	
 	
 	<c:if test="${!anuncios.isEmpty()}">
-	<b style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto! </b>
-	
-	
-	<div id="myBtnContainer">
-	
-	  <button style="background-color: orange; border-color: brown"class="btn active btn-primary" onclick="filterSelection('all')"> Mostrar todos</button>
-	  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
-	  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
-	  <button class="btn btn-primary" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
-	  <button class="btn btn-primary" onclick="filterSelection('ACRILICO')"> Acrílico</button>
-	  <button class="btn btn-primary" onclick="filterSelection('OLEO')"> Óleo</button>
-	  <button class="btn btn-primary" onclick="filterSelection('JOYERIA')"> Joyería</button>
-	  <button class="btn btn-primary" onclick="filterSelection('RESINA')"> Resina</button>
-	  <button class="btn btn-primary" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
-	  
+	<div style="font-size:20px; text-align:center">
+		<b class="Roboto responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para buscar anuncios a tu gusto!</b>
 	</div>
 	<br/>
-	<br/>
-	<br/>
-	<br/>
+	
+	<div style="text-align:center; margin-bottom:20px; margin-top:23px" class="centerContainer" id="myBtnContainer">
+	
+	  <button class="btn active btn-primary tamBoton" onclick="filterSelection('all')"> Mostrar todos</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('TEXTIL')"> Textil</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ESCULTURA')"> Escultura</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ACRILICO')"> Acrílico</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('OLEO')"> Óleo</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('JOYERIA')"> Joyería</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('RESINA')"> Resina</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
+	  
+	</div>
 	
 	<c:forEach items="${anuncios}" var="anuncio">
 	
@@ -112,26 +113,32 @@
 		  <div class="carTam column ${anuncio.especialidad}">
 		    	
 		    	
-		    	<div class="card ${destacado}"  id="encargosCard">
+		    	<div class="card ${destacado}"  id="encargosCard" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
 		    	
 		    	
-		    	<div class="card-header-publicaciones"><h4 class="card-title">${anuncio.titulo}
-		    	
-		    	<c:if test="${anuncio.destacado == true}">
-		    	
-		    	<div class="SegoeFont" style="float: right;">
-		    	<i style="color: orange; " class="fas fa-star"> </i>
-				<p style="color: black; float: right; font-style: italic; margin-top: 5px;font-size: medium;"> &nbsp;Promocionado</p>
+		    	<div class="card-header-publicaciones ">
+			    	<div style="width:70%; float:left">
+			    		
+			    		<a class="customHoverAnuncios" href="#myModal${anuncio.id}" data-toggle="modal"><b style="font-size: 1.5rem;" class="card-title Roboto ">${anuncio.titulo}</b></a>
+			    	</div>
+
+			    	<div style="width:30%; float:right">
+				    	<c:if test="${anuncio.destacado == true}">		    	
+					    	<div class="SegoeFont" style="float: right;">
+					    		<i style="color: #fec255; margin-top: 8px; -webkit-filter: drop-shadow(5px 5px 5px #222 ); filter: drop-shadow(1px 1px 2px #222);" class="fas fa-star"> </i>
+								<p class="noMostrar"style="color: #fec255; float: right; font-style: italic; margin-top: 5px;font-size: medium;"> &nbsp;Promocionado</p>
+					    	</div>
+						</c:if>
+		    		</div>
 		    	</div>
-				</c:if>
-		    	</h4>
-		    	</div>
-		    	<div class="card-body">
+		    	<div style="padding-top:0px;" class="card-body">
 		    		<div class="row">
-		      	<h6>${anuncio.descripcion}</h6></div>
-		      	<div class="row">
-		      	<h6>Categoría:&nbsp;</h6>
-		      	<h6 style="color:grey" >      
+		      			<h6 class="RobotoLight" style="color:#333333; margin-bottom:0px">${anuncio.descripcion}</h6>
+		      		</div>
+		      		<hr style="margin:0px">
+		      	<div style="margin-bottom:0px; padding-top:0px; padding-bottom:0px"class="row">
+		      	<h6 class="RobotoLight">Categoría:&nbsp;</h6>
+		      	<h6 class="RobotoLight" style="color:grey" >      
 					                      	<c:if test="${anuncio.especialidad == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
 					                      	</c:if>
@@ -172,8 +179,8 @@
 		      		<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
 	                	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	               	</spring:url>
-	            <div class="row">
-		     	<h6>Publicado por:&nbsp;</h6>
+	            <div style="margin-bottom:0px; margin-top:0px; padding-top:0px; padding-bottom:0px" class="row">
+		     	<h6 class="RobotoLight">Publicado por:&nbsp;</h6>
 				     <h6 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">
 				     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
 				</div>
@@ -182,8 +189,8 @@
 	                        <spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	                	</spring:url>
 	                	<div class="text-center">
-				     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${anuncio.id}">Ver más
-						</button>
+				     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${anuncio.id}">Ver más</button>
+				     
 						</div>
 		    </div>
 		    </div>
