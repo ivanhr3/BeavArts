@@ -103,15 +103,15 @@
 	
 	<br/>
 	<div style="text-align:center"class="centerContainer" id="myBtnContainer">
-	  <button class="btn active btn-primary" onclick="filterSelection('all')" > Mostrar todos</button>
-	  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
-	  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
-	  <button class="btn btn-primary" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
-	  <button class="btn btn-primary" onclick="filterSelection('ACRILICO')""> Acrílico</button>
-	  <button class="btn btn-primary" onclick="filterSelection('OLEO')"> Óleo</button>
-	  <button class="btn btn-primary" onclick="filterSelection('JOYERIA')"> Joyería</button>
-	  <button class="btn btn-primary" onclick="filterSelection('RESINA')"> Resina</button>
-	  <button class="btn btn-primary" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
+	  <button class="btn active btn-primary tamBoton" onclick="filterSelection('all')" > Mostrar todos</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('TEXTIL')"> Textil</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ESCULTURA')"> Escultura</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ACRILICO')""> Acrílico</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('OLEO')"> Óleo</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('JOYERIA')"> Joyería</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('RESINA')"> Resina</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
 	</div>
 
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
