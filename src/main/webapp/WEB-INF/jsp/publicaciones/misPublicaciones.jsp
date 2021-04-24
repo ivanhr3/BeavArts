@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
@@ -36,42 +36,42 @@
             <div class="card-body card-body-anuncios">
             	<h5 class="SegoeFont"><c:out value="${anuncio.descripcion}"/></h5>
             	<h6 class="SegoeFont">Categoría: <c:if test="${anuncio.especialidad == 'TEXTIL'}">
-					                      		<i class="fas fa-socks"></i>
+					                      		<p class="fas fa-socks"></p>
 					                      	</c:if>
 				                     
 				                      		<c:if test="${anuncio.especialidad == 'ESCULTURA'}">
-					                      		<i class="fas fa-chess-knight"></i>
+					                      		<p class="fas fa-chess-knight"></p>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'ILUSTRACION'}">
-					                      		<i class="fas fa-portrait"></i>
+					                      		<p class="fas fa-portrait"></p>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'ACRILICO'}">
-					                      		<i class="fas fa-paint-brush"></i>
+					                      		<p class="fas fa-paint-brush"></p>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'OLEO'}">
-					                      		<i class="fas fa-palette"></i>
+					                      		<p class="fas fa-palette"></p>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'JOYERIA'}">
-					                      		<i class="fas fa-gem"></i>
+					                      		<p class="fas fa-gem"></p>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'RESINA'}">
-					                      		<i class="fas fa-prescription-bottle"></i>
+					                      		<p class="fas fa-prescription-bottle"></p>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'FOTOGRAFIA'}">
-					                      		<i class="fas fa-camera-retro"></i>
+					                      		<p class="fas fa-camera-retro"></p>
 					                      	</c:if>
 	                    				<c:out value="${anuncio.especialidad} "/>
 	                    				<c:if test="${anuncio.especialidad==null}">
 					                      		Sin categoría
 					                      	</c:if></h6>
         		<br/>
-        		<a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
+        		<a href="${fn:escapeXml(anuncioUrl)}" class="btn btn-primary" id="verMas">Ver más</a>
         	</div>
         	</c:forEach>
       			</c:if>
@@ -97,7 +97,7 @@
         				<c:if test="${encargo.disponibilidad == true}">
             				<h5><span class="badge badge-success">Disponible</span></h5>
         				</c:if></p>
-        				<a href="${encargoUrl}" class="btn btn-primary" id="verMas">Ver más</a>
+        				<a href="${fn:escapeXml(encargoUrl)}" class="btn btn-primary" id="verMas">Ver más</a>
         			</div>
             		</c:if>
             		
@@ -128,9 +128,9 @@
 <div class="col">
 <c:if test="${beaver.user.username == principalUsername}">
 		<c:if test="${noHayEspecialidades == false}">
-		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/encargos/new" htmlEscape="true"/>'>Nuevo encargo</a>
+		<a class="btn btn-primary" href='<spring:url value="/beavers/${fn:escapeXml(beaverId)}/encargos/new" htmlEscape="true"/>'>Nuevo encargo</a>
 		</c:if>
-		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/anuncios/new" htmlEscape="true"/>'>Nuevo anuncio</a>
+		<a class="btn btn-primary" href='<spring:url value="/beavers/${fn:escapeXml(beaverId)}/anuncios/new" htmlEscape="true"/>'>Nuevo anuncio</a>
 		<br/>
     	<c:if test="${url == true}">
     	<div class="alert alert-danger" role="alert">

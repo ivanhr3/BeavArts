@@ -32,7 +32,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 //@RunWith(SpringRunner.class)
-// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @WebMvcTest(value = SolicitudController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 //@AutoConfigureMockMvc
 public class SolicitudControllerTests {
@@ -499,13 +499,7 @@ public class SolicitudControllerTests {
         BDDMockito.given(this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio)).willReturn(false);
         BDDMockito.given(this.solicitudService.isCollectionAllURL(ArgumentMatchers.any(Solicitud.class))).willReturn(true);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/{anuncioId}/new", TEST_ANUNCIO_ID)
-            .with(csrf())
-            .param("estado", "PENDIENTE")
-            .param("precio", "11.0")
-            .param("descripcion", "Esta es la descripcion"))
-            .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+        solicitudAnunciosHasErrors1Y3();
     }
 
     @Test
@@ -532,6 +526,10 @@ public class SolicitudControllerTests {
         BDDMockito.given(this.solicitudService.existSolicitudAnuncioByBeaver(beaver, anuncio)).willReturn(true);
         BDDMockito.given(this.solicitudService.isCollectionAllURL(ArgumentMatchers.any(Solicitud.class))).willReturn(true);
 
+        solicitudAnunciosHasErrors1Y3();
+    }
+
+    public void solicitudAnunciosHasErrors1Y3() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/solicitudes/{anuncioId}/new", TEST_ANUNCIO_ID)
             .with(csrf())
             .param("estado", "PENDIENTE")

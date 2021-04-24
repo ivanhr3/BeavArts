@@ -4,7 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> 
+<%-- Para  tildes, ñ y caracteres especiales como el € --%>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	
 <beavarts:layout pageName="Detalles de encargos">
@@ -19,7 +20,7 @@
                	</spring:url>
             <div class="card-encargos">
                 <c:if test="${!encargo.photo.isEmpty()}">
-            		<img class="card-img-top" src="${encargo.photo}"  alt="">
+            		<img class="card-img-top" src="${fn:escapeXml(encargo.photo)}"  alt="">
         		</c:if>
 			<div class="card-body">
 			<div class="row">
@@ -49,7 +50,7 @@
     <br/>
     <c:if test="${createdByUser == false}">
     		<c:if test="${encargo.disponibilidad == true}">
-				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${fn:escapeXml(encargo.id)}/create" htmlEscape="true"/>'>Solicitar encargo</a>
 			</c:if>
      </c:if>
     <br/>
@@ -63,7 +64,7 @@
 	    <spring:url value="{encargoId}/delete" var="deleteEncargoUrl">
 		<spring:param name="encargoId" value="${encargo.id}"/>              
 		</spring:url>
-		<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteEncargoUrl)}"><i class="fas fa-trash-alt"></i> Borrar Encargo</a>
+		<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteEncargoUrl)}"><p class="fas fa-trash-alt"></p> Borrar Encargo</a>
               
     </security:authorize>
 </beavarts:layout>
