@@ -14,6 +14,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Anuncio;
 import org.springframework.samples.petclinic.model.Authorities;
@@ -314,9 +317,13 @@ public class AnuncioControllerTests {
 	@WithMockUser(value = "testuser")
 	@Test
 	public void testListAnuncios() throws Exception {
-	    BDDMockito.given(this.anuncioService.getAllAnuncios(0, 10, "destacado")).willReturn(listaAnunciosPaginacion);
+	    Page<Anuncio> page = new PageImpl<>(listaAnunciosPaginacion, PageRequest.of(0, 5), 1);
+	    BDDMockito.given(this.anuncioService.findAllAnuncios(PageRequest.of(0, 5))).willReturn(page);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/anuncios/list")).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios")).andExpect(MockMvcResultMatchers.status().isOk())
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/anuncios/list"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("anuncios"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("anunciosPages"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.view().name("anuncios/listAnuncios"));
 	}
 

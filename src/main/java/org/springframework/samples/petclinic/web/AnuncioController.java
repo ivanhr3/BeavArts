@@ -11,6 +11,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.petclinic.model.Anuncio;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
@@ -223,7 +226,7 @@ public class AnuncioController {
 			return "redirect:/anuncios/list";
 		}
 	}
-
+	/*
 	// LISTAR TODOS LOS ANUNCIOS EN EL MENÚ
 	@GetMapping("/anuncios/list")
 	public String listAnuncios(final ModelMap modelMap,
@@ -248,7 +251,22 @@ public class AnuncioController {
 		List<Anuncio> listaAnuncios = this.anuncioService.getAllAnuncios(pageNo, pageSize, sortBy);
 		modelMap.addAttribute("anuncios", listaAnuncios);
 		return vista;
-	}
+	} */
+
+    @GetMapping(value = "/anuncios/list")
+    public ModelAndView listAnuncios(@PageableDefault(value = 5, page= 0) Pageable pageable){
+        final ModelAndView vista = new ModelAndView("anuncios/listAnuncios");
+        Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+
+        if (me != null) {//añadido el if para los tests
+            vista.getModel().put("myBeaverId", me.getId()); //añadimos el id a la vista
+        }
+        Page<Anuncio> listaAnuncios = this.anuncioService.findAllAnuncios(pageable);
+        vista.getModel().put("anuncios", listaAnuncios.getContent());
+        vista.getModel().put("anunciosPages", listaAnuncios.getTotalPages()-1);
+
+        return vista;
+    }
 
 	// MOSTRAR LOS DETALLES DE UN ANUNCIO
 

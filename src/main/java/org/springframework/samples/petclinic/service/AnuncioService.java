@@ -81,18 +81,10 @@ public class AnuncioService {
         return this.anuncioRepository.findAnunciosNoDestacados();
     }
 
-    @Transactional
-    public List<Anuncio> getAllAnuncios(Integer pageNo, Integer pageSize, String sortBy)
-    {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
-
-        Page<Anuncio> pagedResult = anuncioRepository.findAll(paging);
-
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
-            return new ArrayList<Anuncio>();
-        }
+    @Transactional(readOnly = true)
+    public Page<Anuncio> findAllAnuncios (Pageable pageable){
+        Page<Anuncio> page = anuncioRepository.findAllAnuncios(pageable);
+        return page;
     }
 
 }
