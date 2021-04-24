@@ -67,31 +67,31 @@
 	</jsp:attribute>
 
 <jsp:body>
-<div styleclass="minAlto">
-	<h1 style="text-align:center" styleclass="SegoeFont">ANUNCIOS</h1>
+<div class="minAlto">
+	<h1 style="text-align:center" class="SegoeFont">ANUNCIOS</h1>
 	<br/>
 	<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 	<c:if test="${anuncios.isEmpty()}">
 	<br/>
-		 <h3 styleclass="SegoeFont">Lo sentimos, no hay anuncios disponibles por el momento.</h3>
+		 <h3 class="SegoeFont">Lo sentimos, no hay anuncios disponibles por el momento.</h3>
 	</c:if>
 	
 	
 	<c:if test="${!anuncios.isEmpty()}">
-	<b styleclass="SegoeFont" style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto! </b>
+	<b class="SegoeFont" style="font-size:20px">¡Usa los filtros para buscar anuncios a tu gusto! </b>
 	
 	
 	<div id="myBtnContainer">
 	
 	  <button style="background-color: orange; border-color: brown"class="btn active btn-primary" onclick="filterSelection('all')"> Mostrar todos</button>
-	  <button styleclass="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
-	  <button styleclass="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
-	  <button styleclass="btn btn-primary" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
-	  <button styleclass="btn btn-primary" onclick="filterSelection('ACRILICO')"> Acrílico</button>
-	  <button styleclass="btn btn-primary" onclick="filterSelection('OLEO')"> Óleo</button>
-	  <button styleclass="btn btn-primary" onclick="filterSelection('JOYERIA')"> Joyería</button>
-	  <button styleclass="btn btn-primary" onclick="filterSelection('RESINA')"> Resina</button>
-	  <button styleclass="btn btn-primary" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
+	  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
+	  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
+	  <button class="btn btn-primary" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
+	  <button class="btn btn-primary" onclick="filterSelection('ACRILICO')"> Acrílico</button>
+	  <button class="btn btn-primary" onclick="filterSelection('OLEO')"> Óleo</button>
+	  <button class="btn btn-primary" onclick="filterSelection('JOYERIA')"> Joyería</button>
+	  <button class="btn btn-primary" onclick="filterSelection('RESINA')"> Resina</button>
+	  <button class="btn btn-primary" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
 	  
 	</div>
 	<br/>
@@ -109,18 +109,18 @@
 			<c:set var="destacado" value="destacadoNo"></c:set>
 		</c:if>
 		<div class="mb-3 centerContainerVal">
-		  <div styleclass="carTam column ${fn:escapeXml(anuncio.especialidad)}">
+		  <div class="carTam column ${fn:escapeXml(anuncio.especialidad)}">
 		    	
 		    	
-		    	<div styleclass="card ${fn:escapeXml(destacado)}"  id="encargosCard">
+		    	<div class="card ${fn:escapeXml(destacado)}"  id="encargosCard">
 		    	
 		    	
-		    	<div styleclass="card-header-publicaciones"><h4 styleclass="card-title SegoeFont">${fn:escapeXml(anuncio.titulo)}
+		    	<div class="card-header-publicaciones"><h4 class="card-title SegoeFont">${fn:escapeXml(anuncio.titulo)}
 		    	
 		    	<c:if test="${anuncio.destacado == true}">
 		    	
 		    	<div style="float: right;">
-		    	<i style="color: orange; " styleclass="fas fa-star"> </i>
+		    	<i style="color: orange; " class="fas fa-star"> </i>
 				<p style="color: black; float: right; font-style: italic; margin-top: 5px;font-size: medium;"> &nbsp;Promocionado</p>
 		    	</div>
 				
@@ -133,39 +133,39 @@
 		    	
 		    	</div>  
 		    	
-		    	<div styleclass="card-body">
+		    	<div class="card-body">
 		      	<p>${fn:escapeXml(anuncio.descripcion)}</p>
-		      	<h6 styleclass="SegoeFont">Categoría:      
+		      	<h6 class="SegoeFont">Categoría:      
 					                      	<c:if test="${anuncio.especialidad == 'TEXTIL'}">
-					                      		<i styleclass="fas fa-socks"></i>
+					                      		<i class="fas fa-socks"></i>
 					                      	</c:if>
 				                     
 				                      		<c:if test="${anuncio.especialidad == 'ESCULTURA'}">
-					                      		<i styleclass="fas fa-chess-knight"></i>
+					                      		<i class="fas fa-chess-knight"></i>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'ILUSTRACION'}">
-					                      		<i styleclass="fas fa-portrait"></i>
+					                      		<i class="fas fa-portrait"></i>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'ACRILICO'}">
-					                      		<i styleclass="fas fa-paint-brush"></i>
+					                      		<i class="fas fa-paint-brush"></i>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'OLEO'}">
-					                      		<i styleclass="fas fa-palette"></i>
+					                      		<i class="fas fa-palette"></i>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'JOYERIA'}">
-					                      		<i styleclass="fas fa-gem"></i>
+					                      		<i class="fas fa-gem"></i>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'RESINA'}">
-					                      		<i styleclass="fas fa-prescription-bottle"></i>
+					                      		<i class="fas fa-prescription-bottle"></i>
 					                      	</c:if>
 					                      	
 					                      	<c:if test="${anuncio.especialidad == 'FOTOGRAFIA'}">
-					                      		<i styleclass="fas fa-camera-retro"></i>
+					                      		<i class="fas fa-camera-retro"></i>
 					                      	</c:if>
 	                    				<c:out value="${anuncio.especialidad} "/>
 	                    				<c:if test="${anuncio.especialidad==null}">
@@ -175,14 +175,14 @@
 		      		<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
 	                	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	               	</spring:url>
-		     	<h6 styleclass="SegoeFont">Publicado por:
+		     	<h6 class="SegoeFont">Publicado por:
 				     <a href="${fn:escapeXml(beaverUrl)}">
 				     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
 				     <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
 	                        <spring:param name="anuncioId" value="${anuncio.id}"/>
 	                        <spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	                	</spring:url>
-				     <a href="$fn:escapeXml(anuncioUrl)}" class="btn btn-primary" id="verMas">Ver más</a>
+				     <a href="${fn:escapeXml(anuncioUrl)}" class="btn btn-primary" id="verMas">Ver más</a>
 		    </div>
 		    </div>
 		    

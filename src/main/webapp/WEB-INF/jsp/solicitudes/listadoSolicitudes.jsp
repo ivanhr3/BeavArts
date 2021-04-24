@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el €  --%>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="solicitudesList">
@@ -58,7 +58,7 @@
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    			<a class="btn btn-primary" href="${fn:escapeXml(solicitudUrl)}"> Ver solicitud</a>
     	</div>
     </li>
     </c:if>
