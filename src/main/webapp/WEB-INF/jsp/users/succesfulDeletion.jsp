@@ -10,18 +10,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
-<beavarts:layout pageName="deletion">
-
-    <form:form modelAttribute="user" class="form-horizontal" id="delete-user-data">
+<beavarts:layout pageName="succesfulDeletion">
     <div class="container">
-        <h1><fmt:message key="confirmacionBorrado.titulo"/></h1>
-        <p><fmt:message key="confirmacionBorrado.texto"/></p>
-        
-            <a class="btn btn-secondary" href='<spring:url value="/" htmlEscape="true"/>'><fmt:message key="confirmacionBorrado.cancelar"/></a>
-            <button class="btn btn-danger" type="submit"><fmt:message key="confirmacionBorrado.eliminar"/></button>
-        
+        <h1><fmt:message key="borradoExitoso.titulo"/></h1>
+        <p><fmt:message key="borradoExitoso.texto"/></p>
+        <a class="btn btn-secondary" href='<spring:url value="/" htmlEscape="true"/>'><fmt:message key="borradoExitoso.volverHome"/></a>
     </div>
-    </form:form>
-
-
 </beavarts:layout>
