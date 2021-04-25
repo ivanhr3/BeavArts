@@ -2,10 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import static org.mockito.Mockito.doNothing;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +17,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
@@ -36,21 +36,23 @@ import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @WebMvcTest(value = ValoracionController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
-@AutoConfigureMockMvc
+//@AutoConfigureMockMvc
 public class ValoracionControllerTests {
-    
+
     @Autowired
 	private MockMvc				mockMvc;
 
 	@MockBean
-    private ValoracionService	valoracionService; 
+    private ValoracionService	valoracionService;
 
 	@MockBean
 	private BeaverService		beaverService;
 
 	private static final int	TEST_BEAVER_ID		= 99;
+
+	private List<Valoracion> listaValoracionesPaginacion;
 
 	@BeforeEach
 	public void setUp() {
@@ -75,13 +77,15 @@ public class ValoracionControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
-    } 
+    }
 
     @WithMockUser(value = "User123")
 	@Test
 	public void testListValoracionesEmpty() throws Exception {
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", ValoracionControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("valoracion/lista"))
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", ValoracionControllerTests.TEST_BEAVER_ID))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("valoracion/lista"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("hayValoraciones"));
 	}
 
@@ -112,7 +116,15 @@ public class ValoracionControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("valoracion/lista"))
+		listaValoracionesPaginacion = new ArrayList<>();
+		listaValoracionesPaginacion.add(v);
+
+		Page<Valoracion> page = new PageImpl<>(listaValoracionesPaginacion, PageRequest.of(0, 5), 1);
+		BDDMockito.given(this.valoracionService.findValoracionesByBeaverId(7, PageRequest.of(0, 5))).willReturn(page);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", 7))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("valoracion/lista"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("valoraciones"));
 	}
 
@@ -178,7 +190,7 @@ public class ValoracionControllerTests {
 		.andExpect(MockMvcResultMatchers.status().isUnauthorized()); //TODO: Front avisad cuando cambieis el nombre de la vista
 
 	}
-	
+
 	@WithMockUser(value = "spring")
 	@Test
 	public void processCreationFormExito() throws Exception{

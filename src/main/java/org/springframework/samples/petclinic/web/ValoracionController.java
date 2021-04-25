@@ -3,6 +3,9 @@ package org.springframework.samples.petclinic.web;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Valoracion;
 import org.springframework.samples.petclinic.service.BeaverService;
@@ -14,11 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/beavers/{beaverId}/valoraciones")
 public class ValoracionController {
-    
+
     private final ValoracionService valoracionService;
     private final BeaverService beaverService;
 
@@ -30,24 +34,24 @@ public class ValoracionController {
 
     //LIST
     @GetMapping("/list")
-    public String listarValoraciones(@PathVariable("beaverId") final int beaverId, final ModelMap model){
+    public ModelAndView listarValoraciones(@PageableDefault(value = 5, page= 0) Pageable pageable, @PathVariable("beaverId") final int beaverId){
 
-        String vista = "valoracion/lista"; //REDIRECCIONAR A VISTA CORRECTA
+        ModelAndView vista = new ModelAndView("valoracion/lista"); //REDIRECCIONAR A VISTA CORRECTA
         Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
-        model.addAttribute("beaverId", beaverId);
-		model.addAttribute("beaver", beaver);
-		
+        vista.getModel().put("beaverId", beaverId);
+        vista.getModel().put("beaver", beaver);
+
 		//PARA QUE FUNCIONE EL BOTÓN MI PERFIL
 		Beaver current = this.beaverService.getCurrentBeaver();
 		if(current != null){
-	        model.put("myBeaverId", current.getId());
+            vista.getModel().put("myBeaverId", current.getId());
 	        }
 
         if (beaver.getValoraciones().isEmpty()) {
-            model.addAttribute("hayValoraciones", false); //Control de falta de valoraciones
+            vista.getModel().put("hayValoraciones", false); //Control de falta de valoraciones
         }
-        Iterable<Valoracion> valoraciones = this.valoracionService.findValoracionesByBeaverId(beaverId);
-        model.addAttribute("valoraciones", valoraciones);
+        Page<Valoracion> valoraciones = this.valoracionService.findValoracionesByBeaverId(beaverId, pageable);
+        vista.getModel().put("valoraciones", valoraciones);
         return vista;
     }
 
@@ -56,8 +60,8 @@ public class ValoracionController {
     @GetMapping(value = "/create")
     public String initCreationForm(@PathVariable("beaverId") final int beaverId, ModelMap model){
         Beaver current = beaverService.getCurrentBeaver();
-        Beaver reciever = beaverService.findBeaverByIntId(beaverId); 
-        
+        Beaver reciever = beaverService.findBeaverByIntId(beaverId);
+
         if(current  == null|| current == reciever){
             return "accesoNoAutorizado";
         } else {

@@ -7,6 +7,8 @@ import java.util.Collection;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Valoracion;
 
@@ -33,7 +35,7 @@ public class ValoracionService {
 
     @Transactional
     public void crearValoracion(Valoracion val, Beaver reciever, Beaver author){
-        
+
         Collection<Valoracion> valcurrent = reciever.getValoraciones();
         if(valcurrent == null){
             valcurrent = new ArrayList<>();
@@ -61,11 +63,16 @@ public class ValoracionService {
 	}
 
     public Double calcularValoracion(Integer beaverId){
-        return this.valoracionRepository.calcularPuntuacion(beaverId);   
+        return this.valoracionRepository.calcularPuntuacion(beaverId);
     }
 
     public Integer getNumValoracionesUsuario (Integer beaverId){
         return this.valoracionRepository.getNumValoracionesUsuario(beaverId);
+    }
+
+    public Page<Valoracion> findValoracionesByBeaverId(final int id, Pageable pageable) {
+        Page<Valoracion> page = this.valoracionRepository.findValoracionesByBeaverId(id, pageable);
+        return page;
     }
 
 
