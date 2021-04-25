@@ -9,6 +9,9 @@ import javax.validation.Valid;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Portfolio;
@@ -19,6 +22,7 @@ import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -192,18 +196,17 @@ public class BeaverController {
 	}
 
 	@GetMapping("/list")
-	public String listBeavers(final ModelMap modelMap) {
-
+	public ModelAndView listBeavers(@PageableDefault(value = 5, page= 0) Pageable pageable) {
+        final ModelAndView vista = new ModelAndView("users/listBeavers");
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
 		if (me != null) {//añadido el if para los tests
-			modelMap.put("myBeaverId", me.getId()); //añadimos el id a la vista
+			vista.getModel().put("myBeaverId", me.getId()); //añadimos el id a la vista
 		}
+		Page<Beaver> beavers = this.beaverService.findAllBeavers(pageable);
+		vista.getModel().put("beavers", beavers.getContent());
+		vista.getModel().put("beaversPages", beavers.getTotalPages()-1);
 
-		String vista = "users/listBeavers";
-		Iterable<Beaver> beavers = this.beaverService.findAllBeavers();
-		modelMap.addAttribute("beavers", beavers);
 		return vista;
-
 	}
 
 	@GetMapping("/beaverInfo/{beaverId}/editPhoto")
@@ -268,8 +271,8 @@ public class BeaverController {
 
 			} else {
 
-				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", 
-					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud", 
+				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio",
+					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud",
 					"anuncios", "valoraciones", "valoracionesCreadas");
 
 				this.beaverService.saveBeaver(beaver1);
@@ -305,4 +308,4 @@ public class BeaverController {
 			return "accesoNoAutorizado";
 		}
 	}
-}	
+}

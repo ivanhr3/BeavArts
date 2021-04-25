@@ -9,14 +9,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.Authorities;
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Especialidad;
-import org.springframework.samples.petclinic.model.Portfolio;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.PortfolioService;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
@@ -67,6 +66,8 @@ public class BeaverControllerTests {
     private Beaver				beaver1;
 
     private Beaver				beaver2;
+
+    private List<Beaver>        listaBeaversPaginacion;
     // User user;
 
     @BeforeEach
@@ -122,9 +123,13 @@ public class BeaverControllerTests {
         this.beaver2.setEspecialidades(esp);
         this.beaver2.setDni("12345978Q");
         this.beaver2.setUser(user2);
-        
+
         List<Authorities> lista = new ArrayList<Authorities>();
 		lista.add(au);
+
+		listaBeaversPaginacion = new ArrayList<>();
+		listaBeaversPaginacion.add(beaver1);
+		listaBeaversPaginacion.add(beaver2);
 
         BDDMockito.given(this.userService.findUserByUsername("beaver2")).willReturn(user2);
         BDDMockito.given(this.userService.findUserByUsername("beaver1")).willReturn(user);
@@ -240,17 +245,20 @@ public class BeaverControllerTests {
     @WithMockUser(value = "beaver1")
     @Test
     public void testListAllBeavers() throws Exception {
+        Page<Beaver> page = new PageImpl<>(listaBeaversPaginacion, PageRequest.of(0, 5), 1);
+        BDDMockito.given(this.beaverService.findAllBeavers(PageRequest.of(0, 5))).willReturn(page);
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/list")).andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("users/listBeavers"))
-            .andExpect(MockMvcResultMatchers.model().attributeExists("beavers"));
-
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/list"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.model().attributeExists("beavers"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("beaversPages"))
+            .andExpect(MockMvcResultMatchers.view().name("users/listBeavers"));
     }
-    
+
     @WithMockUser(value = "beaveradmin")
     @Test
     public void banBeaver() throws Exception {
-    	
+
     	 final User user = new User();
          user.setUsername("beaver3");
          user.setPassword("supersecretpass");
@@ -277,18 +285,18 @@ public class BeaverControllerTests {
  		 lista.add(au);
  		 BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
          BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
-    	
+
     	this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/beaverInfo/{beaverId}/ban", TEST_BEAVER_ID).with(csrf()))
     		.andExpect(status().is3xxRedirection())
     		.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/list/"));
     }
-    
+
     @WithMockUser(value = "beaveradmin")
     @Test
     public void banBeaverNotAuthorized() throws Exception {
 
          BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver1);
-    	
+
     	this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/beaverInfo/{beaverId}/ban", TEST_BEAVER_ID).with(csrf()))
     		.andExpect(status().isOk())
     		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
