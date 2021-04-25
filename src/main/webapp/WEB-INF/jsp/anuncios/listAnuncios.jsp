@@ -84,6 +84,20 @@
 	<div id="myBtnContainer">
 	
 	  <button style="background-color: orange; border-color: brown"class="btn active btn-primary" onclick="filterSelection('all')"> Mostrar todos</button>
+	 <nav aria-label="Pagination">
+<ul class="pagination justify-content-center">
+<li class="page-item">
+	<c:if test="${!anuncios.isEmpty()}">
+    <c:forEach begin="0" end="${anunciosPages}" var="current">
+        <spring:url value="../anuncios/list?page=${current}" var="pageUrl">
+        </spring:url>
+    <a href="${fn:escapeXml(pageUrl)}" class="page-link">Página ${current+1}</a>
+     
+    </c:forEach>
+    </c:if> 
+  </li>
+  </ul>
+  </nav>
 	  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
 	  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
 	  <button class="btn btn-primary" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
@@ -194,7 +208,7 @@
 	</c:if>
 
 	</div>
-
 </div>
+
 </jsp:body> 
 </beavarts:layout>
