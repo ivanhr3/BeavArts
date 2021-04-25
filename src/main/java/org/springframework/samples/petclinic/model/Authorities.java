@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +20,7 @@ public class Authorities extends BaseEntity{
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "username")
+	@JsonIgnore
 	User user;
 	
 	@Size(min = 3, max = 50)

@@ -14,6 +14,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.OnDelete;
@@ -47,18 +49,21 @@ public class Solicitud extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name="beaver_id")
+    @JsonIgnore
     private Beaver beaver;
 
     @ManyToOne
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="encargo_id")
+    @JsonIgnore
     private Encargo encargo;
 
     @ManyToOne
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="anuncio_id")
+    @JsonIgnore
     private Anuncio anuncio;
 
 }

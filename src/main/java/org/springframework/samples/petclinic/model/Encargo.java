@@ -14,6 +14,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.OnDelete;
@@ -48,6 +50,7 @@ public class Encargo extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name="beaver_id")
+    @JsonIgnore
     private Beaver beaver;
 
     @OneToMany(mappedBy = "encargo", orphanRemoval = true)

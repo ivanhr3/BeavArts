@@ -21,6 +21,10 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Modifying;
@@ -59,6 +63,9 @@ public class UserService {
 
 	@Autowired
 	private EntityManagerFactory entityManager;
+
+	@Autowired
+	private BeaverService beaverService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -128,5 +135,13 @@ public class UserService {
 		em.getTransaction().begin();
 		em.remove(em.contains(user) ? user : em.merge(user));
 		em.getTransaction().commit();
+	}
+
+	@Transactional
+	public String getUserEntitiesJson(User user) throws JsonProcessingException{
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		Beaver beaver = this.beaverService.findBeaverByUsername(user.getUsername());
+		String json2 = ow.writeValueAsString(beaver);
+		return json2;
 	}
 }

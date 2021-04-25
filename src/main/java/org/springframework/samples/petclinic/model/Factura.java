@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +29,7 @@ public class Factura extends BaseEntity{
     private LocalDate paymentDate;
 
     @OneToOne
+    @JsonIgnore
     private Solicitud solicitud;
 
     private Double precio;
