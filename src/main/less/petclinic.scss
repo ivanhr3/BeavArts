@@ -3998,7 +3998,7 @@ tbody.collapse.show {
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
+  color: rgb(51, 51, 51);
   background-color: #fff;
   border-color: #dee2e6 #dee2e6 #fff;
 }
@@ -9168,7 +9168,7 @@ a.text-dark:hover, a.text-dark:focus {
 .navbar-custom .navbar-nav .dropdown-item:hover,
 .navbar-custom .navbar-nav .dropdown-item:focus {
     color: #000000;
-    background-color: #f8f8f8;
+    background-color: rgb(214, 214, 214);
 	font-weight:bold;
 	font-family: "Roboto";
 }
@@ -9575,7 +9575,7 @@ align-items: center;
 .card-header-publicaciones{
 	padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  
+  color:#ffffff;
 	background: rgba(75,98,133,1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 	border-top: 1px solid rgba(0, 0, 0, 0.125);
@@ -9943,7 +9943,7 @@ td {
 
 .carTam{
 	width:100%;
-	max
+	
 }
 
 .center-login{
@@ -10191,4 +10191,7 @@ td {
 	width:80%;
 }
 
+.enlaceEncargos{
+	color: rgb(42, 42, 42);
+}
 

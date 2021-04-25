@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 
 	<security:authorize access="isAuthenticated()">
    		<security:authentication var="principalUsername" property="principal.username" /> 
@@ -33,10 +33,10 @@
 <div class="card-header">
 <ul class="nav nav-tabs card-header-tabs" id="publicaciones-list">
     			<li class="nav-item">
-        			<a style="color:#824500" class="nav-link active SegoeFont" href="#listAnuncios" data-toggle="tab">Anuncios</a>
+        			<a class="nav-link active enlaceEncargos" href="#listAnuncios" data-toggle="tab">Anuncios</a>
       			</li>
       			<li class="nav-item">
-              		<a style="color:#824500" class="nav-link SegoeFont" href="#listEncargos" data-toggle="tab">Encargos</a></li>
+              		<a class="nav-link enlaceEncargos" href="#listEncargos" data-toggle="tab">Encargos</a></li>
     		</ul></div>
     		
     <div class="card-body tab-content justify-content-center">	

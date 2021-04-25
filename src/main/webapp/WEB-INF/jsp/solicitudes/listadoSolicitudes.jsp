@@ -11,12 +11,12 @@
 <div class="minAlto">                              
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==true && listaSolicitudesRecibidasAnuncios.isEmpty()==true}">
 
-	<h2 class="SegoeFont">No hay solicitudes recibidas.</h2>
+	<h2 class="Roboto">No hay solicitudes recibidas.</h2>
 </c:if>
 
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==false || listaSolicitudesRecibidasAnuncios.isEmpty()==false}">
 	
-    <h2 class="SegoeFont">Mis solicitudes recibidas: </h2>
+    <h2 class="Roboto">Mis solicitudes recibidas </h2>
     <br/>
 <ul class="list-group">
     <c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
@@ -49,10 +49,9 @@
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
                   <div class="row">  
-                    <p class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</p>
+                    <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
                     <div class="SegoeFont">
                     <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a>
-                    
         			</div>
         		</div>
         </div>  
@@ -143,7 +142,7 @@
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
                     <div class="row">
-                    <p class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;<p>
+                    <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
                     <div class="SegoeFont">
                     <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
         			</div>
@@ -165,11 +164,11 @@
 </c:if>
 <br/>
 <c:if test="${haySolicitudes==false}">
-	<h2 class="SegoeFont">No hay solicitudes enviadas.</h2>
+	<h2 class="Roboto">No hay solicitudes enviadas.</h2>
 </c:if>
 
 <c:if test="${haySolicitudes==true}">
-    <h2 class="SegoeFont">Mis solicitudes enviadas</h2>
+    <h2 class="Roboto">Mis solicitudes enviadas</h2>
 	<ul class="list-group">
 	<c:forEach items="${listaSolicitudesEnviadas}" var="solicitud">
 	<c:if test="${solicitud.encargo != null}">
@@ -203,7 +202,7 @@
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
                  <div class="row">
-                    <p class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;<p>
+                    <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
                     <div class="SegoeFont"> 
                     <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
         		</div>
@@ -245,7 +244,7 @@
 					 </c:choose>
                 </h4>
                 
-                <div class="SegoeFont" style="color:black" class="candidate-list-option">
+                <div style="color:grey" class="candidate-list-option">
 		                          
 		                          <c:choose>
 	                      
@@ -294,7 +293,7 @@
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
                  <div class="row">   
-                    <p class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</p>
+                    <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
                     <div class="SegoeFont">
                     <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
         		 	</div>
@@ -310,7 +309,6 @@
     	</div>
     </li>
     </c:if>
-    
     </c:forEach>
 </ul>
 </c:if>

@@ -28,7 +28,7 @@
 <beavarts:layout pageName="solicitudDetails">
 
 <c:if test="${esDeEncargo==true}">
-<h2 class="SegoeFont"> Encargo: </h2>
+<h2 class="Roboto"> Encargo: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
@@ -64,7 +64,7 @@
 <br/>
 
 <c:if test="${esDeEncargo==false}">
-<h2 class="SegoeFont"> Anuncio: </h2>
+<h2 class="Roboto"> Anuncio: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
@@ -152,7 +152,7 @@
 <br/>
 
 
-<h2 class="SegoeFont"> Solicitud: </h2>
+<h2 class="Roboto"> Solicitud: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
@@ -163,7 +163,7 @@
                       <h5>Estado </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                       <h3>
+                       <h5>
            				<c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -183,7 +183,7 @@
 					       </c:when>
 					       
 					 </c:choose>
-        			   </h3>
+        			   </h5>
                     </div>
                   </div>
                   <hr>
@@ -223,7 +223,7 @@
                     <hr>
     				<div class="row">
                     <div class="col-sm-3">
-                      <h6>Contacto: </h6>
+                      <h5>Contacto: </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
            				<c:out value="${solicitud.beaver.email}"/>
@@ -239,7 +239,7 @@
 
 <c:if test= "${solicitud.fotos.isEmpty() != true}">
 
-<h2 class="SegoeFont"> Fotos adjuntas: </h2>
+<h2 class="Roboto"> Fotos adjuntas: </h2>
 <br/>
 <br/>
 <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
@@ -289,7 +289,7 @@
 </c:if>
 
 <c:if test= "${solicitud.fotos.isEmpty() == true}">
-	<h5 class="SegoeFont"> No hay fotos adjuntas </h5>
+	<h5 class="RobotoLight"> No hay fotos adjuntas </h5>
 </c:if>
 
 
@@ -317,7 +317,7 @@
 <c:if test= "${isAnuncioCreator==true}"> 
 <c:if test= "${solicitudPendiente==true}">
    
-    <p class="SegoeFont" style="text-align:justify">Para aceptar esta solicitud debes realizar el pago con una de las siguientes opciones. Cuando se acepte esta solicitud usted estará aceptando las condiciones descritas en la solicitud, así como la contraoferta propuesta.</p>
+    <p style="text-align:justify">Para aceptar esta solicitud debes realizar el pago con una de las siguientes opciones. Cuando se acepte esta solicitud usted estará aceptando las condiciones descritas en la solicitud, así como la contraoferta propuesta.</p>
     <body>
         <script
           src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9&currency=EUR"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
