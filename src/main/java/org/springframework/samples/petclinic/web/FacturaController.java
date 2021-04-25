@@ -53,8 +53,8 @@ public class FacturaController {
 		} else {
 
 			Page<Factura> facturas = this.facturaService.findAllFacturas(pageable);
-			vista.getModel().put("facturas", facturas);
-
+			vista.getModel().put("facturas", facturas.getContent());
+            vista.getModel().put("facturasPages", facturas.getTotalPages()-1);
 			return vista;
 		}
 	}

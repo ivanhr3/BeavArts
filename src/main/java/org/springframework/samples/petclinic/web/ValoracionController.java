@@ -51,7 +51,8 @@ public class ValoracionController {
             vista.getModel().put("hayValoraciones", false); //Control de falta de valoraciones
         }
         Page<Valoracion> valoraciones = this.valoracionService.findValoracionesByBeaverId(beaverId, pageable);
-        vista.getModel().put("valoraciones", valoraciones);
+        vista.getModel().put("valoraciones", valoraciones.getContent());
+        vista.getModel().put("valoracionesPages", valoraciones.getTotalPages()-1);
         return vista;
     }
 

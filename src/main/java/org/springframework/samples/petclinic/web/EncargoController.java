@@ -120,11 +120,13 @@ public class EncargoController {
 				vista.getModel().put("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos *DONE*
 			} else if (beaver.equals(this.beaverService.getCurrentBeaver())) {
 				final Page<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId, pageable);
-				vista.getModel().put("encargos", encargos);
+				vista.getModel().put("encargos", encargos.getContent());
+                vista.getModel().put("encargosPages", encargos.getTotalPages()-1);
 			} else {
 				// para mostrar los encargos de un beaver a otro usuario que la disponibilidad debe ser True
 				final Page<Encargo> encargos = this.encargoService.findEncargoByAnotherBeaverId(beaverId, pageable);
-				vista.getModel().put("encargos", encargos);
+				vista.getModel().put("encargos", encargos.getContent());
+                vista.getModel().put("encargosPages", encargos.getTotalPages()-1);
 			}
 			return vista;
 		}
