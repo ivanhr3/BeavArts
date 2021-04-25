@@ -67,4 +67,20 @@
 		</div>
 		</c:if>
 </c:if>
+
+<nav aria-label="Pagination">
+<ul class="pagination justify-content-center">
+<li class="page-item">
+	<c:if test="${!encargos.isEmpty()}">
+    <c:forEach begin="0" end="${encargosPages}" var="current">
+        <spring:url value="../list/?page=${current}" var="encargoUrl">
+        </spring:url>
+    <a href="${fn:escapeXml(encargoUrl)}" class="page-link">Página ${current+1}</a>
+     
+    </c:forEach>
+    </c:if> 
+  </li>
+  </ul>
+  </nav>
+
 </beavarts:layout>

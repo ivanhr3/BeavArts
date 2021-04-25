@@ -216,6 +216,21 @@
     </div>
   </div>
 </div>
+<nav aria-label="Pagination">
+<ul class="pagination justify-content-center">
+<li class="page-item">
+	<c:if test="${!beavers.isEmpty()}">
+    <c:forEach begin="0" end="${beaversPages}" var="current">
+        <spring:url value="../beavers/list?page=${current}" var="beaverUrl">
+        </spring:url>
+    <a href="${fn:escapeXml(beaverUrl)}" class="page-link">Página ${current+1}</a>
+     
+    </c:forEach>
+    </c:if> 
+  </li>
+  </ul>
+  </nav>  
+
 </jsp:body> 
   
 </beavarts:layout>
