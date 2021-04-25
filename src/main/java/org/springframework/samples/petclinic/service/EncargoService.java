@@ -3,6 +3,8 @@ package org.springframework.samples.petclinic.service;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.samples.petclinic.repository.EncargoRepository;
@@ -64,6 +66,18 @@ public class EncargoService {
     public Iterable<Encargo> findEncargoByAnotherBeaverId(final int id) {
 
 	    return this.encargoRepository.findEncargoByAnotherBeaverId(id);
+    }
+
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public Page<Encargo> findEncargoByBeaverId(final int id, Pageable pageable) {
+        Page<Encargo> page = this.encargoRepository.findEncargoByBeaverId(id, pageable);
+        return page;
+    }
+
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public Page<Encargo> findEncargoByAnotherBeaverId(final int id, Pageable pageable) {
+	    Page<Encargo> page = this.encargoRepository.findEncargoByAnotherBeaverId(id, pageable);
+	    return page;
     }
 
 

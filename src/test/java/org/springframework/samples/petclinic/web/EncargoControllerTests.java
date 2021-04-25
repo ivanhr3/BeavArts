@@ -18,6 +18,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
@@ -39,9 +42,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @WebMvcTest(value = EncargoController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
-@AutoConfigureMockMvc
+//@AutoConfigureMockMvc
 public class EncargoControllerTests {
 
 	@Autowired
@@ -216,15 +219,27 @@ public class EncargoControllerTests {
 		beaver.setUser(user);
 
 		Encargo e = new Encargo();
+		Encargo e2 = new Encargo();
 		Set<Encargo> s = new HashSet<>();
 		s.add(e);
+		s.add(e2);
 		beaver.setEncargos(s);
 		this.beaverService.saveBeaver(beaver);
+
+        List<Encargo> listaEncargosPaginacion = new ArrayList<>();
+        listaEncargosPaginacion.add(e);
+        listaEncargosPaginacion.add(e2);
+
+		Page<Encargo> page = new PageImpl<>(listaEncargosPaginacion, PageRequest.of(0, 5), 1);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+		BDDMockito.given(this.encargoService.findEncargoByBeaverId(7, PageRequest.of(0, 5))).willReturn(page);
+		BDDMockito.given(this.encargoService.findEncargoByAnotherBeaverId(7, PageRequest.of(0, 5))).willReturn(page);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"))
-			.andExpect(MockMvcResultMatchers.model().attributeExists("encargos"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.model().attributeExists("encargos"))
+            .andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"));
 	}
 
 	@WithMockUser(value = "User123")

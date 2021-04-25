@@ -1,5 +1,8 @@
 package org.springframework.samples.petclinic.repository;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.samples.petclinic.model.Encargo;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +20,9 @@ public interface EncargoRepository extends CrudRepository<Encargo, Integer> {
     @Query("select e from Encargo e where e.beaver.id = ?1 AND e.disponibilidad = true")
     Iterable<Encargo> findEncargoByAnotherBeaverId(Integer id);
 
+    @Query("select e from Encargo e where e.beaver.id = ?1")
+    Page<Encargo> findEncargoByBeaverId(Integer id, Pageable pageable) throws DataAccessException;
+
+    @Query("select e from Encargo e where e.beaver.id = ?1 AND e.disponibilidad = true")
+    Page<Encargo> findEncargoByAnotherBeaverId(Integer id, Pageable pageable) throws DataAccessException;
 }

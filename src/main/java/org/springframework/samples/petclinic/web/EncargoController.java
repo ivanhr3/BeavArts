@@ -9,6 +9,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Encargo;
@@ -99,30 +102,31 @@ public class EncargoController {
 	//List
 
 	@GetMapping("/list")
-	public String listarEncargos(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
+	public ModelAndView listarEncargos(@PageableDefault(value = 5, page= 0) Pageable pageable, @PathVariable("beaverId") final int beaverId) {
+        ModelAndView vista = new ModelAndView("encargos/listEncargos");
 
 		if (this.beaverService.getCurrentBeaver() != null) {
 			Beaver me = this.beaverService.getCurrentBeaver();
-			model.put("myBeaverId", me.getId()); //Añadido para usar las url del header
+			vista.getModel().put("myBeaverId", me.getId()); //Añadido para usar las url del header
 		}
 
 		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
-		model.addAttribute("beaverId", beaverId);
-		model.addAttribute("beaver", beaver);
+		vista.getModel().put("beaverId", beaverId);
+		vista.getModel().put("beaver", beaver);
 		if (this.beaverService.getCurrentBeaver() == null) {  // deben listar solo usuarios logueados, ¿LLevar a otra vista?
-			return "accesoNoAutorizado"; //Acceso no autorizado
+			return new ModelAndView("accesoNoAutorizado"); //Acceso no autorizado
 		} else {
 			if (beaver.getEncargos().isEmpty()) {
-				model.addAttribute("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos *DONE*
+				vista.getModel().put("hayEncargos", false); //TODO: Usar este boolean para controlar la falta de encargos *DONE*
 			} else if (beaver.equals(this.beaverService.getCurrentBeaver())) {
-				final Iterable<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId);
-				model.addAttribute("encargos", encargos);
+				final Page<Encargo> encargos = this.encargoService.findEncargoByBeaverId(beaverId, pageable);
+				vista.getModel().put("encargos", encargos);
 			} else {
 				// para mostrar los encargos de un beaver a otro usuario que la disponibilidad debe ser True
-				final Iterable<Encargo> encargos = this.encargoService.findEncargoByAnotherBeaverId(beaverId);
-				model.addAttribute("encargos", encargos);
+				final Page<Encargo> encargos = this.encargoService.findEncargoByAnotherBeaverId(beaverId, pageable);
+				vista.getModel().put("encargos", encargos);
 			}
-			return "encargos/listEncargos";
+			return vista;
 		}
 	}
 
