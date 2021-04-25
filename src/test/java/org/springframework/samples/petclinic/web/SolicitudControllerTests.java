@@ -8,12 +8,10 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +22,6 @@ import org.springframework.samples.petclinic.service.*;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -37,8 +34,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 //@AutoConfigureMockMvc
 public class SolicitudControllerTests {
 
-    @Autowired
-    private SolicitudController	solicitudController;
     @MockBean
     private SolicitudService	solicitudService;
     @MockBean
@@ -51,9 +46,6 @@ public class SolicitudControllerTests {
     private UserService			userService;
     @MockBean
     private AnuncioService anuncioService;
-
-    @MockBean
-    private AuthoritiesService	authoritiesService;
 
     @MockBean
     private FacturaService facturaService;
@@ -77,12 +69,9 @@ public class SolicitudControllerTests {
     Anuncio anuncio2;
 
     private static final int	TEST_BEAVER_ID			= 1;
-    private static final int	TEST_USER_ID			= 1;
-    private static final int	TEST_AUTHORITIES_ID		= 1;
     private static final int	TEST_ENCARGO_ID			= 1;
 
     private static final int	TEST_BEAVER_ID2			= 2;
-    private static final int	TEST_AUTHORITIES_ID2	= 2;
 
     private static final int	TEST_SOLICITUD_ID		= 1;
     private static final int	TEST_SOLICITUD_ID2		= 2;

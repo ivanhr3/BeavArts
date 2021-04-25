@@ -49,21 +49,9 @@ public class EncargoControllerTests {
 	private BeaverService		beaverService;
 
 	@MockBean
-	private UserService			userService;
-
-	@MockBean
-	private AuthoritiesService	authoritiesService;
-
-	@MockBean
-	private SolicitudService	solicitudService;
-
-	@MockBean
 	private FacturaService		facturaService;
 
 	private static final int	TEST_BEAVER_ID		= 99;
-	private static final int	TEST_ENCARGO_ID		= 1;
-	private static final String	TEST_BEAVERUSER_ID	= "beaver2";
-
 
 	@BeforeEach
 	public void setUp() {
