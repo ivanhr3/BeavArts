@@ -83,6 +83,11 @@ public class ValoracionControllerTests {
 	@Test
 	public void testListValoracionesEmpty() throws Exception {
 
+        listaValoracionesPaginacion = new ArrayList<>();
+
+        Page<Valoracion> page = new PageImpl<>(listaValoracionesPaginacion, PageRequest.of(0, 5), 1);
+        BDDMockito.given(this.valoracionService.findValoracionesByBeaverId(TEST_BEAVER_ID, PageRequest.of(0, 5))).willReturn(page);
+
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", ValoracionControllerTests.TEST_BEAVER_ID))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("valoracion/lista"))
