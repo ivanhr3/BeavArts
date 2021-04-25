@@ -4,6 +4,9 @@ package org.springframework.samples.petclinic.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Factura;
@@ -11,6 +14,7 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +34,8 @@ public class FacturaController {
 	}
 
 	@GetMapping("/facturas/list")
-	public String listFacturas(final ModelMap modelMap) {
+	public ModelAndView listFacturas(@PageableDefault(value = 5, page= 0) Pageable pageable) {
+        ModelAndView vista = new ModelAndView("facturas/listFacturas");
 
 		Beaver beav = this.beaverService.getCurrentBeaver();
 		User user = beav.getUser();
@@ -39,17 +44,16 @@ public class FacturaController {
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
 		if (me != null) {//añadido el if para los tests
-			modelMap.put("myBeaverId", me.getId()); //añadimos el id a la vista
+			vista.getModel().put("myBeaverId", me.getId()); //añadimos el id a la vista
 		}
 
 		if (!esAdmin) {
-			return "accesoNoAutorizado";
+			return new ModelAndView("accesoNoAutorizado");
 
 		} else {
 
-			String vista = "facturas/listFacturas";
-			List<Factura> facturas = (List<Factura>) this.facturaService.findAllFacturas();
-			modelMap.addAttribute("facturas", facturas);
+			Page<Factura> facturas = this.facturaService.findAllFacturas(pageable);
+			vista.getModel().put("facturas", facturas);
 
 			return vista;
 		}

@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.petclinic.model.Factura;
 import org.springframework.samples.petclinic.model.Solicitud;
 import org.springframework.samples.petclinic.repository.FacturaRepository;
@@ -48,4 +50,9 @@ public class FacturaService {
 		return this.facturaRepo.findFacturayBySolicitud(sol.getId());
 	}
 
+	@org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public Page<Factura> findAllFacturas(Pageable pageable){
+	    Page<Factura> page = this.facturaRepo.findAllFacturas(pageable);
+	    return page;
+    }
 }

@@ -16,6 +16,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.samples.petclinic.model.Beaver;
@@ -58,6 +61,8 @@ public class FacturaControllerTests {
 
 	private Factura				factura1;
 	private Factura				factura2;
+
+	private List<Factura> listaFacturasPaginacion;
 
 
 	@BeforeEach
@@ -115,6 +120,10 @@ public class FacturaControllerTests {
 		this.solicitudService.saveSolicitud(solicitud1);
 		this.facturaService.crearFactura(this.factura2);
 
+		listaFacturasPaginacion = new ArrayList<>();
+		listaFacturasPaginacion.add(factura1);
+		listaFacturasPaginacion.add(factura2);
+
 		BDDMockito.given(this.beaverService.findUserAuthorities(user1)).willReturn(lista);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver1);
 		BDDMockito.given(this.facturaService.findFacturaById(FacturaControllerTests.TEST_FACTURA_ID)).willReturn(this.factura1);
@@ -123,7 +132,12 @@ public class FacturaControllerTests {
 	@WithMockUser(value = "testuser")
 	@Test
 	public void testListFacturas() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/facturas/list")).andExpect(MockMvcResultMatchers.model().attributeExists("facturas")).andExpect(MockMvcResultMatchers.status().isOk())
+	    Page<Factura> page = new PageImpl<>(listaFacturasPaginacion, PageRequest.of(0, 5), 1);
+	    BDDMockito.given(this.facturaService.findAllFacturas(PageRequest.of(0,5))).willReturn(page);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/facturas/list"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("facturas"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
 			.andExpect(MockMvcResultMatchers.view().name("facturas/listFacturas"));
 	}
 
