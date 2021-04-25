@@ -18,8 +18,12 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.ConfirmationToken;
@@ -52,6 +56,9 @@ public class UserService {
 
 	@Autowired
 	private AuthoritiesService authoritiesService;
+
+	@Autowired
+	private EntityManagerFactory entityManager;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -112,4 +119,14 @@ public class UserService {
     public User findUserByUsername(String username){
         return this.userRepository.findByUsername(username);
     }
+
+	@Transactional
+	public void deleteAllUser(User user){
+
+		EntityManager em = this.entityManager.createEntityManager();
+		em.find(User.class, user.getUsername());
+		em.getTransaction().begin();
+		em.remove(em.contains(user) ? user : em.merge(user));
+		em.getTransaction().commit();
+	}
 }

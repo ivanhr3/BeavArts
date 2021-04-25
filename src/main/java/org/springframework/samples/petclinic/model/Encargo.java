@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.model;
 
 import java.util.Collection;
 
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,6 +14,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.URL;
 
 import lombok.Getter;
@@ -45,7 +50,9 @@ public class Encargo extends BaseEntity {
     @JoinColumn(name="beaver_id")
     private Beaver beaver;
 
-    @OneToMany(mappedBy = "encargo")
+    @OneToMany(mappedBy = "encargo", orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Solicitud> solicitud;
     
 }

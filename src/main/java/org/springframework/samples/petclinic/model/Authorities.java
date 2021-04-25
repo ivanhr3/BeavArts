@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,7 +16,7 @@ import lombok.Setter;
 @Table(name = "authorities")
 public class Authorities extends BaseEntity{
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "username")
 	User user;
 	

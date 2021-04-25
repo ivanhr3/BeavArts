@@ -14,7 +14,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +38,8 @@ public class Solicitud extends BaseEntity{
 
     @ElementCollection(targetClass = String.class)
     @CollectionTable(name = "solicitud_fotos", joinColumns = {@JoinColumn(name="solicitud_id")})
+    @JoinColumn(name="solicitud_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<String> fotos;
 
     @NotBlank
@@ -45,10 +50,14 @@ public class Solicitud extends BaseEntity{
     private Beaver beaver;
 
     @ManyToOne
+    @Cascade(CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="encargo_id")
     private Encargo encargo;
 
     @ManyToOne
+    @Cascade(CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="anuncio_id")
     private Anuncio anuncio;
 

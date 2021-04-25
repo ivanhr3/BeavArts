@@ -30,6 +30,7 @@ import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.ConfirmationTokenService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -39,6 +40,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -131,6 +133,32 @@ public class UserController {
 		Optional<ConfirmationToken> optToken = confirmationTokenService.findConfirmationTokenByToken(token);
 		optToken.ifPresent(userService::confirmUser);
 		return "redirect:/login";
+	}
+
+	@GetMapping("/users/delete")
+	ModelAndView deleteLoggedUserAndChildren(){
+		
+		Beaver beaver = beaverService.getCurrentBeaver();
+
+		if(beaver == null){
+			final ModelAndView vista = new ModelAndView("accessNotAuthorized");
+			return vista;
+		} else {
+			final ModelAndView vista = new ModelAndView("users/confirmDeletion");
+			vista.addObject("myBeaverId", beaver.getId());
+			return vista;
+		}
+	}
+
+	@PostMapping("/users/delete")
+	ModelAndView postDeleteLoggedUserAndChildren(){
+		Beaver beaver = beaverService.getCurrentBeaver();
+		//Logout
+		SecurityContextHolder.getContext().setAuthentication(null);
+		//Borrado
+		userService.deleteAllUser(beaver.getUser());
+		return new ModelAndView("user/succesfulDeletion");
+			
 	}
 
 }

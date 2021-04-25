@@ -23,6 +23,6 @@ public class User{
 	
 	boolean enabled;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
 	private Set<Authorities> authorities;
 }
