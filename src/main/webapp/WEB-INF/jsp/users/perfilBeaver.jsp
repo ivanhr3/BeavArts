@@ -5,6 +5,7 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.0/jquery.fancybox.min.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -84,7 +85,8 @@
  	
                       </c:if>
                       	<c:if test="${beaver.user.username == principalUsername}">
-							<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>						
+							<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>
+							<a class="btn btn-danger" href='<spring:url value="/users/delete" htmlEscape="true"/>'><fmt:message key="portfolio.borrarDatos"/></a>					
                       </c:if> 
                     </div>
                   </div>
@@ -299,6 +301,7 @@
               </div>              
            </div>
         </div>
+		<a class="btn btn-secondary" href='<spring:url value="/users/portability" htmlEscape="true"/>'><fmt:message key="portfolio.portabilidad"/></a>
       </c:if> 
     </div>
   </div>

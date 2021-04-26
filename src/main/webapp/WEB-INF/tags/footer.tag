@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <%-- Placed at the end of the document so the pages load faster --%>
@@ -46,6 +47,7 @@
         data-mdb-ripple-color="dark"
         ><i style="color: #000000;" class="fab fa-github"></i></a>
     <p style="color: #000000;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
+  <a class="btn btn-link" href="/terminos"><fmt:message key="footer.terminoscondiciones"/></a>
   </div>
   <!-- Copyright -->
 </footer>
