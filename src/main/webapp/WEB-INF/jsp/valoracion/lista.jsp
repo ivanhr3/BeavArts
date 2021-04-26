@@ -205,7 +205,7 @@
                     		</spring:url>
                     		<h5 style="font-size:22px" class="mb-0 SegoeFont"><a  href="${fn:escapeXml(beaverUrlAuthor)}">${valoracion.valAuthor.user.username}</a></h5>
 	                       
-	                        <span class="date text-black-50 SegoeFont">Puntuación: 
+	                        <span class="date text-black-50">Puntuación: 
 	                                        
 	                        		<c:choose>	                      
 					                    	<c:when test="${valoracion.puntuacion == 5}">

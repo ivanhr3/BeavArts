@@ -178,44 +178,51 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
  </script>
 
 <beavarts:layout pageName="beavers">
-    <h2 class="SegoeFont text-center">
-        <c:if test="${beaver['new']}">
-            ¡Registrarse como beaver! 
-        </c:if>
-    </h2>
+<div class="formulario">
+	
+	<div style="position: relative; text-align: center; margin-bottom:30px">
+		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
+	                                             
+	    <h2 class="GagalinLight text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">
+	        <c:if test="${beaver['new']}">
+	            REGISTRO
+	        </c:if>
+	    </h2>
+    </div>
     <br/>
+    
 <div class="container justify-content-center" style="display:block;">
     <!-- ############################################################################3 -->
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form" onsubmit="return checkForm(this);">
         <div class="form-group has-feedback">
 
             <!-- *First name group -->
-          <div class="form-group">
+          <div class="form-group widhtTam ">
             <label class="sr-only">{% trans "First name" %}</label>
-            <input type="text" id="id_first_name" name="firstName" class="form-control" 
-    value="" placeholder="First name" maxlength="30">
+            <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30">
+            	
           </div>
 
             <!-- *Last name group -->
-          <div class="form-group">
+          <div class="form-group widhtTam">
             <label class="sr-only">{% trans "Last name" %}</label>
-            <input type="text" id="id_last_name" name="lastName" class="form-control" 
-    value="" placeholder="Last name" maxlength="100">
+            <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100">
           </div> 
           
- 		   <p class="SegoeFont">Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
-            <div class="control-group" style="padding: 10px">
-            	<beavarts:selectField name="especialidades" label="Especialidades" names="${types}" size="8"/>
-            </div>
+ 		   
+            <div class="control-group widhtTam2 ">
             
+            	<beavarts:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
+            </div>
+            <p class="widhtTam" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
             <!-- dni group -->
-          <div class="form-group">
+          <div class="form-group widhtTam">
             <input type="text" id="id_dni" required name="dni" class="form-control" 
               value="" placeholder="22333444X" maxlength="12">
           </div>
 
             <!-- email group -->
-          <div class="form-group">
+          <div class="form-group widhtTam">
             <input type="email" id="id_email" required name="email" class="form-control" 
               value="" placeholder="email@dominio.com" maxlength="254">
           </div>
@@ -226,10 +233,10 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
 						</c:if>
 
             <!-- Username -->
-            <div class="form-group">
+            <div class="form-group widhtTam">
                 <label class="sr-only">{% trans "Username" %}</label>
                 <input type="text" id="id_username" name="user.username" class="form-control"
-                value="" placeholder="Username" required>
+                value="" placeholder="Usuario..." required>
               </div>
               <c:if test="${urlUsername == true}">
                         	<div class="alert alert-danger" role="alert">
@@ -238,13 +245,13 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
 						</c:if>
 
             <!-- password group -->
-            <div class="form-group">
+            <div class="form-group widhtTam">
             <!-- password label -->
             <label class="sr-only">{% trans "Password" %}</label>
             <!-- password input -->
             <div class="input-group">
               <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
-      data-html="true" value="" placeholder="Password" required>
+      data-html="true" value="" placeholder="Contraseña..." required >
 
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-append1" onclick="togglePassword()">
@@ -260,18 +267,19 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group widhtTam3 fontSizeButton">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${beaver['new']}">
-                        <button class="btn btn-primary" type="submit">¡Convertirme en Beaver!</button>
+                        <button  class="btn btn-primary buttonTam" type="submit">¡Convertirme en Beaver!</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-primary" type="submit">Actualizar Beaver</button>
+                        <button class="btn btn-primary buttonTam" type="submit">Actualizar Beaver</button>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
     </form:form>
     </div>
+</div>
 </beavarts:layout>

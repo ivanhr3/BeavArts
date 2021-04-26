@@ -14,21 +14,21 @@
         <c:if test="${editando}">Editar </c:if> Encargo
     </h2>
     
-    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
         <div class="form-group">
-        	<b class="SegoeFont" style="margin-left:15px"> *Título:</b>
+        	<b style="margin-left:15px"> *Título:</b>
             <beavarts:inputField label="" name="titulo" readonly="${isDisponible}"/>
-            <b class="SegoeFont" style="margin-left:15px"> *Precio:</b>
+            <b style="margin-left:15px"> *Precio:</b>
             <beavarts:inputNumberField label="" name="precio" placeholder="0.00" readonly="${isDisponible}"/>
-            <b class="SegoeFont" style="margin-left:15px"> *Descripción:</b>
+            <b style="margin-left:15px"> *Descripción:</b>
             <beavarts:inputField label="" name="descripcion" readonly="${isDisponible}"/>
                    
              <div class="form-group">     
                 <c:if test="${encargo.disponibilidad == true}">
-                <b class="SegoeFont" style="margin-left:15px"> *Disponibilidad:</b>
+                <b style="margin-left:15px"> *Disponibilidad:</b>
                 <br/>
 	            	<label class = "col-sm-2 control-label" for="disponibilidad"> </label>
 	            		<div class="col-sm-3">
@@ -40,7 +40,7 @@
             	</c:if>  
             	          
                 <c:if test="${encargo.disponibilidad != true}">
-                 <b class="SegoeFont" style="margin-left:15px"> *Disponibilidad:</b>
+                 <b style="margin-left:15px"> *Disponibilidad:</b>
                  <br/>
 	            	<label class = "col-sm-2 control-label" for="disponibilidad"></label>
 	            		<div class="col-sm-3">
@@ -52,7 +52,7 @@
             	</c:if>
     		</div>
             <br/>
-            <b class="SegoeFont" style="margin-left:15px"> Introduce URL de la foto:</b>
+            <b style="margin-left:15px"> Introduce URL de la foto:</b>
            <beavarts:inputField label="" name="photo" readonly="${isDisponible}"/>
            </div>
         </div>

@@ -89,28 +89,30 @@
 
 <jsp:body>
 
-	<c:if test="${baneado==true}">
-		<h1 class="SegoeFont" style="text-align:center; color:red">Usuario ${userBanned} suspendido con éxito</h1>
-		</c:if>
-
-<h1 class="SegoeFont" style="text-align:center">BEAVERS</h1>
-<br/>
+	<div style="position: relative; text-align: center; margin-bottom:30px">
+		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
+	                                             
+	    <h1 class="GagalinLight text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">BEAVERS</h1>
+    </div>
+    
 <div class="container mt-3 mb-4">
-<div style="font-size:20px; text-align:center">
-<b class="SegoeFont" style="font-size:20px; text-align:center">¡Usa los filtros para encontrar beavers con tus gustos!</b>
-</div>
-<br/>
-<div style="text-align:center"class="centerContainer" id="myBtnContainer">
-  <button style="background-color: orange; border-color: brown; margin-top:1%;"class="btn active btn-primary SegoeFont" onclick="filterSelection('all')" > Mostrar todos</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('TEXTIL')"style="margin-top:1%;"> Textil</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ESCULTURA')"style="margin-top:1%;"> Escultura</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ILUSTRACION')"style="margin-top:1%;"> Ilustración</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('ACRILICO')"style="margin-top:1%;"> Acrílico</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('OLEO')"style="margin-top:1%;"> Óleo</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('JOYERIA')"style="margin-top:1%;"> Joyería</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('RESINA')"style="margin-top:1%;"> Resina</button>
-  <button class="btn btn-primary SegoeFont" onclick="filterSelection('FOTOGRAFIA')"style="margin-top:1%;"> Fotografía</button>
-</div>
+
+	<div style="font-size:20px; text-align:center">
+		<b class="Roboto responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para encontrar beavers con tus gustos!</b>
+	</div>
+	
+	<br/>
+	<div style="text-align:center"class="centerContainer" id="myBtnContainer">
+	  <button class="btn active btn-primary tamBoton" onclick="filterSelection('all')" > Mostrar todos</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('TEXTIL')"> Textil</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ESCULTURA')"> Escultura</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ACRILICO')""> Acrílico</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('OLEO')"> Óleo</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('JOYERIA')"> Joyería</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('RESINA')"> Resina</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
+	</div>
 
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
 
