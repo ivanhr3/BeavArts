@@ -301,6 +301,7 @@
               </div>              
            </div>
         </div>
+		<a class="btn btn-secondary" href='<spring:url value="/users/portability" htmlEscape="true"/>'><fmt:message key="portfolio.portabilidad"/></a>
       </c:if> 
     </div>
   </div>

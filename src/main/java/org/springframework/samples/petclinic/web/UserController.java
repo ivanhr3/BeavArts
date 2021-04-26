@@ -23,6 +23,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.ConfirmationToken;
@@ -159,6 +161,20 @@ public class UserController {
 		userService.deleteAllUser(beaver.getUser());
 		return new ModelAndView("users/succesfulDeletion");
 			
+	}
+
+	@GetMapping("/users/portability")
+	ModelAndView getDataPortability() throws JsonProcessingException{
+		Beaver beaver = beaverService.getCurrentBeaver();
+		ModelAndView vista = null;
+		if(beaver == null){
+			vista = new ModelAndView("accessNotAuthorized");
+		} else {
+			vista = new ModelAndView("users/portability");
+			vista.addObject("json", userService.getUserEntitiesJson(beaver.getUser()));
+		}
+		
+		return vista;
 	}
 	
 
