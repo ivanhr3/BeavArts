@@ -248,6 +248,7 @@
 	    
     </div>
     <div>
+    
     		<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
             	<spring:param name="beaverId" value="${beaver.id}"/>
             </spring:url>
