@@ -6,6 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +34,9 @@ public class Factura extends BaseEntity{
     private LocalDate paymentDate;
 
     @OneToOne
+    @Cascade(CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Solicitud solicitud;
 
     private Double precio;

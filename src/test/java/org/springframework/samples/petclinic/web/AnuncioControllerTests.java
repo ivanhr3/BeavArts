@@ -19,13 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.Anuncio;
-import org.springframework.samples.petclinic.model.Authorities;
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Especialidad;
-import org.springframework.samples.petclinic.model.Estados;
-import org.springframework.samples.petclinic.model.Solicitud;
-import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.AnuncioService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
@@ -69,6 +63,7 @@ public class AnuncioControllerTests {
 
 	private Beaver						beaver;
 	private Beaver						beaver2;
+    private Beaver						beaver3;
 	private Anuncio						anuncio;
 	private Anuncio						anuncio2;
 	private Anuncio						anuncio3;
@@ -124,6 +119,28 @@ public class AnuncioControllerTests {
 		user2.setEnabled(true);
 		this.beaver2.setUser(user2);
 
+        this.beaver3 = new Beaver();
+        this.beaver3.setFirstName("Nombre");
+        this.beaver3.setLastName("Apellidos");
+        this.beaver3.setEmail("valid3@gmail.com");
+        Collection<Especialidad> espe3 = new HashSet<>();
+        espe3.add(Especialidad.ESCULTURA);
+        this.beaver3.setEspecialidades(espe2);
+        this.beaver3.setDni("12345178X");
+        this.beaver3.setId(109);
+
+        User user3 = new User();
+        user3.setUsername("User23456");
+        user3.setPassword("supersecretpass22");
+        Authorities au3 = new Authorities();
+        Set<Authorities> col3 = new HashSet<>();
+        col3.add(au3);
+        au3.setAuthority("user");
+        au3.setUser(user2);
+        user3.setAuthorities(col3);
+        user3.setEnabled(true);
+        this.beaver2.setUser(user3);
+
 		this.anuncio = new Anuncio();
 		this.anuncio.setBeaver(this.beaver);
 		this.anuncio.setDescripcion("Esto es una descripción");
@@ -150,6 +167,13 @@ public class AnuncioControllerTests {
 		this.anuncio3.setDestacado(false);
 		this.anuncio3.setEspecialidad(Especialidad.RESINA);
 		this.anuncio3.setId(92);
+
+        Solicitud sol = new Solicitud();
+        Factura factura = new Factura();
+        factura.setSolicitud(sol);
+        Collection<Solicitud> cole = new ArrayList();
+        cole.add(sol);
+        this.anuncio3.setSolicitud(cole);
 
 		this.solicitud = new Solicitud();
 		this.solicitud.setPrecio(50.0);
@@ -194,7 +218,6 @@ public class AnuncioControllerTests {
 	@WithMockUser(value = "User123")
 	@Test
 	public void testInitCreationSucces() throws Exception {
-
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/createAnunciosForm"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("anuncio"));
 	}
@@ -207,6 +230,18 @@ public class AnuncioControllerTests {
 			.param("especialidad", "TEXTIL").param("descripcion", "Descripción del anuncio de prueba")).andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/99/anuncios/60"));
 
 	}
+
+    @WithMockUser(value = "User123")
+    @Test
+    public void testPostCreationAnunciosNull() throws Exception {
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver3);
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/anuncios/new", AnuncioControllerTests.TEST_BEAVER_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "AnuncioTest").param("id", "60").param("precio", "35.50")
+            .param("especialidad", "TEXTIL")
+            .param("descripcion", "Descripción del anuncio de prueba"))
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+            .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/109/anuncios/60"));
+
+    }
 
 	@WithMockUser(value = "User123")
 	@Test
@@ -323,12 +358,183 @@ public class AnuncioControllerTests {
 			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/anunciosDetails"));
 	}
 
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testMostrarAnuncioAnotherBeaver() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}", AnuncioControllerTests.TEST_BEAVER_ID2, AnuncioControllerTests.TEST_ANUNCIO_ID3)).andExpect(MockMvcResultMatchers.model().attributeExists("anuncio"))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/anunciosDetails"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testMostrarAnuncioUserNull() throws Exception {
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(null);
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID)).andExpect(MockMvcResultMatchers.model().attributeExists("anuncio"))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/anunciosDetails"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testMostrarAnuncioAdmin() throws Exception {
+        Beaver beaver3 = new Beaver();
+        beaver3.setFirstName("Nombre");
+        beaver3.setLastName("Apellidos");
+        beaver3.setEmail("validx@gmail.com");
+        beaver3.setId(50);
+        Collection<Especialidad> espe = new HashSet<>();
+        espe.add(Especialidad.ESCULTURA);
+        beaver3.setEspecialidades(espe);
+        beaver3.setDni("12345672Q");
+        User user = new User();
+        user.setUsername("Admin123");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        Authorities au = new Authorities();
+        Set<Authorities> col = new HashSet<>();
+        au.setAuthority("admin");
+        au.setUser(user);
+        col.add(au);
+        user.setAuthorities(col);
+        beaver3.setUser(user);
+        beaver3.setEncargos(new HashSet<>());
+        List<Authorities> lista = new ArrayList<Authorities>();
+        lista.add(au);
+
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
+        BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID)).andExpect(MockMvcResultMatchers.model().attributeExists("anuncio"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("esAdmin"))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("anuncios/anunciosDetails"));
+    }
+
 	@WithMockUser(value = "testuser")
 	@Test
 	public void testListPublicaciones() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/misPublicaciones", AnuncioControllerTests.TEST_BEAVER_ID)).andExpect(MockMvcResultMatchers.model().attributeExists("anuncios"))
-			.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("encargos")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("publicaciones/misPublicaciones"));
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/misPublicaciones", AnuncioControllerTests.TEST_BEAVER_ID))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("anuncios"))
+			.andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("encargos"))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("publicaciones/misPublicaciones"));
 	}
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testListPublicaciones2() throws Exception {
+        Beaver beaver3 = new Beaver();
+        beaver3.setFirstName("Nombre");
+        beaver3.setLastName("Apellidos");
+        beaver3.setEmail("validx@gmail.com");
+        beaver3.setId(50);
+        Collection<Especialidad> espe = new HashSet<>();
+        espe.add(Especialidad.ESCULTURA);
+        beaver3.setEspecialidades(espe);
+        beaver3.setDni("12345672Q");
+        User user = new User();
+        user.setUsername("user11123");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        beaver3.setUser(user);
+        beaver3.setEncargos(new HashSet<>());
+
+        Anuncio anuncio = new Anuncio();
+        anuncio.setBeaver(beaver3);
+        anuncio.setDescripcion("Esto es una descripción");
+        anuncio.setPrecio(50.0);
+        anuncio.setTitulo("Esto es un título");
+        anuncio.setDestacado(false);
+        anuncio.setEspecialidad(Especialidad.ESCULTURA);
+        anuncio.setId(20);
+        Set<Anuncio> anun = new HashSet<>();
+        anun.add(anuncio);
+        beaver3.setAnuncios(anun);
+        Encargo e = new Encargo();
+        e.setId(20);
+        e.setBeaver(beaver3);
+        Set<Encargo> s = new HashSet<>();
+        s.add(e);
+        beaver3.setEncargos(s);
+
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
+        BDDMockito.given(this.beaverService.findBeaverByIntId(50)).willReturn(beaver3);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/misPublicaciones", 50))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("anuncios"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("encargos"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("publicaciones/misPublicaciones"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testListPublicaciones3() throws Exception {
+        Beaver beaver3 = new Beaver();
+        beaver3.setFirstName("Nombre");
+        beaver3.setLastName("Apellidos");
+        beaver3.setEmail("validx@gmail.com");
+        beaver3.setId(50);
+        Collection<Especialidad> espe = new HashSet<>();
+        espe.add(Especialidad.ESCULTURA);
+        beaver3.setEspecialidades(espe);
+        beaver3.setDni("12345672Q");
+        User user = new User();
+        user.setUsername("user11123");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        beaver3.setUser(user);
+        beaver3.setAnuncios(new HashSet<>());
+        Encargo e = new Encargo();
+        e.setId(20);
+        e.setBeaver(beaver3);
+        Set<Encargo> s = new HashSet<>();
+        s.add(e);
+        beaver3.setEncargos(s);
+
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
+        BDDMockito.given(this.beaverService.findBeaverByIntId(50)).willReturn(beaver3);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/misPublicaciones", 50))
+            .andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("anuncios"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("encargos"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("publicaciones/misPublicaciones"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testListPublicaciones4() throws Exception {
+        Beaver beaver3 = new Beaver();
+        beaver3.setFirstName("Nombre");
+        beaver3.setLastName("Apellidos");
+        beaver3.setEmail("validx@gmail.com");
+        beaver3.setId(50);
+        Collection<Especialidad> espe = new HashSet<>();
+        espe.add(Especialidad.ESCULTURA);
+        beaver3.setEspecialidades(espe);
+        beaver3.setDni("12345672Q");
+        User user = new User();
+        user.setUsername("user11123");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        beaver3.setUser(user);
+        beaver3.setAnuncios(new HashSet<>());
+        beaver3.setEncargos(new HashSet<>());
+
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
+        BDDMockito.given(this.beaverService.findBeaverByIntId(50)).willReturn(beaver3);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/misPublicaciones", 50))
+            .andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("anuncios"))
+            .andExpect(MockMvcResultMatchers.model().attributeDoesNotExist("encargos"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.view().name("publicaciones/misPublicaciones"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testListPublicacionesUserNull() throws Exception {
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(null);
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/misPublicaciones", AnuncioControllerTests.TEST_BEAVER_ID))
+            .andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+    }
 
 	@WithMockUser(value = "testuser")
 	@Test
@@ -364,5 +570,40 @@ public class AnuncioControllerTests {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID, AnuncioControllerTests.TEST_ANUNCIO_ID2).with(SecurityMockMvcRequestPostProcessors.csrf()))
 			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/anuncios/list"));
 	}
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testDeleteAnuncioAdminFactura() throws Exception {
+
+        Beaver beaver3 = new Beaver();
+        beaver3.setFirstName("Nombre");
+        beaver3.setLastName("Apellidos");
+        beaver3.setEmail("validx@gmail.com");
+        beaver3.setId(50);
+        Collection<Especialidad> espe = new HashSet<>();
+        espe.add(Especialidad.ESCULTURA);
+        beaver3.setEspecialidades(espe);
+        beaver3.setDni("12345672Q");
+        User user = new User();
+        user.setUsername("Admin123");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        Authorities au = new Authorities();
+        Set<Authorities> col = new HashSet<>();
+        au.setAuthority("admin");
+        au.setUser(user);
+        col.add(au);
+        user.setAuthorities(col);
+        beaver3.setUser(user);
+        beaver3.setEncargos(new HashSet<>());
+        List<Authorities> lista = new ArrayList<Authorities>();
+        lista.add(au);
+
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
+        BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/anuncios/{anuncioId}/delete", AnuncioControllerTests.TEST_BEAVER_ID2, AnuncioControllerTests.TEST_ANUNCIO_ID3).with(SecurityMockMvcRequestPostProcessors.csrf()))
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/anuncios/list"));
+    }
 
 }

@@ -193,7 +193,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
     
 <div class="container justify-content-center" style="display:block;">
     <!-- ############################################################################3 -->
-    <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form">
+    <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form" onsubmit="return checkForm(this);">
         <div class="form-group has-feedback">
 
             <!-- *First name group -->
@@ -259,6 +259,11 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
                 </button>
               </div>
             </div>
+            </div>
+            <div class="form-check">
+                <p><input type = "checkbox" required name="terms">
+                <fmt:message key="createBeaver.terminostexto"/><a class="btn btn-link" href="/terminos"><fmt:message key="footer.terminoscondiciones"/></a>
+                </p>
             </div>
         </div>
 

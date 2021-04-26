@@ -6,6 +6,9 @@ import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
 
 import lombok.Getter;
@@ -23,5 +26,6 @@ public class Portfolio extends BaseEntity{
     private String sobreMi;
 
     @OneToOne(mappedBy = "portfolio")
+    @JsonIgnore
     private Beaver beaver;
 }

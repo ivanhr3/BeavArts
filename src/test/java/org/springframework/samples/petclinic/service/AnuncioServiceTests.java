@@ -61,7 +61,7 @@ public class AnuncioServiceTests {
         anuncio3 = new Anuncio();
         anuncio3.setBeaver(beaver);
         anuncio3.setDescripcion("Esto es una descripción 2");
-        anuncio3.setDestacado(false);
+        anuncio3.setDestacado(true);
         anuncio3.setPrecio(30.0);
         anuncio3.setTitulo("Esto es un título 2");
         anuncio3.setEspecialidad(Especialidad.ACRILICO);
@@ -141,9 +141,11 @@ public class AnuncioServiceTests {
         anuncio2.setPrecio(30.0);
         anuncio2.setTitulo("Esto es un título 2");
         anuncio2.setEspecialidad(Especialidad.ACRILICO);
-        this.anuncioService.saveAnuncio(anuncio2);
-        int numAnuncios2 = this.anuncioService.anunciosCount();
 
+        this.anuncioService.crearAnuncio(anuncio2, beaver);
+        Anuncio prueba = this.anuncioService.findAnuncioById(anuncio2.getId());
+        Assertions.assertEquals(prueba, anuncio2);
+        int numAnuncios2 = this.anuncioService.anunciosCount();
         Assertions.assertEquals(numAnuncios2, numAnuncios + 1);
     }
 
@@ -184,5 +186,34 @@ public class AnuncioServiceTests {
             this.anuncioService.deleteAnuncio(123456789);
 
         });
+    }
+
+    @Test
+    @Transactional
+    void testFindAnunciosDestacados() {
+
+        List<Anuncio> listaAnuncios = this.anuncioService.findAnunciosDestacados();
+        Assertions.assertEquals(listaAnuncios.size(), 2);
+    }
+
+    @Test
+    @Transactional
+    void testFindAnunciosNoDestacados() {
+
+        List<Anuncio> listaAnuncios = this.anuncioService.findAnunciosNoDestacados();
+        Assertions.assertEquals(listaAnuncios.size(), 2);
+    }
+
+    @Test
+    @Transactional
+    void testFindAllAnuncios() {
+        List<Anuncio> listaAnuncios = new ArrayList<>();
+        Iterable<Anuncio> anuncios = this.anuncioService.findAllAnuncios();
+        for(Anuncio a: anuncios){
+            listaAnuncios.add(a);
+        }
+
+        Assertions.assertEquals(listaAnuncios.size(), 4);
+
     }
 }
