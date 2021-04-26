@@ -58,16 +58,6 @@
 </div>
 </c:if>
 <br/>
-<c:if test="${beaver.user.username == principalUsername}">
-		<a class="btn btn-primary" href='<spring:url value="new" htmlEscape="true"/>'>Nuevo encargo</a>
-		<br/>
-    	<c:if test="${url == true}">
-    	<div class="alert alert-danger" role="alert">
-			<c:out value="${errorEspecialidades}"/>
-		</div>
-		</c:if>
-</c:if>
-
 <nav aria-label="Pagination">
 <ul class="pagination justify-content-center">
 <li class="page-item">
@@ -82,5 +72,16 @@
   </li>
   </ul>
   </nav>
+<c:if test="${beaver.user.username == principalUsername}">
+		<a class="btn btn-primary" href='<spring:url value="new" htmlEscape="true"/>'>Nuevo encargo</a>
+		<br/>
+    	<c:if test="${url == true}">
+    	<div class="alert alert-danger" role="alert">
+			<c:out value="${errorEspecialidades}"/>
+		</div>
+		</c:if>
+</c:if>
+
+
 
 </beavarts:layout>

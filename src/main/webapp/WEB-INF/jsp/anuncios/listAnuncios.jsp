@@ -84,20 +84,6 @@
 	<div id="myBtnContainer">
 	
 	  <button style="background-color: orange; border-color: brown"class="btn active btn-primary" onclick="filterSelection('all')"> Mostrar todos</button>
-	 <nav aria-label="Pagination">
-<ul class="pagination justify-content-center">
-<li class="page-item">
-	<c:if test="${!anuncios.isEmpty()}">
-    <c:forEach begin="0" end="${anunciosPages}" var="current">
-        <spring:url value="../anuncios/list?page=${current}" var="pageUrl">
-        </spring:url>
-    <a href="${fn:escapeXml(pageUrl)}" class="page-link">Página ${current+1}</a>
-     
-    </c:forEach>
-    </c:if> 
-  </li>
-  </ul>
-  </nav>
 	  <button class="btn btn-primary" onclick="filterSelection('TEXTIL')"> Textil</button>
 	  <button class="btn btn-primary" onclick="filterSelection('ESCULTURA')"> Escultura</button>
 	  <button class="btn btn-primary" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
@@ -122,6 +108,8 @@
 		<c:if test="${anuncio.destacado == false}">
 			<c:set var="destacado" value="destacadoNo"></c:set>
 		</c:if>
+		
+		
 		<div class="mb-3 centerContainerVal">
 		  <div class="carTam column ${anuncio.especialidad}">
 		    	
@@ -207,8 +195,36 @@
 	
 	</c:if>
 
+
 	</div>
 </div>
+		 <nav aria-label="Pagination">
+<ul class="pagination justify-content-center pagination-sm">
+ <li class="page-item disabled" class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+
+<li class="page-item">
+	<c:if test="${!anuncios.isEmpty()}">
+    <c:forEach begin="0" end="${anunciosPages}" var="current">
+        <spring:url value="../anuncios/list?page=${current}" var="pageUrl">
+        </spring:url>
+    <a href="${fn:escapeXml(pageUrl)}" class="page-link">${current+1}</a>   
+    </c:forEach>
+    </c:if> 
+  </li>
+   <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+  </nav>
 
 </jsp:body> 
+
 </beavarts:layout>

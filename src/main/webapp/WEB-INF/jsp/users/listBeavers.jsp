@@ -215,21 +215,48 @@
       </div>
     </div>
   </div>
+    <nav aria-label="Pagination">
+<ul class="pagination justify-content-center pagination-sm">
+ <li class="page-item disabled" class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+
+<li class="page-item">
+	<c:if test="${!beavers.isEmpty()}">
+	  <c:forEach begin="0" end="${beaversPages}" var="current">
+        <spring:url value="../beavers/list?page=${current}" var="beaverUrl">
+        </spring:url>
+    <a class="page-link" href="${fn:escapeXml(beaverUrl)}">${current+1}    
+    </a> 
+    </c:forEach> 
+    </c:if> 
+ </li>
+ <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+  </nav>
 </div>
-<nav aria-label="Pagination">
+<%-- <nav aria-label="Pagination">
 <ul class="pagination justify-content-center">
 <li class="page-item">
 	<c:if test="${!beavers.isEmpty()}">
     <c:forEach begin="0" end="${beaversPages}" var="current">
         <spring:url value="../beavers/list?page=${current}" var="beaverUrl">
         </spring:url>
-    <a href="${fn:escapeXml(beaverUrl)}" class="page-link">Página ${current+1}</a>
-     
+    <a class="page-link" href="${fn:escapeXml(beaverUrl)}"> Página ${current+1}
+    </a> 
     </c:forEach>
     </c:if> 
   </li>
   </ul>
-  </nav>  
+  </nav>   --%>
 
 </jsp:body> 
   
