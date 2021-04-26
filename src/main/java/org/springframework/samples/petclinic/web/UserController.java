@@ -172,6 +172,7 @@ public class UserController {
 		} else {
 			vista = new ModelAndView("users/portability");
 			vista.addObject("json", userService.getUserEntitiesJson(beaver.getUser()));
+			vista.addObject("myBeaverId", beaver.getId());
 		}
 		
 		return vista;
