@@ -61,12 +61,12 @@ public class Beaver extends Person {
 
     private String urlFotoPerfil;
 
-    @OneToMany(mappedBy = "beaver", orphanRemoval = true)
+    @OneToMany(mappedBy = "beaver")
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Encargo> encargos;
 
-    @OneToMany(mappedBy = "beaver", orphanRemoval = true)
+    @OneToMany(mappedBy = "beaver")
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Solicitud> solicitud;
@@ -77,17 +77,17 @@ public class Beaver extends Person {
     @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 
-	@OneToMany(mappedBy = "beaver", orphanRemoval = true)
+	@OneToMany(mappedBy = "beaver")
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Anuncio> anuncios;
 
-    @OneToMany(mappedBy = "beaver", orphanRemoval = true)
+    @OneToMany(mappedBy = "beaver")
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Valoracion> valoraciones;
 
-    @OneToMany(mappedBy = "valAuthor", orphanRemoval = true)
+    @OneToMany(mappedBy = "valAuthor")
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Valoracion> valoracionesCreadas;
