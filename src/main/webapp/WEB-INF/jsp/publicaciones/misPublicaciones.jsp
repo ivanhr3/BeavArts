@@ -33,10 +33,10 @@
 <div class="card-header">
 <ul class="nav nav-tabs card-header-tabs" id="publicaciones-list">
     			<li class="nav-item">
-        			<a class="nav-link active enlaceEncargos" href="#listAnuncios" data-toggle="tab">Anuncios</a>
+        			<a class="nav-link active enlaceEncargos RobotoLight" href="#listAnuncios" data-toggle="tab">Anuncios</a>
       			</li>
       			<li class="nav-item">
-              		<a class="nav-link enlaceEncargos" href="#listEncargos" data-toggle="tab">Encargos</a></li>
+              		<a class="nav-link enlaceEncargos RobotoLight" href="#listEncargos" data-toggle="tab">Encargos</a></li>
     		</ul></div>
     		
     <div class="card-body tab-content justify-content-center">	

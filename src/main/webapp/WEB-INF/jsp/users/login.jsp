@@ -21,7 +21,7 @@ function togglePassword() {
 <beavarts:layout pageName="beavers">
 <div class="minAlto">
      <img class="center-login" src="/resources/images/icono-login.png" alt="">  
-    <h2 class="SegoeFont text-center">
+    <h2 class="RobotoLight text-center">
             ¡Inicia sesión en BeavArts!
     </h2>
     <br/>

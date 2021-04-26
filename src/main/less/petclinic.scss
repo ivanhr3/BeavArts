@@ -9101,11 +9101,11 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 .carousel-control-prev-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23b14900' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%234b6285' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
 }
 
 .carousel-control-next-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23b14900' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%234b6285' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
 }
 
 /* change the background color */
@@ -10195,3 +10195,450 @@ td {
 	color: rgb(42, 42, 42);
 }
 
+.mainCard{
+	max-width: 432px;
+}
+
+.perfilCard{
+	max-width: 400px;
+	height: 800px;
+	padding: 20px;
+	background-color: #f9f9f9;
+	box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+}
+
+.perfilDataCard{
+	margin-left:auto;
+	margin-right:auto;
+	max-width: 370px;
+	height: 250px;
+	padding: 20px;
+	background: linear-gradient(0deg, rgba(255,243,229,1) 0%, rgba(246,183,98,1) 82%, rgba(254,154,42,1) 100%);
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.fotoCard{
+	width: 100%;
+	height: 40%;
+	padding: 40px;
+	background-color: #f9f9f9;
+	float: left;
+}
+
+.fotoCard2{
+	width: 100%;
+	height: 60%;
+	padding: 20px;
+	background: linear-gradient(0deg, rgb(75 98 133) 0%, rgb(136 169 217) 70%, rgb(193 206 227) 100%);
+	float: right;
+	border-radius:10px;
+	box-shadow: #596e8f 0px 5px 8px;
+}
+
+.sombraPng{
+	-webkit-filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.24));
+	filter: drop-shadow(0px 3px 8px rgba(0, 0, 0, 0.24));
+}
+
+.imgResponsivePerfil {
+  max-width: 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.editBoton{
+	background: #ff9825; border-color:#ee6e0800;
+}
+
+.editBoton:hover{
+	background: #dc831f; border-color:#ee6e0800;
+}
+
+.portfolioCard{
+	padding: 20px;
+	float:right; 
+	max-width: 648px; 
+	width:648px;
+	height:800px; 
+	background-color:#f9f9f9; 
+	box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+}
+
+.portfolioCard2{
+	height:100%; 
+	padding-top:60px; 
+	border-radius:10px; 
+	background: linear-gradient(0deg, rgb(75 98 133) 0%, rgb(136 169 217) 70%, rgb(193 206 227) 100%);
+	box-shadow: #596e8f 0px 5px 8px;
+}
+
+.valHover{
+	color:black;
+	underline:none
+}
+
+.fotoSize{
+	width:150px; 
+	height:150px; 
+	margin: auto; 
+	position: relative;
+}
+
+.textoPerfil{
+		font-size: 14px;
+		text-align: justify;
+	}
+	
+.tituloPerfil2{
+		font-size: 24px;
+	}
+
+.carouselPerfil{
+		height: 60%;
+	}
+
+@media (max-width:1200px){
+	
+	.perfilCard{
+		max-width: 300px;
+		width:auto;
+		float:left;
+		height: 800px;
+		padding: 20px;
+		background-color: #f9f9f9;
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.portfolioCard{
+		padding: 20px;
+		float:right; 
+		max-width: 648px; 
+		width: 548px;
+		height:800px; 
+		background-color:#f9f9f9; 
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.fotoCard{
+		margin-bottom: 10%;
+		width: 100%;
+		height: 40%;
+		padding: 40px;
+		background-color: #f9f9f9;
+		float: left;
+	}
+
+	.fotoCard2{
+		width: 100%;
+		height: 56%;
+		padding: 20px;
+		background: linear-gradient(0deg, rgb(75 98 133) 0%, rgb(136 169 217) 70%, rgb(193 206 227) 100%);
+		float: right;
+		border-radius:10px;
+		box-shadow: #596e8f 0px 5px 8px;
+	}
+	
+	.perfilDataCard{
+		margin-left:24px;
+		margin-right:auto;
+		margin-top: 800px;
+		max-width: 370px;
+		width:250px;
+		padding: 20px;
+		background: linear-gradient(0deg, rgba(255,243,229,1) 0%, rgba(246,183,98,1) 82%, rgba(254,154,42,1) 100%);
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+	}
+	
+	.textoDatoPerfil{
+		font-size: 12px;
+	}
+	
+}
+
+@media (max-width:991px){
+	
+	.perfilCard{
+		max-width: 200px;
+		width:auto;
+		float:left;
+		height: 800px;
+		padding: 20px;
+		background-color: #f9f9f9;
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.portfolioCard{
+		padding: 20px;
+		float:right; 
+		max-width: 648px; 
+		width: 448px;
+		height:800px; 
+		background-color:#f9f9f9; 
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.fotoSize{
+		width:100px;
+		height:100px;
+		margin: auto; 
+		position: relative;
+	}
+	
+	.fotoCard{
+		margin-bottom: 0%;
+		width: 100%;
+		height: 30%;
+		padding: 0px;
+		background-color: #f9f9f9;
+		float: left;
+	}	
+	.fotoCard2{
+		width: 100%;
+		height: 70%;
+		padding: 20px;
+		background: linear-gradient(0deg, rgb(75 98 133) 0%, rgb(136 169 217) 70%, rgb(193 206 227) 100%);
+		float: right;
+		border-radius:10px;
+		box-shadow: #596e8f 0px 5px 8px;
+	}
+
+	.tituloPerfil{
+		font-size: 17px;
+	}
+	
+	.textoPerfil{
+		font-size: 11px;
+		text-align: justify;
+	}
+	
+	.perfilDataCard{
+		margin-left:5px;
+		margin-right:auto;
+		margin-top: 800px;
+		max-width: 370px;
+		width:190px;
+		padding: 20px;
+		background: linear-gradient(0deg, rgba(255,243,229,1) 0%, rgba(246,183,98,1) 82%, rgba(254,154,42,1) 100%);
+		border-bottom-left-radius: 10px;
+		border-bottom-right-radius: 10px;
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+	}
+	
+	.textoDatoPerfil{
+		font-size: 9px;
+	}
+	
+	.tituloPerfil2{
+		font-size: 24px;
+	}
+	
+}
+
+@media (max-width:767px){
+	
+	.perfilCard{	
+		max-width:100%;	
+		width:100%;
+		height: 800px;
+		padding: 20px;
+		background-color: #f9f9f9;
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.mainCard{
+		width:100%;
+		max-width:100%;
+		margin-bottom:10%;
+	}
+	
+	.portfolioCard{
+		padding: 20px;
+		width: 100%;
+		height:800px; 
+		background-color:#f9f9f9; 
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.tituloPerfil{
+		font-size: 24px;
+	}
+	
+	.tituloPerfil2{
+		font-size: 10px;
+	}
+	
+	.textoPerfil{
+		font-size: 16px;
+		text-align: justify;
+	}
+	
+	.perfilDataCard{
+		margin-left: auto;
+	    margin-right: auto;
+	    margin-top: 800px;
+	    max-width: 370px;
+		width:90%;
+	    height: 115px;
+	    padding: 20px;
+	    background: linear-gradient(0deg, rgba(255,243,229,1) 0%, rgba(246,183,98,1) 82%, rgba(254,154,42,1) 100%);
+	    border-bottom-left-radius: 10px;
+	    border-bottom-right-radius: 10px;
+	    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+	}
+	
+	.textoDatoPerfil{
+		font-size: 9px;
+	}
+	
+	.rowPad{
+		padding: 0px;
+	}
+
+}
+
+@media (max-width:575px){
+	
+	.portfolioCard{
+		padding: 20px;
+		width: 100%;
+		height:600px; 
+		background-color:#f9f9f9; 
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.carouselPerfil{
+		height: 30%;
+	}
+	
+	.rowPad{
+		padding: 0px;
+		
+	}
+	
+		.perfilDataCard{
+		margin-left: auto;
+	    margin-right: auto;
+	    margin-top: 600px;
+	    max-width: 370px;
+		width:90%;
+	    height: 115px;
+	    padding: 20px;
+	    background: linear-gradient(0deg, rgba(255,243,229,1) 0%, rgba(246,183,98,1) 82%, rgba(254,154,42,1) 100%);
+	    border-bottom-left-radius: 10px;
+	    border-bottom-right-radius: 10px;
+	    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+	}
+	
+
+}
+
+@media (max-width:390px){
+	
+	.perfilCard{	
+		max-width:100%;	
+		width:100%;
+		height: 600px;
+		padding: 20px;
+		background-color: #f9f9f9;
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.mainCard{
+		width:100%;
+		max-width:100%;
+		margin-bottom:10%;
+	}
+	
+	.portfolioCard{
+		padding: 20px;
+		width: 100%;
+		height:350px; 
+		background-color:#f9f9f9; 
+		box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+	}
+	
+	.tituloPerfil{
+		font-size: 17px;
+	}
+	
+	.textoPerfil{
+		font-size: 11px;
+		text-align: justify;
+	}
+	
+	.fotoCard{
+		margin-bottom: 10%;
+		width: 100%;
+		height: 30%;
+		padding: 0px;
+		background-color: #f9f9f9;
+		float: left;
+	}	
+	
+	.fotoCard2{
+		width: 100%;
+		height: 60%;
+		padding: 20px;
+		background: linear-gradient(0deg, rgb(75 98 133) 0%, rgb(136 169 217) 70%, rgb(193 206 227) 100%);
+		float: right;
+		border-radius:10px;
+		box-shadow: #596e8f 0px 5px 8px;
+	}
+	
+	.portfolioCard2{
+		height:100%; 
+		padding-top:10px; 
+		border-radius:10px; 
+		background: linear-gradient(0deg, rgb(75 98 133) 0%, rgb(136 169 217) 70%, rgb(193 206 227) 100%);
+		box-shadow: #596e8f 0px 5px 8px;
+	}
+	
+	.carouselPerfil{
+		height: 0%;
+	}
+	
+	.SignBoardRegister{
+		width: 150px;
+		height: 100px;
+	}
+}
+
+@media (max-width:575px){
+	
+	.tituloPerfil{
+		font-size: 14px;
+	}
+
+	
+	.textoEsp{
+		font-size: 12px;
+	}
+	
+}
+
+@media (max-width:334px){
+	
+	.fotoCard{
+		margin-bottom: 30%;
+		width: 100%;
+		height: 30%;
+		padding: 0px;
+		background-color: #f9f9f9;
+		float: left;
+	}	
+	
+}
+
+@media (max-width:330px){
+	
+
+	
+	.textoPerfil{
+		font-size: 9px;
+		text-align: justify;
+	}
+}
