@@ -24,7 +24,7 @@
 			<div class="card-body">
 			<div class="row">
 			<div class="col">
-			<div class="card-title"><h1 class="mb-0 SegoeFont"><c:out value="${encargo.titulo}"/>&nbsp;<c:if test="${encargo.disponibilidad == false}">
+			<div class="card-title"><h1 class="mb-0 Roboto"><c:out value="${encargo.titulo}"/>&nbsp;<c:if test="${encargo.disponibilidad == false}">
             				<span class="badge badge-pill badge-danger" style="font-size:24px;" id="badge-noDisponible">No disponible</span>
         				</c:if>
         				<c:if test="${encargo.disponibilidad == true}">
