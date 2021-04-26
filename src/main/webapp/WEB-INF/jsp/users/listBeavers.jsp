@@ -244,6 +244,13 @@
      </c:if> 
   </ul>
   </nav>
+  
+  <nav aria-label="Pagination">
+  <ul class="pagination justify-content-center pagination-sm">
+  <c:if test="${especialidad == 'TEXTIL'}">
+  </c:if> 
+   </ul>
+   </nav>
 </div>
 
 
