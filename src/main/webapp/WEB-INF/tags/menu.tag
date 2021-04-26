@@ -16,7 +16,7 @@
 
 <nav style="padding-left:10%; padding-right:10%" class="navbar navbar-custom navbar-expand-lg sticky-top">
 
-      <a class="navbar-brand" href="<spring:url value="/" htmlEscape="true" />"><img src="/resources/images/v5.png"  class="d-inline-block align-top" alt="/"></a>
+      <a class="navbar-brand" href="<spring:url value="/" htmlEscape="true" />"><img src="/resources/images/v32.png"  class="d-inline-block align-top" alt="/"></a>
             
       <button class="navbar-toggler" type="button" style="background-color:#4b6285;" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

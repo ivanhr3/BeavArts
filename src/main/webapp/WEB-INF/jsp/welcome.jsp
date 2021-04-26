@@ -15,7 +15,7 @@
 	        <h2 class="RobotoLight responsiveFontSmartphoneTituloMediano">Y si aún no formas parte de esta gran comunidad, <i>¡regístrate!</i></h2>
        	</sec:authorize>
         <div class="col-12 text-center imagenResponsive">
-            <img src="<spring:url value="/resources/images/emblema22.png" htmlEscape="true" />"
+            <img src="<spring:url value="/resources/images/emblema23.png" htmlEscape="true" />"
                                              alt=""/>
  		</div>
     </div>
