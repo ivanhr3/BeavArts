@@ -46,7 +46,7 @@
 					</div>		      
 	                  
 	                    <div class="mt-3">
-	                      <h4 class="SegoeFont tituloPerfil">${beaver.user.username}</h4> 
+	                      <h4 class="Gagalin tituloPerfil">${beaver.user.username}</h4> 
 	                      <c:if test="${beaver.user.username != principalUsername}">                    
 	                  	
 	                      	<spring:url value="/beavers/{beaverId}/valoraciones/create" var="valorar">
@@ -55,8 +55,7 @@
 	 	
 	                      </c:if>
 	                      	<c:if test="${beaver.user.username == principalUsername}">
-								<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>
-                <a class="btn btn-danger" href='<spring:url value="/users/delete" htmlEscape="true"/>'><fmt:message key="portfolio.borrarDatos"/></a>
+								<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>              
 	                      </c:if>
 	                      
 	                      <security:authorize access="hasAuthority('admin')">
@@ -228,8 +227,9 @@
 	                    <div class="row rowPad" style="margin-left:10px">
 		                      <h6 class="mb-0 Roboto textoDatoPerfil">Email: &nbsp;<c:out value = "${beaver.email}"/></h6>	     
 	                  	</div>
+	                  	
 				</div>
-       <a class="btn btn-secondary" href='<spring:url value="/users/portability" htmlEscape="true"/>'><fmt:message key="portfolio.portabilidad"/></a>
+       
 			</c:if>
 			
 		</div>
@@ -245,6 +245,13 @@
 		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
 	                                             
 	    <h1 class="GagalinLight text-center responsiveFontSignBoard tituloPerfil" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">PORTFOLIO</h1>
+	    
+    </div>
+    <div>
+    		<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
+            	<spring:param name="beaverId" value="${beaver.id}"/>
+            </spring:url>
+			<b class="Roboto encargosFont">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b  class="Roboto encargosFont">Encargos</b></a>
     </div>
     
 	  <br/>
@@ -290,7 +297,7 @@
 	        </a> 
 	         
 	   </div>
-	 
+	   	
 	</c:if> 
 
 	</div>
@@ -309,4 +316,12 @@
 
 		
 </div>
+
+<div class="botonesPerfil">
+	<c:if test="${beaver.user.username == principalUsername}">
+		<a class="btn btn-secondary espacio" href='<spring:url value="/users/portability" htmlEscape="true"/>'><fmt:message key="portfolio.portabilidad"/></a>
+	    <a class="btn btn-danger" href='<spring:url value="/users/delete" htmlEscape="true"/>'><fmt:message key="portfolio.borrarDatos"/></a>
+	</c:if>	
+ </div>     		
+   	  
 </beavarts:layout>

@@ -2664,14 +2664,14 @@ font-family:"Roboto";
 
 .btn-secondary {
   color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+  background-color: #4b6285;
+  border-color: #022544;
 }
 
 .btn-secondary:hover {
   color: #fff;
-  background-color: #5a6268;
-  border-color: #545b62;
+  background-color: #3b4d69;
+  border-color: #022544;
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
@@ -2680,15 +2680,15 @@ font-family:"Roboto";
 
 .btn-secondary.disabled, .btn-secondary:disabled {
   color: #fff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+  background-color: #3b4d69;
+  border-color: #022544;
 }
 
 .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
 .show > .btn-secondary.dropdown-toggle {
   color: #fff;
-  background-color: #545b62;
-  border-color: #4e555b;
+  background-color: #3b4d69;
+  border-color: #022544;
 }
 
 .btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus,
@@ -10317,6 +10317,10 @@ td {
 .carouselPerfil{
 		height: 60%;
 	}
+	
+.encargosFont{
+	font-size:16px;	
+	}
 
 @media (max-width:1200px){
 	
@@ -10379,6 +10383,10 @@ td {
 }
 
 @media (max-width:991px){
+	
+	.encargosFont{
+		font-size:14px;	
+	}
 	
 	.perfilCard{
 		max-width: 200px;
@@ -10457,7 +10465,17 @@ td {
 	
 }
 
+.botonesPerfil{
+		float: right;
+
+	}
+
 @media (max-width:767px){
+	
+	.botonesPerfil{
+		text-align: center;
+		float: none;
+	}
 	
 	.perfilCard{	
 		max-width:100%;	
@@ -10475,6 +10493,7 @@ td {
 	}
 	
 	.portfolioCard{
+		margin-bottom: 10%;
 		padding: 20px;
 		width: 100%;
 		height:800px; 
@@ -10520,6 +10539,10 @@ td {
 }
 
 @media (max-width:575px){
+	
+	.encargosFont{
+		font-size:14px;	
+	}
 	
 	.portfolioCard{
 		padding: 20px;
@@ -10570,7 +10593,22 @@ td {
 
 }
 
+@media (max-width:465px){
+	.espacio{
+		margin-bottom:2%;
+	}
+	
+	.encargosFont{
+		font-size:12px;	
+	}
+}
+
+
 @media (max-width:390px){
+	
+	.encargosFont{
+		font-size:10px;	
+	}
 	
 	.perfilCard{	
 		max-width:100%;	
