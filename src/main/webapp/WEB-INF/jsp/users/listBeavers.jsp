@@ -245,12 +245,19 @@
   </ul>
   </nav>
   
-  <nav aria-label="Pagination">
+  <%-- <nav aria-label="Pagination">
   <ul class="pagination justify-content-center pagination-sm">
   <c:if test="${especialidad == 'TEXTIL'}">
+  <c:forEach begin="0" end="${beaversPages}" var="current">
+        <spring:url value="../beavers/list?page=${current}" var="beaverUrl">
+        </spring:url>
   </c:if> 
+  <li class="page-item">
+    <a class="page-link" href="${fn:escapeXml(beaverUrl)}">${current+1}    
+    </a>   
+ </li>
    </ul>
-   </nav>
+   </nav> --%>
 </div>
 
 

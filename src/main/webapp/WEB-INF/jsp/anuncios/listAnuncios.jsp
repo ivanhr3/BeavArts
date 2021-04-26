@@ -198,7 +198,7 @@
 
 	</div>
 </div>
-		 <nav aria-label="Pagination">
+<%-- 		 <nav aria-label="Pagination">
 <ul class="pagination justify-content-center pagination-sm">
  <li class="page-item disabled" class="page-item">
       <a class="page-link" href="#" aria-label="Previous">
@@ -222,6 +222,35 @@
         <span class="sr-only">Next</span>
       </a>
     </li>
+  </ul>
+  </nav> --%>
+           <nav aria-label="Pagination">
+<ul class="pagination justify-content-center pagination-sm">
+ <li class="page-item">
+ <spring:url value="../anuncios/list?page=0" var="previousUrl">
+        </spring:url>
+      <a class="page-link" href="${fn:escapeXml(previousUrl)}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+<c:if test="${!anuncios.isEmpty()}">
+	  <c:forEach begin="0" end="${anunciosPages}" var="current">
+        <spring:url value="../anuncios/list?page=${current}" var="anuncioUrl">
+        </spring:url>
+<li class="page-item">
+    <a class="page-link" href="${fn:escapeXml(anuncioUrl)}">${current+1}    
+    </a>   
+ </li>
+ </c:forEach>
+       
+ <li class="page-item">
+      <a class="page-link" href="${fn:escapeXml(anuncioUrl)}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+     </c:if> 
   </ul>
   </nav>
 
