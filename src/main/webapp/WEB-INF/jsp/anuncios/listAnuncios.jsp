@@ -71,7 +71,7 @@
 	<div style="position: relative; text-align: center; margin-bottom:30px">
 		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
 	                                             
-	    <h1 class="SegoeFont text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">ANUNCIOS</h1>
+	    <h1 class="GagalinLight text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">ANUNCIOS</h1>
     </div>
 	<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 	<c:if test="${anuncios.isEmpty()}">
@@ -101,6 +101,23 @@
 	</div>
 	
 	<c:forEach items="${anuncios}" var="anuncio">
+	
+		<c:set var="mostrar" value="true"></c:set>
+		
+		<c:if test="${not empty anuncio.solicitud}">
+		
+			<c:forEach items="${anuncio.solicitud}" var="solicitud">		
+		
+	    		<c:if test="${solicitud.estado == 'ACEPTADO'}">
+					<c:set var="mostrar" value="false"></c:set>
+				</c:if>		
+	
+			</c:forEach>
+			
+			
+		</c:if>
+		
+		<c:if test="${mostrar == true}">
 	
 		<c:if test="${anuncio.destacado == true}">
 			<c:set var="destacado" value="destacado"></c:set>
@@ -229,6 +246,7 @@
     					</div>
     					</div>
     					</div>
+    		</c:if>
 	</c:forEach>
 	</c:if>
 	</div>

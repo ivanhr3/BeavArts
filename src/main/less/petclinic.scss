@@ -51,6 +51,23 @@ url("/resources/fonts/Roboto.otf") format("opentype"),
 url("/resources/fonts/Roboto.svg#Roboto") format("svg");
 }
 
+@font-face {
+font-family: "Gagalin";
+src: url("/resources/fonts/Gagalin.eot");
+src: url("/resources/fonts/Gagalin.woff") format("woff"),
+url("/resources/fonts/Gagalin.otf") format("opentype"),
+url("/resources/fonts/Gagalin.svg#Roboto") format("svg");
+}
+
+.Gagalin {
+	font-family:"Gagalin"; 
+	font-weight:bold;
+}
+
+.GagalinLight {
+	font-family:"Gagalin"; 
+}
+
 .Roboto {
 	font-family:"Roboto"; 
 	font-weight:bold;
@@ -10074,8 +10091,10 @@ td {
 		margin-right: auto; 
 		margin-left: auto;
 }
-	
-	
+
+.responsiveFontSignBoard{
+	font-size:55px;
+}	
 
 @media (max-width:1201px) {
 	
@@ -10211,7 +10230,7 @@ td {
 	margin-left:auto;
 	margin-right:auto;
 	max-width: 370px;
-	height: 250px;
+	height: 200px;
 	padding: 20px;
 	background: linear-gradient(0deg, rgba(255,243,229,1) 0%, rgba(246,183,98,1) 82%, rgba(254,154,42,1) 100%);
 	border-bottom-left-radius: 10px;
@@ -10521,8 +10540,7 @@ td {
 	
 		.perfilDataCard{
 		margin-left: auto;
-	    margin-right: auto;
-	    margin-top: 600px;
+	    margin-right: auto;	    
 	    max-width: 370px;
 		width:90%;
 	    height: 115px;
@@ -10531,6 +10549,22 @@ td {
 	    border-bottom-left-radius: 10px;
 	    border-bottom-right-radius: 10px;
 	    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+	}
+	
+	.tituloPerfil{
+		font-size: 14px;
+	}
+
+	
+	.textoEsp{
+		font-size: 12px;
+	}
+	
+	.center {
+	  display: block;
+	  margin-left: auto;
+	  margin-right: auto;
+	  width: 75%;
 	}
 	
 
@@ -10605,19 +10639,20 @@ td {
 		width: 150px;
 		height: 100px;
 	}
-}
-
-@media (max-width:575px){
 	
-	.tituloPerfil{
-		font-size: 14px;
+	.perfilDataCard{
+		margin-left: auto;
+	    margin-right: auto;
+	    margin-top: 600px;
+	    max-width: 370px;
+		width:90%;
+	    height: 115px;
+	    padding: 20px;
+	    background: linear-gradient(0deg, rgba(255,243,229,1) 0%, rgba(246,183,98,1) 82%, rgba(254,154,42,1) 100%);
+	    border-bottom-left-radius: 10px;
+	    border-bottom-right-radius: 10px;
+	    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 	}
-
-	
-	.textoEsp{
-		font-size: 12px;
-	}
-	
 }
 
 @media (max-width:334px){

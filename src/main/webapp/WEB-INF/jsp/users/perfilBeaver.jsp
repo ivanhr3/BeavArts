@@ -238,14 +238,14 @@
 	<div class="portfolioCard text-center">
 		<div class="portfolioCard2">
 	<c:if test= "${beaver.portfolio.photos.isEmpty() == true}">
-		<h5 class="SegoeFont"> No hay fotos en el portfolio </h5>
+		<h5 class="Roboto"> No hay fotos en el portfolio </h5>
 	</c:if>
 	
 	<c:if test= "${beaver.portfolio.photos.isEmpty() != true}">
 	<div style="position: relative; text-align: center; margin-bottom:30px">
 		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
 	                                             
-	    <h1 class="SegoeFont text-center responsiveFontSignBoard tituloPerfil" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">PORTFOLIO</h1>
+	    <h1 class="GagalinLight text-center responsiveFontSignBoard tituloPerfil" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">PORTFOLIO</h1>
     </div>
     
 	  <br/>

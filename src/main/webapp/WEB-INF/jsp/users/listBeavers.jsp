@@ -92,7 +92,7 @@
 	<div style="position: relative; text-align: center; margin-bottom:30px">
 		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
 	                                             
-	    <h1 class="SegoeFont text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">BEAVERS</h1>
+	    <h1 class="GagalinLight text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">BEAVERS</h1>
     </div>
     
 <div class="container mt-3 mb-4">
