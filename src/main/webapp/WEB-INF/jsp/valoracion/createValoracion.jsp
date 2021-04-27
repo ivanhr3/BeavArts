@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 <beavarts:layout pageName="valorariones">
-
+<div class="minAlto">
 
     <h2 class="Roboto">
         Añadir valoración:
@@ -50,6 +50,6 @@
             </div>
         </div>
     </form:form>
-    
+  </div>  
 </div>
 </beavarts:layout>

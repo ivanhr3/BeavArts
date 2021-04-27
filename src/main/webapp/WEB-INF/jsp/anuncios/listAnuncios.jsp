@@ -141,7 +141,7 @@
 
 			    	<div style="width:30%; float:right">
 				    	<c:if test="${anuncio.destacado == true}">		    	
-					    	<div class="SegoeFont" style="float: right;">
+					    	<div class="Roboto" style="float: right;">
 					    		<i style="color: #fec255; margin-top: 8px; -webkit-filter: drop-shadow(5px 5px 5px #222 ); filter: drop-shadow(1px 1px 2px #222);" class="fas fa-star"> </i>
 								<p class="noMostrar"style="color: #fec255; float: right; font-style: italic; margin-top: 5px;font-size: medium;"> &nbsp;Promocionado</p>
 					    	</div>
@@ -198,7 +198,7 @@
 	               	</spring:url>
 	            <div style="margin-bottom:0px; margin-top:0px; padding-top:0px; padding-bottom:0px" class="row">
 		     	<h6 class="RobotoLight">Publicado por:&nbsp;</h6>
-				     <h6 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">
+				     <h6 class="Roboto"><a href="${fn:escapeXml(beaverUrl)}">
 				     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
 				</div>
 				     <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
