@@ -326,3 +326,15 @@ INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES 
 -- Anuncios
 INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver_id, destacado) VALUES (2, 'Algun costurero?', 30.0, 'TEXTIL', 'Busco alguien que me haga un sombrero parecido al de la foto para un disfraz', 'https://cdn.pixabay.com/photo/2016/11/29/09/51/day-of-the-dead-1868836_1280.jpg', 2, TRUE );
 INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver_id, destacado) VALUES (1, 'Busco pintor', 20.00, 'OLEO', 'Busco un pintor capaz de dibujar un retrato de Michael Jackson', 'https://cdn.pixabay.com/photo/2015/04/24/22/45/michael-jackson-738410_960_720.jpg', 1, FALSE );
+
+--Usuario Ana Demo
+INSERT INTO users(username,password,enabled) VALUES ('anadom', '$2a$10$0Rm2Op07isOjpSFutjAkNOQpslXkbsfKY1l8O33HNA8bAmYRYP.GS', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(45, 'anadom', 'user');
+INSERT INTO portfolio(id, sobre_mi) VALUES (45, '');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (45, 'Ana', 'Domínguez', '12234321Q', '670540509', 'https://drive.google.com/file/d/1Z3rN0vm8rQwbcXDOTKZXq5UY4GwlwsqG/view?usp=sharing', 45, 'anadom');
+
+--Usuario Miguel Demo
+INSERT INTO users(username,password,enabled) VALUES ('miguelrod', '$2a$10$beJ239kez/BqpCnT2nRNBemPWHtQghZchCdB3PDYzmHCu4L4S7sfC', TRUE);
+INSERT INTO authorities(id, username, authority) VALUES(46, 'miguelrod', 'user');
+INSERT INTO portfolio(id, sobre_mi) VALUES (46, '');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (46, 'Miguel', 'Rodríguez', '12234321Q', '670540509', 'https://www.imgur.com/a/en7fEoz', 46, 'miguelrod');
