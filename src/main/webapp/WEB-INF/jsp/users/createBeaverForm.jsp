@@ -193,20 +193,20 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
     
 <div class="container justify-content-center" style="display:block;">
     <!-- ############################################################################3 -->
-    <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form" onsubmit="return checkForm(this);">
+    <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form" onsubmit="submitButton.disabled = true; return checkForm(this);">
         <div class="form-group has-feedback">
 
             <!-- *First name group -->
           <div class="form-group widhtTam ">
             <label class="sr-only">{% trans "First name" %}</label>
-            <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30">
+            <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30" required>
             	
           </div>
 
             <!-- *Last name group -->
           <div class="form-group widhtTam">
             <label class="sr-only">{% trans "Last name" %}</label>
-            <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100">
+            <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
           </div> 
           
  		   
@@ -271,7 +271,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${beaver['new']}">
-                        <button  class="btn btn-primary buttonTam" type="submit">¡Convertirme en Beaver!</button>
+                        <button name="submitButton" class="btn btn-primary buttonTam" type="submit">¡Convertirme en Beaver!</button>
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-primary buttonTam" type="submit">Actualizar Beaver</button>
