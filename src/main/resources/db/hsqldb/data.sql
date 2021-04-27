@@ -328,10 +328,10 @@ INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver
 INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver_id, destacado) VALUES (1, 'Busco pintor', 20.00, 'OLEO', 'Busco un pintor capaz de dibujar un retrato de Michael Jackson', 'https://cdn.pixabay.com/photo/2015/04/24/22/45/michael-jackson-738410_960_720.jpg', 1, FALSE );
 
 --Sequence
-ALTER SEQUENCE authorities_id_seq RESTART WITH 46;
-ALTER SEQUENCE portfolio_id_seq RESTART WITH 46;
-ALTER SEQUENCE beavers_id_seq RESTART WITH 46;
-ALTER SEQUENCE encargos_id_seq RESTART WITH 1;
-ALTER SEQUENCE solicitud_id_seq RESTART WITH 1;
-ALTER SEQUENCE anuncio_id_seq RESTART WITH 2;
-ALTER SEQUENCE valoracion_id_seq RESTART WITH 10;
+ALTER SEQUENCE authorities_id_seq RESTART WITH 47;
+ALTER SEQUENCE portfolio_id_seq RESTART WITH 47;
+ALTER SEQUENCE beavers_id_seq RESTART WITH 47;
+ALTER SEQUENCE encargos_id_seq RESTART WITH 2;
+ALTER SEQUENCE solicitud_id_seq RESTART WITH 2;
+ALTER SEQUENCE anuncio_id_seq RESTART WITH 3;
+ALTER SEQUENCE valoracion_id_seq RESTART WITH 11;
