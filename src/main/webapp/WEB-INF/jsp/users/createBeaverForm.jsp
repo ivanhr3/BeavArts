@@ -210,11 +210,10 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
           </div> 
           
  		   
-            <div class="control-group widhtTam2 ">
-            
+            <div class="control-group widhtTam2 RobotoLight">           
             	<beavarts:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
             </div>
-            <p class="widhtTam" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
+            <p class="widhtTam RobotoLight" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
             <!-- dni group -->
           <div class="form-group widhtTam">
             <input type="text" id="id_dni" required name="dni" class="form-control" 
@@ -260,9 +259,9 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
               </div>
             </div>
             </div>
-            <div class="form-check">
-                <p><input type = "checkbox" required name="terms">
-                <fmt:message key="createBeaver.terminostexto"/><a class="btn btn-link" href="/terminos"><fmt:message key="footer.terminoscondiciones"/></a>
+            <div class="form-check RobotoLight text-center ">
+                <p class="buttonTam"><input type = "checkbox" required name="terms">
+                <fmt:message key="createBeaver.terminostexto"/><a class="btn btn-link buttonTam" href="/terminos"><fmt:message key="footer.terminoscondiciones"/></a>
                 </p>
             </div>
         </div>

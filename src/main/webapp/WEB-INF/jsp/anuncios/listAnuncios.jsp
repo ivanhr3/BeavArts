@@ -198,7 +198,7 @@
 	               	</spring:url>
 	            <div style="margin-bottom:0px; margin-top:0px; padding-top:0px; padding-bottom:0px" class="row">
 		     	<h6 class="RobotoLight">Publicado por:&nbsp;</h6>
-				     <h6 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">
+				     <h6 class="Roboto"><a href="${fn:escapeXml(beaverUrl)}">
 				     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
 				</div>
 				     <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="anuncioUrl">

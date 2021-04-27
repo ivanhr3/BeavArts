@@ -11,11 +11,17 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="portability">
-<div class= "container">
-    <h1><fmt:message key="portabilidad.titulo"/></h1>
-    <p><fmt:message key="portabilidad.texto"/></p>
-    <div class = "container">
-        <samp><c:out value="${json}"/></samp>
-    </div>
+<div class="minAlto">
+	<div class= "container">
+		
+	    <h1 class="Roboto fontDeleteDataTitulo text-center"><fmt:message key="portabilidad.titulo"/></h1>
+	    <br/>
+	    <p class="RobotoLight fontDeleteDataTexto"><fmt:message key="portabilidad.texto"/></p>
+	    <br/>
+	    
+	    <div class = "container" style="word-break: break-word;">
+	        <samp><c:out value="${json}"/></samp>
+	    </div>
+	</div>
 </div>
 </beavarts:layout>

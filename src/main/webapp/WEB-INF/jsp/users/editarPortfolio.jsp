@@ -8,33 +8,36 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <petclinic:layout pageName="perfil">
-    <h2 class="SegoeFont"> Datos de Portfolio: </h2>
+<div class="minAlto">
+    <h2 class="Roboto"> Datos de Portfolio: </h2>
     <br/>
 
-    
+
     <form:form modelAttribute="portfolio" class="form-horizontal" id="add-owner-form">
     
         <div class="form-group has-feedback">
                  
-            <b class="SegoeFont" style="margin-left:15px"> Sobre mi:</b>
+            <b class="Roboto" style="margin-left:15px; text-align:left"> Sobre mi:</b>
             <petclinic:inputField label="" name="sobreMi"/>
-                   
-            <b class="SegoeFont" style="margin-left:15px"> Portfolio:</b>
+            <br/>      
+            <b class="Roboto" style="margin-left:15px; text-align:left"> Portfolio:</b>
             <petclinic:inputField label="" name="photos"/>                       
              <c:if test="${errorUrl != null}">
                         	<div class="alert alert-danger col-sm-10" role="alert">
 								<c:out value="${errorUrl}"/>
 							</div>
 						</c:if>
-            <p class="SegoeFont">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
-    
+            <p class="RobotoLight" style="margin-left:15px">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
+    		<br/>
         </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+        <div class="form-group" style="margin-left:15px">
+           
                
                         <button class="btn btn-primary" type="submit">Actualizar perfil</button>
                  
-            </div>
+            
         </div>
     </form:form>
+    
+</div>
 </petclinic:layout>

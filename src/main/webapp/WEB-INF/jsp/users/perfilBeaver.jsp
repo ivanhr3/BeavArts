@@ -40,7 +40,7 @@
 						<img src="${beaver.urlFotoPerfil}"  class="imgResponsivePerfil rounded-circle sombraPng">
 						
 						<c:if test="${beaver.user.username == principalUsername}">
-								<a style="border-radius: 50%; height: 45px; position: absolute; top: 15%; left: 85%; transform: translate(-50%, -50%);" class="btn btn-primary editBoton sombraPng" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editPhoto" htmlEscape="true"/>'>
+								<a style="border-radius: 50%; height: 45px; position: absolute; top: 15%; left: 85%; transform: translate(-50%, -50%);" class="btn btn-primary sombraPng" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editPhoto" htmlEscape="true"/>'>
 									<i style="margin-left: 2px; margin-top: 7px;" class="fas fa-edit"></i></a>												
 	                    </c:if> 
 					</div>		      

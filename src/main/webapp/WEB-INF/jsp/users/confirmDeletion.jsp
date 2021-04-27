@@ -11,17 +11,21 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="deletion">
-
+<div class="minAlto">
     <form:form modelAttribute="user" class="form-horizontal" id="delete-user-data">
     <div class="container">
-        <h1><fmt:message key="confirmacionBorrado.titulo"/></h1>
-        <p><fmt:message key="confirmacionBorrado.texto"/></p>
-        
-            <a class="btn btn-secondary" href='<spring:url value="/" htmlEscape="true"/>'><fmt:message key="confirmacionBorrado.cancelar"/></a>
-            <button class="btn btn-danger" type="submit"><fmt:message key="confirmacionBorrado.eliminar"/></button>
-        
+        <h1 class="Roboto text-center fontDeleteDataTitulo"><fmt:message key="confirmacionBorrado.titulo"/></h1>
+        <br/>
+        <div class="formulario">
+        <p class="RobotoLight fontDeleteDataTexto"><fmt:message key="confirmacionBorrado.texto"/></p>
+        </div>
+        <br/>
+        <div class="text-center">
+            <a style="margin-bottom: 5%;" class="btn btn-secondary fontDeleteDataTexto" href='<spring:url value="/beavers/beaverInfo/${myBeaverId}" htmlEscape="true"/>'><fmt:message key="confirmacionBorrado.cancelar"/></a>
+            <button style="margin-bottom: 5%;" class="btn btn-danger fontDeleteDataTexto" type="submit"><fmt:message key="confirmacionBorrado.eliminar"/></button>
+        </div>
     </div>
     </form:form>
 
-
+</div>
 </beavarts:layout>

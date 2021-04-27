@@ -8,11 +8,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <petclinic:layout pageName="FotoPerfil">
-    
+   <div class="minAlto">
     <br/>    
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-         <b class="SegoeFont" style="margin-left:15px"> Foto de perfil:</b>
+         <b class="Roboto" style="margin-left:15px"> Foto de perfil:</b>
              <petclinic:inputField label="" name= "urlFotoPerfil"/> 
         </div>
         <c:if test="${errorUrl != null}">
@@ -33,4 +33,5 @@
         	<input name="dni" value="${beaver.dni}"><br>
         </div>
     </form:form>
+    </div>
 </petclinic:layout>

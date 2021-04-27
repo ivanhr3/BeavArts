@@ -2630,6 +2630,7 @@ font-family:"Roboto";
   border-color: #991825;
   font-weight:bold;
 	font-family:"Roboto";
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;	
 }
 
 .btn-red:hover {
@@ -2666,12 +2667,14 @@ font-family:"Roboto";
   color: #fff;
   background-color: #4b6285;
   border-color: #022544;
+font-family:"Roboto";
 }
 
 .btn-secondary:hover {
   color: #fff;
   background-color: #3b4d69;
   border-color: #022544;
+font-family:"Roboto";
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
@@ -2802,12 +2805,14 @@ font-family:"Roboto";
   color: #fff;
   background-color: #dc3545;
   border-color: #dc3545;
+	font-family:"Roboto";
 }
 
 .btn-danger:hover {
   color: #fff;
   background-color: #c82333;
   border-color: #bd2130;
+	font-family:"Roboto";
 }
 
 .btn-danger:focus, .btn-danger.focus {
@@ -9955,7 +9960,7 @@ td {
 }
 
 .minAlto {
-	min-height:630px;
+	min-height:595px;
 }
 
 .carTam{
@@ -10046,6 +10051,13 @@ td {
 
 @media (max-width:415px) {
 	
+	.fontDeleteDataTitulo{
+		font-size:30px;
+	}
+	
+	.fontDeleteDataTexto{
+		font-size:14px;
+	}
 	
 	
 	.responsiveFontSmartphoneTexto{
@@ -10707,8 +10719,6 @@ td {
 }
 
 @media (max-width:330px){
-	
-
 	
 	.textoPerfil{
 		font-size: 9px;
