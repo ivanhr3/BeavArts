@@ -11,10 +11,13 @@
 	</security:authorize>
 
 <beavarts:layout pageName="Lista de encargos">
-    <h2 class="SegoeFont">Encargos</h2> 
-	<br/>
+    <div style="position: relative; text-align: center; margin-bottom:30px">
+		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
+	                                             
+	    <h1 class="GagalinLight text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">ENCARGOS</h1>
+    </div>
  <c:if test="${hayEncargos == false}">
- 		<div class= "col-12 text-center"><h1>¡AÚN NO HAY ENCARGOS!</h1></div>
+ 		<div class= "Roboto col-12 text-center"><h1>¡AÚN NO HAY ENCARGOS!</h1></div>
  </c:if>
  
 <c:if test="${hayEncargos != false}">
@@ -29,7 +32,7 @@
                 	<c:if test="${!encargo.photo.isEmpty()}">
             		<img class="card-img-top" src="${encargo.photo}" width=217px height=250px alt="Card image cap">
             		<div class="card-body">
-            		<h4 class="card-title SegoeFont text-center"><c:out value="${encargo.titulo}"/></h4>
+            		<h4 class="card-title RobotoLight text-center"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
             				<h5 style="text-align:center"><span class="badge badge-danger">No disponible</span></h5>
         				</c:if>
@@ -42,7 +45,7 @@
             		<c:if test="${encargo.photo.isEmpty()}">
             		<img class="card-img-top" src="/resources/images/no-pictures.png" width=217px height=250px alt="No hay imagen">
             			<div class="card-body" id ="card-body">
-            			<h4 class="card-title SegoeFont text-center"><c:out value="${encargo.titulo}"/></h4>
+            			<h4 class="card-title RobotoLight text-center"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
             				<h5 style="text-align:center"><span class="badge badge-pill badge-danger" id="badge-noDisponible">No disponible</span></h5>
         				</c:if>

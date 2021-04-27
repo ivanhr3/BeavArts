@@ -98,7 +98,7 @@
 <div class="container mt-3 mb-4">
 
 	<div style="font-size:20px; text-align:center">
-		<b class="Roboto responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para encontrar beavers con tus gustos!</b>
+		<b class="RobotoLight responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para encontrar beavers con tus gustos!</b>
 	</div>
 	
 	<br/>
@@ -125,7 +125,7 @@
           <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar usuarios">
           <table class="table manage-candidates-top mb-0" id="myTable">
               <tr class="header">
-                <th class="SegoeFont">Usuarios</th> 
+                <th class="RobotoLight">Usuarios</th> 
               </tr>
 			  <security:authorize access="hasAuthority('admin')">
             	<c:set var="isAdmin1" value="true"></c:set>

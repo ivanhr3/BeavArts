@@ -76,13 +76,13 @@
 	<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 	<c:if test="${anuncios.isEmpty()}">
 	<br/>
-		 <h3>Lo sentimos, no hay anuncios disponibles por el momento.</h3>
+		 <h3 class="Roboto">Lo sentimos, no hay anuncios disponibles por el momento.</h3>
 	</c:if>
 	
 	
 	<c:if test="${!anuncios.isEmpty()}">
 	<div style="font-size:20px; text-align:center">
-		<b class="Roboto responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para buscar anuncios a tu gusto!</b>
+		<b class="RobotoLight responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para buscar anuncios a tu gusto!</b>
 	</div>
 	<br/>
 	

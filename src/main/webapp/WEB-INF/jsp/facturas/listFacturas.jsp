@@ -22,7 +22,7 @@
 	
 		<c:if test="${facturas.isEmpty()}">
 		<br/>
-			 <h3 class="SegoeFont">Lo sentimos, no hay facturas disponibles por el momento.</h3>
+			 <h3 class="RobotoLight">Lo sentimos, no hay facturas disponibles por el momento.</h3>
 		</c:if>
 		
 		<c:if test="${!facturas.isEmpty()}">
@@ -32,7 +32,7 @@
 				<div class="card mb-3 centerContainerVal">
 	                <div class="card">                
 		                <div class="card-header-publicaciones2">
-		                	<h5 style="margin-top: 10px;" class="card-title SegoeFont">
+		                	<h5 style="margin-top: 10px;" class="card-title Roboto">
 		
 								<c:if test="${factura.solicitud.encargo != null}">
 									Encargo: <c:out value="${factura.solicitud.encargo.titulo}"></c:out>	
@@ -45,7 +45,7 @@
 				    		</h5>
 				    	</div> 
 	                  	<div style="word-break: break-all; margin-top: 5px;">  
-	        				<b style="margin-left:10px;" class="SegoeFont">Pagador:</b> 	<c:out value="${factura.emailPayer}"></c:out>                                    
+	        				<b style="margin-left:10px;">Pagador:</b> 	<c:out value="${factura.emailPayer}"></c:out>                                    
 	                  	</div>	                  	
 	                  		<b style="word-break: break-all; text-align:end; margin-right:10px; margin-bottom: 5px;">${factura.paymentDate}</b>
 	                  	 	<spring:url value="/facturas/{facturaId}" var="facturaUrl">

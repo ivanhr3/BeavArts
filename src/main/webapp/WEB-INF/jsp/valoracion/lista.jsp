@@ -54,7 +54,7 @@
 
 <c:if test="${valoraciones.isEmpty()}">
 
-<h2 style="text-align:center" class="SegoeFont">NO HAY VALORACIONES</h2>
+<h2 style="text-align:center" class="Roboto">NO HAY VALORACIONES</h2>
 
 </c:if>
 
@@ -183,7 +183,7 @@
  		<br/>
  		<br/>
     <br/>
-    <h3 style="text-align:center" class="SegoeFont">Comentarios y valoraciones: </h3>
+    <h3 style="text-align:center" class="Roboto">Comentarios y valoraciones: </h3>
     <br/>
    	
 

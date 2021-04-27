@@ -11,16 +11,16 @@
 <beavarts:layout pageName="valorariones">
 
 
-    <h2 class="SegoeFont">
+    <h2 class="Roboto">
         Añadir valoración:
     </h2>
     
-    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <br/>
     <div class="container justify-content-center" style="display:block;">
    
     
-    <b class="SegoeFont" style="margin-left:15px"> *Puntuación:</b>
+    <b style="margin-left:15px"> *Puntuación:</b>
     <form:form modelAttribute="valoracion" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
         
@@ -37,7 +37,7 @@
 						  <label class="star star-1" for="star-1"></label>
 						  </div>
 				 <br/>
-				<b class="SegoeFont" style="margin-left:15px"> *Comentario:</b>
+				<b style="margin-left:15px"> *Comentario:</b>
               <b><beavarts:inputField label="" name="comentario"/></b>
            
         </div>
