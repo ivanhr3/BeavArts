@@ -199,14 +199,14 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <!-- *First name group -->
           <div class="form-group widhtTam ">
             <label class="sr-only">{% trans "First name" %}</label>
-            <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30">
+            <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30" required>
             	
           </div>
 
             <!-- *Last name group -->
           <div class="form-group widhtTam">
             <label class="sr-only">{% trans "Last name" %}</label>
-            <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100">
+            <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
           </div> 
           
  		   
