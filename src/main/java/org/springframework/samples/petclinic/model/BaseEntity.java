@@ -31,7 +31,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 
 	public Integer getId() {
