@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -54,6 +55,6 @@ public class UserServiceTests {
         User user = this.userService.findUserByUsername("Cib3r");
         String json = this.userService.getUserEntitiesJson(user);
         System.out.println(json);
-        assertThat(json).isNotNull();
+        assertNotNull(json);
     }
 }
