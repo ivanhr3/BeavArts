@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,5 +46,14 @@ public class UserServiceTests {
         this.userService.saveUser(user, beaver);
 
         assertEquals("User123", user.getUsername());
+    }
+
+    @Test
+    @Transactional
+    void getJson() throws JsonProcessingException{
+        User user = this.userService.findUserByUsername("Cib3r");
+        String json = this.userService.getUserEntitiesJson(user);
+        System.out.println(json);
+        assertThat(json).isNotNull();
     }
 }

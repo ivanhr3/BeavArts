@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <%-- Placed at the end of the document so the pages load faster --%>
@@ -26,7 +27,7 @@
         href="https://twitter.com/beavarts"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fab fa-twitter"></i
+        ><i style="color: #ffffff;" class="fab fa-twitter"></i
       ></a>
 
       <!-- Instagram -->
@@ -35,7 +36,7 @@
         href="https://www.instagram.com/beavarts_/"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fab fa-instagram"></i
+        ><i style="color: #ffffff;" class="fab fa-instagram"></i
       ></a>
 
       <!-- Github -->
@@ -44,8 +45,10 @@
         href="https://github.com/ivanhr3/BeavArts"
         role="button"
         data-mdb-ripple-color="dark"
-        ><i style="color: #000000;" class="fab fa-github"></i></a>
-    <p style="color: #000000;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
+        ><i style="color: #ffffff;" class="fab fa-github"></i></a>
+    <p class="responsiveFontSmartphoneTexto" style="color: #ffffff;">&copy; <strong>2021</strong>. Designed by Beavarts</p>
+    <a class="btn btn-link responsiveFontSmartphoneTexto" href="/terminos" style="color: #ffffff;"><fmt:message key="footer.terminoscondiciones"/></a>
+
   </div>
   <!-- Copyright -->
 </footer>

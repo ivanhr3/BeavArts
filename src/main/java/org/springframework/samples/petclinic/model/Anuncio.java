@@ -13,6 +13,12 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.URL;
 
 import lombok.Getter;
@@ -42,9 +48,12 @@ public class Anuncio extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name="beaver_id")
+    @JsonIgnore
     private Beaver beaver;
 
-    @OneToMany(mappedBy = "anuncio")
+    @OneToMany(mappedBy = "anuncio", orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Solicitud> solicitud;
 
     private Boolean destacado;

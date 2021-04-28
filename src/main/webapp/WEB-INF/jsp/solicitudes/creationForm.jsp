@@ -23,18 +23,15 @@
 
 <beavarts:layout pageName="solicitud">
   
-    <h1 class="SegoeFont"><c:out value="Encargo: ${encargo.titulo}"/></h1>
+    <h1 class="Roboto"><c:out value="Encargo: ${encargo.titulo}"/></h1>
     <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                         <spring:param name="beaverId" value="${encargo.beaver.id}"/>
     </spring:url>
-                  <br/> 
-    <b class="SegoeFont">Publicado por: </b><a href="${fn:escapeXml(beaverUrl)}"><c:out value=" ${encargo.beaver.user.username}"/></a>
+    <br/> 
+    <h5><c:out value="${encargo.descripcion}"/></h5><br/> 
+    <h5>Publicado por <a href="${fn:escapeXml(beaverUrl)}"><c:out value=" ${encargo.beaver.user.username}"/></a></h5>
     <br/>
-    <b class="SegoeFont">Precio: </b><c:out value="${encargo.precio}"/>€
-    <br/>
-    <br/>
-    <h2 class="SegoeFont">Descripción: </h2>
-    <b><c:out value="${encargo.descripcion}"/></b>
+    <h5>Precio: <c:out value="${encargo.precio}"/>€</h5>
  
 <c:if test="${pendiente}">
     <div class="alert alert-danger col-sm-10" role="alert">
@@ -42,9 +39,9 @@
     </div>
     </c:if> 
 
-  <c:if test="${!pendiente}">           
-    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
-    <br/>
+  <c:if test="${!pendiente}">     
+  <br/>      
+    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
  <div class="container">   
     <form:form modelAttribute="solicitud" class="form-horizontal" id="add-solicitud-form">
         <div class="form-group has-feedback">
@@ -58,7 +55,7 @@
                 </div>
             </div>
          
-        <b class="SegoeFont" style="margin-left:15px"> *Descripción:</b>
+        <h6 style="margin-left:15px"> *Descripción:</h6>
             <beavarts:inputField label="" name="descripcion"/>
         <%--    <c:if test="${vacia}">
             <div class="alert alert-danger col-sm-10" role="alert">
@@ -67,9 +64,9 @@
             </c:if> --%>
             <br/>
          <div>
-         <b class="SegoeFont" style="margin-left:15px"> Fotos:</b>
+         <h6 style="margin-left:15px"> Fotos:</h6>
             <beavarts:inputField label="" name="fotos"/>
-            <p class="SegoeFont" style="text-align:justify">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
+            <p style="text-align:justify;margin-left:15px;">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
 			<c:if test="${url}">
             <div class="alert alert-danger col-sm-10" role="alert">
             	<p><c:out value="${errorUrl}"/></p>
@@ -79,7 +76,8 @@
          </div>
          </div>         
          <br/>
-         <p class="SegoeFont" style="text-align:justify">Tu solicitud se creará tras haber finalizado el pago.</p>
+         <br/>
+         <p class="RobotoLight" style="text-align:justify">* Tu solicitud se creará tras haber finalizado el pago.</p>
             <body>
                 <script
                   src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9&currency=EUR"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
@@ -114,13 +112,8 @@
                     //This function displays Smart Payment Buttons on your web page.
                 </script>
               </body>
-
             <br/>
-            </div>
-           
-        </div>
     </form:form>
-  
 </div>
 </c:if> 
 </beavarts:layout>

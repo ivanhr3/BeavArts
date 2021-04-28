@@ -30,7 +30,7 @@
 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
                	</spring:url>
-     <h1 class="mb-0 SegoeFont"><c:out value="${anuncio.titulo}"/>&nbsp;
+     <h1 class="mb-0 Roboto"><c:out value="${anuncio.titulo}"/>&nbsp;
      							<c:if test="${anuncio.especialidad == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
 					                      	</c:if>
@@ -74,22 +74,27 @@
 		    	</div>
 				</c:if>
         	<c:if test="${createdByUser== false}">
-            	<h3 class="mb-0 SegoeFont">Publicado por: </h3><br/><h5><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h5><br/>
+        	<div class="row">
+            	<h3 class="mb-0 ">Publicado por:&nbsp; </h3><br/><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
+            </div>
             </c:if>
-           		<h3 class="mb-0 SegoeFont">Precio: </h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.precio} €"/></h5>
-        	<br/>
-           		<h3 class="mb-0 SegoeFont">Descripción: </h3><br/><h5 class="descripcionAnuncio"><c:out value="${anuncio.descripcion}"/></h5>
+            <br/>
+            <br/>
+           		<h4><c:out value="${anuncio.descripcion}"/></h4><br/>
+           		<h5>Precio: <c:out value="${anuncio.precio} €"/></h5><br/>
+        	
         	
 		<c:if test="${!anuncio.photo.isEmpty()}">
-            	<h3 class="mb-0 SegoeFont">Imagen de ejemplo</h3>
+            	<h3 class="mb-0">Imagen de ejemplo</h3>
             	<br/>
             		<img class ="img-thumbnail"src="${fn:escapeXml(anuncio.photo)}" width=217px height=250px alt="">
         </c:if>
         <c:if test="${anuncio.photo.isEmpty()}">
        		
-            	<br/><h3 class="mb-0 SegoeFont">No hay imagen para mostrar</h3>
+            	<br/><h3 class="mb-0">No hay imagen para mostrar</h3>
         	
         </c:if>
+        
   </div>
   </div>
   </div>
@@ -121,7 +126,7 @@
 
 	<c:if test="${!promocionado}">
 			<form:form modelAttribute="anuncio" class="form-horizontal" id="promocionar-anuncio" action="/beavers/${anuncio.beaver.id}/anuncios/${anuncio.id}/promote">
-			<p class="SegoeFont" style="text-align:justify">Puedes destacar tu anuncio por sólo 4.99 Euros, para ello realiza el pago con una de las siguientes opciones.</p>
+			<p class="RobotoLight" style="text-align:justify">Puedes destacar tu anuncio por sólo 4.99 Euros, para ello realiza el pago con una de las siguientes opciones.</p>
 			<div class="form-group has-feedback">
 				<div class="form-group" >
 			<!-- Pasarela de Pago Promoción -->
