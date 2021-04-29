@@ -11,6 +11,6 @@
 <div class="minAlto">
     <h2>Su solicitud ha sido aceptada con éxito.</h2>
 	<br/>
-	<a class="btn btn-primary" href="/">Volver al inicio</a>
+	<a class="btn btn-primary" href="/solicitudes/list">Volver al listado</a>
 </div>
 </beavarts:layout>
