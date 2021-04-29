@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -47,7 +47,7 @@
 	                  	<div style="word-break: break-all; margin-top: 5px;">  
 	        				<b style="margin-left:10px;" class="SegoeFont">Pagador:</b> 	<c:out value="${factura.emailPayer}"></c:out>                                    
 	                  	</div>	                  	
-	                  		<b style="word-break: break-all; text-align:end; margin-right:10px; margin-bottom: 5px;">${factura.paymentDate}</b>
+	                  		<b style="word-break: break-all; text-align:end; margin-right:10px; margin-bottom: 5px;">${fn:escapeXml(factura.paymentDate)}</b>
 	                  	 	<spring:url value="/facturas/{facturaId}" var="facturaUrl">
 							<spring:param name="facturaId" value="${factura.id}"/>              
 							</spring:url>

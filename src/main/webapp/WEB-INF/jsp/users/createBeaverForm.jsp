@@ -5,9 +5,11 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 
-<!-- VIEW MODES WITH COOKIES -->
+<%-- VIEW MODES WITH COOKIES --%>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/pwdScript.js"></script> --%>
+
 <script>
     $(document).ready(function() { 
 
@@ -175,7 +177,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
          document.getElementById("text").style.color = "white"
          setCookie("theme", "dark", 365);
      }
- </script>
+</script>
 
 <beavarts:layout pageName="beavers">
 <div class="formulario">
@@ -192,18 +194,18 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
     <br/>
     
 <div class="container justify-content-center" style="display:block;">
-    <!-- ############################################################################3 -->
+    <%-- ############################################################################3 --%>
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form" onsubmit="submitButton.disabled = true; return checkForm(this);">
         <div class="form-group has-feedback">
 
-            <!-- *First name group -->
+            <%-- *First name group --%>
           <div class="form-group widhtTam ">
             <label class="sr-only">{% trans "First name" %}</label>
             <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30" required>
             	
           </div>
 
-            <!-- *Last name group -->
+            <%-- *Last name group --%>
           <div class="form-group widhtTam">
             <label class="sr-only">{% trans "Last name" %}</label>
             <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
@@ -215,13 +217,13 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             	<beavarts:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
             </div>
             <p class="widhtTam" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
-            <!-- dni group -->
+            <%-- dni group --%>
           <div class="form-group widhtTam">
             <input type="text" id="id_dni" required name="dni" class="form-control" 
               value="" placeholder="22333444X" maxlength="12">
           </div>
 
-            <!-- email group -->
+            <%-- email group --%>
           <div class="form-group widhtTam">
             <input type="email" id="id_email" required name="email" class="form-control" 
               value="" placeholder="email@dominio.com" maxlength="254">
@@ -232,7 +234,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
 							</div>
 						</c:if>
 
-            <!-- Username -->
+            <%-- Username --%>
             <div class="form-group widhtTam">
                 <label class="sr-only">{% trans "Username" %}</label>
                 <input type="text" id="id_username" name="user.username" class="form-control"
@@ -244,18 +246,18 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
 							</div>
 						</c:if>
 
-            <!-- password group -->
+            <%-- password group --%>
             <div class="form-group widhtTam">
-            <!-- password label -->
+            <%-- password label --%>
             <label class="sr-only">{% trans "Password" %}</label>
-            <!-- password input -->
+            <%-- password input --%>
             <div class="input-group">
               <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
       data-html="true" value="" placeholder="Contraseña..." required >
 
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-append1" onclick="togglePassword()">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
+                  <p class="fa fa-eye" aria-hidden="true"></p>
                 </button>
               </div>
             </div>
