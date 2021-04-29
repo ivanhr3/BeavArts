@@ -209,18 +209,16 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
           </div> 
           
- 		   
             <div class="control-group widhtTam2 ">
-            
             	<beavarts:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
             </div>
-            <p class="widhtTam" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
+            <p class="widhtTam" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades. Tenga en cuenta que si no elige ninguna especialidad no podrá CREAR ENCARGOS.</p>
+            
             <!-- dni group -->
           <div class="form-group widhtTam">
-            <input type="text" id="id_dni" required name="dni" class="form-control" 
-              value="" placeholder="22333444X" maxlength="12">
+            <beavarts:inputDNIField label="Introduce el DNI:" name="dni" placeholder="22333444X"/>
           </div>
-
+          
             <!-- email group -->
           <div class="form-group widhtTam">
             <input type="email" id="id_email" required name="email" class="form-control" 
@@ -246,13 +244,14 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
 
             <!-- password group -->
             <div class="form-group widhtTam">
+            
             <!-- password label -->
             <label class="sr-only">{% trans "Password" %}</label>
+            
             <!-- password input -->
             <div class="input-group">
               <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
       data-html="true" value="" placeholder="Contraseña..." required >
-
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-append1" onclick="togglePassword()">
                   <i class="fa fa-eye" aria-hidden="true"></i>
