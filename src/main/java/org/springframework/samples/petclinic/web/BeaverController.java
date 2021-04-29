@@ -268,11 +268,11 @@ public class BeaverController {
 
 			} else {
 
-				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", 
-					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud", 
+				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio",
+					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud",
 					"anuncios", "valoraciones", "valoracionesCreadas");
 
-				this.beaverService.saveBeaver(beaver1);
+				this.beaverService.guardarUsuario(beaver1);
 				model.put("beaver", beaver);
 				return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
 			}
@@ -305,4 +305,4 @@ public class BeaverController {
 			return "accesoNoAutorizado";
 		}
 	}
-}	
+}
