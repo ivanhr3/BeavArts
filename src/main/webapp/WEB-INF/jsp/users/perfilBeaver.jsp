@@ -249,10 +249,7 @@
     </div>
     <div>
     
-    		<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
-            	<spring:param name="beaverId" value="${beaver.id}"/>
-            </spring:url>
-			<b class="Roboto encargosFont">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b  class="Roboto encargosFont">Encargos</b></a>
+    		
     </div>
     
 	  <br/>
@@ -305,9 +302,10 @@
 	
 	</div>
 <c:if test= "${beaver.user.username != principalUsername}">
+<c:if test= "${beaver.encargos.isEmpty() != true}">
 	<div class="encCard">
 		
-		<div class="encCard2">
+		<div class="encCard2 text-center">
 		
 			<div style="position: relative; text-align: center; margin-bottom:60px">
 				<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
@@ -315,35 +313,86 @@
 			    <h1 class="GagalinLight text-center responsiveFontSignBoard tituloPerfil" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">ENCARGOS</h1>
 			    
     		</div>
-			<div style=" width:100%; height:100%; padding:2%">
+			<div style=" width:100%; height:100%; padding:2% ; display: flex; flex-wrap: wrap;">
 					
-			<c:forEach items="${beaver.encargos}" var="encargo">
-			
-				<div class="cartaEncargo">
+			<c:forEach begin="0" end="5" items="${beaver.encargos}" var="encargo">
+				<c:if test="${encargo.disponibilidad == true}">
 				
-				  <div class="cuerpoHeader">
-                       <h5><c:out value="${encargo.titulo}"/></h5>
-                  </div>
-                  
-                  
-                  <div class="cuerpoCarta">
-
-                  </div>
-                  
+				
+					<div class="cartaEncargo">
+				
+	                  
+	                  
+	                 <div class="cuerpoCarta" style="background-image: url(${encargo.photo}); background-position: center; ">
+							<div class="text-center" style="height:50%;">
+								<div class="letrero Roboto"  style="font-size:20px">
+									<c:out value="${encargo.titulo}"/>
+								</div>
+		
+							</div>
+	                        <div class="cuerpoCartaFoto">
+	                        
+	                        	
+	                            <a data-fancybox="gallery" href="${encargo.photo}">
+					      		<img class="imgResponsiveCarta sombraImg" src="${encargo.photo}" alt="EncargosTienda">
+					      		</a>
+	                            
 	
-				  <div class="card-footer text-center">
-				  		<a href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'class="btn btn-primary">Solicitar encargo</a>
-				  </div>
-				</div>
-                        
+		                        
+	
+	                  		</div>
+					</div>
+	
+	                  
+		
+					  <div class="cuerpoFooter text-center">
+					  		<a  class="customHoverEncargos" href="#myModal${encargo.id}" data-toggle="modal"><b style="font-size: 1.5rem;" class="card-title Roboto ">Ver más</b></a>
+					  </div>
+					</div>
+	                <div class="modal fade" id="myModal${encargo.id}">
+	  						<div class="modal-dialog modal-dialog-centered modal-lg">
+	    					<div class="modal-content">
+	    					
+	    					<!-- Modal Header -->
+	    					<div class="modal-header">
+	        					<h4 class="modal-title col-11 text-center">${encargo.titulo}</h4>
+	        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+	     						 </div>
+	     						 
+	     						 <!-- Modal Body -->
+	     						 <div class="modal-body">
+	        						<h5>${encargo.descripcion}</h5>
+	        						<h5>Precio: ${encargo.precio}€</h5>
+					     		<c:if test="${!encargo.photo.isEmpty()}">
+	            					<img class ="img-thumbnail center" src="${encargo.photo}" alt="">
+	        					</c:if>
+	        					
+	        					<c:if test="${encargo.photo.isEmpty()}">
+	            				<h6 class="mb-0">No hay imagen para mostrar</h6>
+	        					</c:if>	
+	      						</div>
+	      						
+	      						<!-- Modal Footer -->
+	     						 <div class="modal-footer justify-content-center">
+	        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+	      							</div>
+	    					</div>
+	    				</div>
+	    			</div> 
+    			</c:if>       
    			</c:forEach>
-			
+   			
+			</div>
+			<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
+            	<spring:param name="beaverId" value="${beaver.id}"/>
+            </spring:url>
+				<b style="color: white" class="Roboto encargosFont">Mira el resto de mis encargos </b><a href="${fn:escapeXml(listUrl)}"><b  class="Roboto encargosFont">aquí</b></a>
 			</div>
 	
 		
 		</div>
 				
-	</div>
+	</c:if>		
 </c:if>	
 </div>
 
