@@ -122,7 +122,7 @@ public class BeaverControllerTests {
         this.beaver2.setEspecialidades(esp);
         this.beaver2.setDni("12345978Q");
         this.beaver2.setUser(user2);
-        
+
         List<Authorities> lista = new ArrayList<Authorities>();
 		lista.add(au);
 
@@ -194,6 +194,7 @@ public class BeaverControllerTests {
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("portfolio"))
+            .andExpect(model().attributeExists("especialidades"))
             .andExpect(view().name("users/editarPortfolio"));
     }
 
@@ -209,6 +210,7 @@ public class BeaverControllerTests {
     @Test
     public void testProcessActualizarPerfil() throws Exception {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID).with(csrf())
+            .param("especialidades", "TEXTIL")
             .param("sobreMi", "Nueva descripción")
             .param("photos", "https://sites.google.com/site/imagenesdecarrosgratis/_/rsrc/1421516636272/home/carros-deportivos-lamborghini-aventador-tron_aventador.jpg",
                 "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg"))
@@ -230,6 +232,7 @@ public class BeaverControllerTests {
     @Test
     public void testProcessActualizarPerfilNulo() throws Exception {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", 12).with(csrf())
+            .param("especialidades", "")
             .param("sobreMi", "Nueva descripción")
             .param("photos", "https://sites.google.com/site/imagenesdecarrosgratis/_/rsrc/1421516636272/home/carros-deportivos-lamborghini-aventador-tron_aventador.jpg",
                 "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg"))
@@ -246,11 +249,11 @@ public class BeaverControllerTests {
             .andExpect(MockMvcResultMatchers.model().attributeExists("beavers"));
 
     }
-    
+
     @WithMockUser(value = "beaveradmin")
     @Test
     public void testBanBeaver() throws Exception {
-    	
+
     	 final User user = new User();
          user.setUsername("beaver3");
          user.setPassword("supersecretpass");
@@ -277,18 +280,18 @@ public class BeaverControllerTests {
  		 lista.add(au);
  		 BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
          BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
-    	
+
     	this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/beaverInfo/{beaverId}/ban", TEST_BEAVER_ID).with(csrf()))
     		.andExpect(status().is3xxRedirection())
     		.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/list/"));
     }
-    
+
     @WithMockUser(value = "beaveradmin")
     @Test
     public void testBanBeaverNotAuthorized() throws Exception {
 
          BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver1);
-    	
+
     	this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/beaverInfo/{beaverId}/ban", TEST_BEAVER_ID).with(csrf()))
     		.andExpect(status().isOk())
     		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
@@ -366,17 +369,17 @@ public class BeaverControllerTests {
             .andExpect(model().attribute("numValoraciones", 17))
             .andExpect(view().name("users/perfilBeaver"));
     }
-    
+
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitActualizarPerfilNoAutorizado() throws Exception {
         BDDMockito.given(this.userService.findUserByUsername("beaver1")).willReturn(null);
-    	
+
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(view().name("accesoNoAutorizado"));
     }
-    
+
     @WithMockUser(value = "beaver2")
     @Test
     public void testInitActualizarPerfilSinPortfolio() throws Exception {
@@ -385,7 +388,7 @@ public class BeaverControllerTests {
             .andExpect(model().attributeExists("portfolio"))
             .andExpect(view().name("users/editarPortfolio"));
     }
-    
+
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitActualizarPerfilUsuarioNoNull() throws Exception {
@@ -396,26 +399,27 @@ public class BeaverControllerTests {
             .andExpect(model().attributeExists("portfolio"))
             .andExpect(view().name("users/editarPortfolio"));
     }
-    
+
     @WithMockUser(value = "beaver1")
     @Test
     public void testProcessActualizarPerfilUsuarioNoNull() throws Exception {
         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver1);
 
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID).with(csrf())
+            .param("especialidades", "")
             .param("sobreMi", "Nueva descripción")
             .param("photos", "https://sites.google.com/site/imagenesdecarrosgratis/_/rsrc/1421516636272/home/carros-deportivos-lamborghini-aventador-tron_aventador.jpg",
                 "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg"))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/beavers/beaverInfo/"+TEST_BEAVER_ID));
     }
-    
+
     @WithMockUser(value = "beaver2")
     @Test
     public void testProcessActualizarPerfilNoAutorizado() throws Exception {
        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver2);
 
-    	
+
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID).with(csrf())
             .param("sobreMi", "Nueva descripción")
             .param("photos", "https://sites.google.com/site/imagenesdecarrosgratis/_/rsrc/1421516636272/home/carros-deportivos-lamborghini-aventador-tron_aventador.jpg",
@@ -423,7 +427,7 @@ public class BeaverControllerTests {
             .andExpect(status().isOk())
             .andExpect(view().name("accesoNoAutorizado"));
     }
-    
+
 
     @WithMockUser(value = "beaver1")
     @Test
@@ -435,22 +439,22 @@ public class BeaverControllerTests {
             .andExpect(MockMvcResultMatchers.model().attributeExists("beavers"));
 
     }
-    
+
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitEditPhotoUserNull() throws Exception {
         BDDMockito.given(this.userService.findUserByUsername("beaver1")).willReturn(null);
-    	
+
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(view().name("accesoNoAutorizado"));
     }
-    
+
     @WithMockUser(value = "beaver1")
     @Test
     public void testInitEditPhotoMeNotNull() throws Exception {
     	BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver1);
-    	
+
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("beaver"))
@@ -460,19 +464,19 @@ public class BeaverControllerTests {
 
     @WithMockUser(value = "beaver2")
     @Test
-    public void testInitEditPhotoSinFoto() throws Exception {    	
+    public void testInitEditPhotoSinFoto() throws Exception {
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editPhoto", 12))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("beaver"))
             .andExpect(view().name("users/editarFotoPerfil"));
     }
-    
-    
+
+
     @WithMockUser(value = "beaver1")
     @Test
     public void testProcessEditPhotoMeNotNull() throws Exception {
     	BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver1);
-    	
+
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editPhoto", TEST_BEAVER_ID).with(csrf())
             .param("firstName", "Nombre")
             .param("lastName", "Apellidos")
@@ -481,11 +485,11 @@ public class BeaverControllerTests {
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/beavers/beaverInfo/"+TEST_BEAVER_ID));
     }
-    
+
     @WithMockUser(value = "beaveradmin")
     @Test
     public void testBanAdminNotAuthorized() throws Exception {
-    	
+
     	 final User user = new User();
          user.setUsername("beaver3");
          user.setPassword("supersecretpass");
@@ -510,7 +514,7 @@ public class BeaverControllerTests {
          beaver3.setUser(user);
          List<Authorities> lista = new ArrayList<Authorities>();
  		 lista.add(au);
- 		 
+
  		final User user2 = new User();
         user2.setUsername("beaver4");
         user2.setPassword("supersecretpass");
@@ -538,10 +542,10 @@ public class BeaverControllerTests {
          BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver3);
          BDDMockito.given(this.beaverService.findBeaverByIntId(14)).willReturn(beaver4);
  		 BDDMockito.given(this.beaverService.findUserAuthorities(user2)).willReturn(lista2);
-    	
+
     	this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/beaverInfo/{beaverId}/ban", 14).with(csrf()))
     		.andExpect(status().isOk())
     		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
     }
-    
+
 }

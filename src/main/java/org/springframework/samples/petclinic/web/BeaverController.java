@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
@@ -9,10 +10,7 @@ import javax.validation.Valid;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Authorities;
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Portfolio;
-import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.PortfolioService;
 import org.springframework.samples.petclinic.service.UserService;
@@ -104,6 +102,8 @@ public class BeaverController {
 
 		Portfolio portfolio = beaver.getPortfolio();
 
+        Collection<Especialidad> especialidades = beaver.getEspecialidades();
+
 		//Necesario tambien en el get
 		if (beaver.getPortfolio() == null) {
 			Portfolio port = new Portfolio();
@@ -124,6 +124,7 @@ public class BeaverController {
 		if (user.getUsername().equals(beaver.getUser().getUsername())) {
 
 			model.addAttribute("portfolio", portfolio);
+			model.addAttribute("especialidades", especialidades);
 			vista = "users/editarPortfolio";
 			return vista;
 
@@ -136,12 +137,12 @@ public class BeaverController {
 	}
 
 	@PostMapping("/beaverInfo/{beaverId}/portfolio/edit")
-	public String processActualizarPerfil(@PathVariable("beaverId") final int beaverId, @Valid final Portfolio portfolio, final BindingResult result, final ModelMap model) {
+	public String processActualizarPerfil(@PathVariable("beaverId") final int beaverId, @Valid final Portfolio portfolio, final Beaver beaver, final BindingResult result, final ModelMap model) {
 		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication1.getName();
 		User user = this.userService.findUserByUsername(currentPrincipalName);
 
-		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+		Beaver beaver1 = this.beaverService.findBeaverByIntId(beaverId);
 		String vista;
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
@@ -150,7 +151,7 @@ public class BeaverController {
 		}
 
 		//compruebo si el usuario logeado es el mismo que el usuario del perfil a editar
-		if (user.getUsername().equals(beaver.getUser().getUsername())) {
+		if (user.getUsername().equals(beaver1.getUser().getUsername())) {
 
 			UrlValidator validar = new UrlValidator();
 
@@ -159,19 +160,20 @@ public class BeaverController {
 			if (result.hasErrors() || !compruebaUrl) {
 				model.put("errorUrl", "Las fotos añadidas al portfolio deben ser Urls");
 				model.put("portfolio", portfolio);
+				model.put("especialidades", beaver1.getEspecialidades());
 				vista = "users/editarPortfolio"; //si hay algún error de campos se redirige a la misma vista
 
 			} else {
 
 				//Si el atributo portfolio del beaver es nulo, crearemos uno vacío
-				if (beaver.getPortfolio() == null) {
+				if (beaver1.getPortfolio() == null) {
 					Portfolio port = new Portfolio();
 					port.setSobreMi("");
 					port.setPhotos(new HashSet<>());
-					beaver.setPortfolio(port);
+					beaver1.setPortfolio(port);
 				}
 
-				final Portfolio portfolio1 = beaver.getPortfolio();
+				final Portfolio portfolio1 = beaver1.getPortfolio();
 
 				BeanUtils.copyProperties(portfolio, portfolio1, "id", "beaver");
 				beaver.setPortfolio(portfolio1);
@@ -179,8 +181,11 @@ public class BeaverController {
 				//Necesario para que se actualice el portfolio
 				this.portfolioService.savePortfolio(portfolio1);
 
+				beaver1.setEspecialidades(beaver.getEspecialidades());
+				this.beaverService.saveBeaver(beaver1);
+
 				model.put("portfolio", portfolio1);
-				return "redirect:/beavers/beaverInfo/" + beaver.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
+				return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
 			}
 
 		} else {
@@ -268,8 +273,8 @@ public class BeaverController {
 
 			} else {
 
-				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", 
-					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud", 
+				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio",
+					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud",
 					"anuncios", "valoraciones", "valoracionesCreadas");
 
 				this.beaverService.saveBeaver(beaver1);
@@ -305,4 +310,4 @@ public class BeaverController {
 			return "accesoNoAutorizado";
 		}
 	}
-}	
+}
