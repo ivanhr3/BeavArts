@@ -113,12 +113,14 @@
 			</div>
 			</c:if>
 			
+			<security:authorize access="!hasAuthority('admin')">
         	<a class="btn btn-primary" href='<spring:url value="/beavers/${anuncio.beaver.id}/anuncios/${anuncio.id}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
         	<c:if test="${urlEliminar == true}">
         	<div class="alert alert-danger" role="alert">
 			<c:out value="${errorEliminarSolicitudesAceptadas}"/>
 			</div>
 			</c:if>
+			</security:authorize>
 
 			<br/>
 			<br/>
