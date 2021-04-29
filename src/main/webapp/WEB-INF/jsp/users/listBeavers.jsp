@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
@@ -15,7 +15,7 @@
 
 <jsp:attribute name="customScript">
 	
-	<!-- Script filtro %-->
+	<%-- Script filtro --%>
 	
 		<script>
 			filterSelection("all")
@@ -140,7 +140,7 @@
 		            <tr class="candidates-list ${beaver.especialidades}">
 		             <td class="title">
 		                  <div class="thumb">
-		                    <img class="rounded-circle " src="${beaver.urlFotoPerfil}" width="80" height="80">
+		                    <img class="rounded-circle " src="${fn:escapeXml(beaver.urlFotoPerfil)}" width="80" height="80">
 		                  </div>
 		                  <div class="candidate-list-details">
 		                    <div class="candidate-list-info">
@@ -148,7 +148,7 @@
 		                      	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                        		 		<spring:param name="beaverId" value="${beaver.id}"/>
                     			</spring:url>
-								<h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
+								<h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${fn:escapeXml(beaver.user.username)} </a> 
 			                         
 									<security:authorize access="hasAuthority('admin')">
 													

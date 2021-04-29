@@ -54,45 +54,45 @@
             	<div class="row justify-content-center">
             	<h5>Categoría:&nbsp;</h5>
             	<h5 style="color:grey">  
-            								<c:if test="${anuncio.especialidad == 'TEXTIL'}">
+            								<c:if test="${fn:escapeXml(anuncio.especialidad) == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
 					                      	</c:if>
 				                     
-				                      		<c:if test="${anuncio.especialidad == 'ESCULTURA'}">
-					                      		<i class="fas fa-chess-knight"></i>
+				                      		<c:if test="${fn:escapeXml(anuncio.especialidad) == 'ESCULTURA'}">
+					                      		<p class="fas fa-chess-knight"></p>
 					                      	</c:if>
 					                      	
-					                      	<c:if test="${anuncio.especialidad == 'ILUSTRACION'}">
-					                      		<i class="fas fa-portrait"></i>
+					                      	<c:if test="${fn:escapeXml(anuncio.especialidad) == 'ILUSTRACION'}">
+					                      		<p class="fas fa-portrait"></p>
 					                      	</c:if>
 					                      	
-					                      	<c:if test="${anuncio.especialidad == 'ACRILICO'}">
-					                      		<i class="fas fa-paint-brush"></i>
+					                      	<c:if test="${fn:escapeXml(anuncio.especialidad) == 'ACRILICO'}">
+					                      		<p class="fas fa-paint-brush"></p>
 					                      	</c:if>
 					                      	
-					                      	<c:if test="${anuncio.especialidad == 'OLEO'}">
-					                      		<i class="fas fa-palette"></i>
+					                      	<c:if test="${fn:escapeXml(anuncio.especialidad) == 'OLEO'}">
+					                      		<p class="fas fa-palette"></p>
 					                      	</c:if>
 					                      	
-					                      	<c:if test="${anuncio.especialidad == 'JOYERIA'}">
-					                      		<i class="fas fa-gem"></i>
+					                      	<c:if test="${fn:escapeXml(anuncio.especialidad) == 'JOYERIA'}">
+					                      		<p class="fas fa-gem"></p>
 					                      	</c:if>
 					                      	
-					                      	<c:if test="${anuncio.especialidad == 'RESINA'}">
-					                      		<i class="fas fa-prescription-bottle"></i>
+					                      	<c:if test="${fn:escapeXml(anuncio.especialidad) == 'RESINA'}">
+					                      		<p class="fas fa-prescription-bottle"></p>
 					                      	</c:if>
 					                      	
-					                      	<c:if test="${anuncio.especialidad == 'FOTOGRAFIA'}">
-					                      		<i class="fas fa-camera-retro"></i>
+					                      	<c:if test="${fn:escapeXml(anuncio.especialidad) == 'FOTOGRAFIA'}">
+					                      		<p class="fas fa-camera-retro"></p>
 					                      	</c:if>
-	                    				<c:out value="${anuncio.especialidad} "/>
-	                    				<c:if test="${anuncio.especialidad==null}">
+	                    				<c:out value="${fn:escapeXml(anuncio.especialidad)} "/>
+	                    				<c:if test="${fn:escapeXml(anuncio.especialidad)==null}">
 					                      		Sin categoría
 					                      	</c:if>
 				</h5>
 				</div>
         		<br/>
-        		<a href="${anuncioUrl}" class="btn btn-primary" id="verMas">Ver más</a>
+        		<a href="${fn:escapeXml(anuncioUrl)}" class="btn btn-primary" id="verMas">Ver más</a>
         	</div>
         	</c:forEach>
       			</c:if>
@@ -118,7 +118,7 @@
         				<c:if test="${encargo.disponibilidad == true}">
             				<h5><span class="badge badge-success">Disponible</span></h5>
         				</c:if></p>
-        				<a href="${encargoUrl}" class="btn btn-primary" id="verMas">Ver más</a>
+        				<a href="${fn:escapeXml(encargoUrl)}" class="btn btn-primary" id="verMas">Ver más</a>
         			</div>
             		</c:if>
             		
