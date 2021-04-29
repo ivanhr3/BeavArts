@@ -227,25 +227,25 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
           <div class="form-group widhtTam">
             <input type="email" id="id_email" required name="email" class="form-control" 
               value="" placeholder="email@dominio.com" maxlength="254">
-          </div>
+         
           <c:if test="${urlEmail == true}">
                         	<div class="alert alert-danger" role="alert">
 								<c:out value="${emailExistente}"/>
 							</div>
 						</c:if>
-
+ 			</div>
             <%-- Username --%>
             <div class="form-group widhtTam">
                 <label class="sr-only">{% trans "Username" %}</label>
                 <input type="text" id="id_username" name="user.username" class="form-control"
                 value="" placeholder="Usuario..." required>
-              </div>
+              
               <c:if test="${urlUsername == true}">
                         	<div class="alert alert-danger" role="alert">
 								<c:out value="${usernameExistente}"/>
 							</div>
 						</c:if>
-
+			</div>
             <%-- password group --%>
             <div class="form-group widhtTam">
             <!-- password label -->
@@ -268,17 +268,17 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
                 
             </div>
         </div>
-		
+        
 		<div class="modal fade" id="modalterminos" tabindex="-1" role="dialog">
   						<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     					<div class="modal-content">
-    					
+
     					<!-- Modal Header -->
     					<div class="modal-header">
         					<h2 class="modal-title col-11 text-center"><fmt:message key="terminosCondiciones.titulo"/></h2>
         					<button type="button" class="close" data-dismiss="modal">&times;</button>
      						 </div>
-     						 
+
      						 <!-- Modal Body -->
      						 <div class="modal-body">
        	<p><fmt:message key="terminosCondiciones.par1"/></p>
@@ -344,7 +344,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
         <br>
         <p><fmt:message key="terminosCondiciones.par33"/></p>
         <br>
-        
+
         <ul>
         	<li><fmt:message key="terminosCondiciones.par34"/></li>
             <li><fmt:message key="terminosCondiciones.par35"/></li>
@@ -402,7 +402,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
         <br>
 
         <h3 class="text-center"><fmt:message key="terminosCondiciones.subti6"/></h3>
-        
+
         <br>
         <p><fmt:message key="terminosCondiciones.par55"/></p>
         <br>
@@ -422,7 +422,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <li><fmt:message key="terminosCondiciones.par61"/></li>
             <li><fmt:message key="terminosCondiciones.par62"/></li>
         </ul>        
-        
+
         <br>
         <p><fmt:message key="terminosCondiciones.par63"/></p>
         <br>
@@ -440,7 +440,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
         <br>
         <p><fmt:message key="terminosCondiciones.par67"/></p>
         <br>
-        
+
         <h3 class="text-center"><fmt:message key="terminosCondiciones.subti8"/></h3>
         <br>
         <p><fmt:message key="terminosCondiciones.par68"/></p>
@@ -489,13 +489,13 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
         <br>
         <p><fmt:message key="terminosCondiciones.par88"/></p>
         <br>
-        
+
         <h3 class="text-center"><fmt:message key="terminosCondiciones.subti12"/></h3>
         <br>                
         <p><fmt:message key="terminosCondiciones.par89"/></p>	
-        						
+
       						</div>
-      						
+
       						<!-- Modal Footer -->
      						<div class="modal-footer text-center">
         						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -503,7 +503,6 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
     					</div>
     					</div>
     					</div>
-		
 		
         <div class="form-group widhtTam3 fontSizeButton">
             <div class="col-sm-offset-2 col-sm-10">
