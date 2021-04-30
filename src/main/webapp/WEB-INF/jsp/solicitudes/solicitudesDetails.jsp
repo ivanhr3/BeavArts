@@ -343,6 +343,7 @@
                 return actions.order.capture().then(function(details) {
                 // This function shows a transaction success message to your buyer.
                 alert('¡Pago realizado con éxito!');
+
                 window.location.replace("/solicitudes/accept/${solicitud.id}")
                 });
             }

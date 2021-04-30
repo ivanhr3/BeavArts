@@ -242,6 +242,14 @@
      						 <div class="modal-footer justify-content-center">
      						 
         						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+        						<security:authorize access="hasAuthority('admin')">
+	    									&nbsp;              
+	    								<spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}/delete" var="deleteAnuncioUrl">
+									<spring:param name="anuncioId" value="${anuncio.id}"/>      
+									<spring:param name="beaverId" value="${anuncio.beaver.id}"/>           
+									</spring:url>
+									<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteAnuncioUrl)}"><i class="fas fa-trash-alt"></i>&nbsp;Borrar Anuncio</a>
+   								 </security:authorize>
       							</div>
     					</div>
     					</div>
