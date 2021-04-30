@@ -48,13 +48,13 @@
 	                    <div class="mt-3">
 	                      <h4 class="Gagalin tituloPerfil">${beaver.user.username}</h4> 
 	                      <security:authorize access="isAuthenticated()">
-	                      <c:if test="${beaver.user.username != principalUsername}">                    
-	                  	
-	                      	<spring:url value="/beavers/{beaverId}/valoraciones/create" var="valorar">
-							<spring:param name="beaverId" value="${beaver.id}"/>              </spring:url>    
-	                      	<a class="btn btn-primary" href="${fn:escapeXml(valorar)}">Valorar</a>
-	 	
-	                      </c:if>
+	                      <c:if test="${beaver.user.username != principalUsername}">      
+							  <c:if test="${!usuarioYaValorado}">
+								<spring:url value="/beavers/{beaverId}/valoraciones/create" var="valorar">
+								<spring:param name="beaverId" value="${beaver.id}"/>              </spring:url>    
+								<a class="btn btn-primary" href="${fn:escapeXml(valorar)}">Valorar</a>
+							  </c:if>              
+	                  	  </c:if>
 	                      </security:authorize>
 	                      	<c:if test="${beaver.user.username == principalUsername}">
 								<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>              

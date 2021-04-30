@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 public class Valoracion extends BaseEntity{
     
-    @Min(1)
+    @Min(0)
     @Max(5)
     @NotNull
     private double puntuacion;
