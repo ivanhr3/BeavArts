@@ -194,7 +194,6 @@ public class BeaverControllerTests {
         this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("portfolio"))
-            .andExpect(model().attributeExists("especialidades"))
             .andExpect(view().name("users/editarPortfolio"));
     }
 
@@ -210,7 +209,6 @@ public class BeaverControllerTests {
     @Test
     public void testProcessActualizarPerfil() throws Exception {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", TEST_BEAVER_ID).with(csrf())
-            .param("especialidades", "TEXTIL")
             .param("sobreMi", "Nueva descripción")
             .param("photos", "https://sites.google.com/site/imagenesdecarrosgratis/_/rsrc/1421516636272/home/carros-deportivos-lamborghini-aventador-tron_aventador.jpg",
                 "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg"))
@@ -232,7 +230,6 @@ public class BeaverControllerTests {
     @Test
     public void testProcessActualizarPerfilNulo() throws Exception {
         this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/portfolio/edit", 12).with(csrf())
-            .param("especialidades", "")
             .param("sobreMi", "Nueva descripción")
             .param("photos", "https://sites.google.com/site/imagenesdecarrosgratis/_/rsrc/1421516636272/home/carros-deportivos-lamborghini-aventador-tron_aventador.jpg",
                 "https://i.pinimg.com/originals/3f/57/60/3f576076e1a6431e9c6d704d2da3a3f9.jpg"))
@@ -547,5 +544,99 @@ public class BeaverControllerTests {
     		.andExpect(status().isOk())
     		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
     }
+
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testInitEditEspecialidades() throws Exception {
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editEspecialidades", TEST_BEAVER_ID))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("beaver"))
+            .andExpect(view().name("users/editarEspecialidades"));
+    }
+
+    @WithMockUser(value = "beaver2")
+    @Test
+    public void testInitEditEspecialidadesHasErrors() throws Exception {
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editEspecialidades", TEST_BEAVER_ID))
+            .andExpect(status().isOk())
+            .andExpect(view().name("accesoNoAutorizado"));
+    }
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditEspecialidades() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editEspecialidades", TEST_BEAVER_ID).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("especialidades", "ESCULTURA"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/beavers/beaverInfo/"+TEST_BEAVER_ID));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditEspecialidadHasErrors() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editEspecialidades", TEST_BEAVER_ID).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("especialidades", "Nada"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("users/editarEspecialidades"));
+    }
+
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditEspecialidadHasError2() throws Exception {
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editEspecialidades", 12).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("especialidades", "ESCULTURA"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("accesoNoAutorizado"));
+    }
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testInitEditEspecialidadesUserNull() throws Exception {
+        BDDMockito.given(this.userService.findUserByUsername("beaver1")).willReturn(null);
+
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editEspecialidades", TEST_BEAVER_ID))
+            .andExpect(status().isOk())
+            .andExpect(view().name("accesoNoAutorizado"));
+    }
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testInitEditEspecialidadesMeNotNull() throws Exception {
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver1);
+
+        this.mockMvc.perform(get("/beavers/beaverInfo/{beaverId}/editEspecialidades", TEST_BEAVER_ID))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("beaver"))
+            .andExpect(model().attributeExists("myBeaverId"))
+            .andExpect(view().name("users/editarEspecialidades"));
+    }
+
+    @WithMockUser(value = "beaver1")
+    @Test
+    public void testProcessEditEspecialidadesMeNotNull() throws Exception {
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver1);
+
+        this.mockMvc.perform(post("/beavers/beaverInfo/{beaverId}/editEspecialidades", TEST_BEAVER_ID).with(csrf())
+            .param("firstName", "Nombre")
+            .param("lastName", "Apellidos")
+            .param("dni", "12345678Q")
+            .param("especialides", "ESCULTURA"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/beavers/beaverInfo/"+TEST_BEAVER_ID));
+    }
+
 
 }

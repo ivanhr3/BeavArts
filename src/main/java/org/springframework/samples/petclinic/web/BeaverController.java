@@ -102,8 +102,6 @@ public class BeaverController {
 
 		Portfolio portfolio = beaver.getPortfolio();
 
-        Collection<Especialidad> especialidades = beaver.getEspecialidades();
-
 		//Necesario tambien en el get
 		if (beaver.getPortfolio() == null) {
 			Portfolio port = new Portfolio();
@@ -124,7 +122,6 @@ public class BeaverController {
 		if (user.getUsername().equals(beaver.getUser().getUsername())) {
 
 			model.addAttribute("portfolio", portfolio);
-			model.addAttribute("especialidades", especialidades);
 			vista = "users/editarPortfolio";
 			return vista;
 
@@ -137,12 +134,12 @@ public class BeaverController {
 	}
 
 	@PostMapping("/beaverInfo/{beaverId}/portfolio/edit")
-	public String processActualizarPerfil(@PathVariable("beaverId") final int beaverId, @Valid final Portfolio portfolio, final Beaver beaver, final BindingResult result, final ModelMap model) {
+	public String processActualizarPerfil(@PathVariable("beaverId") final int beaverId, @Valid final Portfolio portfolio, final BindingResult result, final ModelMap model) {
 		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
 		String currentPrincipalName = authentication1.getName();
 		User user = this.userService.findUserByUsername(currentPrincipalName);
 
-		Beaver beaver1 = this.beaverService.findBeaverByIntId(beaverId);
+		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
 		String vista;
 
 		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
@@ -151,7 +148,7 @@ public class BeaverController {
 		}
 
 		//compruebo si el usuario logeado es el mismo que el usuario del perfil a editar
-		if (user.getUsername().equals(beaver1.getUser().getUsername())) {
+		if (user.getUsername().equals(beaver.getUser().getUsername())) {
 
 			UrlValidator validar = new UrlValidator();
 
@@ -160,20 +157,20 @@ public class BeaverController {
 			if (result.hasErrors() || !compruebaUrl) {
 				model.put("errorUrl", "Las fotos añadidas al portfolio deben ser Urls");
 				model.put("portfolio", portfolio);
-				model.put("especialidades", beaver1.getEspecialidades());
+				model.put("especialidades", beaver.getEspecialidades());
 				vista = "users/editarPortfolio"; //si hay algún error de campos se redirige a la misma vista
 
 			} else {
 
 				//Si el atributo portfolio del beaver es nulo, crearemos uno vacío
-				if (beaver1.getPortfolio() == null) {
+				if (beaver.getPortfolio() == null) {
 					Portfolio port = new Portfolio();
 					port.setSobreMi("");
 					port.setPhotos(new HashSet<>());
-					beaver1.setPortfolio(port);
+					beaver.setPortfolio(port);
 				}
 
-				final Portfolio portfolio1 = beaver1.getPortfolio();
+				final Portfolio portfolio1 = beaver.getPortfolio();
 
 				BeanUtils.copyProperties(portfolio, portfolio1, "id", "beaver");
 				beaver.setPortfolio(portfolio1);
@@ -181,11 +178,8 @@ public class BeaverController {
 				//Necesario para que se actualice el portfolio
 				this.portfolioService.savePortfolio(portfolio1);
 
-				beaver1.setEspecialidades(beaver.getEspecialidades());
-				this.beaverService.saveBeaver(beaver1);
-
 				model.put("portfolio", portfolio1);
-				return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
+				return "redirect:/beavers/beaverInfo/" + beaver.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
 			}
 
 		} else {
@@ -310,4 +304,78 @@ public class BeaverController {
 			return "accesoNoAutorizado";
 		}
 	}
+
+    @GetMapping("/beaverInfo/{beaverId}/editEspecialidades")
+    public String initEditEspecialidades(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
+        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication1.getName();
+        User user = this.userService.findUserByUsername(currentPrincipalName);
+
+        //Si el usuario no esta logueado tb salta el no autorizado
+        if (user == null) {
+            return "accesoNoAutorizado";
+        }
+
+        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+        String vista;
+        Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+        if (me != null) {//añadido el if para los tests
+            model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+        }
+
+        //compruebo si el usuario logeado es el mismo
+        if (user.getUsername().equals(beaver.getUser().getUsername())) {
+
+            model.addAttribute("beaver", beaver);
+
+            vista = "users/editarEspecialidades";
+            return vista;
+
+        } else {
+
+            vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
+        }
+        return vista;
+    }
+
+    @PostMapping("/beaverInfo/{beaverId}/editEspecialidades")
+    public String processEditEspecialidades(@PathVariable("beaverId") final int beaverId, @Valid final Beaver beaver, final BindingResult result, final ModelMap model) {
+        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication1.getName();
+        User user = this.userService.findUserByUsername(currentPrincipalName);
+
+        String vista;
+        Beaver beaver1 = this.beaverService.findBeaverByIntId(beaverId);
+
+        Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+        if (me != null) { //añadido el if para los tests
+            model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+        }
+        //compruebo si el usuario logeado es el mismo
+        if (user.getUsername().equals(beaver1.getUser().getUsername())) {
+
+
+            if (result.hasErrors()) {
+
+                model.put("beaver", beaver);
+                vista = "users/editarEspecialidades";
+
+            } else {
+
+                BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio",
+                    "urlFotoPerfil", "email", "dni", "valoracion", "encargos", "solicitud",
+                    "anuncios", "valoraciones", "valoracionesCreadas");
+
+                this.beaverService.saveBeaver(beaver1);
+                return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
+            }
+
+        } else {
+            vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo
+        }
+
+        return vista;
+    }
+
+
 }
