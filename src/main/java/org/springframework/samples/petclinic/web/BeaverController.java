@@ -261,18 +261,16 @@ public class BeaverController {
 			UrlValidator validar = new UrlValidator();
 			Boolean compruebaUrl = validar.isValid(beaver.getUrlFotoPerfil());
 
-			if (result.hasErrors() || !compruebaUrl) {
+			if (result.hasErrors() || !compruebaUrl && !beaver.getUrlFotoPerfil().isEmpty()) {
 				model.put("errorUrl", "Las foto añadida debe ser una Url");
 				model.put("beaver", beaver);
 				vista = "users/editarFotoPerfil"; //si hay algún error de campos se redirige a la misma vista
 
 			} else {
 
-				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", 
-					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud", 
-					"anuncios", "valoraciones", "valoracionesCreadas");
+				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", "especialidades", "email", "dni", "valoracion", "encargos", "solicitud", "anuncios", "valoraciones", "valoracionesCreadas");
 
-				this.beaverService.saveBeaver(beaver1);
+				this.beaverService.guardarUsuario(beaver1);
 				model.put("beaver", beaver);
 				return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
 			}
@@ -305,4 +303,4 @@ public class BeaverController {
 			return "accesoNoAutorizado";
 		}
 	}
-}	
+}
