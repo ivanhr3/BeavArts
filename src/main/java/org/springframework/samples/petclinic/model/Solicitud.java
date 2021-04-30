@@ -53,15 +53,11 @@ public class Solicitud extends BaseEntity{
     private Beaver beaver;
 
     @ManyToOne
-    @Cascade(CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="encargo_id")
     @JsonIgnore
     private Encargo encargo;
 
     @ManyToOne
-    @Cascade(CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="anuncio_id")
     @JsonIgnore
     private Anuncio anuncio;

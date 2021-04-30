@@ -83,6 +83,15 @@
       						<!-- Modal Footer -->
      						 <div class="modal-footer justify-content-center">
         						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+        						<security:authorize access="hasAuthority('admin')">
+	    							&nbsp;              
+	    						<spring:url value="/beavers/{beaverId}/encargos/{encargoId}/delete" var="deleteEncargoUrl">
+									<spring:param name="encargoId" value="${encargo.id}"/>  
+									<spring:param name="beaverId" value="${encargo.beaver.id}"/>         
+								</spring:url>
+								<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteEncargoUrl)}"><i class="fas fa-trash-alt"></i> Borrar Encargo</a>
+              
+    						</security:authorize>
       							</div>
     					</div>
     					</div>
