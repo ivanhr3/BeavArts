@@ -32,9 +32,6 @@
 		<div class="mainCard" style="float:left">
 			<div class="perfilCard">
 			
-				
-			
-			
 				<div class="fotoCard text-center">
 					<div class="fotoSize">
 						<img src="${beaver.urlFotoPerfil}"  class="imgResponsivePerfil rounded-circle sombraPng">
@@ -58,7 +55,7 @@
 	                      </security:authorize>
 	                      	<c:if test="${beaver.user.username == principalUsername}">
 								<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>              
-	                      </c:if>
+	                      	</c:if>
 	                      
 	                      <security:authorize access="hasAuthority('admin')">
 	                  
@@ -87,8 +84,9 @@
 				</div>
 				
 				<div class="fotoCard2 text-center">
-					<div class ="RobotoLight textoEsp" style="height:20%; color:#3a3a3a; ">
+					<div class ="RobotoLight textoEsp" style="height:35%; color:#3a3a3a; ">
 						<h4 class ="Roboto tituloPerfil" style="color:black">Especialidades</h4>
+						
 						<c:forEach items="${beaver.especialidades}" var="especialidad">
 				                          <c:choose>
 							                      	<c:when test="${especialidad == 'TEXTIL'}">
@@ -118,6 +116,10 @@
 						                  </c:choose>                          
 			                    		  <c:out value="${especialidad} "/> &nbsp;
 						</c:forEach>
+						
+						<c:if test="${beaver.user.username == principalUsername}">
+								<a class="btn btn-primary espButton" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editEspecialidades" htmlEscape="true"/>'>Cambiar</a>              
+	                      </c:if>
 					</div>
 					
 					<div class ="Roboto" style="height:50%">
@@ -125,7 +127,7 @@
 						<p class ="RobotoLight textoPerfil" style="font-weight: normal; "><c:out value="${beaver.portfolio.sobreMi}"/></p>
 					</div>
 					
-					<div class ="RobotoLight" style="height:20%; ">
+					<div class ="RobotoLight" style="height:5%; ">
 						<h4 class ="Roboto tituloPerfil">Valoración</h4>
 							<c:if test = "${puntuacionMedia != null}">
 		                    	<c:if test="${puntuacionMedia < 0}">	

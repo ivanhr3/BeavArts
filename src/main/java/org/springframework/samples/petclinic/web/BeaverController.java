@@ -1,6 +1,7 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +11,11 @@ import javax.validation.Valid;
 import org.apache.commons.validator.UrlValidator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.*;
+import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.Beaver;
+import org.springframework.samples.petclinic.model.Especialidad;
+import org.springframework.samples.petclinic.model.Portfolio;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.PortfolioService;
 import org.springframework.samples.petclinic.service.UserService;
@@ -20,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +44,24 @@ public class BeaverController {
 	@Autowired
 	private PortfolioService	portfolioService;
 
+
+	//Añadido para usarlo en el jsp
+	@ModelAttribute("types")
+	public Collection<Especialidad> populateStatus() {
+
+		Collection<Especialidad> especialidades = new ArrayList<>();
+
+		especialidades.add(Especialidad.ACRILICO);
+		especialidades.add(Especialidad.ESCULTURA);
+		especialidades.add(Especialidad.FOTOGRAFIA);
+		especialidades.add(Especialidad.ILUSTRACION);
+		especialidades.add(Especialidad.JOYERIA);
+		especialidades.add(Especialidad.RESINA);
+		especialidades.add(Especialidad.TEXTIL);
+		especialidades.add(Especialidad.OLEO);
+
+		return especialidades;
+	}
 
 	@RequestMapping("/beaverInfo/{beaverId}")
 	public ModelAndView mostrarPerfilUsuario(@PathVariable("beaverId") final int beaverId) {
@@ -267,9 +291,7 @@ public class BeaverController {
 
 			} else {
 
-				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio",
-					"especialidades", "email", "dni", "valoracion", "encargos", "solicitud",
-					"anuncios", "valoraciones", "valoracionesCreadas");
+				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", "especialidades", "email", "dni", "valoracion", "encargos", "solicitud", "anuncios", "valoraciones", "valoracionesCreadas");
 
 				this.beaverService.saveBeaver(beaver1);
 				model.put("beaver", beaver);
@@ -305,77 +327,73 @@ public class BeaverController {
 		}
 	}
 
-    @GetMapping("/beaverInfo/{beaverId}/editEspecialidades")
-    public String initEditEspecialidades(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
-        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication1.getName();
-        User user = this.userService.findUserByUsername(currentPrincipalName);
+	@GetMapping("/beaverInfo/{beaverId}/editEspecialidades")
+	public String initEditEspecialidades(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
+		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication1.getName();
+		User user = this.userService.findUserByUsername(currentPrincipalName);
 
-        //Si el usuario no esta logueado tb salta el no autorizado
-        if (user == null) {
-            return "accesoNoAutorizado";
-        }
+		//Si el usuario no esta logueado tb salta el no autorizado
+		if (user == null) {
+			return "accesoNoAutorizado";
+		}
 
-        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
-        String vista;
-        Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
-        if (me != null) {//añadido el if para los tests
-            model.put("myBeaverId", me.getId()); //añadimos el id a la vista
-        }
+		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+		String vista;
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		if (me != null) {//añadido el if para los tests
+			model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
 
-        //compruebo si el usuario logeado es el mismo
-        if (user.getUsername().equals(beaver.getUser().getUsername())) {
+		//compruebo si el usuario logeado es el mismo
+		if (user.getUsername().equals(beaver.getUser().getUsername())) {
 
-            model.addAttribute("beaver", beaver);
+			model.addAttribute("beaver", beaver);
 
-            vista = "users/editarEspecialidades";
-            return vista;
+			vista = "users/editarEspecialidades";
+			return vista;
 
-        } else {
+		} else {
 
-            vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
-        }
-        return vista;
-    }
+			vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo que el usuario del perfil a editar
+		}
+		return vista;
+	}
 
-    @PostMapping("/beaverInfo/{beaverId}/editEspecialidades")
-    public String processEditEspecialidades(@PathVariable("beaverId") final int beaverId, @Valid final Beaver beaver, final BindingResult result, final ModelMap model) {
-        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication1.getName();
-        User user = this.userService.findUserByUsername(currentPrincipalName);
+	@PostMapping("/beaverInfo/{beaverId}/editEspecialidades")
+	public String processEditEspecialidades(@PathVariable("beaverId") final int beaverId, @Valid final Beaver beaver, final BindingResult result, final ModelMap model) {
+		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
+		String currentPrincipalName = authentication1.getName();
+		User user = this.userService.findUserByUsername(currentPrincipalName);
 
-        String vista;
-        Beaver beaver1 = this.beaverService.findBeaverByIntId(beaverId);
+		String vista;
+		Beaver beaver1 = this.beaverService.findBeaverByIntId(beaverId);
 
-        Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
-        if (me != null) { //añadido el if para los tests
-            model.put("myBeaverId", me.getId()); //añadimos el id a la vista
-        }
-        //compruebo si el usuario logeado es el mismo
-        if (user.getUsername().equals(beaver1.getUser().getUsername())) {
+		Beaver me = this.beaverService.getCurrentBeaver();  //Obtenemos el beaver conectado
+		if (me != null) { //añadido el if para los tests
+			model.put("myBeaverId", me.getId()); //añadimos el id a la vista
+		}
+		//compruebo si el usuario logeado es el mismo
+		if (user.getUsername().equals(beaver1.getUser().getUsername())) {
 
+			if (result.hasErrors()) {
 
-            if (result.hasErrors()) {
+				model.put("beaver", beaver);
+				vista = "users/editarEspecialidades";
 
-                model.put("beaver", beaver);
-                vista = "users/editarEspecialidades";
+			} else {
 
-            } else {
+				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", "urlFotoPerfil", "email", "dni", "valoracion", "encargos", "solicitud", "anuncios", "valoraciones", "valoracionesCreadas");
 
-                BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio",
-                    "urlFotoPerfil", "email", "dni", "valoracion", "encargos", "solicitud",
-                    "anuncios", "valoraciones", "valoracionesCreadas");
+				this.beaverService.saveBeaver(beaver1);
+				return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
+			}
 
-                this.beaverService.saveBeaver(beaver1);
-                return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
-            }
+		} else {
+			vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo
+		}
 
-        } else {
-            vista = "accesoNoAutorizado"; //si el usuario logeado no es el mismo
-        }
-
-        return vista;
-    }
-
+		return vista;
+	}
 
 }
