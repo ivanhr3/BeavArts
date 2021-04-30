@@ -234,8 +234,8 @@ public class FacturaControllerTests {
 		BDDMockito.given(this.beaverService.findUserAuthorities(user2)).willReturn(lista2);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver2);
 
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/facturas/{facturaId}", FacturaControllerTests.TEST_FACTURA_ID).with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.view().name("facturas/listFacturas"));
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/facturas/{facturaId}", FacturaControllerTests.TEST_FACTURA_ID).with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+			.andExpect(MockMvcResultMatchers.view().name("redirect:/facturas/list"));
 	}
 
 	@WithMockUser(value = "testuser")

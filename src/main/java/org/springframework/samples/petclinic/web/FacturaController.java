@@ -100,7 +100,7 @@ public class FacturaController {
 		} else {
 			factura.setEstado(Estados.FINALIZADO);
 			this.facturaService.saveFactura(factura);
-			vista = "facturas/listFacturas";
+			vista = "redirect:/facturas/list";
 		}
 
 		return vista;
