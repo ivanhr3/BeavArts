@@ -385,7 +385,7 @@ public class BeaverController {
 
 				BeanUtils.copyProperties(beaver, beaver1, "id", "user", "portfolio", "urlFotoPerfil", "email", "dni", "valoracion", "encargos", "solicitud", "anuncios", "valoraciones", "valoracionesCreadas");
 
-				this.beaverService.saveBeaver(beaver1);
+				this.beaverService.guardarUsuario(beaver1);
 				return "redirect:/beavers/beaverInfo/" + beaver1.getId(); //si no hay ningún error de campos se redirige al perfil ya actualizado
 			}
 
