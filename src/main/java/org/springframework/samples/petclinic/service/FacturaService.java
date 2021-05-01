@@ -4,8 +4,6 @@ package org.springframework.samples.petclinic.service;
 import java.time.LocalDate;
 import java.util.Collection;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +20,6 @@ public class FacturaService {
 
 	@Autowired
 	private SolicitudService solicitudService;
-
-	@Autowired
-	private EntityManagerFactory entityManager;
-
 
 	@Autowired
 	public FacturaService(final FacturaRepository facturaRepo) {
@@ -63,7 +57,6 @@ public class FacturaService {
 		Collection<Solicitud> sols = this.solicitudService.findAllSolicitudesFromBeaverEncargosAndAnuncios(beaver);
 		Factura factura;
 		Factura newFactura;
-		EntityManager em = this.entityManager.createEntityManager();
 		if(!sols.isEmpty()){
 			for(Solicitud s: sols){
 				factura = this.facturaRepo.findFacturayBySolicitud(s.getId());
