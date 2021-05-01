@@ -106,20 +106,22 @@
 	</c:if>
 	</div>
     <c:if test="${createdByUser == true}">
-        	<a class="btn btn-primary" href='<spring:url value="/beavers/${fn:escapeXml(anuncio.beaver.id)}/anuncios/${fn:escapeXml(anuncio.id})/edit" htmlEscape="true"/>'>Editar anuncio</a>
+        	<a class="btn btn-primary" href='<spring:url value="/beavers/${fn:escapeXml(anuncio.beaver.id)}/anuncios/${fn:escapeXml(anuncio.id)}/edit" htmlEscape="true"/>'>Editar anuncio</a>
         	<c:if test="${urlEdit == true}">
         	<div class="alert alert-danger" role="alert">
 			<c:out value="${errorEditarSolicitudesAceptadas}"/>
 			</div>
 			</c:if>
 			
-        	<a class="btn btn-primary" href='<spring:url value="/beavers/${fn:escapeXml(anuncio.beaver.id)}/anuncios/${fn:escapeXml(anuncio.id})/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
+			<security:authorize access="!hasAuthority('admin')">
+        	<a class="btn btn-primary" href='<spring:url value="/beavers/${fn:escapeXml(anuncio.beaver.id)}/anuncios/${fn:escapeXml(anuncio.id)}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
         	<c:if test="${urlEliminar == true}">
         	<div class="alert alert-danger" role="alert">
 			<c:out value="${errorEliminarSolicitudesAceptadas}"/>
 			</div>
 			</c:if>
-
+			</security:authorize>
+			
 			<br/>
 			<br/>
 			<br/>
@@ -153,7 +155,7 @@
 					// This function captures the funds from the transaction.
 					return actions.order.capture().then(function(details) {
 					  // This function shows a transaction success message to your buyer.
-					  alert('Transaction completed by ' + details.payer.name.given_name);
+					  alert('¡Se ha realizado el pago correctamente! Ahora tu anuncio se encuentra promocionado.');
 					  form.submit();
 					});
 				  }

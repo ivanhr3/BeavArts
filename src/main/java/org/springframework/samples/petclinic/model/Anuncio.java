@@ -51,7 +51,7 @@ public class Anuncio extends BaseEntity {
     @JsonIgnore
     private Beaver beaver;
 
-    @OneToMany(mappedBy = "anuncio", orphanRemoval = true)
+    @OneToMany(mappedBy = "anuncio")
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Solicitud> solicitud;

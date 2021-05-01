@@ -293,9 +293,9 @@
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
                  <div class="row">   
-                    <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
+                    <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
                     <div class="SegoeFont">
-                    <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+                    <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.anuncio.beaver.user.username}"/></a></p>
         		 	</div>
         		 </div>
         </div>  

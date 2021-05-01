@@ -53,7 +53,7 @@ public class Encargo extends BaseEntity {
     @JsonIgnore
     private Beaver beaver;
 
-    @OneToMany(mappedBy = "encargo", orphanRemoval = true)
+    @OneToMany(mappedBy = "encargo")
     @Cascade(CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Solicitud> solicitud;

@@ -24,10 +24,11 @@
 									</div>
 									<br>
 									<div class="row">
-										<div class="col-xs-12">
+										<div class="col-xs-6">
 											<h2>Factura<br>
-											<span class="small">número #${factura.id}</span></h2>
-										</div>
+											<span class="small">Número #${factura.id}</span></h2>
+											<h2><span class="small">Estado: ${fn:escapeXml(factura.estado)}</span></h2>
+											</div>
 									</div>
 								</div>
 								<hr>
@@ -81,7 +82,13 @@
 									<b>Anuncio:</b> ${fn:escapeXml(factura.solicitud.anuncio.titulo)}	
 									</c:if>
 									<br/>
-									<b>Precio:</b> ${fn:escapeXml(factura.precio)} €	
+									<b>Precio:</b> ${fn:escapeXml(factura.precio)} €
+									<br/>
+									<b>Comisión:</b> ${fn:escapeXml(comision)} €
+									<br/>
+									<b>Precio con comisión:</b> ${fn:escapeXml(precioConComision)} €
+									<br/>
+									</div>
 									</div>	
 										
 										
@@ -100,5 +107,11 @@
 					</div>
 					<%-- END INVOICE --%>
 				</div>
-</div>
+				<c:if test="${factura.estado !='FINALIZADO'}">
+					<form:form modelAttribute="factura" class="form-horizontal" id="factura-form">
+					<div class="text-center">
+					<button class="btn btn-primary" type="submit">Finalizar factura</button>
+					</div>
+					</form:form>
+					</c:if>
 </beavarts:layout>
