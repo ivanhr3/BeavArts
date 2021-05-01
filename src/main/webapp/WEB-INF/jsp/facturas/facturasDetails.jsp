@@ -61,7 +61,9 @@
 											<strong>Estado de la solicitud:</strong><br>
 											${fn:escapeXml(factura.solicitud.estado)}<br>
 										</c:if>
-
+											<c:if test="${factura.solicitud.encargo != null && factura.recibido}">
+												<strong>Encargo recibido, enviar pago al recipiente.</strong>
+											</c:if>
 										<c:if test="${factura.solicitud.encargo == null && factura.solicitud.anuncio == null}">
 											<strong>Estado de la solicitud:</strong><br>
 											Solicitud Eliminada, reembolsar pago.<br>

@@ -240,6 +240,8 @@ public class SolicitudController {
 			vista.getModel().put("esDeEncargo", true);
 			vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
 			vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
+			vista.getModelMap().addAttribute("isEncargoRequester", beaver == solicitud.getBeaver());
+			vista.getModelMap().addAttribute("recibido", facturaService.findFacturaBySolicitud(solicitud).getRecibido());
 		}
 
 		if (solicitud.getAnuncio() != null) {
@@ -295,6 +297,7 @@ public class SolicitudController {
 				factura.setEmailPayer(beaver.getEmail());
 				factura.setPrecio(sol.getPrecio());
 				factura.setEstado(Estados.PENDIENTE);
+				factura.setRecibido(false);
 
 				this.solicitudService.saveSolicitud(sol);
 
@@ -444,6 +447,27 @@ public class SolicitudController {
 			return "solicitudes/solicitudSuccess"; //FRONT: Este es el caso de éxito en el que se crea la solicitud asociada al encargo
 		}
 
+	}
+
+	@PostMapping("/{solicitudId}/checkDelivery")
+	public String encargoRecibido(@PathVariable("solicitudId") Integer solicitudId){
+		Beaver beaver = beaverService.getCurrentBeaver();
+		if(beaver == null){
+			return "redirect:/accesoNoAutorizado";
+		} else{
+			Solicitud solicitud = solicitudService.findById(solicitudId);
+			if(solicitud.getBeaver() != beaver){
+				return "redirect:/accesoNoAutorizado";
+			}
+			if(solicitud.getEncargo() == null){
+				return "redirect:/accesoNoAutorizado";
+			} else {
+				Factura factura = facturaService.findFacturaBySolicitud(solicitud);
+				factura.setRecibido(true);
+				facturaService.saveFactura(factura);
+				return "redirect:/solicitudes/solicitudInfo/" + solicitudId;
+			}
+		}
 	}
 
 }

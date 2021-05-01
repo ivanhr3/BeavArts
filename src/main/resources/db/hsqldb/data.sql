@@ -53,7 +53,8 @@ INSERT INTO solicitud_fotos(solicitud_id, fotos) VALUES (1, 'https://cdn.pixabay
 
 --Facturas
 
-INSERT INTO factura(id, email_payer, email_beaver, payment_date, solicitud_id, precio, estado) VALUES (1, 'dummy@email.com', 'dummy@email.com', CURRENT_TIMESTAMP, 1, 30.0, 'PENDIENTE');
+INSERT INTO factura(id, email_payer, email_beaver, payment_date, solicitud_id, precio, estado, recibido) VALUES (1, 'dummy@email.com', 'dummy@email.com', CURRENT_TIMESTAMP, 1, 30.0, 'PENDIENTE', false);
+
 
 --Usuarios Piloto
 

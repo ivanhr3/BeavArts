@@ -65,7 +65,7 @@
 	                      	<c:if test="${beaver.user.username == principalUsername}">
 								<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>              
 	                      	</c:if>
-	                      
+							</security:authorize> 
 	                      <security:authorize access="hasAuthority('admin')">
 							  
 		                  <c:if test="${beaver.user.enabled == true and authority!='admin'}">
