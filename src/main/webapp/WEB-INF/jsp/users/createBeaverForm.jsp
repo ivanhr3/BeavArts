@@ -211,50 +211,49 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
           </div> 
           
- 		   
             <div class="control-group widhtTam2 ">
-            
             	<beavarts:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
             </div>
-            <p class="widhtTam" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
-            <%-- dni group --%>
-          <div class="form-group widhtTam">
-            <input type="text" id="id_dni" required name="dni" class="form-control" 
-              value="" placeholder="22333444X" maxlength="12">
-          </div>
 
-            <%-- email group --%>
+            <p class="widhtTam" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades. Tenga en cuenta que si no elige ninguna especialidad no podrá CREAR ENCARGOS.</p>
+            
+            <!-- dni group -->
+          <div class="form-group widhtTam">
+            <beavarts:inputDNIField label="Introduce el DNI:" name="dni" placeholder="22333444X"/>
+          </div>
+          
+            <!-- email group -->
+
           <div class="form-group widhtTam">
             <input type="email" id="id_email" required name="email" class="form-control" 
               value="" placeholder="email@dominio.com" maxlength="254">
-          </div>
+         
           <c:if test="${urlEmail == true}">
                         	<div class="alert alert-danger" role="alert">
 								<c:out value="${emailExistente}"/>
 							</div>
 						</c:if>
-
+ 			</div>
             <%-- Username --%>
             <div class="form-group widhtTam">
                 <label class="sr-only">{% trans "Username" %}</label>
                 <input type="text" id="id_username" name="user.username" class="form-control"
                 value="" placeholder="Usuario..." required>
-              </div>
+              
               <c:if test="${urlUsername == true}">
                         	<div class="alert alert-danger" role="alert">
 								<c:out value="${usernameExistente}"/>
 							</div>
 						</c:if>
-
+			</div>
             <%-- password group --%>
             <div class="form-group widhtTam">
-            <%-- password label --%>
+            <!-- password label -->
             <label class="sr-only">{% trans "Password" %}</label>
-            <%-- password input --%>
+            <!-- password input -->
             <div class="input-group">
               <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
       data-html="true" value="" placeholder="Contraseña..." required >
-
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-append1" onclick="togglePassword()">
                   <p class="fa fa-eye" aria-hidden="true"></p>
@@ -262,13 +261,13 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
               </div>
             </div>
             </div>
-            <div class="form-check">
-                <p><input type = "checkbox" required name="terms">
-                <fmt:message key="createBeaver.terminostexto"/><a class="btn btn-link" href="/terminos"><fmt:message key="footer.terminoscondiciones"/></a>
-                </p>
+          
+            <div class="form-group widhtTam">
+                <input type = "checkbox" required name="terms">
+                Acepto los <a href="/terminos" id="enlaceTerminos">Términos y condiciones</a>
             </div>
         </div>
-
+		
         <div class="form-group widhtTam3 fontSizeButton">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>

@@ -306,6 +306,7 @@ public class AnuncioController {
 			return "accesoNoAutorizado"; //Acceso no autorizado
 		} else {
 			model.addAttribute("noHayEspecialidades", beaver.getEspecialidades().isEmpty());
+			model.put("errorEspecialidades", "Debe seleccionar alguna especialidad para poder crear encargos.");
 			if (beaver.getEncargos().isEmpty() && beaver.getAnuncios().isEmpty()) {
 				model.addAttribute("hayEncargos", false);
 				model.addAttribute("hayAnuncios", false);

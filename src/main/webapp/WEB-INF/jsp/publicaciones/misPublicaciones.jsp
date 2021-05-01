@@ -19,13 +19,14 @@
 		<c:if test="${noHayEspecialidades == false}">
 		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/encargos/new" htmlEscape="true"/>'>Nuevo encargo</a>
 		</c:if>
-		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/anuncios/new" htmlEscape="true"/>'>Nuevo anuncio</a>
-		<br/>
-    	<c:if test="${url == true}">
+		<c:if test="${noHayEspecialidades == true}">
     	<div class="alert alert-danger" role="alert">
 			<c:out value="${errorEspecialidades}"/>
 		</div>
 		</c:if>
+		<a class="btn btn-primary" href='<spring:url value="/beavers/${beaverId}/anuncios/new" htmlEscape="true"/>'>Nuevo anuncio</a>
+		<br/>
+    	
 </c:if>
 </div>
 </div>
