@@ -157,11 +157,15 @@ public class SolicitudService {
         if(!beaver.getEncargos().isEmpty()){
         for(Encargo e: beaver.getEncargos()){
             sols.addAll(this.solicitudRepository.findSolicitudByEncargoId(e.getId()));
+            }
         }
-    } else if(!beaver.getAnuncios().isEmpty()){
+       if(!beaver.getAnuncios().isEmpty()){
         for(Anuncio a: beaver.getAnuncios()){
             sols.addAll(this.solicitudRepository.findAllSolicitudesByAnuncioId(a.getId()));
             }
+        }
+        if(!beaver.getSolicitud().isEmpty()){
+            sols.addAll(this.solicitudRepository.findAllSolicitudesByBeaverId(beaver.getId()));
         }
         return sols;
     }
