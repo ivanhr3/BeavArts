@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%-- <%@ taglib prefix="sec"
     uri="http://www.springframework.org/security/tags%22%%3E "%> --%>
@@ -237,6 +238,7 @@
 </div>                  
 <br/>
 
+
 <c:if test= "${solicitud.fotos.isEmpty() != true}">
 
 <h2 class="Roboto"> Fotos adjuntas: </h2>
@@ -292,7 +294,33 @@
 	<h5 class="RobotoLight"> No hay fotos adjuntas </h5>
 </c:if>
 
-
+<c:if test = "${esDeEncargo ==true}">
+  <c:if test="${solicitud.estado == 'FINALIZADO' && isEncargoRequester == true && !recibido}">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#recepcionModal">
+      Confirmar Recepción
+    </button>
+    <div class="modal" tabindex="-1" role="dialog" id="recepcionModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirmar Recepción</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Tras confirmar la recepción se marcará el pago para ser enviado a la persona que ha realizado el encargo. ¿Estás seguro de que quieres confirmar la recepción?</p>
+          </div>
+          <div class="modal-footer">
+            <form:form class="form-horizontal" id="recibirPedido" action="/solicitudes/${solicitud.id}/checkDelivery">
+            <button name="submitButton" class="btn btn-primary buttonTam" type="submit">Confirmar recepción</button>
+        </form:form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </c:if>
+</c:if>
 
 <br/>
 <br/>

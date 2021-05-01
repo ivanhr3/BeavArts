@@ -97,9 +97,9 @@ public class BeaverController {
 		
 		Iterable<Valoracion> valoracionesUsuario = this.valoracionService.findValoracionesByBeaverId(beaverId);
 		Boolean usuarioYaValorado = false;
-		while(usuarioYaValorado == false && valoracionesUsuario.iterator().hasNext()) {
-			if(valoracionesUsuario.iterator().next().getValAuthor().getId() == this.beaverService.getCurrentBeaver().getId()) {
-				usuarioYaValorado = true;
+		for(Valoracion v: valoracionesUsuario){
+			if(v.getValAuthor().getId() == this.beaverService.getCurrentBeaver().getId()){
+			usuarioYaValorado = true;
 			}
 		}
 		vista.addObject("usuarioYaValorado", usuarioYaValorado);
