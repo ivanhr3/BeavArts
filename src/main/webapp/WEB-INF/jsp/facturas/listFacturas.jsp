@@ -16,7 +16,11 @@
 
 <div class="minAlto">
 
-	<h1 style="text-align:center" class="SegoeFont">FACTURAS</h1>	
+	<div style="position: relative; text-align: center; margin-bottom:30px">
+		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
+	                                             
+	    <h1 class="GagalinLight text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">FACTURAS</h1>
+    </div>
 	<br/>	
 	<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 	
