@@ -290,7 +290,7 @@
 		                      </div>
                 
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
-                        <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
+                        <spring:param name="beaverId" value="${solicitud.anuncio.beaver.id}"/>
                     </spring:url>
                  <div class="row">   
                     <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
