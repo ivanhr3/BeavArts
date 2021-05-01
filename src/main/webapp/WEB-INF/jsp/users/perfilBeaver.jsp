@@ -67,15 +67,16 @@
 	                      	</c:if>
 							</security:authorize> 
 	                      <security:authorize access="hasAuthority('admin')">
-	                  
+							  
 		                  <c:if test="${beaver.user.enabled == true and authority!='admin'}">
-		                  
+						
 		                  	  <spring:url value="/beavers/beaverInfo/{beaverId}/ban" var="banUserUrl">
 							  <spring:param name="beaverId" value="${beaver.id}"/>              
 							  </spring:url>
 			                  <a style="color:white"class="btn btn-red" href="${fn:escapeXml(banUserUrl)}"><i class="fas fa-ban"></i> Suspender</a>
 		                  		
 		                  </c:if>
+						
 		                  <c:if test="${beaver.user.enabled == true and authority == 'admin'}">
 		                  	
 		                  </c:if>
@@ -418,9 +419,5 @@
 </c:if>	
 		
 </div>
-
-
- 
-    		
-   	  
+    		   	  
 </beavarts:layout>
