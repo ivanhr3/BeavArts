@@ -19,18 +19,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.model.Authorities;
-import org.springframework.samples.petclinic.model.Beaver;
-import org.springframework.samples.petclinic.model.Encargo;
-import org.springframework.samples.petclinic.model.Especialidad;
-import org.springframework.samples.petclinic.model.Solicitud;
-import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.samples.petclinic.service.SolicitudService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -54,21 +48,15 @@ public class EncargoControllerTests {
 	private BeaverService		beaverService;
 
 	@MockBean
-	private UserService			userService;
+	private SolicitudService		solicitudService;
 
 	@MockBean
-	private AuthoritiesService	authoritiesService;
-
-	@MockBean
-	private SolicitudService	solicitudService;
+	private AuthoritiesService		authoritiesService;
 
 	@MockBean
 	private FacturaService		facturaService;
 
 	private static final int	TEST_BEAVER_ID		= 99;
-	private static final int	TEST_ENCARGO_ID		= 1;
-	private static final String	TEST_BEAVERUSER_ID	= "beaver2";
-
 
 	@BeforeEach
 	public void setUp() {
@@ -102,6 +90,50 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
 		BDDMockito.doNothing().when(this.facturaService).saveFactura(ArgumentMatchers.any());
 	}
+
+	public void createBeaverWithEncargo() {
+		Beaver beaver = new Beaver();
+		beaver.setFirstName("Nombre2");
+		beaver.setLastName("Apellidos");
+		beaver.setEmail("vali2d@gmail.com");
+		beaver.setDni("12345678Q");
+		beaver.setId(7);
+		User user = new User();
+		user.setUsername("User12");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+		beaver.setUser(user);
+
+		Encargo e = new Encargo();
+		Set<Encargo> s = new HashSet<>();
+		s.add(e);
+		beaver.setEncargos(s);
+		this.beaverService.saveBeaver(beaver);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+	}
+
+	public void createBeaverWithEncargoAndGetId() {
+		Beaver beaver = new Beaver();
+		beaver.setFirstName("Nombre2");
+		beaver.setLastName("Apellidos");
+		beaver.setEmail("vali2d@gmail.com");
+		beaver.setDni("12345678Q");
+		beaver.setId(7);
+		User user = new User();
+		user.setUsername("User12");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+		beaver.setUser(user);
+
+		Encargo e = new Encargo();
+		Set<Encargo> s = new HashSet<>();
+		s.add(e);
+		beaver.setEncargos(s);
+		this.beaverService.saveBeaver(beaver);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+	}
+	
 
 	@WithMockUser(value = "User123")
 	@Test
@@ -164,25 +196,7 @@ public class EncargoControllerTests {
 	@Test
 	public void testPostCreationNoEncargos() throws Exception {
 
-		Beaver beaver = new Beaver();
-		beaver.setFirstName("Nombre2");
-		beaver.setLastName("Apellidos");
-		beaver.setEmail("vali2d@gmail.com");
-		beaver.setDni("12345678Q");
-		beaver.setId(7);
-		User user = new User();
-		user.setUsername("User12");
-		user.setPassword("supersecretpass");
-		user.setEnabled(true);
-		beaver.setUser(user);
-
-		Encargo e = new Encargo();
-		Set<Encargo> s = new HashSet<>();
-		s.add(e);
-		beaver.setEncargos(s);
-		this.beaverService.saveBeaver(beaver);
-		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
-
+		this.createBeaverWithEncargo();
 		this.mockMvc
 			.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/encargos/new", 7).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "Titulo ejemplo").param("id", "60").param("precio", "35.50").param("disponibilidad", "true")
 				.param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
@@ -203,29 +217,78 @@ public class EncargoControllerTests {
 	@Test
 	public void testListarEncargo() throws Exception {
 
-		Beaver beaver = new Beaver();
-		beaver.setFirstName("Nombre2");
-		beaver.setLastName("Apellidos");
-		beaver.setEmail("vali2d@gmail.com");
-		beaver.setDni("12345678Q");
-		beaver.setId(7);
-		User user = new User();
-		user.setUsername("User12");
-		user.setPassword("supersecretpass");
-		user.setEnabled(true);
-		beaver.setUser(user);
-
-		Encargo e = new Encargo();
-		Set<Encargo> s = new HashSet<>();
-		s.add(e);
-		beaver.setEncargos(s);
-		this.beaverService.saveBeaver(beaver);
-		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
-		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+		this.createBeaverWithEncargoAndGetId();
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("encargos"));
 	}
+
+    @WithMockUser(value = "User123")
+    @Test
+    public void testListarEncargoAnotherBeaver() throws Exception {
+
+        Beaver beaver = new Beaver();
+        beaver.setFirstName("Nombre2");
+        beaver.setLastName("Apellidos");
+        beaver.setEmail("vali2d@gmail.com");
+        beaver.setDni("12345678Q");
+        beaver.setId(7);
+        User user = new User();
+        user.setUsername("User12");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        beaver.setUser(user);
+
+        Beaver beaver2 = new Beaver();
+        beaver2.setFirstName("Nombre3");
+        beaver2.setLastName("Apellidos");
+        beaver2.setEmail("vali5d@gmail.com");
+        beaver2.setDni("12341678Q");
+        beaver2.setId(70);
+        User user2 = new User();
+        user2.setUsername("User1234");
+        user2.setPassword("supersecretpass");
+        user2.setEnabled(true);
+        beaver2.setUser(user2);
+
+        Encargo e = new Encargo();
+        Set<Encargo> s = new HashSet<>();
+        s.add(e);
+        beaver.setEncargos(s);
+        this.beaverService.saveBeaver(beaver);
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver2);
+        BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("encargos"));
+    }
+
+    @WithMockUser(value = "testuser")
+    @Test
+    public void testListarEncargoUserNull() throws Exception {
+
+        Beaver beaver = new Beaver();
+        beaver.setFirstName("Nombre2");
+        beaver.setLastName("Apellidos");
+        beaver.setEmail("vali2d@gmail.com");
+        beaver.setDni("12345678Q");
+        beaver.setId(7);
+        User user = new User();
+        user.setUsername("User12");
+        user.setPassword("supersecretpass");
+        user.setEnabled(true);
+        beaver.setUser(user);
+
+        Encargo e = new Encargo();
+        Set<Encargo> s = new HashSet<>();
+        s.add(e);
+        beaver.setEncargos(s);
+        this.beaverService.saveBeaver(beaver);
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(null);
+        BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+    }
 
 	@WithMockUser(value = "User123")
 	@Test
@@ -292,6 +355,57 @@ public class EncargoControllerTests {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos//{encargoId}", 7, 55)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/encargosDetails"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("encargo"));
 	}
+
+    @WithMockUser(value = "User123")
+    @Test
+    public void testMostrarEncargoUserAdmin() throws Exception {
+
+        Beaver beaver = new Beaver();
+        beaver.setFirstName("Nombre2");
+        beaver.setLastName("Apellidos");
+        beaver.setEmail("vali2d@gmail.com");
+        beaver.setDni("12345678Q");
+        beaver.setId(7);
+        User user = new User();
+        user.setUsername("User12");
+        user.setPassword("supersecretpass");
+        Authorities au = new Authorities();
+        Set<Authorities> col = new HashSet<>();
+        col.add(au);
+        au.setAuthority("admin");
+        au.setUser(user);
+        user.setAuthorities(col);
+        user.setEnabled(true);
+        beaver.setUser(user);
+
+        Beaver beaver2 = new Beaver();
+        beaver2.setFirstName("Nombre3");
+        beaver2.setLastName("Apellidos");
+        beaver2.setEmail("vali5d@gmail.com");
+        beaver2.setDni("12341678Q");
+        beaver2.setId(70);
+        User user2 = new User();
+        user2.setUsername("User1234");
+        user2.setPassword("supersecretpass");
+        user2.setEnabled(true);
+        beaver2.setUser(user2);
+
+        Encargo e = new Encargo();
+        e.setId(55);
+        e.setBeaver(beaver2);
+        Set<Encargo> s = new HashSet<>();
+        s.add(e);
+        beaver2.setEncargos(s);
+        this.beaverService.saveBeaver(beaver2);
+        List<Authorities> lista = new ArrayList<Authorities>();
+        lista.add(au);
+        BDDMockito.given(this.encargoService.findEncargoById(55)).willReturn(e);
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+        BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos//{encargoId}", 70, 55)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/encargosDetails"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("encargo"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("esAdmin"));
+    }
 
 	@WithMockUser(value = "User123")
 	@Test
@@ -553,25 +667,7 @@ public class EncargoControllerTests {
 	@Test
 	public void testListarEncargoOtroUsuario() throws Exception {
 
-		Beaver beaver = new Beaver();
-		beaver.setFirstName("Nombre2");
-		beaver.setLastName("Apellidos");
-		beaver.setEmail("vali2d@gmail.com");
-		beaver.setDni("12345678Q");
-		beaver.setId(7);
-		User user = new User();
-		user.setUsername("User12");
-		user.setPassword("supersecretpass");
-		user.setEnabled(true);
-		beaver.setUser(user);
-
-		Encargo e = new Encargo();
-		Set<Encargo> s = new HashSet<>();
-		s.add(e);
-		beaver.setEncargos(s);
-		this.beaverService.saveBeaver(beaver);
-		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
-		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+		this.createBeaverWithEncargoAndGetId();
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"));
 	}
@@ -620,5 +716,56 @@ public class EncargoControllerTests {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 7, 55)).andExpect(MockMvcResultMatchers.status().is3xxRedirection())
 			.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/7/encargos/list"));
 	}
+
+
+    @WithMockUser(value = "User123")
+    @Test
+    public void testEncargoAdminDeleteSuccesFactura() throws Exception {
+
+        Beaver beaver = new Beaver();
+        beaver.setFirstName("Nombre2");
+        beaver.setLastName("Apellidos");
+        beaver.setEmail("vali2d@gmail.com");
+        beaver.setDni("12345678Q");
+        beaver.setId(7);
+        User user = new User();
+        user.setUsername("User12");
+        user.setPassword("supersecretpass");
+        Authorities au = new Authorities();
+        Set<Authorities> col = new HashSet<>();
+        col.add(au);
+        au.setAuthority("admin");
+        au.setUser(user);
+        user.setAuthorities(col);
+        user.setEnabled(true);
+        beaver.setUser(user);
+
+        Encargo e = new Encargo();
+        e.setId(55);
+        e.setBeaver(beaver);
+        Set<Encargo> s = new HashSet<>();
+        s.add(e);
+        beaver.setEncargos(s);
+        this.beaverService.saveBeaver(beaver);
+        Solicitud sol = new Solicitud();
+        Factura factura = new Factura();
+        factura.setSolicitud(sol);
+        Collection<Solicitud> sols = new ArrayList<>();
+        sols.add(sol);
+        e.setSolicitud(sols);
+        List<Authorities> lista = new ArrayList<Authorities>();
+        lista.add(au);
+
+        BDDMockito.given(this.encargoService.findEncargoById(55)).willReturn(e);
+        BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+        BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+        BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
+        BDDMockito.given(this.facturaService.findFacturaBySolicitud(sol)).willReturn(factura);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/{encargoId}/delete", 7, 55)).andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+            .andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/7/encargos/list"));
+    }
+
+
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -35,5 +36,14 @@ public class WelcomeController {
 		}
 
 		return "welcome";
+	}
+
+	@GetMapping("/terminos")
+	public String terminos(final ModelMap model){
+		Beaver beaver = this.beaverService.getCurrentBeaver();
+		if(beaver !=null){
+			model.put("myBeaverId", beaver.getId());
+		}
+		return "terminos";
 	}
 }

@@ -1,23 +1,19 @@
 # Spring Beavarts Application 
 
-
-
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/1922da2e3b4f461ba5dae0f6e2971841)](https://www.codacy.com/gh/ivanhr3/BeavArts/dashboard?utm_source=github.com&utm_medium=referral&utm_content=ivanhr3/BeavArts&utm_campaign=Badge_Coverage)
 [![Build Status](https://travis-ci.com/ivanhr3/BeavArts.svg?branch=master)](https://travis-ci.com/ivanhr3/BeavArts)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b6349c42eccb43a0b7e3b45877fff3c4)](https://app.codacy.com/gh/ivanhr3/BeavArts?utm_source=github.com&utm_medium=referral&utm_content=ivanhr3/BeavArts&utm_campaign=Badge_Grade_Settings)
 
 This is a project designed for the ISPP course. The main parts of the project are:
-- Anuncios: Section where you can make new ads and get known by million of artists.
-- Encargos: Section where you can make new petitions to several artists.
-- Portfolio: Section in your main proffile where other people can see your crafts
-
+  - Anuncios: Section where you can make new ads and get known by million of artists.
+  - Encargos: Section where you can make new petitions to several artists.
+  - Portfolio: Section in your main proffile where other people can see your crafts
 
 ## Understanding the Spring Beavarts application
 <a href="https://beavartsispp.wixsite.com/home">Watch our main landing page here</a>
 
 ## Running beavarts locally
 Beavarts is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
-
 
 ```
 git clone https://github.com/ivanhr3/BeavArts
@@ -39,7 +35,6 @@ Or you can run it from Maven directly using the Spring Boot Maven plugin. If you
 ## In case you find a bug/suggested improvement for Spring Beavarts
 Our issue tracker is available here: https://github.com/ivanhr3/BeavArts/issues
 
-
 ## Database configuration
 
 In its default configuration, Beavarts uses an in-memory database (H2) which
@@ -49,43 +44,43 @@ gets populated at startup with data. In development it can use the MySQL proffil
 
 ### Prerequisites
 The following items should be installed in your system:
-* Java 8 or newer.
-* git command line tool (https://help.github.com/articles/set-up-git)
-* Your preferred IDE 
-  * Eclipse with the m2e plugin. Note: when m2e is available, there is an m2 icon in `Help -> About` dialog. If m2e is
+  - Java 8 or newer.
+  - git command line tool (https://help.github.com/articles/set-up-git)
+  - Your preferred IDE 
+  - Eclipse with the m2e plugin. Note: when m2e is available, there is an m2 icon in `Help -> About` dialog. If m2e is
   not there, just follow the install process here: https://www.eclipse.org/m2e/
-  * [Spring Tools Suite](https://spring.io/tools) (STS)
-  * IntelliJ IDEA
-  * [VS Code](https://code.visualstudio.com)
 
-### Steps:
+  - [Spring Tools Suite](https://spring.io/tools) (STS)
+  - IntelliJ IDEA
+  - [VS Code](https://code.visualstudio.com)
 
-1) On the command line
-```
-git clone https://github.com/ivanhr3/BeavArts
-```
-2) Inside Eclipse or STS
-```
-File -> Import -> Maven -> Existing Maven project
-```
+### Steps
 
-Then either build on the command line `./mvnw generate-resources` or using the Eclipse launcher (right click on project and `Run As -> Maven install`) to generate the css. Run the application main method by right clicking on it and choosing `Run As -> Java Application`.
+ 1) On the command line
+ ```
+ git clone https://github.com/ivanhr3/BeavArts
+ ```
+ 2) Inside Eclipse or STS
+ ```
+ File -> Import -> Maven -> Existing Maven project
+ ```
 
-3) Inside IntelliJ IDEA
+ Then either build on the command line `./mvnw generate-resources` or using the Eclipse launcher (right click on project and `Run As -> Maven install`) to generate the css. Run the application main method by right clicking on it and choosing `Run As -> Java Application`.
 
-In the main menu, choose `File -> Open` and select the Beavarts [pom.xml](pom.xml). Click on the `Open` button.
+ 3) Inside IntelliJ IDEA
 
-CSS files are generated from the Maven build. You can either build them on the command line `./mvnw generate-resources`
-or right click on the `spring-beavarts` project then `Maven -> Generates sources and Update Folders`.
+ In the main menu, choose `File -> Open` and select the Beavarts [pom.xml](pom.xml). Click on the `Open` button.
 
-A run configuration named `BeavartsApplication` should have been created for you if you're using a recent Ultimate
-version. Otherwise, run the application by right clicking on the `BeavartsApplication` main class and choosing
-`Run 'BeavartsApplication'`.
+ CSS files are generated from the Maven build. You can either build them on the command line `./mvnw generate-resources`
+  or right click on the `spring-beavarts` project then `Maven -> Generates sources and Update Folders`.
 
-4) Navigate to Beavarts
+ A run configuration named `BeavartsApplication` should have been created for you if you're using a recent Ultimate
+ version. Otherwise, run the application by right clicking on the `BeavartsApplication` main class and choosing
+ `Run 'BeavartsApplication'`.
 
-Visit [http://localhost:8080](http://localhost:8080) in your browser.
+ 4) Navigate to Beavarts
 
+ Visit [http://localhost:8080](http://localhost:8080) in your browser.
 
 ## Looking for something in particular?
 

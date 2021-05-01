@@ -31,6 +31,7 @@ import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.samples.petclinic.service.SolicitudService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -104,6 +105,8 @@ public class FacturaControllerTests {
 		this.factura1.setEmailBeaver("emailejemplo1@gmail.com");
 		this.factura1.setEmailPayer("emailejemplo2@gmail.com");
 		this.factura1.setSolicitud(solicitud1);
+		this.factura1.setEstado(Estados.PENDIENTE);
+		this.factura1.setPrecio(50.);
 		this.solicitudService.saveSolicitud(solicitud1);
 		this.facturaService.crearFactura(this.factura1);
 
@@ -112,12 +115,15 @@ public class FacturaControllerTests {
 		this.factura2.setEmailBeaver("emailejemplo3@gmail.com");
 		this.factura2.setEmailPayer("emailejemplo4@gmail.com");
 		this.factura2.setSolicitud(solicitud1);
+		this.factura2.setEstado(Estados.FINALIZADO);
+		this.factura2.setPrecio(60.);
 		this.solicitudService.saveSolicitud(solicitud1);
 		this.facturaService.crearFactura(this.factura2);
 
 		BDDMockito.given(this.beaverService.findUserAuthorities(user1)).willReturn(lista);
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver1);
 		BDDMockito.given(this.facturaService.findFacturaById(FacturaControllerTests.TEST_FACTURA_ID)).willReturn(this.factura1);
+		BDDMockito.given(this.facturaService.findFacturaById(2)).willReturn(this.factura2);
 	}
 
 	@WithMockUser(value = "testuser")
@@ -198,4 +204,104 @@ public class FacturaControllerTests {
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/facturas/{facturaId}", FacturaControllerTests.TEST_FACTURA_ID)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
 	}
 
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testFinalizarFactura() throws Exception {
+
+		User user2 = new User();
+		user2.setUsername("testuser");
+		user2.setPassword("pass123");
+		Authorities au2 = new Authorities();
+		Set<Authorities> col2 = new HashSet<>();
+		col2.add(au2);
+		au2.setAuthority("admin");
+		au2.setUser(user2);
+		user2.setAuthorities(col2);
+		List<Authorities> lista2 = new ArrayList<Authorities>();
+		lista2.add(au2);
+
+		Beaver beaver2 = new Beaver();
+		beaver2.setDni("29519811N");
+		beaver2.setEmail("testemail@hotmail.com");
+		Collection<Especialidad> especialidad2 = new HashSet<Especialidad>();
+		especialidad2.add(Especialidad.FOTOGRAFIA);
+		beaver2.setEspecialidades(especialidad2);
+		beaver2.setFirstName("testbeaver");
+		beaver2.setLastName("Perez");
+		beaver2.setUser(user2);
+		this.beaverService.saveBeaver(beaver2);
+
+		BDDMockito.given(this.beaverService.findUserAuthorities(user2)).willReturn(lista2);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver2);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/facturas/{facturaId}", FacturaControllerTests.TEST_FACTURA_ID).with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+			.andExpect(MockMvcResultMatchers.view().name("redirect:/facturas/list"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testFinalizarFacturaNoAutorizado() throws Exception {
+
+		User user2 = new User();
+		user2.setUsername("testuser");
+		user2.setPassword("pass123");
+		Authorities au2 = new Authorities();
+		Set<Authorities> col2 = new HashSet<>();
+		col2.add(au2);
+		au2.setAuthority("user");
+		au2.setUser(user2);
+		user2.setAuthorities(col2);
+		List<Authorities> lista2 = new ArrayList<Authorities>();
+		lista2.add(au2);
+
+		Beaver beaver2 = new Beaver();
+		beaver2.setDni("29519811N");
+		beaver2.setEmail("testemail@hotmail.com");
+		Collection<Especialidad> especialidad2 = new HashSet<Especialidad>();
+		especialidad2.add(Especialidad.FOTOGRAFIA);
+		beaver2.setEspecialidades(especialidad2);
+		beaver2.setFirstName("testbeaver");
+		beaver2.setLastName("Perez");
+		beaver2.setUser(user2);
+		this.beaverService.saveBeaver(beaver2);
+
+		BDDMockito.given(this.beaverService.findUserAuthorities(user2)).willReturn(lista2);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver2);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/facturas/{facturaId}", FacturaControllerTests.TEST_FACTURA_ID).with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+	}
+
+	@WithMockUser(value = "testuser")
+	@Test
+	public void testFinalizarFacturaFinalizada() throws Exception {
+
+		User user2 = new User();
+		user2.setUsername("testuser");
+		user2.setPassword("pass123");
+		Authorities au2 = new Authorities();
+		Set<Authorities> col2 = new HashSet<>();
+		col2.add(au2);
+		au2.setAuthority("admin");
+		au2.setUser(user2);
+		user2.setAuthorities(col2);
+		List<Authorities> lista2 = new ArrayList<Authorities>();
+		lista2.add(au2);
+
+		Beaver beaver2 = new Beaver();
+		beaver2.setDni("29519811N");
+		beaver2.setEmail("testemail@hotmail.com");
+		Collection<Especialidad> especialidad2 = new HashSet<Especialidad>();
+		especialidad2.add(Especialidad.FOTOGRAFIA);
+		beaver2.setEspecialidades(especialidad2);
+		beaver2.setFirstName("testbeaver");
+		beaver2.setLastName("Perez");
+		beaver2.setUser(user2);
+		this.beaverService.saveBeaver(beaver2);
+
+		BDDMockito.given(this.beaverService.findUserAuthorities(user2)).willReturn(lista2);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver2);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/facturas/{facturaId}", 2).with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
+	}
 }

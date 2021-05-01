@@ -11,16 +11,17 @@
 
 <beavarts:layout pageName="solicitud">
 
-    <h1 class="SegoeFont"><c:out value="Anuncio: ${anuncio.titulo}"/></h1>
+    <h1 class="Roboto"><c:out value="Anuncio: ${anuncio.titulo}"/></h1>
     <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                         <spring:param name="beaverId" value="${anuncio.beaver.id}"/>
     </spring:url>
-                  <br/> 
-    <b class="SegoeFont">Publicado por: </b><a href="${fn:escapeXml(beaverUrl)}"><c:out value=" ${anuncio.beaver.user.username}"/></a>
-    <br/>
-    <b class="SegoeFont">Especialidad: </b>
+                  <br/>
+                  <div class="row"> 
+    <h5>Publicado por <a href="${fn:escapeXml(beaverUrl)}"><c:out value=" ${anuncio.beaver.user.username}"/></a></h5></div>
+    <div class="row">
+    <h5>Especialidad:&nbsp;</h5>
     
-    <div style="color:black" class="candidate-list-option">
+    <div style="color:grey" class="candidate-list-option">
 		                          
 		                          <c:choose>
 	                      
@@ -64,17 +65,15 @@
 	                    				<c:out value="${anuncio.especialidad} "/> &nbsp;
 		                        
 		                      </div>
-    
+		                      </div>
+    <div class="row">
+    <h5>Precio: <c:out value="${anuncio.precio}"/>€</h5></div>
+     <div class="row">
+    <h4>Descripción: </h4>
+     </div>
+    <h5><c:out value="${anuncio.descripcion}"/></h5>
     <br/>
-    <b class="SegoeFont">Precio: </b><c:out value="${anuncio.precio}"/>€
-    <br/>
-    <br/>
-    <h2 class="SegoeFont">Descripción: </h2>
-    <b><c:out value="${anuncio.descripcion}"/></b>
-  
-    
-    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
-    <br/>
+    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
  <div class="container">   
     <form:form modelAttribute="solicitud" class="form-horizontal" id="add-solicitud-form">
         <div class="form-group has-feedback">
@@ -89,13 +88,13 @@
             </div>
         
 
-        <b class="SegoeFont" style="margin-left:15px"> *Precio:</b>
+        <h6 style="margin-left:15px"> *Precio:</h6>
             <beavarts:inputNumberField label="" name="precio"/> 
             <br/>
         
 
          
-        <b class="SegoeFont" style="margin-left:15px"> *Condiciones Propuestas:</b>
+        <h6 style="margin-left:15px"> *Condiciones Propuestas:</h6>
             <beavarts:inputField label="" name="descripcion"/>
         <%--    <c:if test="${vacia}">
             <div class="alert alert-danger col-sm-10" role="alert">
@@ -104,9 +103,9 @@
             </c:if> --%>
             <br/>
          <div>
-         <b class="SegoeFont" style="margin-left:15px"> Fotos:</b>
+         <h6 style="margin-left:15px"> Fotos:</h6>
             <beavarts:inputField label="" name="fotos"/>
-            <p class="SegoeFont" style="text-align:justify">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
+            <p style="text-align:justify;margin-left:15px;">Para introducir varias fotos separe las url por comas sin utilizar espacios.</p>
 			<c:if test="${url}">
             <div class="alert alert-danger col-sm-10" role="alert">
             	<p><c:out value="${errorUrl}"/></p>

@@ -23,6 +23,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.ConfirmationToken;
@@ -30,6 +32,7 @@ import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.ConfirmationTokenService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -39,6 +42,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -132,5 +136,47 @@ public class UserController {
 		optToken.ifPresent(userService::confirmUser);
 		return "redirect:/login";
 	}
+
+	@GetMapping("/users/delete")
+	ModelAndView deleteLoggedUserAndChildren(){
+		
+		Beaver beaver = beaverService.getCurrentBeaver();
+
+		if(beaver == null){
+			final ModelAndView vista = new ModelAndView("accessNotAuthorized");
+			return vista;
+		} else {
+			final ModelAndView vista = new ModelAndView("users/confirmDeletion");
+			vista.addObject("myBeaverId", beaver.getId());
+			return vista;
+		}
+	}
+
+	@PostMapping("/users/delete")
+	ModelAndView postDeleteLoggedUserAndChildren(){
+		Beaver beaver = beaverService.getCurrentBeaver();
+		//Logout
+		SecurityContextHolder.getContext().setAuthentication(null);
+		//Borrado
+		userService.deleteAllUser(beaver.getUser());
+		return new ModelAndView("users/succesfulDeletion");
+			
+	}
+
+	@GetMapping("/users/portability")
+	ModelAndView getDataPortability() throws JsonProcessingException{
+		Beaver beaver = beaverService.getCurrentBeaver();
+		ModelAndView vista = null;
+		if(beaver == null){
+			vista = new ModelAndView("accessNotAuthorized");
+		} else {
+			vista = new ModelAndView("users/portability");
+			vista.addObject("json", userService.getUserEntitiesJson(beaver.getUser()));
+			vista.addObject("myBeaverId", beaver.getId());
+		}
+		
+		return vista;
+	}
+	
 
 }

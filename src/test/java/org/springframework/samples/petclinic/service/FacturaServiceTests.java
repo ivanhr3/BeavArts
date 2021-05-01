@@ -33,6 +33,8 @@ public class FacturaServiceTests {
 
 	private Factura				factura1;
 	private Factura				factura2;
+	private Solicitud			solicitud1;
+	private Solicitud			solicitud2;
 
 
 	@BeforeEach
@@ -60,26 +62,36 @@ public class FacturaServiceTests {
 		encargo1.setDisponibilidad(true);
 		this.encargoService.saveEncargo(encargo1);
 
-		Solicitud solicitud1 = new Solicitud();
-		solicitud1.setEncargo(encargo1);
-		solicitud1.setEstado(Estados.PENDIENTE);
-		solicitud1.setPrecio(50.00);
-		solicitud1.setDescripcion("descripcion");
+		this.solicitud1 = new Solicitud();
+		this.solicitud1.setEncargo(encargo1);
+		this.solicitud1.setEstado(Estados.PENDIENTE);
+		this.solicitud1.setPrecio(50.00);
+		this.solicitud1.setDescripcion("descripcion");
+
+		this.solicitud2 = new Solicitud();
+		this.solicitud2.setEncargo(encargo1);
+		this.solicitud2.setEstado(Estados.PENDIENTE);
+		this.solicitud2.setPrecio(50.00);
+		this.solicitud2.setDescripcion("descripcions");
 
 		this.factura1 = new Factura();
 		this.factura1.setId(1);
 		this.factura1.setEmailBeaver("emailejemplo1@gmail.com");
 		this.factura1.setEmailPayer("emailejemplo2@gmail.com");
-		this.factura1.setSolicitud(solicitud1);
-		this.solicitudService.saveSolicitud(solicitud1);
+		this.factura1.setSolicitud(this.solicitud1);
+		this.factura1.setEstado(Estados.PENDIENTE);
+		this.factura1.setPrecio(50.);
+		this.solicitudService.saveSolicitud(this.solicitud1);
 		this.facturaService.crearFactura(this.factura1);
 
 		this.factura2 = new Factura();
-		this.factura2.setId(2);
+		this.factura2.setId(51);
 		this.factura2.setEmailBeaver("emailejemplo3@gmail.com");
 		this.factura2.setEmailPayer("emailejemplo4@gmail.com");
-		this.factura2.setSolicitud(solicitud1);
-		this.solicitudService.saveSolicitud(solicitud1);
+		this.factura2.setSolicitud(this.solicitud2);
+		this.factura2.setEstado(Estados.PENDIENTE);
+		this.factura2.setPrecio(60.);
+		this.solicitudService.saveSolicitud(this.solicitud2);
 		this.facturaService.crearFactura(this.factura2);
 	}
 
@@ -99,4 +111,27 @@ public class FacturaServiceTests {
 		Assertions.assertEquals(total, 2);
 	}
 
+	@Test
+	@Transactional
+	void testFindFacturaBySolicitud() {
+		Factura res = this.facturaService.findFacturaBySolicitud(this.solicitud1);
+		Integer id = res.getSolicitud().getId();
+		Assertions.assertEquals(id, this.solicitud1.getId());
+	}
+
+	@Test
+	@Transactional
+	void testSaveFactura() {
+		this.factura1 = new Factura();
+		this.factura1.setId(90);
+		this.factura1.setEmailBeaver("emailejemplo1@gmail.com");
+		this.factura1.setEmailPayer("emailejemplo2@gmail.com");
+		this.factura1.setSolicitud(this.solicitud1);
+		this.factura1.setEstado(Estados.PENDIENTE);
+		this.factura1.setPrecio(40.);
+		this.solicitudService.saveSolicitud(this.solicitud1);
+		this.facturaService.saveFactura(this.factura1);
+
+		Assertions.assertEquals(this.factura1.getId(), 90);
+	}
 }
