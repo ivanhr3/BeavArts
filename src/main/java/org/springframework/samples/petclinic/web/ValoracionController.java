@@ -75,7 +75,25 @@ public class ValoracionController {
         if(current != null){
         model.put("myBeaverId", current.getId());
         }
-        if(result.hasErrors()){
+
+        Iterable<Valoracion> valoracionesUsuario = this.valoracionService.findValoracionesByBeaverId(beaverId);
+        Boolean usuarioYaValorado = false;
+        while(usuarioYaValorado == false && valoracionesUsuario.iterator().hasNext()) {
+            if(valoracionesUsuario.iterator().next().getValAuthor().getId() == this.beaverService.getCurrentBeaver().getId()) {
+                usuarioYaValorado = true;
+            }
+        }
+
+        if(result.hasErrors() || usuarioYaValorado == true){
+            if(valoracion.getPuntuacion() < 1 || valoracion.getPuntuacion() > 5) {
+                model.addAttribute("errorPuntuacion", true);
+                model.addAttribute("mensajePuntuacion", "La puntuación debe estar entre 1 y 5.");
+            }
+            if(usuarioYaValorado == true) {
+                model.addAttribute("usuarioYaValorado", usuarioYaValorado);
+                model.addAttribute("mensajeUsuarioValorado", "Ya has valorado a este usuario.");
+            }
+            
             model.addAttribute("valoracion", valoracion);
             return "valoracion/createValoracion"; //TODO FRONT: Añadir vista de creación aquí
         } else if(current  == null|| current == reciever){
@@ -86,3 +104,5 @@ public class ValoracionController {
         }
     }
 }
+
+
