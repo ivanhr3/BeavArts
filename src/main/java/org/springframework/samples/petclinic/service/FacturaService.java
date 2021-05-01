@@ -60,6 +60,7 @@ public class FacturaService {
 		if(!sols.isEmpty()){
 			for(Solicitud s: sols){
 				factura = this.facturaRepo.findFacturayBySolicitud(s.getId());
+				if(factura != null){
 				newFactura = new Factura();
 				newFactura.setEmailBeaver(factura.getEmailBeaver());
 				newFactura.setEmailPayer(factura.getEmailPayer());
@@ -68,6 +69,7 @@ public class FacturaService {
 				newFactura.setPrecio(factura.getPrecio());
 				newFactura.setRecibido(factura.getRecibido());
 				this.facturaRepo.save(newFactura);
+				}
 			}
 		}
 	}
