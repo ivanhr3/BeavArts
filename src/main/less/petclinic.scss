@@ -2630,6 +2630,7 @@ font-family:"Roboto";
   border-color: #991825;
   font-weight:bold;
 	font-family:"Roboto";
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;	
 }
 
 .btn-red:hover {
@@ -2666,12 +2667,14 @@ font-family:"Roboto";
   color: #fff;
   background-color: #4b6285;
   border-color: #022544;
+font-family:"Roboto";
 }
 
 .btn-secondary:hover {
   color: #fff;
   background-color: #3b4d69;
   border-color: #022544;
+font-family:"Roboto";
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
@@ -2802,12 +2805,14 @@ font-family:"Roboto";
   color: #fff;
   background-color: #dc3545;
   border-color: #dc3545;
+	font-family:"Roboto";
 }
 
 .btn-danger:hover {
   color: #fff;
   background-color: #c82333;
   border-color: #bd2130;
+	font-family:"Roboto";
 }
 
 .btn-danger:focus, .btn-danger.focus {
@@ -9955,7 +9960,7 @@ td {
 }
 
 .minAlto {
-	min-height:630px;
+	min-height:595px;
 }
 
 .carTam{
@@ -10046,7 +10051,13 @@ td {
 
 @media (max-width:415px) {
 	
+	.fontDeleteDataTitulo{
+		font-size:30px;
+	}
 	
+	.fontDeleteDataTexto{
+		font-size:14px;
+	}
 	
 	.responsiveFontSmartphoneTexto{
 		font-size:14px;
@@ -10095,6 +10106,10 @@ td {
 .responsiveFontSignBoard{
 	font-size:55px;
 }	
+
+.responsiveFontSignBoard2{
+	font-size:45px;
+}
 
 @media (max-width:1201px) {
 	
@@ -10319,7 +10334,7 @@ td {
 	}
 	
 .encargosFont{
-	font-size:16px;	
+	font-size:25px;	
 	}
 
 @media (max-width:1200px){
@@ -10708,10 +10723,177 @@ td {
 
 @media (max-width:330px){
 	
-
-	
 	.textoPerfil{
 		font-size: 9px;
 		text-align: justify;
 	}
+}
+
+
+.espButton{
+	padding: 3;
+    font-size: 15px;
+}
+
+.encCard{
+	margin-top: 30px;
+	padding: 20px;
+	float:right; 
+	width:100%;
+	height: fit-content; 
+	background-color:#f9f9f9; 
+	box-shadow: rgb(255 255 255 / 10%) 0px 1px 1px 0px inset, rgb(50 50 93 / 25%) 0px 50px 100px 20px, rgb(27 81 162) 0px 30px 60px -30px;
+}
+
+.encCard2{
+	padding-top:60px; 
+	padding-bottom:40px;
+	border-radius:10px; 
+	background: linear-gradient(0deg, rgb(75 98 133) 0%, rgb(136 169 217) 70%, rgb(193 206 227) 100%);
+	box-shadow: #596e8f 0px 5px 8px;
+}
+
+.cartaEncargo{
+	min-width: 210px;
+    margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5%;
+    width: 30%;
+    height: 400px;
+    background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+}
+
+.cuerpoCarta{
+	height:85%;
+	
+}
+
+.cuerpoHeader{
+	height:17%;
+	padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.valoracionCard{
+	padding:20px;
+	border-radius:10px; 
+	background: linear-gradient(0deg, rgb(75 98 133) 0%, rgb(136 169 217) 70%, rgb(193 206 227) 100%);
+	box-shadow: #596e8f 0px 5px 8px;
+}
+
+.comentarioCard{
+	
+	margin-left:auto;
+	margin-right:auto;
+	max-width:900px;
+	padding:20px;
+	border-radius:10px; 
+	background: #fff;
+	box-shadow: #596e8f 0px 5px 8px;
+	
+}
+
+.cuerpoCartaFoto{
+    position: relative;
+    width: 100%;
+    height: 50%;
+    padding: 5px;
+}
+
+.cuerpoCartaPrecio {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(34deg, rgb(255 136 3) 0%, rgb(250 250 250) 100%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 7%;
+    }
+
+.cuerpoCartaPrecio > p {
+    color: rgb(0, 0, 0);
+    font-size: 1rem;
+    font-weight: bold;
+    }
+
+.imgResponsiveCarta{
+    width: auto;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.textoEjemplo{
+    width: auto;
+    background: linear-gradient(72deg, rgb(239 239 239) 34%, rgb(255 255 255) 100%);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding-top: 5px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    border-radius: 10px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.sombraImg{
+	box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.homeDisplay2{
+		max-width:100%;
+		display: none;
+	}
+	
+.homeDisplay{
+		max-width:100%;
+	}
+
+@media (max-width:991px){
+	
+	.homeDisplay{
+		max-width:100%;
+		display: none;
+	}
+	
+	.homeDisplay2{
+		max-width:100%;
+		display: revert;
+	}
+}
+
+a.customHoverEncargos {
+  color: #000;
+
+}
+
+a.customHoverEncargos:hover {
+  color: #ff8803;
+  text-decoration: underline;
+  text-decoration-color: #ffffff00;
+}
+
+.cuerpoFooter{
+	padding:14px;
+	height:15%;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.letrero{
+	word-break: break-word;
+    height: auto;
+    background: linear-gradient(72deg, rgb(239 239 239) 34%, rgb(255 255 255) 100%);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }

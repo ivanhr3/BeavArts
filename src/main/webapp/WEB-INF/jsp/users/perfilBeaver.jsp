@@ -32,21 +32,27 @@
 		<div class="mainCard" style="float:left">
 			<div class="perfilCard">
 			
-				
-			
-			
 				<div class="fotoCard text-center">
 					<div class="fotoSize">
-						<img src="${beaver.urlFotoPerfil}"  class="imgResponsivePerfil rounded-circle sombraPng">
+					
+						<c:choose>
+							<c:when test="${not empty beaver.urlFotoPerfil}">
+								<img src="${beaver.urlFotoPerfil}"  class="imgResponsivePerfil rounded-circle sombraPng">
+							</c:when>
+							<c:when test="${empty beaver.urlFotoPerfil}">
+								<img src="/resources/images/FotoBasePerfil.png"  class="imgResponsivePerfil rounded-circle sombraPng">
+							</c:when>
+						</c:choose>
 						
 						<c:if test="${beaver.user.username == principalUsername}">
-								<a style="border-radius: 50%; height: 45px; position: absolute; top: 15%; left: 85%; transform: translate(-50%, -50%);" class="btn btn-primary editBoton sombraPng" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editPhoto" htmlEscape="true"/>'>
+								<a style="border-radius: 50%; height: 45px; position: absolute; top: 15%; left: 85%; transform: translate(-50%, -50%);" class="btn btn-primary sombraPng" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editPhoto" htmlEscape="true"/>'>
 									<i style="margin-left: 2px; margin-top: 7px;" class="fas fa-edit"></i></a>												
 	                    </c:if> 
 					</div>		      
 	                  
 	                    <div class="mt-3">
 	                      <h4 class="Gagalin tituloPerfil">${beaver.user.username}</h4> 
+
 	                      <security:authorize access="isAuthenticated()">
 	                      <c:if test="${beaver.user.username != principalUsername}">      
 							  <c:if test="${!usuarioYaValorado}">
@@ -55,10 +61,10 @@
 								<a class="btn btn-primary" href="${fn:escapeXml(valorar)}">Valorar</a>
 							  </c:if>              
 	                  	  </c:if>
-	                      </security:authorize>
+                        
 	                      	<c:if test="${beaver.user.username == principalUsername}">
 								<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>              
-	                      </c:if>
+	                      	</c:if>
 	                      
 	                      <security:authorize access="hasAuthority('admin')">
 	                  
@@ -87,8 +93,9 @@
 				</div>
 				
 				<div class="fotoCard2 text-center">
-					<div class ="RobotoLight textoEsp" style="height:20%; color:#3a3a3a; ">
+					<div class ="RobotoLight textoEsp" style="height:35%; color:#3a3a3a; ">
 						<h4 class ="Roboto tituloPerfil" style="color:black">Especialidades</h4>
+						
 						<c:forEach items="${beaver.especialidades}" var="especialidad">
 				                          <c:choose>
 							                      	<c:when test="${especialidad == 'TEXTIL'}">
@@ -118,6 +125,10 @@
 						                  </c:choose>                          
 			                    		  <c:out value="${especialidad} "/> &nbsp;
 						</c:forEach>
+						
+						<c:if test="${beaver.user.username == principalUsername}">
+								<a class="btn btn-primary espButton" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editEspecialidades" htmlEscape="true"/>'>Cambiar</a>              
+	                      </c:if>
 					</div>
 					
 					<div class ="Roboto" style="height:50%">
@@ -125,7 +136,7 @@
 						<p class ="RobotoLight textoPerfil" style="font-weight: normal; "><c:out value="${beaver.portfolio.sobreMi}"/></p>
 					</div>
 					
-					<div class ="RobotoLight" style="height:20%; ">
+					<div class ="RobotoLight" style="height:5%; ">
 						<h4 class ="Roboto tituloPerfil">Valoración</h4>
 							<c:if test = "${puntuacionMedia != null}">
 		                    	<c:if test="${puntuacionMedia < 0}">	
@@ -251,10 +262,7 @@
     </div>
     <div>
     
-    		<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
-            	<spring:param name="beaverId" value="${beaver.id}"/>
-            </spring:url>
-			<b class="Roboto encargosFont">¿Te gusta mi trabajo? Puedes solicitar uno de mis </b><a href="${fn:escapeXml(listUrl)}"><b  class="Roboto encargosFont">Encargos</b></a>
+    		
     </div>
     
 	  <br/>
@@ -304,27 +312,115 @@
 	</c:if> 
 
 	</div>
-
-
-	</div>
-
-
 	
+	</div>
+<c:if test= "${beaver.user.username != principalUsername}">
+<c:if test= "${beaver.encargos.isEmpty() != true}">
+	<div class="encCard">
+		
+		<div class="encCard2 text-center">
+		
+			<div style="position: relative; text-align: center; margin-bottom:60px">
+				<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
+			                                             
+			    <h1 class="GagalinLight text-center responsiveFontSignBoard tituloPerfil" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">ENCARGOS</h1>
+			    
+    		</div>
+			<div style=" width:100%; height:100%; padding:2% ; display: flex; flex-wrap: wrap;">
+					
+			<c:forEach begin="0" end="5" items="${beaver.encargos}" var="encargo">
+				<c:if test="${encargo.disponibilidad == true}">
+				
+				
+					<div class="cartaEncargo">
+				
+	                  
+	                  
+	                 <div class="cuerpoCarta" style="background-image: url(${encargo.photo}); background-position: center; ">
+							<div class="text-center" style="height:50%;">
+								<div class="letrero Roboto"  style="font-size:20px">
+									<c:out value="${encargo.titulo}"/>
+								</div>
+		
+							</div>
+	                        <div class="cuerpoCartaFoto">
+	                        
+	                        	
+	                            <a data-fancybox="gallery" href="${encargo.photo}">
+					      		<img class="imgResponsiveCarta sombraImg" src="${encargo.photo}" alt="EncargosTienda">
+					      		</a>
+	                            
+	
+		                        
+	
+	                  		</div>
+					</div>
+	
+	                  
+		
+					  <div class="cuerpoFooter text-center">
+					  		<a  class="customHoverEncargos" href="#myModal${encargo.id}" data-toggle="modal"><b style="font-size: 1.5rem;" class="card-title Roboto ">Ver más</b></a>
+					  </div>
+					</div>
+	                <div class="modal fade" id="myModal${encargo.id}">
+	  						<div class="modal-dialog modal-dialog-centered modal-lg">
+	    					<div class="modal-content">
+	    					
+	    					<!-- Modal Header -->
+	    					<div class="modal-header">
+	        					<h4 class="modal-title col-11 text-center">${encargo.titulo}</h4>
+	        					<button type="button" class="close" data-dismiss="modal">&times;</button>
+	     						 </div>
+	     						 
+	     						 <!-- Modal Body -->
+	     						 <div class="modal-body">
+	        						<h5>${encargo.descripcion}</h5>
+	        						<h5>Precio: ${encargo.precio}€</h5>
+					     		<c:if test="${!encargo.photo.isEmpty()}">
+	            					<img class ="img-thumbnail center" src="${encargo.photo}" alt="">
+	        					</c:if>
+	        					
+	        					<c:if test="${encargo.photo.isEmpty()}">
+	            				<h6 class="mb-0">No hay imagen para mostrar</h6>
+	        					</c:if>	
+	      						</div>
+	      						
+	      						<!-- Modal Footer -->
+	     						 <div class="modal-footer justify-content-center">
+	        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+	      							</div>
+	    					</div>
+	    				</div>
+	    			</div> 
+    			</c:if>       
+   			</c:forEach>
+   			
+			</div>
+			<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
+            	<spring:param name="beaverId" value="${beaver.id}"/>
+            </spring:url>
+				<b style="color: white" class="Roboto encargosFont">Mira el resto de mis encargos </b><a href="${fn:escapeXml(listUrl)}"><b  class="Roboto encargosFont">aquí</b></a>
+			</div>
+	
+		
+		</div>
+				
+	</c:if>		
+</c:if>	
 </div>
 
-
-
-
-
-
+<c:if test="${beaver.user.username == principalUsername}">
+		<div class="botonesPerfil">			
+				<a class="btn btn-secondary espacio" href='<spring:url value="/users/portability" htmlEscape="true"/>'><fmt:message key="portfolio.portabilidad"/></a>
+			    <a class="btn btn-danger" href='<spring:url value="/users/delete" htmlEscape="true"/>'><fmt:message key="portfolio.borrarDatos"/></a>
+			
+		 </div>  
+</c:if>	
 		
 </div>
 
-<div class="botonesPerfil">
-	<c:if test="${beaver.user.username == principalUsername}">
-		<a class="btn btn-secondary espacio" href='<spring:url value="/users/portability" htmlEscape="true"/>'><fmt:message key="portfolio.portabilidad"/></a>
-	    <a class="btn btn-danger" href='<spring:url value="/users/delete" htmlEscape="true"/>'><fmt:message key="portfolio.borrarDatos"/></a>
-	</c:if>	
- </div>     		
+
+ 
+    		
    	  
 </beavarts:layout>
