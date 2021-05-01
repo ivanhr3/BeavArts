@@ -19,6 +19,7 @@ import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.samples.petclinic.service.ValoracionService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -61,6 +62,9 @@ public class BeaverControllerTests {
 
     @MockBean
     private AuthoritiesService	authoritiesService;
+
+    @MockBean
+    private ValoracionService valoracionService;
 
     private static final int TEST_BEAVER_ID = 11;
 

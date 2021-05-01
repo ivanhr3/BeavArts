@@ -4,6 +4,7 @@ package org.springframework.samples.petclinic.web;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,9 +17,11 @@ import org.springframework.samples.petclinic.model.Beaver;
 import org.springframework.samples.petclinic.model.Especialidad;
 import org.springframework.samples.petclinic.model.Portfolio;
 import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.Valoracion;
 import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.PortfolioService;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.samples.petclinic.service.ValoracionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -43,6 +46,9 @@ public class BeaverController {
 
 	@Autowired
 	private PortfolioService	portfolioService;
+
+	@Autowired
+	private ValoracionService valoracionService;
 
 
 	//Añadido para usarlo en el jsp
@@ -88,7 +94,16 @@ public class BeaverController {
 			vista.addObject("puntuacionMedia", Math.round(puntuacionMedia * 100.0) / 100.0);
 			vista.addObject("numValoraciones", numeroDeValoraciones);
 		}
-
+		
+		Iterable<Valoracion> valoracionesUsuario = this.valoracionService.findValoracionesByBeaverId(beaverId);
+		Boolean usuarioYaValorado = false;
+		while(usuarioYaValorado == false && valoracionesUsuario.iterator().hasNext()) {
+			if(valoracionesUsuario.iterator().next().getValAuthor().getId() == this.beaverService.getCurrentBeaver().getId()) {
+				usuarioYaValorado = true;
+			}
+		}
+		vista.addObject("usuarioYaValorado", usuarioYaValorado);
+		
 		vista.addObject("beaver", beaver);
 		vista.addObject("portfolio", portfolio);
 
