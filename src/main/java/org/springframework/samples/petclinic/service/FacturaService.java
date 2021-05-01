@@ -66,6 +66,7 @@ public class FacturaService {
 				newFactura.setEstado(factura.getEstado());
 				newFactura.setPaymentDate(factura.getPaymentDate());
 				newFactura.setPrecio(factura.getPrecio());
+				newFactura.setRecibido(factura.getRecibido());
 				this.facturaRepo.save(newFactura);
 			}
 		}
