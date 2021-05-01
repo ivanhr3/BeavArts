@@ -49,4 +49,6 @@ public class Factura extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private Estados		estado;
 
+	private Boolean recibido;
+
 }
