@@ -76,7 +76,7 @@
 			                  <a style="color:white"class="btn btn-red" href="${fn:escapeXml(banUserUrl)}"><i class="fas fa-ban"></i> Suspender</a>
 		                  		
 		                  </c:if>
-						</security:authorize>
+						
 		                  <c:if test="${beaver.user.enabled == true and authority == 'admin'}">
 		                  	
 		                  </c:if>
