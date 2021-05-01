@@ -20,5 +20,7 @@ public interface SolicitudRepository extends CrudRepository<Solicitud, Integer> 
 	@Query("select s from Solicitud s where s.beaver.id = ?1 and s.anuncio.id = ?2")
 	Collection<Solicitud> findSolicitudAnuncioByBeaver(Integer beaverId, Integer anuncioId);
 
+	@Query("select s from Solicitud s where s.anuncio.id = ?1")
+	Collection<Solicitud> findAllSolicitudesByAnuncioId(Integer id);
 
 }
