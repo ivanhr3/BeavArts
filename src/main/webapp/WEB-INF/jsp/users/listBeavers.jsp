@@ -5,7 +5,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
+<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
@@ -15,7 +15,7 @@
 
 <jsp:attribute name="customScript">
 	
-	<%-- Script filtro --%>
+	<!-- Script filtro %-->
 	
 		<script>
 			filterSelection("all")
@@ -98,7 +98,7 @@
 <div class="container mt-3 mb-4">
 
 	<div style="font-size:20px; text-align:center">
-		<b class="Roboto responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para encontrar beavers con tus gustos!</b>
+		<b class="RobotoLight responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para encontrar beavers con tus gustos!</b>
 	</div>
 	
 	<br/>
@@ -113,19 +113,14 @@
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('RESINA')"> Resina</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
 	</div>
-
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
-
-
-
-
     <div class="row">
       <div class="col-md-12">
         <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">     
           <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar usuarios">
           <table class="table manage-candidates-top mb-0" id="myTable">
               <tr class="header">
-                <th class="SegoeFont">Usuarios</th> 
+                <th class="RobotoLight">Usuarios</th> 
               </tr>
 			  <security:authorize access="hasAuthority('admin')">
             	<c:set var="isAdmin1" value="true"></c:set>
@@ -140,7 +135,14 @@
 		            <tr class="candidates-list ${beaver.especialidades}">
 		             <td class="title">
 		                  <div class="thumb">
-		                    <img class="rounded-circle " src="${fn:escapeXml(beaver.urlFotoPerfil)}" width="80" height="80">
+			                  <c:choose>
+									<c:when test="${not empty beaver.urlFotoPerfil}">
+										<img class="rounded-circle" src="${beaver.urlFotoPerfil}" width="80" height="80">
+									</c:when>
+									<c:when test="${empty beaver.urlFotoPerfil}">
+									<img class="rounded-circle" src="/resources/images/FotoBasePerfil.png" width="80" height="80">
+									</c:when>
+							  </c:choose>	                    
 		                  </div>
 		                  <div class="candidate-list-details">
 		                    <div class="candidate-list-info">
@@ -148,7 +150,7 @@
 		                      	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                        		 		<spring:param name="beaverId" value="${beaver.id}"/>
                     			</spring:url>
-								<h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${fn:escapeXml(beaver.user.username)} </a> 
+								<h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
 			                         
 									<security:authorize access="hasAuthority('admin')">
 													

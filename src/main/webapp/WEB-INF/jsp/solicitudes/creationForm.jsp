@@ -87,8 +87,39 @@
                 <script>
 
                     var form = document.getElementById("add-solicitud-form");
+                    //Metodo Auxiliar, validar urls.
+                    function validURL(str) {
+                     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+                        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+                        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+                        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+                        return !!pattern.test(str);
+                        }
 
                     paypal.Buttons({
+                    onClick: function(data, actions){
+                        descripcion = form.descripcion.value
+                        var url = form.fotos.value
+                        var urls = url.split(',') //Coleccion de urls
+                        if(descripcion == ""){
+                            alert('Debe rellenar los campos necesarios')
+                            return false
+                        }
+                        else if(url != ""){
+                        for(var i = 0; i < urls.length; i++){ //Es necesario recorrer la coleccion de urls en el caso de que haya mas de una
+                            if(!validURL(urls[i])){
+                                alert('Debe usar URLs validas para insertar fotos')
+                                return false
+                            }
+                        }
+                        } else {
+                            return true
+                        }
+                        
+                    },
+
                     createOrder: function(data, actions) {
                         // This function sets up the details of the transaction, including the amount and line item details.
                         return actions.order.create({
