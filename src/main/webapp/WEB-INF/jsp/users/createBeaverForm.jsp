@@ -244,6 +244,11 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
 								<c:out value="${usernameExistente}"/>
 							</div>
 						</c:if>
+			<c:if test="${usernameCorto == true}">
+                   <div class="alert alert-danger" role="alert">
+						<c:out value="${errorUsernameCorto}"/>
+					</div>
+			</c:if>
 			</div>
             <%-- password group --%>
             <div class="form-group widhtTam">
@@ -259,7 +264,13 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
                 </button>
               </div>
             </div>
+            <c:if test="${passwordCorto == true}">
+                   <div class="alert alert-danger" role="alert">
+						<c:out value="${errorPasswordCorto}"/>
+					</div>
+			</c:if>
             </div>
+            
             <div class="form-check RobotoLight text-center ">
                <input type = "checkbox" required name="terms">
                 Acepto los <a href="/terminos" id="enlaceTerminos">Términos y condiciones</a>

@@ -112,7 +112,17 @@ public class UserController {
 		    emailExistente = false;
         }
 
-		if (result.hasErrors() || usernameExistente || emailExistente) {
+		Boolean usernameCorto = false;
+		if(beaver.getUser().getUsername().length() < 8) {
+		    usernameCorto = true;
+        }
+
+		Boolean passwordCorto = false;
+		if(beaver.getUser().getPassword().length() < 8) {
+		    passwordCorto = true;
+        }
+
+		if (result.hasErrors() || usernameExistente || emailExistente || usernameCorto) {
 			if(usernameExistente) {
 				model.put("urlUsername", true);
 				model.put(("usernameExistente"),"El nombre de usuario ya existe.");
@@ -121,6 +131,14 @@ public class UserController {
 				model.put("urlEmail", true);
 				model.put(("emailExistente"),"Este correo ya existe.");
 			}
+			if(usernameCorto) {
+			    model.put("usernameCorto", true);
+			    model.put("errorUsernameCorto", "Nombre de usuario demasiado corto. Introduce uno con al menos 8 caracteres.");
+            }
+			if(passwordCorto) {
+			    model.put("passwordCorto", true);
+			    model.put("errorPasswordCorto", "Contraseña demasiado corta. Introduce una con al menos 8 caracteres.");
+            }
 			return UserController.VIEWS_BEAVER_CREATE_FORM;
 
 		} else {
@@ -139,7 +157,7 @@ public class UserController {
 
 	@GetMapping("/users/delete")
 	ModelAndView deleteLoggedUserAndChildren(){
-		
+
 		Beaver beaver = beaverService.getCurrentBeaver();
 
 		if(beaver == null){
@@ -160,7 +178,7 @@ public class UserController {
 		//Borrado
 		userService.deleteAllUser(beaver.getUser(), beaver);
 		return new ModelAndView("users/succesfulDeletion");
-			
+
 	}
 
 	@GetMapping("/users/portability")
@@ -174,9 +192,9 @@ public class UserController {
 			vista.addObject("json", userService.getUserEntitiesJson(beaver.getUser()));
 			vista.addObject("myBeaverId", beaver.getId());
 		}
-		
+
 		return vista;
 	}
-	
+
 
 }
