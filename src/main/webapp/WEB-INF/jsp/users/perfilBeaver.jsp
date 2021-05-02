@@ -32,12 +32,17 @@
 		<div class="mainCard" style="float:left">
 			<div class="perfilCard">
 			
-				
-			
-			
 				<div class="fotoCard text-center">
 					<div class="fotoSize">
-						<img src="${beaver.urlFotoPerfil}"  class="imgResponsivePerfil rounded-circle sombraPng">
+					
+						<c:choose>
+							<c:when test="${not empty beaver.urlFotoPerfil}">
+								<img src="${beaver.urlFotoPerfil}"  class="imgResponsivePerfil rounded-circle sombraPng">
+							</c:when>
+							<c:when test="${empty beaver.urlFotoPerfil}">
+								<img src="/resources/images/FotoBasePerfil.png"  class="imgResponsivePerfil rounded-circle sombraPng">
+							</c:when>
+						</c:choose>
 						
 						<c:if test="${beaver.user.username == principalUsername}">
 								<a style="border-radius: 50%; height: 45px; position: absolute; top: 15%; left: 85%; transform: translate(-50%, -50%);" class="btn btn-primary sombraPng" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editPhoto" htmlEscape="true"/>'>
@@ -47,27 +52,31 @@
 	                  
 	                    <div class="mt-3">
 	                      <h4 class="Gagalin tituloPerfil">${beaver.user.username}</h4> 
-	                      <c:if test="${beaver.user.username != principalUsername}">                    
-	                  	
-	                      	<spring:url value="/beavers/{beaverId}/valoraciones/create" var="valorar">
-							<spring:param name="beaverId" value="${beaver.id}"/>              </spring:url>    
-	                      	<a class="btn btn-primary" href="${fn:escapeXml(valorar)}">Valorar</a>
-	 	
-	                      </c:if>
+
+	                      <security:authorize access="isAuthenticated()">
+	                      <c:if test="${beaver.user.username != principalUsername}">      
+							  <c:if test="${!usuarioYaValorado}">
+								<spring:url value="/beavers/{beaverId}/valoraciones/create" var="valorar">
+								<spring:param name="beaverId" value="${beaver.id}"/>              </spring:url>    
+								<a class="btn btn-primary" href="${fn:escapeXml(valorar)}">Valorar</a>
+							  </c:if>              
+	                  	  </c:if>
+                        
 	                      	<c:if test="${beaver.user.username == principalUsername}">
 								<a class="btn btn-primary" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/portfolio/edit" htmlEscape="true"/>'>Editar perfil</a>              
-	                      </c:if>
-	                      
+	                      	</c:if>
+							</security:authorize> 
 	                      <security:authorize access="hasAuthority('admin')">
-	                  
+							  
 		                  <c:if test="${beaver.user.enabled == true and authority!='admin'}">
-		                  
+						
 		                  	  <spring:url value="/beavers/beaverInfo/{beaverId}/ban" var="banUserUrl">
 							  <spring:param name="beaverId" value="${beaver.id}"/>              
 							  </spring:url>
 			                  <a style="color:white"class="btn btn-red" href="${fn:escapeXml(banUserUrl)}"><i class="fas fa-ban"></i> Suspender</a>
 		                  		
 		                  </c:if>
+						
 		                  <c:if test="${beaver.user.enabled == true and authority == 'admin'}">
 		                  	
 		                  </c:if>
@@ -86,7 +95,9 @@
 				
 				<div class="fotoCard2 text-center">
 					<div class ="Roboto textoEsp" style="height:20%; color:#3a3a3a; ">
+
 						<h4 class ="Roboto tituloPerfil" style="color:black">Especialidades</h4>
+						
 						<c:forEach items="${beaver.especialidades}" var="especialidad">
 				                          <c:choose>
 							                      	<c:when test="${especialidad == 'TEXTIL'}">
@@ -116,6 +127,10 @@
 						                  </c:choose>                          
 			                    		  <c:out value="${especialidad} "/> &nbsp;
 						</c:forEach>
+						
+						<c:if test="${beaver.user.username == principalUsername}">
+								<a class="btn btn-primary espButton" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editEspecialidades" htmlEscape="true"/>'>Cambiar</a>              
+	                      </c:if>
 					</div>
 					
 					<div class ="Roboto" style="height:50%">
@@ -123,7 +138,7 @@
 						<p class ="RobotoLight textoPerfil" style="font-weight: normal; "><c:out value="${beaver.portfolio.sobreMi}"/></p>
 					</div>
 					
-					<div class ="RobotoLight" style="height:20%; ">
+					<div class ="RobotoLight" style="height:5%; ">
 						<h4 class ="Roboto tituloPerfil">Valoración</h4>
 							<c:if test = "${puntuacionMedia != null}">
 		                    	<c:if test="${puntuacionMedia < 0}">	
@@ -316,6 +331,7 @@
 			<div style=" width:100%; height:100%; padding:2% ; display: flex; flex-wrap: wrap;">
 					
 			<c:forEach begin="0" end="5" items="${beaver.encargos}" var="encargo">
+			<c:if test="${!encargo.photo.isEmpty()}">
 				<c:if test="${encargo.disponibilidad == true}">
 				
 				
@@ -349,6 +365,7 @@
 					  		<a  class="customHoverEncargos" href="#myModal${encargo.id}" data-toggle="modal"><b style="font-size: 1.5rem;" class="card-title Roboto ">Ver más</b></a>
 					  </div>
 					</div>
+					</c:if>
 	                <div class="modal fade" id="myModal${encargo.id}">
 	  						<div class="modal-dialog modal-dialog-centered modal-lg">
 	    					<div class="modal-content">
@@ -375,6 +392,15 @@
 	      						<!-- Modal Footer -->
 	     						 <div class="modal-footer justify-content-center">
 	        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+	        					<security:authorize access="hasAuthority('admin')">
+	    							&nbsp;              
+	    						<spring:url value="/beavers/{beaverId}/encargos/{encargoId}/delete" var="deleteEncargoUrl">
+									<spring:param name="encargoId" value="${encargo.id}"/>  
+									<spring:param name="beaverId" value="${encargo.beaver.id}"/>         
+								</spring:url>
+								<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteEncargoUrl)}"><i class="fas fa-trash-alt"></i> Borrar Encargo</a>
+              
+    						</security:authorize>
 	      							</div>
 	    					</div>
 	    				</div>
@@ -405,9 +431,4 @@
 </c:if>	
 		
 </div>
-
-
- 
-    		
-   	  
 </beavarts:layout>

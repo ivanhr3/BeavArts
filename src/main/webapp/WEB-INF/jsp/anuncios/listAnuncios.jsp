@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -17,7 +17,7 @@
 
 <jsp:attribute name="customScript">
 	
-	<!-- Script filtro %-->
+	<%-- Script filtro  --%>
 	
 		<script>
 			filterSelection("all")
@@ -127,10 +127,10 @@
 			<c:set var="destacado" value="destacadoNo"></c:set>
 		</c:if>
 		<div class="mb-3 centerContainerVal">
-		  <div class="carTam column ${anuncio.especialidad}">
+		  <div class="carTam column ${fn:escapeXml(anuncio.especialidad)}">
 		    	
 		    	
-		    	<div class="card ${destacado}"  id="encargosCard" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
+		    	<div class="card ${fn:escapeXml(destacado)}"  id="encargosCard" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
 		    	
 		    	
 		    	<div class="card-header-publicaciones ">
@@ -150,7 +150,7 @@
 		    	</div>
 		    	<div style="padding-top:0px;" class="card-body">
 		    		<div class="row">
-		      			<h6 class="RobotoLight" style="color:#333333; margin-bottom:0px">${anuncio.descripcion}</h6>
+		      			<h6 class="RobotoLight" style="color:#333333; margin-bottom:0px">${fn:escapeXml(anuncio.descripcion)}</h6>
 		      		</div>
 		      		<hr style="margin:0px">
 		      	<div style="margin-bottom:0px; padding-top:0px; padding-bottom:0px"class="row">
@@ -206,7 +206,7 @@
 	                        <spring:param name="beaverId" value="${anuncio.beaver.id}"/>
 	                	</spring:url>
 	                	<div class="text-center">
-				     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${anuncio.id}">Ver más</button>
+				     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal${fn:escapeXml(anuncio.id)}">Ver más</button>
 				     
 						</div>
 		    </div>
@@ -242,6 +242,14 @@
      						 <div class="modal-footer justify-content-center">
      						 
         						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+        						<security:authorize access="hasAuthority('admin')">
+	    									&nbsp;              
+	    								<spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}/delete" var="deleteAnuncioUrl">
+									<spring:param name="anuncioId" value="${anuncio.id}"/>      
+									<spring:param name="beaverId" value="${anuncio.beaver.id}"/>           
+									</spring:url>
+									<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteAnuncioUrl)}"><i class="fas fa-trash-alt"></i>&nbsp;Borrar Anuncio</a>
+   								 </security:authorize>
       							</div>
     					</div>
     					</div>

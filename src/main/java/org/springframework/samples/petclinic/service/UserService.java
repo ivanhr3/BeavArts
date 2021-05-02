@@ -68,6 +68,9 @@ public class UserService {
 	private BeaverService beaverService;
 
 	@Autowired
+	private FacturaService facturaService;
+
+	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -128,7 +131,9 @@ public class UserService {
     }
 
 	@Transactional
-	public void deleteAllUser(User user){
+	public void deleteAllUser(User user, Beaver beaver){
+
+		this.facturaService.unbindFacturas(beaver);
 
 		EntityManager em = this.entityManager.createEntityManager();
 		em.find(User.class, user.getUsername());

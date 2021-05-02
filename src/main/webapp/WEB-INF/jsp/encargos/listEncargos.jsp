@@ -28,9 +28,9 @@
                         <spring:param name="encargoId" value="${encargo.id}"/>
                 	</spring:url>
         <div class="card-deck">
-    	<div class="card" style="width: 20rem; margin-top:1rem;" id="encargosCard">
+    	<div class="card" style="width: 19rem; margin-top:1rem; box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;" id="encargosCard">
                 	<c:if test="${!encargo.photo.isEmpty()}">
-            		<img class="card-img-top" src="${encargo.photo}" width=217px height=250px alt="Card image cap">
+            		<img class="card-img-top" src="${encargo.photo}" width=217px height=270px alt="Card image cap">
             		<div class="card-body">
             		<h4 class="card-title RobotoLight text-center"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
@@ -86,6 +86,15 @@
       						<!-- Modal Footer -->
      						 <div class="modal-footer justify-content-center">
         						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+        						<security:authorize access="hasAuthority('admin')">
+	    							&nbsp;              
+	    						<spring:url value="/beavers/{beaverId}/encargos/{encargoId}/delete" var="deleteEncargoUrl">
+									<spring:param name="encargoId" value="${encargo.id}"/>  
+									<spring:param name="beaverId" value="${encargo.beaver.id}"/>         
+								</spring:url>
+								<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteEncargoUrl)}"><i class="fas fa-trash-alt"></i> Borrar Encargo</a>
+              
+    						</security:authorize>
       							</div>
     					</div>
     					</div>

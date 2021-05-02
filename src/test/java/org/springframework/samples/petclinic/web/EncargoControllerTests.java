@@ -25,7 +25,6 @@ import org.springframework.samples.petclinic.service.BeaverService;
 import org.springframework.samples.petclinic.service.EncargoService;
 import org.springframework.samples.petclinic.service.FacturaService;
 import org.springframework.samples.petclinic.service.SolicitudService;
-import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
@@ -49,21 +48,15 @@ public class EncargoControllerTests {
 	private BeaverService		beaverService;
 
 	@MockBean
-	private UserService			userService;
+	private SolicitudService		solicitudService;
 
 	@MockBean
-	private AuthoritiesService	authoritiesService;
-
-	@MockBean
-	private SolicitudService	solicitudService;
+	private AuthoritiesService		authoritiesService;
 
 	@MockBean
 	private FacturaService		facturaService;
 
 	private static final int	TEST_BEAVER_ID		= 99;
-	private static final int	TEST_ENCARGO_ID		= 1;
-	private static final String	TEST_BEAVERUSER_ID	= "beaver2";
-
 
 	@BeforeEach
 	public void setUp() {
@@ -97,6 +90,50 @@ public class EncargoControllerTests {
 		BDDMockito.given(this.beaverService.findUserAuthorities(user)).willReturn(lista);
 		BDDMockito.doNothing().when(this.facturaService).saveFactura(ArgumentMatchers.any());
 	}
+
+	public void createBeaverWithEncargo() {
+		Beaver beaver = new Beaver();
+		beaver.setFirstName("Nombre2");
+		beaver.setLastName("Apellidos");
+		beaver.setEmail("vali2d@gmail.com");
+		beaver.setDni("12345678Q");
+		beaver.setId(7);
+		User user = new User();
+		user.setUsername("User12");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+		beaver.setUser(user);
+
+		Encargo e = new Encargo();
+		Set<Encargo> s = new HashSet<>();
+		s.add(e);
+		beaver.setEncargos(s);
+		this.beaverService.saveBeaver(beaver);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+	}
+
+	public void createBeaverWithEncargoAndGetId() {
+		Beaver beaver = new Beaver();
+		beaver.setFirstName("Nombre2");
+		beaver.setLastName("Apellidos");
+		beaver.setEmail("vali2d@gmail.com");
+		beaver.setDni("12345678Q");
+		beaver.setId(7);
+		User user = new User();
+		user.setUsername("User12");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+		beaver.setUser(user);
+
+		Encargo e = new Encargo();
+		Set<Encargo> s = new HashSet<>();
+		s.add(e);
+		beaver.setEncargos(s);
+		this.beaverService.saveBeaver(beaver);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+	}
+	
 
 	@WithMockUser(value = "User123")
 	@Test
@@ -159,25 +196,7 @@ public class EncargoControllerTests {
 	@Test
 	public void testPostCreationNoEncargos() throws Exception {
 
-		Beaver beaver = new Beaver();
-		beaver.setFirstName("Nombre2");
-		beaver.setLastName("Apellidos");
-		beaver.setEmail("vali2d@gmail.com");
-		beaver.setDni("12345678Q");
-		beaver.setId(7);
-		User user = new User();
-		user.setUsername("User12");
-		user.setPassword("supersecretpass");
-		user.setEnabled(true);
-		beaver.setUser(user);
-
-		Encargo e = new Encargo();
-		Set<Encargo> s = new HashSet<>();
-		s.add(e);
-		beaver.setEncargos(s);
-		this.beaverService.saveBeaver(beaver);
-		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
-
+		this.createBeaverWithEncargo();
 		this.mockMvc
 			.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/encargos/new", 7).with(SecurityMockMvcRequestPostProcessors.csrf()).param("titulo", "Titulo ejemplo").param("id", "60").param("precio", "35.50").param("disponibilidad", "true")
 				.param("descripcion", "Descripción del encargo de las pinturas del nuevo Beaver a 35 euros")
@@ -198,25 +217,7 @@ public class EncargoControllerTests {
 	@Test
 	public void testListarEncargo() throws Exception {
 
-		Beaver beaver = new Beaver();
-		beaver.setFirstName("Nombre2");
-		beaver.setLastName("Apellidos");
-		beaver.setEmail("vali2d@gmail.com");
-		beaver.setDni("12345678Q");
-		beaver.setId(7);
-		User user = new User();
-		user.setUsername("User12");
-		user.setPassword("supersecretpass");
-		user.setEnabled(true);
-		beaver.setUser(user);
-
-		Encargo e = new Encargo();
-		Set<Encargo> s = new HashSet<>();
-		s.add(e);
-		beaver.setEncargos(s);
-		this.beaverService.saveBeaver(beaver);
-		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
-		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+		this.createBeaverWithEncargoAndGetId();
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"))
 			.andExpect(MockMvcResultMatchers.model().attributeExists("encargos"));
@@ -666,25 +667,7 @@ public class EncargoControllerTests {
 	@Test
 	public void testListarEncargoOtroUsuario() throws Exception {
 
-		Beaver beaver = new Beaver();
-		beaver.setFirstName("Nombre2");
-		beaver.setLastName("Apellidos");
-		beaver.setEmail("vali2d@gmail.com");
-		beaver.setDni("12345678Q");
-		beaver.setId(7);
-		User user = new User();
-		user.setUsername("User12");
-		user.setPassword("supersecretpass");
-		user.setEnabled(true);
-		beaver.setUser(user);
-
-		Encargo e = new Encargo();
-		Set<Encargo> s = new HashSet<>();
-		s.add(e);
-		beaver.setEncargos(s);
-		this.beaverService.saveBeaver(beaver);
-		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
-		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
+		this.createBeaverWithEncargoAndGetId();
 
 		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/encargos/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("encargos/listEncargos"));
 	}

@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 <beavarts:layout pageName="valorariones">
@@ -18,7 +18,13 @@
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <br/>
     <div class="container justify-content-center" style="display:block;">
-   
+    
+    <c:if test="${usuarioYaValorado == true}">
+        <div class="alert alert-danger" role="alert">
+            <c:out value="${mensajeUsuarioValorado}"/>
+        </div>
+    </c:if>
+    <br/>
     
     <b style="margin-left:15px"> *Puntuación:</b>
     <form:form modelAttribute="valoracion" class="form-horizontal" id="add-encargo-form">
@@ -36,6 +42,11 @@
 						  <input class="star star-1" id="star-1" type="radio" name="puntuacion" value="1"/>
 						  <label class="star star-1" for="star-1"></label>
 						  </div>
+                          <c:if test="${errorPuntuacion == true}">
+                        	<div class="alert alert-danger" role="alert">
+								<c:out value="${mensajePuntuacion}"/>
+							</div>
+						</c:if>
 				 <br/>
 				<b style="margin-left:15px"> *Comentario:</b>
               <b><beavarts:inputField label="" name="comentario"/></b>

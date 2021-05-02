@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -53,15 +54,11 @@ public class Solicitud extends BaseEntity{
     private Beaver beaver;
 
     @ManyToOne
-    @Cascade(CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="encargo_id")
     @JsonIgnore
     private Encargo encargo;
 
     @ManyToOne
-    @Cascade(CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="anuncio_id")
     @JsonIgnore
     private Anuncio anuncio;

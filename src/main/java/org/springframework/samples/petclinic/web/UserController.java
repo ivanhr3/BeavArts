@@ -158,7 +158,7 @@ public class UserController {
 		//Logout
 		SecurityContextHolder.getContext().setAuthentication(null);
 		//Borrado
-		userService.deleteAllUser(beaver.getUser());
+		userService.deleteAllUser(beaver.getUser(), beaver);
 		return new ModelAndView("users/succesfulDeletion");
 			
 	}

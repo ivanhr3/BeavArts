@@ -51,6 +51,11 @@ INSERT INTO encargos(id, descripcion, disponibilidad, photo, precio, titulo, bea
 INSERT INTO solicitud(id, descripcion, estado, precio, beaver_id, encargo_id) VALUES (1, 'Me gustaría tener un retrato a mano de mi hijo. Adjunto una foto en la que me gustaría que se basara.', 'PENDIENTE', 30.0, 2, 1);
 INSERT INTO solicitud_fotos(solicitud_id, fotos) VALUES (1, 'https://cdn.pixabay.com/photo/2015/06/22/08/40/child-817373_1280.jpg');
 
+--Facturas
+
+INSERT INTO factura(id, email_payer, email_beaver, payment_date, solicitud_id, precio, estado, recibido) VALUES (1, 'dummy@email.com', 'dummy@email.com', CURRENT_TIMESTAMP, 1, 30.0, 'PENDIENTE', false);
+
+
 --Usuarios Piloto
 
 -- 1

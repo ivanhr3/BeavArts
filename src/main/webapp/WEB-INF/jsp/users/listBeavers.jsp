@@ -113,12 +113,7 @@
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('RESINA')"> Resina</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
 	</div>
-
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
-
-
-
-
     <div class="row">
       <div class="col-md-12">
         <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">     
@@ -140,7 +135,14 @@
 		            <tr class="candidates-list ${beaver.especialidades}">
 		             <td class="title">
 		                  <div class="thumb">
-		                    <img class="rounded-circle " src="${beaver.urlFotoPerfil}" width="80" height="80">
+			                  <c:choose>
+									<c:when test="${not empty beaver.urlFotoPerfil}">
+										<img class="rounded-circle" src="${beaver.urlFotoPerfil}" width="80" height="80">
+									</c:when>
+									<c:when test="${empty beaver.urlFotoPerfil}">
+									<img class="rounded-circle" src="/resources/images/FotoBasePerfil.png" width="80" height="80">
+									</c:when>
+							  </c:choose>	                    
 		                  </div>
 		                  <div class="candidate-list-details">
 		                    <div class="candidate-list-info">

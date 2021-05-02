@@ -45,8 +45,6 @@ public class AnuncioService {
 
     @Transactional
     public void crearAnuncio(Anuncio anuncio, Beaver beaver){
-
-        this.beaverService.guardarUsuario(beaver);
         anuncioRepository.save(anuncio);
 
     }

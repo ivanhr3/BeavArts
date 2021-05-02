@@ -11,7 +11,6 @@
 
 <div class="encCard text-center" style="margin-bottom: 10%;">
 
-
 	<img  width="150px" height="150px" src="${beaver.urlFotoPerfil}" alt="Admin" class="rounded-circle sombraPng" width="150">
 
 	<div class="card-body Roboto">
@@ -203,8 +202,9 @@
 	                    		</spring:url>
                     		
                     		<h5 class="mb-0 Roboto fontValTitle"><a  href="${fn:escapeXml(beaverUrlAuthor)}">${valoracion.valAuthor.user.username}</a></h5>
-	                       
+
 	                        <span class="date text-black-50 fontValCom">Puntuación: 	                                        
+
 	                        		<c:choose>	                      
 					                    	<c:when test="${valoracion.puntuacion == 5}">
 					                      		<span class="fa fa-star checked"></span>
@@ -248,19 +248,4 @@
 	    
 	</div>		
 </div>
-
-
-
- 		
- 		
-
-   	
-
-
-
-
-
-
-
-
 </beavarts:layout>

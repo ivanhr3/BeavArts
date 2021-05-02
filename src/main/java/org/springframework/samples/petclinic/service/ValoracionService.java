@@ -50,8 +50,6 @@ public class ValoracionService {
         author.setValoracionesCreadas(valAuthor);
         val.setValAuthor(author);
 
-        beaverService.guardarUsuario(reciever);
-        beaverService.guardarUsuario(author);
         valoracionRepository.save(val);
     }
 

@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
+<%@ page contentType="text/html; charset=UTF-8" %> <%-- Para  tildes, ñ y caracteres especiales como el € --%>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -15,7 +15,6 @@
 <beavarts:layout pageName="Lista de facturas">
 
 <div class="minAlto">
-
 	<div style="position: relative; text-align: center; margin-bottom:30px">
 		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
 	                                             
@@ -37,7 +36,6 @@
 	                <div class="card">                
 		                <div class="card-header-publicaciones2">
 		                	<h5 style="margin-top: 10px;" class="card-title Roboto">
-		
 								<c:if test="${factura.solicitud.encargo != null}">
 									Encargo: <c:out value="${factura.solicitud.encargo.titulo}"></c:out>	
 								</c:if>
@@ -49,9 +47,13 @@
 				    		</h5>
 				    	</div> 
 	                  	<div style="word-break: break-all; margin-top: 5px;">  
-	        				<b style="margin-left:10px;">Pagador:</b> 	<c:out value="${factura.emailPayer}"></c:out>                                    
-	                  	</div>	                  	
-	                  		<b style="word-break: break-all; text-align:end; margin-right:10px; margin-bottom: 5px;">${factura.paymentDate}</b>
+
+	        				<b style="margin-left:10px;">Pagador:</b> 	<c:out value="${factura.emailPayer}"></c:out>
+	        				</div>
+	        				<div style="word-break: break-all; margin-top: 5px;">  
+	        				<b style="margin-left:10px;">Estado de la factura:</b> 	<c:out value="${factura.estado}"></c:out>
+	                  		</div>		                  	
+	                  		<b style="word-break: break-all; text-align:end; margin-right:10px; margin-bottom: 5px;">${fn:escapeXml(factura.paymentDate)}</b>
 	                  	 	<spring:url value="/facturas/{facturaId}" var="facturaUrl">
 							<spring:param name="facturaId" value="${factura.id}"/>              
 							</spring:url>
@@ -60,6 +62,7 @@
 	              </div> 	
 			  </c:forEach>
 		  </c:if>
+		  
 	</div>
 </div>
 

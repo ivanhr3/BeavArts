@@ -79,6 +79,8 @@ public class FacturaServiceTests {
 		this.factura1.setEmailBeaver("emailejemplo1@gmail.com");
 		this.factura1.setEmailPayer("emailejemplo2@gmail.com");
 		this.factura1.setSolicitud(this.solicitud1);
+		this.factura1.setEstado(Estados.PENDIENTE);
+		this.factura1.setPrecio(50.);
 		this.solicitudService.saveSolicitud(this.solicitud1);
 		this.facturaService.crearFactura(this.factura1);
 
@@ -87,6 +89,8 @@ public class FacturaServiceTests {
 		this.factura2.setEmailBeaver("emailejemplo3@gmail.com");
 		this.factura2.setEmailPayer("emailejemplo4@gmail.com");
 		this.factura2.setSolicitud(this.solicitud2);
+		this.factura2.setEstado(Estados.PENDIENTE);
+		this.factura2.setPrecio(60.);
 		this.solicitudService.saveSolicitud(this.solicitud2);
 		this.facturaService.crearFactura(this.factura2);
 	}
@@ -123,6 +127,8 @@ public class FacturaServiceTests {
 		this.factura1.setEmailBeaver("emailejemplo1@gmail.com");
 		this.factura1.setEmailPayer("emailejemplo2@gmail.com");
 		this.factura1.setSolicitud(this.solicitud1);
+		this.factura1.setEstado(Estados.PENDIENTE);
+		this.factura1.setPrecio(40.);
 		this.solicitudService.saveSolicitud(this.solicitud1);
 		this.facturaService.saveFactura(this.factura1);
 
