@@ -96,8 +96,8 @@ public class UserControllerTests {
             .param("lastName", "Last Name")
             .param("dni", "11111111A")
             .param("email", "email@email.com")
-            .param("user.username", "User123")
-            .param("user.password", "2345"))
+            .param("user.username", "User1234")
+            .param("user.password", "1234578"))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/"));
     }

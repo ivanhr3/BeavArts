@@ -76,13 +76,13 @@
 	<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 	<c:if test="${anuncios.isEmpty()}">
 	<br/>
-		 <h3>Lo sentimos, no hay anuncios disponibles por el momento.</h3>
+		 <h3 class="Roboto">Lo sentimos, no hay anuncios disponibles por el momento.</h3>
 	</c:if>
 	
 	
 	<c:if test="${!anuncios.isEmpty()}">
 	<div style="font-size:20px; text-align:center">
-		<b class="Roboto responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para buscar anuncios a tu gusto!</b>
+		<b class="RobotoLight responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para buscar anuncios a tu gusto!</b>
 	</div>
 	<br/>
 	
@@ -141,7 +141,7 @@
 
 			    	<div style="width:30%; float:right">
 				    	<c:if test="${anuncio.destacado == true}">		    	
-					    	<div class="SegoeFont" style="float: right;">
+					    	<div class="Roboto" style="float: right;">
 					    		<i style="color: #fec255; margin-top: 8px; -webkit-filter: drop-shadow(5px 5px 5px #222 ); filter: drop-shadow(1px 1px 2px #222);" class="fas fa-star"> </i>
 								<p class="noMostrar"style="color: #fec255; float: right; font-style: italic; margin-top: 5px;font-size: medium;"> &nbsp;Promocionado</p>
 					    	</div>
@@ -198,7 +198,7 @@
 	               	</spring:url>
 	            <div style="margin-bottom:0px; margin-top:0px; padding-top:0px; padding-bottom:0px" class="row">
 		     	<h6 class="RobotoLight">Publicado por:&nbsp;</h6>
-				     <h6 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">
+				     <h6 class="Roboto"><a href="${fn:escapeXml(beaverUrl)}">
 				     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
 				</div>
 				     <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
@@ -240,8 +240,11 @@
       						
       						<!-- Modal Footer -->
      						 <div class="modal-footer justify-content-center">
-     						 
-        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+     						 	<security:authorize access="isAuthenticated()">
+	     						 	<c:if test="${principalUsername != anuncio.beaver.user.username}">
+	        							<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+	        						</c:if>
+        						</security:authorize>       	
         						<security:authorize access="hasAuthority('admin')">
 	    									&nbsp;              
 	    								<spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}/delete" var="deleteAnuncioUrl">

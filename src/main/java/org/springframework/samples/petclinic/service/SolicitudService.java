@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -149,6 +150,26 @@ public class SolicitudService {
         }
         return res;
     }
+
+    @Transactional
+    public Collection<Solicitud> findAllSolicitudesFromBeaverEncargosAndAnuncios(Beaver beaver){
+        Collection<Solicitud> sols = new ArrayList<>();
+        if(!beaver.getEncargos().isEmpty()){
+        for(Encargo e: beaver.getEncargos()){
+            sols.addAll(this.solicitudRepository.findSolicitudByEncargoId(e.getId()));
+            }
+        }
+       if(!beaver.getAnuncios().isEmpty()){
+        for(Anuncio a: beaver.getAnuncios()){
+            sols.addAll(this.solicitudRepository.findAllSolicitudesByAnuncioId(a.getId()));
+            }
+        }
+        if(!beaver.getSolicitud().isEmpty()){
+            sols.addAll(this.solicitudRepository.findAllSolicitudesByBeaverId(beaver.getId()));
+        }
+        return sols;
+    }
+
 
     public Boolean isCollectionAllURL(Solicitud solicitud){
         Boolean res = false;

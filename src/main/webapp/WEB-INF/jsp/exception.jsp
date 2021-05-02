@@ -4,14 +4,14 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="error">
-
-<div class="col-12 text-center" >
-	<h2>Ha ocurrido un error. Si este error persiste, es conveniente que avises al administrador del sistema.</h2>
-    <spring:url value="/resources/images/sadbeaver.png" var="sadBeaver"/>
-    <img src="${sadBeaver}"/>
-
-    <p>${exception.message}</p>
-    
-</div>
+<div class="minAlto">
+	<div class="col-12 text-center" >
+		<h2>Ha ocurrido un error. Si este error persiste, es conveniente que avises al administrador del sistema.</h2>
+	    <spring:url value="/resources/images/sadbeaver.png" var="sadBeaver"/>
+	    <img src="${sadBeaver}"/>
 	
+	    <p>${exception.message}</p>
+	    
+	</div>
+</div>	
 </beavarts:layout>

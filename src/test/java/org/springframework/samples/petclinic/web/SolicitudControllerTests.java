@@ -530,7 +530,7 @@ public class SolicitudControllerTests {
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/finish/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("solicitudes/aceptarSuccess"));
+            .andExpect(MockMvcResultMatchers.view().name("solicitudes/finalizarSuccess"));
     }
 
     @WithMockUser(value = "spring")
@@ -544,7 +544,7 @@ public class SolicitudControllerTests {
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/finish/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID2))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("solicitudes/aceptarSuccess"));
+            .andExpect(MockMvcResultMatchers.view().name("solicitudes/finalizarSuccess"));
     }
 
     @WithMockUser(value = "spring")

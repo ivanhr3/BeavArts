@@ -12,8 +12,8 @@
 
 <beavarts:layout pageName="Mis publicaciones">
 <div class="minAlto">
-<div class="mb-3 centerContainerVal">
-<div class="container row" style="display:flex; flex-wrap: wrap;">
+<div class="mb-3 centerContainerVal"style="display:flex; flex-wrap: wrap;">
+<div class="container row">
 <div class="col">
 <c:if test="${beaver.user.username == principalUsername}">
 		<c:if test="${noHayEspecialidades == false}">
@@ -30,7 +30,7 @@
 </c:if>
 </div>
 </div>
-<div class="card" style="width:43rem;">
+<div class="card" style="width:43rem; box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
 <div class="card-header">
 <ul class="nav nav-tabs card-header-tabs" id="publicaciones-list">
     			<li class="nav-item">

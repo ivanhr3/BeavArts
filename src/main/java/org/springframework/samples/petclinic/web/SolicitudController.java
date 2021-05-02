@@ -64,7 +64,7 @@ public class SolicitudController {
 	public String crearSolicitudInit(@PathVariable("engId") final int encargoId, final ModelMap model) {
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-		Boolean exists = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
+
 
 		if (beaver != null) {
 			model.put("myBeaverId", beaver.getId());
@@ -76,11 +76,12 @@ public class SolicitudController {
 
 		if (encargo.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
 			return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo.
+        } else if (beaver == null) {
+            return "accesoNoAutorizado";
 		} else if (!encargo.isDisponibilidad()) {
 			return "accesoNoAutorizado";
-		} else if (beaver == null) {
-			return "accesoNoAutorizado";
 		} else {
+            Boolean exists = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
 			final Solicitud sol = new Solicitud();
 			model.addAttribute("pendiente", exists);
 			model.put("error", "Tu solicitud se encuentra pendiente de aceptación");
@@ -375,7 +376,7 @@ public class SolicitudController {
 			} else if (sol.getEstado() == Estados.ACEPTADO) {
 				sol.setEstado(Estados.FINALIZADO);
 				this.solicitudService.saveSolicitud(sol);
-				res = "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+				res = "solicitudes/finalizarSuccess"; //TODO: Front: Poned las redirecciones
 			} else {
 				res = "accesoNoAutorizado";
 			}
@@ -388,7 +389,7 @@ public class SolicitudController {
 			} else if (sol.getEstado() == Estados.ACEPTADO) {
 				sol.setEstado(Estados.FINALIZADO);
 				this.solicitudService.saveSolicitud(sol);
-				res = "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+				res = "solicitudes/finalizarSuccess"; //TODO: Front: Poned las redirecciones
 			} else {
 				res = "accesoNoAutorizado";
 			}
