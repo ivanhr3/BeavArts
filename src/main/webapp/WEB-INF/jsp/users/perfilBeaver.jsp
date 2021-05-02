@@ -391,8 +391,11 @@
 	      						
 	      						<!-- Modal Footer -->
 	     						 <div class="modal-footer justify-content-center">
-	        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+                                     <security:authorize access="isAuthenticated()">
+                                         <a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+                                     </security:authorize>
 	        					<security:authorize access="hasAuthority('admin')">
+
 	    							&nbsp;              
 	    						<spring:url value="/beavers/{beaverId}/encargos/{encargoId}/delete" var="deleteEncargoUrl">
 									<spring:param name="encargoId" value="${encargo.id}"/>  
@@ -412,7 +415,14 @@
 			<spring:url value="/beavers/${beaverId}/encargos/list" var="listUrl">
             	<spring:param name="beaverId" value="${beaver.id}"/>
             </spring:url>
+            <security:authorize access="isAuthenticated()">
 				<b style="color: white" class="Roboto encargosFont">Mira el resto de mis encargos </b><a href="${fn:escapeXml(listUrl)}"><b  class="Roboto encargosFont">aquí</b></a>
+            </security:authorize>
+            <c:if test="${principalUsername == null}">
+                <spring:url value="/login" var="loginURL">
+                </spring:url>
+                <p style="color: white" class="RobotoLight encargosFont"><a href="${fn:escapeXml(loginURL)}">Inicia sesión</a> para ver más encargos</p>
+            </c:if>
 			</div>
 	
 		
