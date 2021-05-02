@@ -9,13 +9,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 <beavarts:layout pageName="valorariones">
+<div class="minAlto">
 
-
-    <h2 class="SegoeFont">
+    <h2 class="Roboto">
         Añadir valoración:
     </h2>
     
-    <p class="SegoeFont" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <br/>
     <div class="container justify-content-center" style="display:block;">
     
@@ -26,7 +26,7 @@
     </c:if>
     <br/>
     
-    <b class="SegoeFont" style="margin-left:15px"> *Puntuación:</b>
+    <b style="margin-left:15px"> *Puntuación:</b>
     <form:form modelAttribute="valoracion" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback">
         
@@ -48,7 +48,7 @@
 							</div>
 						</c:if>
 				 <br/>
-				<b class="SegoeFont" style="margin-left:15px"> *Comentario:</b>
+				<b style="margin-left:15px"> *Comentario:</b>
               <b><beavarts:inputField label="" name="comentario"/></b>
            
         </div>
@@ -61,6 +61,6 @@
             </div>
         </div>
     </form:form>
-    
+  </div>  
 </div>
 </beavarts:layout>

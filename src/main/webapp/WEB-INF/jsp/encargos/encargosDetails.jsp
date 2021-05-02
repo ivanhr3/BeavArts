@@ -36,16 +36,17 @@
 			</div>
         	<c:if test="${createdByUser== false}">
         	<div class="row">
-            	<h3 class="mb-0">Publicado por&nbsp;</h3><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h3>
+            	<h4 class="mb-0">Publicado por&nbsp;</h4><h4 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h4>
         	</div>
         	</c:if>
-        	<br/><h4><c:out value="${encargo.descripcion}"/></h4>
         	<div class="row">
-           	<br/><h5 class="mb-0">Precio <c:out value="${encargo.precio} €"/></h5>
+        	<h4><c:out value="${encargo.descripcion}"/></h4></div>
+        	<div class="row">
+           	<h4 class="mb-0">Precio <c:out value="${encargo.precio} €"/></h4>
            	</div>
         	<div class="text-center">
             	<c:if test="${encargo.photo.isEmpty()}">
-            	<br/><h3 class="mb-0">No hay imagen para mostrar</h3>
+            	<br/><h5 class="mb-0">No hay imagen para mostrar</h5>
         		</c:if>
         	</div>
     </div>

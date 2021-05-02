@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="Encargos">
-    <h2 class="SegoeFont">
+    <h2 class="Roboto">
         <c:if test="${!editando}">Registrar </c:if> 
         <c:if test="${editando}">Editar </c:if> Encargo
     </h2>

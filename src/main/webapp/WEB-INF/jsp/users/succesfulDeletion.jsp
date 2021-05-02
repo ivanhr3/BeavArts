@@ -11,9 +11,13 @@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <beavarts:layout pageName="succesfulDeletion">
-    <div class="container">
-        <h1><fmt:message key="borradoExitoso.titulo"/></h1>
-        <p><fmt:message key="borradoExitoso.texto"/></p>
-        <a class="btn btn-secondary" href='<spring:url value="/" htmlEscape="true"/>'><fmt:message key="borradoExitoso.volverHome"/></a>
+<div class="minAlto">
+    <div class="container text-center">
+        <h1 class="Roboto fontDeleteDataTitulo"><fmt:message key="borradoExitoso.titulo"/></h1>
+        <br/>
+        <p class="RobotoLight fontDeleteDataTexto"><fmt:message key="borradoExitoso.texto"/></p>
+        <br/>
+        <a class="btn btn-secondary fontDeleteDataTexto" href='<spring:url value="/" htmlEscape="true"/>'><fmt:message key="borradoExitoso.volverHome"/></a>
     </div>
+</div>
 </beavarts:layout>

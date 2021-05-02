@@ -65,7 +65,7 @@
 	                    				<c:out value="${anuncio.especialidad} "/>
 	                				</h1>
 	 <br/>
-	 <div class="card">
+	 <div class="card" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
 	 	<div class="card-body">
 	 		<c:if test="${anuncio.destacado == true}">
 		    	<div class="SegoeFont" style="float: right;">
@@ -77,22 +77,28 @@
         	<div class="row">
             	<h3 class="mb-0 ">Publicado por:&nbsp; </h3><br/><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
             </div>
+            <br/>
             </c:if>
-            <br/>
-            <br/>
-           		<h4><c:out value="${anuncio.descripcion}"/></h4><br/>
-           		<h5>Precio: <c:out value="${anuncio.precio} €"/></h5><br/>
+            <div class="row">
+           		<h4><c:out value="${anuncio.descripcion}"/></h4></div>
+           		<div class="row">
+           		<h4>Precio: <c:out value="${anuncio.precio} €"/></h4></div>
         	
         	
 		<c:if test="${!anuncio.photo.isEmpty()}">
-            	<h3 class="mb-0">Imagen de ejemplo</h3>
-            	<br/>
-            		<img class ="img-thumbnail"src="${fn:escapeXml(anuncio.photo)}" width=217px height=250px alt="">
+		<div class="row justify-content-center">
+            	<h4 class="mb-0">Imagen de ejemplo</h4></div>
+            	<div id="multi-item-example" class="carousel carousel-multi-item carouselPerfil text-center" data-ride="carousel">
+            	<div class="carousel-inner sombraPng" role="listbox">		
+            	<div class="carousel-item active">
+            		<img class ="d-bldk w-50"src="${anuncio.photo}" alt="">
+            		</div>
+            		</div>
+            		</div>
         </c:if>
         <c:if test="${anuncio.photo.isEmpty()}">
-       		
-            	<br/><h3 class="mb-0">No hay imagen para mostrar</h3>
-        	
+            	<div class="row justify-content-center">
+            	<h4 class="mb-0">No hay imagen para mostrar</h4></div>
         </c:if>
         
   </div>
