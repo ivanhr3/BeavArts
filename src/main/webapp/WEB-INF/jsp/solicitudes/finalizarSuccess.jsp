@@ -5,13 +5,12 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 <%-- <%@ taglib prefix="sec"
-    uri="http://www.springframework.org/security/tags%22%%3E" %> --%>
-
-<beavarts:layout pageName="successSolicitud">
+    uri="http://www.springframework.org/security/tags%22%%3E" %>
+ --%>
+<beavarts:layout pageName="errorAceptar">
 <div class="minAlto">
-    <h2>Su solicitud ha sido creada con éxito</h2>
-
-	<a class="btn btn-primary" href='<spring:url value="/solicitudes/list" htmlEscape="true"/>'>Ver solicitudes</a>
-
+    <h2>¡Su solicitud ha sido finalizada!</h2>
+	<br/>
+	<a class="btn btn-primary" href="/solicitudes/list">Volver al listado</a>
 </div>
 </beavarts:layout>

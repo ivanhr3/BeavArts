@@ -375,7 +375,7 @@ public class SolicitudController {
 			} else if (sol.getEstado() == Estados.ACEPTADO) {
 				sol.setEstado(Estados.FINALIZADO);
 				this.solicitudService.saveSolicitud(sol);
-				res = "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+				res = "solicitudes/finalizarSuccess"; //TODO: Front: Poned las redirecciones
 			} else {
 				res = "accesoNoAutorizado";
 			}
@@ -388,7 +388,7 @@ public class SolicitudController {
 			} else if (sol.getEstado() == Estados.ACEPTADO) {
 				sol.setEstado(Estados.FINALIZADO);
 				this.solicitudService.saveSolicitud(sol);
-				res = "solicitudes/aceptarSuccess"; //TODO: Front: Poned las redirecciones
+				res = "solicitudes/finalizarSuccess"; //TODO: Front: Poned las redirecciones
 			} else {
 				res = "accesoNoAutorizado";
 			}

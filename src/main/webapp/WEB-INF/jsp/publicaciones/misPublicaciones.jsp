@@ -12,8 +12,8 @@
 
 <beavarts:layout pageName="Mis publicaciones">
 <div class="minAlto">
-<div class="mb-3 centerContainerVal">
-<div class="container row" style="display:flex; flex-wrap: wrap;">
+<div class="mb-3 centerContainerVal"style="display:flex; flex-wrap: wrap;">
+<div class="container row">
 <div class="col">
 <c:if test="${beaver.user.username == principalUsername}">
 		<c:if test="${noHayEspecialidades == false}">

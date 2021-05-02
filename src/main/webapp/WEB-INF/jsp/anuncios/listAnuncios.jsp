@@ -240,8 +240,11 @@
       						
       						<!-- Modal Footer -->
      						 <div class="modal-footer justify-content-center">
-     						 
-        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+     						 	<security:authorize access="isAuthenticated()">
+	     						 	<c:if test="${principalUsername != anuncio.beaver.user.username}">
+	        							<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+	        						</c:if>
+        						</security:authorize>       	
         						<security:authorize access="hasAuthority('admin')">
 	    									&nbsp;              
 	    								<spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}/delete" var="deleteAnuncioUrl">

@@ -8,6 +8,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <petclinic:layout pageName="perfil">
+
 <div class="minAlto">  
     <h2 class="Roboto"> Datos de Portfolio: </h2>
     <br/>
@@ -16,7 +17,6 @@
     <form:form modelAttribute="portfolio" class="form-horizontal" id="add-owner-form">
     
         <div class="form-group has-feedback">
-                 
             <b class="Roboto" style="margin-left:15px"> Sobre mi:</b>
             <petclinic:inputField label="" name="sobreMi"/>
                    
