@@ -198,7 +198,7 @@
 	               	</spring:url>
 	            <div style="margin-bottom:0px; margin-top:0px; padding-top:0px; padding-bottom:0px" class="row">
 		     	<h6 class="RobotoLight">Publicado por:&nbsp;</h6>
-				     <h6 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">
+				     <h6 class="Roboto"><a href="${fn:escapeXml(beaverUrl)}">
 				     <c:out value="${anuncio.beaver.user.username}"/></a></h6>
 				</div>
 				     <spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
@@ -240,8 +240,11 @@
       						
       						<!-- Modal Footer -->
      						 <div class="modal-footer justify-content-center">
-     						 
-        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+     						 	<security:authorize access="isAuthenticated()">
+	     						 	<c:if test="${principalUsername != anuncio.beaver.user.username}">
+	        							<a class="btn btn-primary" href='<spring:url value="/solicitudes/${anuncio.id}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+	        						</c:if>
+        						</security:authorize>       	
         						<security:authorize access="hasAuthority('admin')">
 	    									&nbsp;              
 	    								<spring:url value="/beavers/{beaverId}/anuncios/{anuncioId}/delete" var="deleteAnuncioUrl">
