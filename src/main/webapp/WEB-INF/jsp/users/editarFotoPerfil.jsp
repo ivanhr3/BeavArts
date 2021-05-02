@@ -12,7 +12,7 @@
     <br/>    
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-         <b class="SegoeFont" style="margin-left:15px"> Foto de perfil:</b>
+         <b class="RobotoLight" style="margin-left:15px"> Foto de perfil:</b>
              <petclinic:inputField label="" name= "urlFotoPerfil"/> 
         </div>
         <c:if test="${errorUrl != null}">
