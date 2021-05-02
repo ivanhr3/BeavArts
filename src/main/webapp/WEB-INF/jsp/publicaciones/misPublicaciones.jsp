@@ -30,7 +30,7 @@
 </c:if>
 </div>
 </div>
-<div class="card" style="width:43rem;">
+<div class="card" style="width:43rem; box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
 <div class="card-header">
 <ul class="nav nav-tabs card-header-tabs" id="publicaciones-list">
     			<li class="nav-item">

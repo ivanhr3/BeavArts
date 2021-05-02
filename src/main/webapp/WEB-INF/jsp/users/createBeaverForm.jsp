@@ -194,7 +194,7 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
     <br/>
     
 <div class="container justify-content-center" style="display:block;">
-    <%-- ############################################################################3 --%>
+    <%-- ############################################################################ --%>
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-user-form" onsubmit="submitButton.disabled = true; return checkForm(this);">
         <div class="form-group has-feedback">
 
@@ -209,14 +209,13 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
           <div class="form-group widhtTam">
             <label class="sr-only">{% trans "Last name" %}</label>
             <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
-          </div> 
-          
-            <div class="control-group widhtTam2 ">
+          </div>  
+            <div class="control-group widhtTam2 RobotoLight">           
+
             	<beavarts:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
             </div>
+            <p class="widhtTam RobotoLight" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades. Tenga en cuenta que si no elige ninguna especialidad NO PODRÁ CREAR ENCARGOS.</p>
 
-            <p class="widhtTam" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades. Tenga en cuenta que si no elige ninguna especialidad no podrá CREAR ENCARGOS.</p>
-            
             <!-- dni group -->
           <div class="form-group widhtTam">
             <beavarts:inputDNIField label="Introduce el DNI:" name="dni" placeholder="22333444X"/>
@@ -261,9 +260,8 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
               </div>
             </div>
             </div>
-          
-            <div class="form-group widhtTam">
-                <input type = "checkbox" required name="terms">
+            <div class="form-check RobotoLight text-center ">
+               <input type = "checkbox" required name="terms">
                 Acepto los <a href="/terminos" id="enlaceTerminos">Términos y condiciones</a>
             </div>
         </div>

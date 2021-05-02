@@ -94,7 +94,8 @@
 				</div>
 				
 				<div class="fotoCard2 text-center">
-					<div class ="RobotoLight textoEsp" style="height:35%; color:#3a3a3a; ">
+					<div class ="Roboto textoEsp" style="height:20%; color:#3a3a3a; ">
+
 						<h4 class ="Roboto tituloPerfil" style="color:black">Especialidades</h4>
 						
 						<c:forEach items="${beaver.especialidades}" var="especialidad">
@@ -330,6 +331,7 @@
 			<div style=" width:100%; height:100%; padding:2% ; display: flex; flex-wrap: wrap;">
 					
 			<c:forEach begin="0" end="5" items="${beaver.encargos}" var="encargo">
+			<c:if test="${!encargo.photo.isEmpty()}">
 				<c:if test="${encargo.disponibilidad == true}">
 				
 				
@@ -363,6 +365,7 @@
 					  		<a  class="customHoverEncargos" href="#myModal${encargo.id}" data-toggle="modal"><b style="font-size: 1.5rem;" class="card-title Roboto ">Ver más</b></a>
 					  </div>
 					</div>
+					</c:if>
 	                <div class="modal fade" id="myModal${encargo.id}">
 	  						<div class="modal-dialog modal-dialog-centered modal-lg">
 	    					<div class="modal-content">
@@ -389,6 +392,15 @@
 	      						<!-- Modal Footer -->
 	     						 <div class="modal-footer justify-content-center">
 	        						<a class="btn btn-primary" href='<spring:url value="/solicitudes/${encargo.id}/create" htmlEscape="true"/>'>Solicitar encargo</a>
+	        					<security:authorize access="hasAuthority('admin')">
+	    							&nbsp;              
+	    						<spring:url value="/beavers/{beaverId}/encargos/{encargoId}/delete" var="deleteEncargoUrl">
+									<spring:param name="encargoId" value="${encargo.id}"/>  
+									<spring:param name="beaverId" value="${encargo.beaver.id}"/>         
+								</spring:url>
+								<a style="color:white"class="btn btn-red" href="${fn:escapeXml(deleteEncargoUrl)}"><i class="fas fa-trash-alt"></i> Borrar Encargo</a>
+              
+    						</security:authorize>
 	      							</div>
 	    					</div>
 	    				</div>
@@ -419,5 +431,4 @@
 </c:if>	
 		
 </div>
-    		   	  
 </beavarts:layout>

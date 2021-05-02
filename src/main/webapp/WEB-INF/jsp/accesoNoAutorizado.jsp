@@ -5,7 +5,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="errorForbidden">
-
+<div class="minAlto">
 	<div class="col-12 text-center" >
     	<spring:url value="/resources/images/ForbiddenAccess.png" var="forbiddenImage"/>
     	<img style="margin-bottom:10px" src="${forbiddenImage}"/>
@@ -17,6 +17,6 @@
     	
      </div>
 
-
+</div>
 </beavarts:layout>
 
