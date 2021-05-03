@@ -112,7 +112,7 @@ public class UserService {
 		mailMessage.setTo(userMail);
 		mailMessage.setSubject("Email de Confirmación para Beavarts");
 		mailMessage.setFrom("beavartsispp@gmail.com");
-		mailMessage.setText("Gracias por registrarse en Beavarts, por favor acceda la siguiente URL para activar su cuenta." + "https://beavarts.herokuapp.com/confirmar?token=" + token);
+		mailMessage.setText("Gracias por registrarse en Beavarts, por favor acceda la siguiente URL para activar su cuenta." + "https://beavarts-3.herokuapp.com/confirmar?token=" + token);
 		emailSenderService.sendEmail(mailMessage);
 	}
 
