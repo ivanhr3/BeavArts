@@ -50,7 +50,7 @@
                     </spring:url>
                   <div class="row">  
                     <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
-                    <div class="Roboto">
+                    <div class="SegoeFont">
                     <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b></h5>
         			</div>
         		</div>
@@ -199,7 +199,7 @@
                 
                 
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
-                        <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
+                        <spring:param name="beaverId" value="${solicitud.encargo.beaver.id}"/>
                     </spring:url>
                  <div class="row">
                     <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
