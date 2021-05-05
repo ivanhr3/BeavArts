@@ -51,7 +51,7 @@
                   <div class="row">  
                     <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
                     <div class="SegoeFont">
-                    <a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a>
+                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b></h5>
         			</div>
         		</div>
         </div>  
@@ -144,7 +144,7 @@
                     <div class="row">
                     <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
                     <div class="SegoeFont">
-                    <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b></h5>
         			</div>
         			</div>
         </div>  
@@ -199,12 +199,12 @@
                 
                 
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
-                        <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
+                        <spring:param name="beaverId" value="${solicitud.encargo.beaver.id}"/>
                     </spring:url>
                  <div class="row">
-                    <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
+                    <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
                     <div class="SegoeFont"> 
-                    <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></p>
+                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.encargo.beaver.user.username}"/></a></b></h5>
         		</div>
         		</div>
         </div>  
@@ -290,12 +290,12 @@
 		                      </div>
                 
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
-                        <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
+                        <spring:param name="beaverId" value="${solicitud.anuncio.beaver.id}"/>
                     </spring:url>
                  <div class="row">   
                     <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
                     <div class="SegoeFont">
-                    <p><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.anuncio.beaver.user.username}"/></a></p>
+                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.anuncio.beaver.user.username}"/></a></b></h5>
         		 	</div>
         		 </div>
         </div>  

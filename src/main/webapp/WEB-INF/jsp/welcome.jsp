@@ -6,18 +6,22 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="home">
-<div class="minAlto">
-    <div class="text-center">
+<div class="minAlto text-center">
+    
     	<h1 class="Roboto responsiveFontSmartphoneTitulo">¡Bienvenido al portal BeavArts!</h1>
     	<br>
     	<sec:authorize access="!isAuthenticated()">
 	        <h2 class="RobotoLight responsiveFontSmartphoneTituloMediano">Para ver todas las funcionalidades, <i>inicia sesión.</i></h2>
 	        <h2 class="RobotoLight responsiveFontSmartphoneTituloMediano">Y si aún no formas parte de esta gran comunidad, <i>¡regístrate!</i></h2>
        	</sec:authorize>
-        <div class="col-12 text-center imagenResponsive">
-            <img src="<spring:url value="/resources/images/emblema23.png" htmlEscape="true" />"
-                                             alt=""/>
- 		</div>
-    </div>
+        
+   
+            <img style="max-width:100%"class="imagenResponsive"src="<spring:url value="/resources/images/emblema23.png" htmlEscape="true" />" alt=""/>
+            <img class="homeDisplay imagenResponsive" src="<spring:url value="/resources/images/HomeFondo.png" htmlEscape="true" />" alt=""/>
+            <img class="homeDisplay2 imagenResponsive" src="<spring:url value="/resources/images/HomeFondo3.png" htmlEscape="true" />"  alt=""/>
+ 		
+  
+
+    
 </div>
 </beavarts:layout>

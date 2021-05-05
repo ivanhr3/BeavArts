@@ -10,17 +10,8 @@
 <beavarts:layout pageName="valoracionesList">
 
 <div class="encCard text-center" style="margin-bottom: 10%;">
-	
-	<c:choose>
-		<c:when test="${not empty beaver.urlFotoPerfil}">
-			<img  width="150px" height="150px" src="${beaver.urlFotoPerfil}" alt="" class="rounded-circle sombraPng" width="150">
-		</c:when>
-		<c:when test="${empty beaver.urlFotoPerfil}">
-			<img  width="150px" height="150px" src="/resources/images/FotoBasePerfil.png" alt="" class="rounded-circle sombraPng" width="150">
-		</c:when>
-	</c:choose>
 
-	
+	<img  width="150px" height="150px" src="${beaver.urlFotoPerfil}" alt="Admin" class="rounded-circle sombraPng" width="150">
 
 	<div class="card-body Roboto">
     	<div class="d-flex flex-column align-items-center text-center">
@@ -125,7 +116,7 @@
  		<div class="centerContainerVal">
                 <div class="row justify-content-left d-flex">
                     <div class="col-md-4 d-flex flex-column sombraPng">
-                        <div style="text-align:center; margin-top:20px" class="rating-box">
+                        <div style="text-align:center; margin-top:20px; margin-bottom: 10%;" class="rating-box ">
                             <h1 class="pt-4">${valoracionMedia}</h1>
                             <p class="">de 5</p>
                         </div>
@@ -204,15 +195,16 @@
 			<div class="comentarioCard RobotoLight" style="margin-bottom:1%">
 			
 				<div style="word-break: break-all;"class="row">        
-                     <div style="margin-left:20px" class="d-flex flex-row user-info "><img class="rounded-circle sombraPng" src="${valoracion.valAuthor.urlFotoPerfil}" width="80" height="80">
+                     <div style="margin-left:20px" class="d-flex flex-row user-info "><img class="rounded-circle sombraPng imgValCom" src="${valoracion.valAuthor.urlFotoPerfil}" width="80" height="80">
 	                      <div class="d-flex flex-column justify-content-start ml-2">
 		                        <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrlAuthor">
 	                       		 		<spring:param name="beaverId" value="${valoracion.valAuthor.id}"/>
 	                    		</spring:url>
                     		
-                    		<h5 style="font-size:22px" class="mb-0 Roboto"><a  href="${fn:escapeXml(beaverUrlAuthor)}">${valoracion.valAuthor.user.username}</a></h5>
-	                       
-	                        <span class="date text-black-50">Puntuación: 	                                        
+                    		<h5 class="mb-0 Roboto fontValTitle"><a  href="${fn:escapeXml(beaverUrlAuthor)}">${valoracion.valAuthor.user.username}</a></h5>
+
+	                        <span class="date text-black-50 fontValCom">Puntuación: 	                                        
+
 	                        		<c:choose>	                      
 					                    	<c:when test="${valoracion.puntuacion == 5}">
 					                      		<span class="fa fa-star checked"></span>
@@ -248,7 +240,7 @@
                   </div>
                   <div class="row">
                     
-                    <p style="margin-left:20px" class="comment-text">${valoracion.comentario}</p>
+                    <p style="margin-left:20px" class="comment-text fontValCom">${valoracion.comentario}</p>
                     
                   </div>
 			</div>
@@ -256,5 +248,4 @@
 	    
 	</div>		
 </div>
-
 </beavarts:layout>

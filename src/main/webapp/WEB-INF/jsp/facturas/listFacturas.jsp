@@ -15,8 +15,11 @@
 <beavarts:layout pageName="Lista de facturas">
 
 <div class="minAlto">
-
-	<h1 style="text-align:center" class="Roboto">FACTURAS</h1>	
+	<div style="position: relative; text-align: center; margin-bottom:30px">
+		<img class="SignBoardRegister"src="/resources/images/letrero.png"  >
+	                                             
+	    <h1 class="GagalinLight text-center responsiveFontSignBoard" style="position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);">FACTURAS</h1>
+    </div>
 	<br/>	
 	<div class="container justify-content-center align-items-center m-0 vh-100" style="display:flex; flex-wrap: wrap;">
 	
@@ -32,8 +35,7 @@
 				<div class="card mb-3 centerContainerVal">
 	                <div class="card">                
 		                <div class="card-header-publicaciones2">
-		                	<h5 style="margin-top: 10px;" class="card-title RobotoLight">
-		
+		                	<h5 style="margin-top: 10px;" class="card-title Roboto">
 								<c:if test="${factura.solicitud.encargo != null}">
 									Encargo: <c:out value="${factura.solicitud.encargo.titulo}"></c:out>	
 								</c:if>
@@ -45,6 +47,7 @@
 				    		</h5>
 				    	</div> 
 	                  	<div style="word-break: break-all; margin-top: 5px;">  
+
 	        				<b style="margin-left:10px;">Pagador:</b> 	<c:out value="${factura.emailPayer}"></c:out>
 	        				</div>
 	        				<div style="word-break: break-all; margin-top: 5px;">  

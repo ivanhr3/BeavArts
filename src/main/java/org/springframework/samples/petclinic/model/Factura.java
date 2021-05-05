@@ -3,10 +3,13 @@ package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
 
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -38,9 +41,10 @@ public class Factura extends BaseEntity {
 	private LocalDate	paymentDate;
 
 	@OneToOne
-	@Cascade(CascadeType.REMOVE)
+	@Cascade(CascadeType.ALL)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
+	@JoinColumn(nullable = true)
 	private Solicitud	solicitud;
 
 	private Double		precio;
@@ -48,5 +52,7 @@ public class Factura extends BaseEntity {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private Estados		estado;
+
+	private Boolean recibido;
 
 }

@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -67,6 +68,8 @@ public class SolicitudControllerTests {
 
     private Anuncio anuncio;
     private Anuncio anuncio2;
+
+    private Factura factura;
 
     private static final int	TEST_BEAVER_ID			= 1;
     private static final int	TEST_ENCARGO_ID			= 1;
@@ -160,6 +163,15 @@ public class SolicitudControllerTests {
         solicitud2.setPrecio(199.0);
         solicitud2.setDescripcion("descripcion");
         solicitudService.saveSolicitud(solicitud2);
+
+        factura = new Factura();
+        factura.setEmailBeaver("dummy@email.com");
+        factura.setEmailPayer("dummy@email.com");
+        factura.setEstado(Estados.PENDIENTE);
+        factura.setPaymentDate(LocalDate.now());
+        factura.setId(1);
+        factura.setPrecio(50.0);
+        factura.setSolicitud(solicitud);
 
         BDDMockito.given(this.solicitudService.findById(TEST_SOLICITUD_ID)).willReturn(this.solicitud);
         BDDMockito.given(this.encargoService.findEncargoById(SolicitudControllerTests.TEST_ENCARGO_ID)).willReturn(this.encargo);
@@ -374,6 +386,7 @@ public class SolicitudControllerTests {
         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
         Optional<Solicitud> sol = Optional.of(this.solicitud);
         BDDMockito.given(this.solicitudService.findSolicitudById(ArgumentMatchers.anyInt())).willReturn(sol);
+        BDDMockito.given(this.facturaService.findFacturaBySolicitud(Mockito.any())).willReturn(factura);
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("solicitudes/solicitudesDetails"));
@@ -385,6 +398,7 @@ public class SolicitudControllerTests {
         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
         Optional<Solicitud> sol = Optional.of(this.solicitud);
         BDDMockito.given(this.solicitudService.findSolicitudById(ArgumentMatchers.anyInt())).willReturn(sol);
+        BDDMockito.given(this.facturaService.findFacturaBySolicitud(Mockito.any())).willReturn(factura);
         sol.get().setAnuncio(anuncio);
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID))
@@ -398,6 +412,7 @@ public class SolicitudControllerTests {
         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
         Optional<Solicitud> sol = Optional.of(this.solicitud);
         BDDMockito.given(this.solicitudService.findSolicitudById(ArgumentMatchers.anyInt())).willReturn(sol);
+        BDDMockito.given(this.facturaService.findFacturaBySolicitud(Mockito.any())).willReturn(factura);
         this.solicitud.setEstado(Estados.ACEPTADO);
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
@@ -410,6 +425,7 @@ public class SolicitudControllerTests {
         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver2);
         Optional<Solicitud> sol = Optional.of(this.solicitud);
         BDDMockito.given(this.solicitudService.findSolicitudById(ArgumentMatchers.anyInt())).willReturn(sol);
+        BDDMockito.given(this.facturaService.findFacturaBySolicitud(Mockito.any())).willReturn(factura);
         this.solicitud.setEstado(Estados.ACEPTADO);
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/solicitudInfo/{solicitudId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
@@ -421,6 +437,7 @@ public class SolicitudControllerTests {
     void testAceptarSolicitud() throws Exception {
         Mockito.doNothing().when(this.emailSender).sendEmail(ArgumentMatchers.anyString(), ArgumentMatchers.anyString());
         BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(this.beaver);
+        
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/accept/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID)).andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("solicitudes/aceptarSuccess"));
@@ -513,7 +530,7 @@ public class SolicitudControllerTests {
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/finish/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("solicitudes/aceptarSuccess"));
+            .andExpect(MockMvcResultMatchers.view().name("solicitudes/finalizarSuccess"));
     }
 
     @WithMockUser(value = "spring")
@@ -527,7 +544,7 @@ public class SolicitudControllerTests {
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/solicitudes/finish/{solId}", SolicitudControllerTests.TEST_SOLICITUD_ID2))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.view().name("solicitudes/aceptarSuccess"));
+            .andExpect(MockMvcResultMatchers.view().name("solicitudes/finalizarSuccess"));
     }
 
     @WithMockUser(value = "spring")

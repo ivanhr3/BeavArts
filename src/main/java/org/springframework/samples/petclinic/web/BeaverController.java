@@ -95,15 +95,6 @@ public class BeaverController {
 			vista.addObject("numValoraciones", numeroDeValoraciones);
 		}
 		
-		Iterable<Valoracion> valoracionesUsuario = this.valoracionService.findValoracionesByBeaverId(beaverId);
-		Boolean usuarioYaValorado = false;
-		while(usuarioYaValorado == false && valoracionesUsuario.iterator().hasNext()) {
-			if(valoracionesUsuario.iterator().next().getValAuthor().getId() == this.beaverService.getCurrentBeaver().getId()) {
-				usuarioYaValorado = true;
-			}
-		}
-		vista.addObject("usuarioYaValorado", usuarioYaValorado);
-		
 		vista.addObject("beaver", beaver);
 		vista.addObject("portfolio", portfolio);
 
@@ -111,6 +102,15 @@ public class BeaverController {
 		if (me != null) {//añadido el if para los tests
 			vista.addObject("myBeaverId", me.getId());
 			vista.addObject("isAuthenticated", true);
+
+			Iterable<Valoracion> valoracionesUsuario = this.valoracionService.findValoracionesByBeaverId(beaverId);
+			Boolean usuarioYaValorado = false;
+			for(Valoracion v: valoracionesUsuario){
+				if(v.getValAuthor().getId() == me.getId()){
+					usuarioYaValorado = true;
+				}
+			}
+			vista.addObject("usuarioYaValorado", usuarioYaValorado);
 		} else {
 			vista.addObject("isAuthenticated", false);
 		}
