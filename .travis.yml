@@ -12,8 +12,6 @@ before_script:
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) download
 
 script:
-  - mvn clean package -DskipTests=true 
-  - mvn test -Dspring-boot.run.profiles=mysql-travis
   - mvn clean -Dspring-boot.run.profiles=mysql-travis org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report
 after_success:
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r target/site/jacoco/*.xml
