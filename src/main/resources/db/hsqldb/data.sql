@@ -34,13 +34,13 @@ INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (3, 'https://cdn.pixab
 
 --Admin user
 INSERT INTO users(username,password,enabled) VALUES ('admin','$2a$10$B4srWD5ejof0cIiI1CsvseKsIbg01bc9L/40aduSxL9vdKp1fSHKO',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (455,'admin','admin');
-INSERT INTO portfolio(id, sobre_mi) VALUES (455, 'Soy un administrador con todas las funcionalidades activas.. También practico el arte y las manualidades en mi tiempo libre, es por eso que me considero un apasionado de disfrutar todo tipo de experiencia.');
-INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (455, 'Nombre', 'Apellidos', '92234321Q', 'adminprueba@email.com', 'https://cdn.pixabay.com/photo/2013/07/13/13/38/man-161282_960_720.png', 455 , 'admin');
-INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (455, 'RESINA');
-INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (455, 'ESCULTURA');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (455, 'https://cdn.pixabay.com/photo/2017/06/15/17/22/sculpture-2406078_1280.jpg');
-INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (455, 'https://cdn.pixabay.com/photo/2017/11/07/15/15/wing-2927254_1280.png');
+INSERT INTO authorities(id,username,authority) VALUES (46,'admin','admin');
+INSERT INTO portfolio(id, sobre_mi) VALUES (46, 'Soy un administrador con todas las funcionalidades activas.. También practico el arte y las manualidades en mi tiempo libre, es por eso que me considero un apasionado de disfrutar todo tipo de experiencia.');
+INSERT INTO beavers(id, first_name, last_name, dni, email, url_foto_perfil, portfolio_id, username) VALUES (46, 'Nombre', 'Apellidos', '92234321Q', 'adminprueba@email.com', 'https://cdn.pixabay.com/photo/2013/07/13/13/38/man-161282_960_720.png', 46 , 'admin');
+INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (46, 'RESINA');
+INSERT INTO beaver_especialidades(beaver_id, especialidad) VALUES (46, 'ESCULTURA');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (46, 'https://cdn.pixabay.com/photo/2017/06/15/17/22/sculpture-2406078_1280.jpg');
+INSERT INTO portfolio_photos(portfolio_id, photos) VALUES (46, 'https://cdn.pixabay.com/photo/2017/11/07/15/15/wing-2927254_1280.png');
 
 --Encargos
 
@@ -54,7 +54,6 @@ INSERT INTO solicitud_fotos(solicitud_id, fotos) VALUES (1, 'https://cdn.pixabay
 --Facturas
 
 INSERT INTO factura(id, email_payer, email_beaver, payment_date, solicitud_id, precio, estado, recibido) VALUES (1, 'dummy@email.com', 'dummy@email.com', CURRENT_TIMESTAMP, 1, 30.0, 'PENDIENTE', false);
-
 
 --Usuarios Piloto
 
@@ -331,3 +330,13 @@ INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES 
 -- Anuncios
 INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver_id, destacado) VALUES (2, 'Algun costurero?', 30.0, 'TEXTIL', 'Busco alguien que me haga un sombrero parecido al de la foto para un disfraz', 'https://cdn.pixabay.com/photo/2016/11/29/09/51/day-of-the-dead-1868836_1280.jpg', 2, TRUE );
 INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver_id, destacado) VALUES (1, 'Busco pintor', 20.00, 'OLEO', 'Busco un pintor capaz de dibujar un retrato de Michael Jackson', 'https://cdn.pixabay.com/photo/2015/04/24/22/45/michael-jackson-738410_960_720.jpg', 1, FALSE );
+
+--Sequence
+ALTER SEQUENCE authorities_id_seq RESTART WITH 47;
+ALTER SEQUENCE portfolio_id_seq RESTART WITH 47;
+ALTER SEQUENCE beavers_id_seq RESTART WITH 47;
+ALTER SEQUENCE encargos_id_seq RESTART WITH 2;
+ALTER SEQUENCE solicitud_id_seq RESTART WITH 2;
+ALTER SEQUENCE anuncio_id_seq RESTART WITH 3;
+ALTER SEQUENCE valoracion_id_seq RESTART WITH 11;
+ALTER SEQUENCE facturas_id_seq RESTART WITH 2;
