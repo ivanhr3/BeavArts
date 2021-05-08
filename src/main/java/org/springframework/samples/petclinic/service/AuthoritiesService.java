@@ -34,15 +34,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class AuthoritiesService {
-
-	private AuthoritiesRepository authoritiesRepository;
-	private UserService userService;
-
 	@Autowired
-	public AuthoritiesService(AuthoritiesRepository authoritiesRepository,UserService userService) {
-		this.authoritiesRepository = authoritiesRepository;
-		this.userService = userService;
-	}
+	private AuthoritiesRepository authoritiesRepository;
+	@Autowired
+	private UserService userService;
 
 	@Transactional
 	public void saveAuthorities(Authorities authorities) throws DataAccessException {
