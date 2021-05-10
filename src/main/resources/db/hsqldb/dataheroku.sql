@@ -1,3 +1,4 @@
+--Usar solo para despliegues
 --Usuarios
 --User1
 INSERT INTO users(username,password,enabled) VALUES ('Cib3r', '$2a$10$92y/D.0vHcQtnBgATuJmPeMfCBYI08aNCcCxFV8gtKSyr/Y1zuIw.', TRUE);
