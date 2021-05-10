@@ -22,7 +22,7 @@ branches:
   - master
   - develop
   - travis-configuration-sprint2
-  - SolicitudAnuncios-issue#116
+  - postgresconfigheroku-issue#213
 
 deploy:
   provider: heroku
