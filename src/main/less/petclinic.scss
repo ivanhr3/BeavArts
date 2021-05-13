@@ -1978,7 +1978,7 @@ pre code {
   .table-responsive-sm {
     display: block;
     width: 100%;
-    overflow-x: auto;
+    overflow-x: auto;*
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
   }
@@ -2030,7 +2030,7 @@ pre code {
   display: block;
   width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  /*-webkit-overflow-scrolling: touch;*/
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
@@ -9313,6 +9313,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .table.manage-candidates-top th {
     border: 0;
+    
 }
 
 .user-dashboard-info-box .candidate-list-favourite-time .candidate-list-favourite {
@@ -9323,6 +9324,7 @@ a.text-dark:hover, a.text-dark:focus {
     min-width: 650px;
 	border-collapse: collapse;
 	width: 100%;
+	
 }
 
 .user-dashboard-info-box .candidate-list-details ul {
