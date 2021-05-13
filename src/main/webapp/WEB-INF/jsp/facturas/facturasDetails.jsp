@@ -19,7 +19,7 @@
 								<div class="invoice-title">
 									<div class="row ">
 										<div class="col-xs-12">
-											<img src="/resources/images/v22.png" alt="" style="opacity: 0.3;">
+											<img src="/resources/images/v32.png" alt="" style="opacity: 0.3;">
 										</div>
 									</div>
 									<br>
