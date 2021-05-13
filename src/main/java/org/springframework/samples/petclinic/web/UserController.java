@@ -96,6 +96,7 @@ public class UserController {
 	public String initCreationForm(final Map<String, Object> model) {
 		Beaver beaver = new Beaver();
 		model.put("beaver", beaver);
+		model.put("someError", false);
 
 		return UserController.VIEWS_BEAVER_CREATE_FORM;
 	}
@@ -139,6 +140,13 @@ public class UserController {
 			    model.put("passwordCorto", true);
 			    model.put("errorPasswordCorto", "Contraseña demasiado corta. Introduce una con al menos 8 caracteres.");
             }
+			model.put("someError", true);
+			model.put("firstName", beaver.getFirstName());
+			model.put("lastName", beaver.getLastName());
+			model.put("email", beaver.getEmail());
+			model.put("username", beaver.getUser().getUsername());
+			model.put("password", beaver.getUser().getPassword());
+			
 			return UserController.VIEWS_BEAVER_CREATE_FORM;
 
 		} else {
