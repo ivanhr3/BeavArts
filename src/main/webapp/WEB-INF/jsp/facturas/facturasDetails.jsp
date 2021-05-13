@@ -24,8 +24,8 @@
 									</div>
 									<br>
 									<div class="row">
-										<div class="col-xs-6">
-											<h2>Factura<br>
+										<div class="col-xs-6 Roboto">
+											<h2 class="Roboto">Factura<br>
 											<span class="small">Número #${factura.id}</span></h2>
 											<h2><span class="small">Estado: ${fn:escapeXml(factura.estado)}</span></h2>
 											</div>
@@ -74,7 +74,7 @@
 								<hr>
 								<div class="row">	
 									<div class="col-xs-6">
-										<h3>SUMARIO:</h3>
+										<h3 class="Roboto">SUMARIO:</h3>
 									
 									
 									<c:if test="${factura.solicitud.encargo != null}">
