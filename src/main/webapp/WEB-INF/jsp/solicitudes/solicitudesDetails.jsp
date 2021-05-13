@@ -39,7 +39,7 @@
                     <div class="col-sm-3">
                       <h5>Título </h5>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="Roboto" class="col-sm-9 text-secondary">
                       <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="beaverUrl">
                 			<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	    		<spring:param name="encargoId" value="${encargo.id}"/>
@@ -212,7 +212,7 @@
                     <div class="col-sm-3">
                       <h5>Realizado por </h5>
                     </div>
-                    <div class="col-sm-9 SegoeFont text-secondary">
+                    <div class="col-sm-9 Roboto text-secondary">
                       <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 		<spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                		  </spring:url>
