@@ -113,7 +113,7 @@ public class UserController {
         }
 
 		Boolean usernameCorto = false;
-		if(beaver.getUser().getUsername().length() < 8) {
+		if(beaver.getUser().getUsername().length() < 4) {
 		    usernameCorto = true;
         }
 
@@ -133,7 +133,7 @@ public class UserController {
 			}
 			if(usernameCorto) {
 			    model.put("usernameCorto", true);
-			    model.put("errorUsernameCorto", "Nombre de usuario demasiado corto. Introduce uno con al menos 8 caracteres.");
+			    model.put("errorUsernameCorto", "Nombre de usuario demasiado corto. Introduce uno con al menos 4 caracteres.");
             }
 			if(passwordCorto) {
 			    model.put("passwordCorto", true);
