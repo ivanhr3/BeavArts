@@ -90,6 +90,8 @@ html {
   -ms-text-size-adjust: 100%;
   -ms-overflow-style: scrollbar;
   -webkit-tap-highlight-color: transparent;
+  min-height: 100%;
+  position: relative;
 }
 
 @-ms-viewport {
@@ -108,7 +110,7 @@ body {
   line-height: 1.5;
   color: #000000;
   text-align: justify;
-  
+  margin-bottom: 10px;
   background-color: #ffffff;
 }
 
@@ -9296,14 +9298,15 @@ a.text-dark:hover, a.text-dark:focus {
     padding: 30px 0;
 }
 
-.user-dashboard-info-box .candidates-list td {
+.user-dashboard-info-box .candidates-list {
     vertical-align: middle;
+	border-bottom: solid 1px rgb(202, 202, 202);
 }
 .candidates-list{
 	display:none;
 }
 
-.user-dashboard-info-box td li {
+.user-dashboard-info-box li {
     margin: 0 4px;
 }
 
@@ -9311,15 +9314,11 @@ a.text-dark:hover, a.text-dark:focus {
     border-bottom: none;
 }
 
-.table.manage-candidates-top th {
-    border: 0;
-}
-
 .user-dashboard-info-box .candidate-list-favourite-time .candidate-list-favourite {
     margin-bottom: 10px;
 }
 
-.table.manage-candidates-top {
+.ul.manage-candidates-top {
     min-width: 650px;
 	border-collapse: collapse;
 	width: 100%;
@@ -9641,7 +9640,7 @@ hr{
 }
 
 div.title{
-  font-size: 2em;
+  font-size: 15px;
 }
 
 h1 span{
@@ -10397,7 +10396,7 @@ td {
 	}
 	
 	.textoDatoPerfil{
-		font-size: 12px;
+		font-size: 15px;
 	}
 	
 }
@@ -10405,7 +10404,7 @@ td {
 @media (max-width:991px){
 	
 	.encargosFont{
-		font-size:14px;	
+		font-size:20px;	
 	}
 	
 	.perfilCard{
@@ -10476,11 +10475,11 @@ td {
 	}
 	
 	.textoDatoPerfil{
-		font-size: 9px;
+		font-size: 12px;
 	}
 	
 	.tituloPerfil2{
-		font-size: 24px;
+		font-size: 18px;
 	}
 	
 }
@@ -10527,7 +10526,7 @@ td {
 	}
 	
 	.tituloPerfil2{
-		font-size: 10px;
+		font-size: 17px;
 	}
 	
 	.textoPerfil{
@@ -10550,7 +10549,7 @@ td {
 	}
 	
 	.textoDatoPerfil{
-		font-size: 9px;
+		font-size: 12px;
 	}
 	
 	.rowPad{
@@ -10562,7 +10561,7 @@ td {
 @media (max-width:575px){
 	
 	.encargosFont{
-		font-size:14px;	
+		font-size:17px;	
 	}
 	
 	.portfolioCard{
@@ -10581,8 +10580,12 @@ td {
 		padding: 0px;
 		
 	}
+	.textoPerfil{
+		font-size: 16px;
+		text-align: justify;
+	}
 	
-		.perfilDataCard{
+	.perfilDataCard{
 		margin-left: auto;
 	    margin-right: auto;	    
 	    max-width: 370px;
@@ -10596,12 +10599,12 @@ td {
 	}
 	
 	.tituloPerfil{
-		font-size: 14px;
+		font-size: 20px;
 	}
 
 	
 	.textoEsp{
-		font-size: 12px;
+		font-size: 13px;
 	}
 	
 	.center {
@@ -10620,7 +10623,7 @@ td {
 	}
 	
 	.encargosFont{
-		font-size:12px;	
+		font-size:14px;	
 	}
 }
 
@@ -10628,7 +10631,7 @@ td {
 @media (max-width:390px){
 	
 	.encargosFont{
-		font-size:10px;	
+		font-size:12px;	
 	}
 	
 	.perfilCard{	
@@ -10655,14 +10658,13 @@ td {
 	}
 	
 	.tituloPerfil{
-		font-size: 17px;
+		font-size: 14px;
 	}
 	
 	.textoPerfil{
 		font-size: 11px;
 		text-align: justify;
 	}
-	
 	.fotoCard{
 		margin-bottom: 10%;
 		width: 100%;
@@ -10735,8 +10737,14 @@ td {
 @media (max-width:330px){
 	
 	.textoPerfil{
-		font-size: 9px;
+		font-size: 11px;
 		text-align: justify;
+	}
+	.tituloPerfil{
+		font-size: 14px;
+	}
+	.textoEsp{
+		font-size: 11px;
 	}
 }
 
@@ -10901,6 +10909,7 @@ a.customHoverEncargos:hover {
     padding-left: 10px;
     margin-left: auto;
     margin-right: auto;
+	font-size:24px;
 }
 
 .espButton{
@@ -10928,5 +10937,52 @@ a.customHoverEncargos:hover {
 	.imgValCom{
 		width:50px;
 		height:50px;
+	}
+	.responsiveFontSmartphoneTituloMediano{
+		font-size: 13px;
+	}
+}
+
+@media screen and (max-width:525px){
+	.user-dashboard-info-box .title{
+ 		display: block;
+		padding: 20px 0;
+	}
+}
+
+.usersList{
+	list-style-type:none;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10px;
+}
+
+@media (max-width:375px){
+	.cartaEncargo{
+	min-width: 170px;
+    margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5%;
+    width: 5%;
+    height: 325px;
+    background-color: white;
+	box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+	}
+	.letrero{
+	word-break: break-word;
+    height: auto;
+    background: linear-gradient(72deg, rgb(239 239 239) 34%, rgb(255 255 255) 100%);
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    margin-left: auto;
+    margin-right: auto;
+	font-size:16px;
 	}
 }
