@@ -76,6 +76,15 @@
 			                  <a style="color:white"class="btn btn-red" href="${fn:escapeXml(banUserUrl)}"><i class="fas fa-ban"></i> Suspender</a>
 		                  		
 		                  </c:if>
+
+						  <c:if test="${beaver.user.enabled == false and authority!='admin'}">
+						
+							<spring:url value="/beavers/beaverInfo/{beaverId}/unban" var="unbanUserUrl">
+						  <spring:param name="beaverId" value="${beaver.id}"/>              
+						  </spring:url>
+						  <a style="color:white"class="btn btn-success" href="${fn:escapeXml(unbanUserUrl)}"><i class="fas fa-check"></i> Reactivar Cuenta</a>
+							  
+					  </c:if>
 						
 		                  <c:if test="${beaver.user.enabled == true and authority == 'admin'}">
 		                  	
