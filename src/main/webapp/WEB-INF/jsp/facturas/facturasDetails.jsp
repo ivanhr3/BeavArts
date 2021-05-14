@@ -88,7 +88,7 @@
 									<br/>
 									<b>Comisión:</b> ${fn:escapeXml(comision)} €
 									<br/>
-									<b>Precio con comisión:</b> ${fn:escapeXml(precioConComision)} €
+									<b>Precio sin comisión:</b> ${fn:escapeXml(precioConComision)} €
 									<br/>
 									</div>
 									</div>	
