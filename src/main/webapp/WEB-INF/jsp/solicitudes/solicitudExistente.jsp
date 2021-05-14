@@ -8,8 +8,8 @@
     uri="http://www.springframework.org/security/tags%22%%3E" %> --%>
 
 <beavarts:layout pageName="errorNoEncargo">
-<div class="minAlto">
-    <h2>Lo sentimos, ya existe un usuario que ha solicitado este encargo</h2>
+<div class="minAlto Roboto">
+    <h3>Lo sentimos, ya existe un usuario que ha solicitado este encargo</h3>
 
 	<a class="btn btn-default" href="/">Volver al inicio</a>
 

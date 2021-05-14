@@ -9,7 +9,7 @@
  --%>
 <beavarts:layout pageName="errorAceptar">
 <div class="minAlto">
-    <h2>Su solicitud ha sido rechazada con éxito.</h2>
+    <h3>Su solicitud ha sido rechazada con éxito.</h3>
 <br/>
 	<a class="btn btn-primary" href="/solicitudes/list">Volver al listado</a>
 </div>

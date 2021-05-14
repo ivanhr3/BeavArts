@@ -8,8 +8,8 @@
     uri="http://www.springframework.org/security/tags%22%%3E" %>
  --%>
 <beavarts:layout pageName="errorAceptar">
-<div class="minAlto">
-    <h2>Su solicitud está pendiente de aceptación.</h2>
+<div class="minAlto Roboto">
+    <h3>Su solicitud está pendiente de aceptación.</h3>
 
 	<a class="btn btn-default" href="/">Volver al inicio</a>
 </div>

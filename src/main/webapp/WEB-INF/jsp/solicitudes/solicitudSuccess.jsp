@@ -8,8 +8,8 @@
     uri="http://www.springframework.org/security/tags%22%%3E" %> --%>
 
 <beavarts:layout pageName="successSolicitud">
-<div class="minAlto">
-    <h2>Su solicitud ha sido creada con éxito</h2>
+<div class="minAlto Roboto">
+    <h3>Su solicitud ha sido creada con éxito</h3>
 
 	<a class="btn btn-primary" href='<spring:url value="/solicitudes/list" htmlEscape="true"/>'>Ver solicitudes</a>
 
