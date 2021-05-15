@@ -36,7 +36,7 @@
 			</div>
         	<c:if test="${createdByUser== false}">
         	<div class="row">
-            	<h4 class="mb-0">Publicado por&nbsp;</h4><h4 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h4>
+            	<h4 class="mb-0">Publicado por&nbsp;</h4><h4 class="RobotoLight"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h4>
         	</div>
         	</c:if>
         	<div class="row">

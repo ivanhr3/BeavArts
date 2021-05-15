@@ -102,7 +102,7 @@
 	</div>
 	
 	<br/>
-	<div style="text-align:center"class="centerContainer" id="myBtnContainer">
+	<div style="text-align:center"class="centerContainer Roboto" id="myBtnContainer">
 	  <button class="btn active btn-primary tamBoton" onclick="filterSelection('all')" > Mostrar todos</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('TEXTIL')"> Textil</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ESCULTURA')"> Escultura</button>
@@ -150,7 +150,7 @@
 		                      	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                        		 		<spring:param name="beaverId" value="${beaver.id}"/>
                     			</spring:url>
-								<h5 class="mb-0 SegoeFont"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
+								<h5 class="mb-0 Roboto"row""><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
 			                         
 									<security:authorize access="hasAuthority('admin')">
 													

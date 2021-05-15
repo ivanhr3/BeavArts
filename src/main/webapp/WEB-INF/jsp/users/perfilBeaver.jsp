@@ -136,10 +136,12 @@
 						                  </c:choose>                          
 			                    		  <c:out value="${especialidad} "/> &nbsp;
 						</c:forEach>
-						
+					
 						<c:if test="${beaver.user.username == principalUsername}">
 								<a class="btn btn-primary espButton" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editEspecialidades" htmlEscape="true"/>'>Cambiar</a>              
 	                      </c:if>
+	                      
+	                      
 					</div>
 					
 					<div class ="Roboto" style="height:50%">

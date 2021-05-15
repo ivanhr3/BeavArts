@@ -328,7 +328,7 @@ INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES 
 INSERT INTO valoracion(id, puntuacion, comentario, beaver_id, author_id) VALUES (10, 1.0, 'Malisimo trabajo, nada satisfecho.', 2, 8);
 
 -- Anuncios
-INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver_id, destacado) VALUES (2, 'Algun costurero?', 30.0, 'TEXTIL', 'Busco alguien que me haga un sombrero parecido al de la foto para un disfraz', 'https://cdn.pixabay.com/photo/2016/11/29/09/51/day-of-the-dead-1868836_1280.jpg', 2, TRUE );
+INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver_id, destacado) VALUES (2, '¿Algún costurero?', 30.0, 'TEXTIL', 'Busco alguien que me haga un sombrero parecido al de la foto para un disfraz', 'https://cdn.pixabay.com/photo/2016/11/29/09/51/day-of-the-dead-1868836_1280.jpg', 2, TRUE );
 INSERT INTO anuncio(id, titulo, precio, especialidad, descripcion, photo, beaver_id, destacado) VALUES (1, 'Busco pintor', 20.00, 'OLEO', 'Busco un pintor capaz de dibujar un retrato de Michael Jackson', 'https://cdn.pixabay.com/photo/2015/04/24/22/45/michael-jackson-738410_960_720.jpg', 1, FALSE );
 
 

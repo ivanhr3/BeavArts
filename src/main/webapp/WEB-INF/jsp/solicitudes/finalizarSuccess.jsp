@@ -8,8 +8,8 @@
     uri="http://www.springframework.org/security/tags%22%%3E" %>
  --%>
 <beavarts:layout pageName="errorAceptar">
-<div class="minAlto">
-    <h2>¡Su solicitud ha sido finalizada!</h2>
+<div class="minAlto Roboto">
+    <h3>¡Su solicitud ha sido finalizada!</h3>
 	<br/>
 	<a class="btn btn-primary" href="/solicitudes/list">Volver al listado</a>
 </div>

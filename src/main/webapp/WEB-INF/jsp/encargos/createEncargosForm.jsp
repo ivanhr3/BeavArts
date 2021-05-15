@@ -20,16 +20,17 @@
 </script>
 
 <beavarts:layout pageName="Encargos">
-    <h2 class="Roboto">
+    <h3 class="Roboto">
         <c:if test="${!editando}">Registrar </c:if> 
         <c:if test="${editando}">Editar </c:if> Encargo
-    </h2>
+    </h3>
     
+
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios, para poder editar los detalles de un encargo primero se debe poner en No Disponible"/></p>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
-        <div class="form-group has-feedback">
-        <div class="form-group">
+        <div class="form-group has-feedback ">
+        <div class="form-group RobotoLight">
         	<b style="margin-left:15px"> *Título:</b>
             <beavarts:inputField label="" name="titulo" readonly="${isDisponible}"/>
             <b style="margin-left:15px"> *Precio:</b>
@@ -69,7 +70,7 @@
         </div>
         
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
+            <div class="col-sm-offset-2 col-sm-10 Roboto">
                 <c:choose>
                     <c:when test="${!editando}">
                         <button class="btn btn-primary" type="submit">Crear encargo</button>
