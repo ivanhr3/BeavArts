@@ -9547,7 +9547,10 @@ align-items: center;
 	.encargoDetailsFont{
 	font-size:22px;
 	}
-	.encargoDetailsFontBody{
+	.solicitudDetailsFont{
+	font-size:18px;
+	}
+	.solicitudDetailsFontBody{
 	font-size:15px;
 	}
 	.anuncioDetailsFontBody{
@@ -9556,6 +9559,8 @@ align-items: center;
 	.encargoDetailsPrecio{
 		font-size:17px;
 	}
+	
+
 }
 
 @media only screen and (max-width: 1200px) {
@@ -10089,12 +10094,16 @@ td {
 	.encargoDetailsFont{
 	font-size:16px;
 	}
-	.encargoDetailsFontBody{
-	font-size:13px;
+	.solicitudDetailsFontBody{
+	font-size:11px;
 	}
 	.encargoDetailsPrecio{
 		font-size:15px;
 	}
+	.solicitudDetailsFont{
+	font-size:13px;
+	}
+	
 }
 
 .formulario {
@@ -10665,6 +10674,9 @@ td {
 	}
 	.encargoDetailsFont{
 	font-size:17px;
+	}
+	.solicitudDetailsFont{
+	font-size:15px;
 	}
 }
 

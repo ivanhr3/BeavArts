@@ -11,7 +11,7 @@
 <div class="minAlto">                              
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==true && listaSolicitudesRecibidasAnuncios.isEmpty()==true}">
 
-	<h2 class="Roboto">No hay solicitudes recibidas.</h2>
+	<h2 class="Roboto solicitudDetailsFont">No hay solicitudes recibidas.</h2>
 </c:if>
 
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==false || listaSolicitudesRecibidasAnuncios.isEmpty()==false}">
