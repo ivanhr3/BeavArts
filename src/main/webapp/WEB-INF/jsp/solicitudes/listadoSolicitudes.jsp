@@ -23,7 +23,7 @@
     <c:if test="${solicitud.encargo != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading responsiveFontSmartphoneTexto">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading responsiveFontSmartphoneTextoM">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -71,7 +71,7 @@
     <c:if test="${solicitud.anuncio != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading responsiveFontSmartphoneMediano ">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
+                <h4 class="responsiveFontSmartphoneTextoM ">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -154,7 +154,7 @@
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    			<a class="btn btn-primary responsiveFontSmartphoneTexto" href="${solicitudUrl}"> Ver solicitud</a>
     	</div>
     </li>
     </c:if>
@@ -174,7 +174,7 @@
 	<c:if test="${solicitud.encargo != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading responsiveFontSmartphoneTexto">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading responsiveFontSmartphoneTextoM">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -202,9 +202,9 @@
                         <spring:param name="beaverId" value="${solicitud.encargo.beaver.id}"/>
                     </spring:url>
                  <div class="row">
-                    <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
+                    <h5 class="list-group-item-text responsiveFontSmartphoneTexto" style="color:#34302D;">Enviado a:&nbsp;</h5>
                     <div class="SegoeFont"> 
-                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.encargo.beaver.user.username}"/></a></b></h5>
+                    <h5 class="responsiveFontSmartphoneTexto"><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.encargo.beaver.user.username}"/></a></b></h5>
         		</div>
         		</div>
         </div>  
@@ -214,7 +214,7 @@
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    			<a class="btn btn-primary responsiveFontSmartphoneTexto" href="${solicitudUrl}"> Ver solicitud</a>
     	</div>
     </li>
     </c:if>
@@ -222,7 +222,7 @@
     <c:if test="${solicitud.anuncio != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading responsiveFontSmartphoneTextoM">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -293,9 +293,9 @@
                         <spring:param name="beaverId" value="${solicitud.anuncio.beaver.id}"/>
                     </spring:url>
                  <div class="row">   
-                    <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
+                    <h5 class="list-group-item-text responsiveFontSmartphoneTexto" style="color:#34302D;">Enviado a:&nbsp;</h5>
                     <div class="SegoeFont">
-                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.anuncio.beaver.user.username}"/></a></b></h5>
+                    <h5 class="responsiveFontSmartphoneTexto"><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.anuncio.beaver.user.username}"/></a></b></h5>
         		 	</div>
         		 </div>
         </div>  
@@ -305,7 +305,7 @@
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    			<a class="btn btn-primary responsiveFontSmartphoneTexto" href="${solicitudUrl}"> Ver solicitud</a>
     	</div>
     </li>
     </c:if>
