@@ -211,11 +211,40 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
           </div>  
             <div class="control-group widhtTam2 RobotoLight">           
+              <div class="form-group">
+                <label class="col control-label">Especialidades:</label>
+                <div class="col-sm-10">
+                  <select id="especialidades" name="especialidades" class="form-control" multiple="multiple" size="8">
+                    <option value="ACRILICO">ACRILICO</option>
+                    <option value="ESCULTURA">ESCULTURA</option>
+                    <option value="FOTOGRAFIA">FOTOGRAFIA</option>
+                    <option value="ILUSTRACION">ILUSTRACION</option>
+                    <option value="JOYERIA">JOYERIA</option>
+                    <option value="RESINA">RESINA</option>
+                    <option value="TEXTIL">TEXTIL</option>
+                    <option value="OLEO">OLEO</option>
+                  </select>
+                  <input type="hidden" name="_especialidades" value="1">
+                  <span class="form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <script>
+                  window.onmousedown = function (e) {
+                    var el = e.target;
+                    if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                        e.preventDefault();
 
-            	<beavarts:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
+                        // toggle selection
+                        if (el.hasAttribute('selected')) el.removeAttribute('selected');
+                        else el.setAttribute('selected', '');
+
+                        // hack to correct buggy behavior
+                        var select = el.parentNode.cloneNode(true);
+                        el.parentNode.parentNode.replaceChild(select, el.parentNode);
+                    }
+                  }
+                </script>
+              </div>
             </div>
-            <p class="widhtTam RobotoLight" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades. Tenga en cuenta que si no elige ninguna especialidad NO PODRÁ CREAR ENCARGOS.</p>
-
             <!-- dni group -->
           <div class="form-group widhtTam">
             <beavarts:inputDNIField label="Introduce el DNI:" name="dni" placeholder="22333444X"/>
