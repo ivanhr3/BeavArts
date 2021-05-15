@@ -96,6 +96,7 @@ public class UserController {
 	public String initCreationForm(final Map<String, Object> model) {
 		Beaver beaver = new Beaver();
 		model.put("beaver", beaver);
+		model.put("someError", false);
 
 		return UserController.VIEWS_BEAVER_CREATE_FORM;
 	}
@@ -113,7 +114,7 @@ public class UserController {
         }
 
 		Boolean usernameCorto = false;
-		if(beaver.getUser().getUsername().length() < 8) {
+		if(beaver.getUser().getUsername().length() < 4) {
 		    usernameCorto = true;
         }
 
@@ -133,12 +134,19 @@ public class UserController {
 			}
 			if(usernameCorto) {
 			    model.put("usernameCorto", true);
-			    model.put("errorUsernameCorto", "Nombre de usuario demasiado corto. Introduce uno con al menos 8 caracteres.");
+			    model.put("errorUsernameCorto", "Nombre de usuario demasiado corto. Introduce uno con al menos 4 caracteres.");
             }
 			if(passwordCorto) {
 			    model.put("passwordCorto", true);
 			    model.put("errorPasswordCorto", "Contraseña demasiado corta. Introduce una con al menos 8 caracteres.");
             }
+			model.put("someError", true);
+			model.put("firstName", beaver.getFirstName());
+			model.put("lastName", beaver.getLastName());
+			model.put("email", beaver.getEmail());
+			model.put("username", beaver.getUser().getUsername());
+			model.put("password", beaver.getUser().getPassword());
+			
 			return UserController.VIEWS_BEAVER_CREATE_FORM;
 
 		} else {

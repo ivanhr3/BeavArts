@@ -8,13 +8,25 @@
 <link rel=“less” type=“text/css” href=“petclinic.scss”/>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
+<script>
+    function ddChange(ddValue) {
+            if (ddValue == "false") {
+                document.getElementById('updateButton').style.display = 'block';
+            }
+            else if (ddValue == "true") {
+                document.getElementById('updateButton').style.display = 'none';
+            }
+        }
+</script>
+
 <beavarts:layout pageName="Encargos">
     <h3 class="Roboto">
         <c:if test="${!editando}">Registrar </c:if> 
         <c:if test="${editando}">Editar </c:if> Encargo
     </h3>
     
-    <p class="RobotoLight"style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+
+    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios, para poder editar los detalles de un encargo primero se debe poner en No Disponible"/></p>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="encargo" class="form-horizontal" id="add-encargo-form">
         <div class="form-group has-feedback ">
@@ -32,7 +44,7 @@
                 <br/>
 	            	<label class = "col-sm-2 control-label" for="disponibilidad"> </label>
 	            		<div class="col-sm-3">
-			            	<select class="form-control" name="disponibilidad">
+			            	<select class="form-control" name="disponibilidad" onchange="ddChange(this.value);">
 			                    <option value=true>Disponible</option>
 			                    <option value=false>No disponible</option>
 			                </select>
@@ -44,7 +56,7 @@
                  <br/>
 	            	<label class = "col-sm-2 control-label" for="disponibilidad"></label>
 	            		<div class="col-sm-3">
-			            	<select class="form-control" name="disponibilidad">
+			            	<select class="form-control" id="disponibilidad" name="disponibilidad">
 			            	<option value=false>No Disponible</option>
 			            		<option value=true>Disponible</option>
 			                </select>
@@ -64,7 +76,12 @@
                         <button class="btn btn-primary" type="submit">Crear encargo</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-primary" type="submit">Actualizar encargo</button>
+                        <c:if test="${encargo.disponibilidad == true}">
+                        <button class="btn btn-primary" id="updateButton" type="submit" name= "updateButton" style="display: none !important;">Actualizar encargo</button>
+                        </c:if>
+                        <c:if test="${encargo.disponibilidad != true}">
+                        <button class="btn btn-primary" id="updateButton" type="submit" name= "updateButton">Actualizar encargo</button>
+                        </c:if>
                         <br/>
                         <c:if test="${url == true}">
                         	<div class="alert alert-danger" role="alert">
@@ -77,4 +94,5 @@
         </div>
     </form:form>
     </div>
+
 </beavarts:layout>
