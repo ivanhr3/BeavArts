@@ -62,9 +62,13 @@ public class SolicitudController {
 
 	@GetMapping("{engId}/create")
 	public String crearSolicitudInit(@PathVariable("engId") final int encargoId, final ModelMap model) {
+
+		if (this.encargoService.findEncargoById(encargoId) == null) {
+			return "accesoNoAutorizado";
+		}
+
 		Encargo encargo = this.encargoService.findEncargoById(encargoId);
 		Beaver beaver = this.beaverService.getCurrentBeaver();
-
 
 		if (beaver != null) {
 			model.put("myBeaverId", beaver.getId());
@@ -76,12 +80,12 @@ public class SolicitudController {
 
 		if (encargo.getBeaver() == beaver) { //No se puede solicitar un encargo a si mismo
 			return "accesoNoAutorizado"; //FRONT: Acceso no autorizado, un usuario NO puede solicitarse un encargo a si mismo.
-        } else if (beaver == null) {
-            return "accesoNoAutorizado";
+		} else if (beaver == null) {
+			return "accesoNoAutorizado";
 		} else if (!encargo.isDisponibilidad()) {
 			return "accesoNoAutorizado";
 		} else {
-            Boolean exists = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
+			Boolean exists = this.solicitudService.existSolicitudByBeaver(beaver, encargo);
 			final Solicitud sol = new Solicitud();
 			model.addAttribute("pendiente", exists);
 			model.put("error", "Tu solicitud se encuentra pendiente de aceptación");
@@ -242,7 +246,7 @@ public class SolicitudController {
 			vista.addObject("encargo", solicitud.getEncargo()); //TODO: FRONT: En los detalles de una solicitud deben aparecer algunos detalles del encargo para saber a cual se refiere.
 			vista.getModelMap().addAttribute("isEncargoCreator", beaver == solicitud.getEncargo().getBeaver()); //TODO: Front: Esto es para mostrar o no los botones de aceptar o rechazar
 			vista.getModelMap().addAttribute("isEncargoRequester", beaver == solicitud.getBeaver());
-			vista.getModelMap().addAttribute("recibido", facturaService.findFacturaBySolicitud(solicitud).getRecibido());
+			vista.getModelMap().addAttribute("recibido", this.facturaService.findFacturaBySolicitud(solicitud).getRecibido());
 		}
 
 		if (solicitud.getAnuncio() != null) {
@@ -451,21 +455,21 @@ public class SolicitudController {
 	}
 
 	@PostMapping("/{solicitudId}/checkDelivery")
-	public String encargoRecibido(@PathVariable("solicitudId") Integer solicitudId){
-		Beaver beaver = beaverService.getCurrentBeaver();
-		if(beaver == null){
+	public String encargoRecibido(@PathVariable("solicitudId") final Integer solicitudId) {
+		Beaver beaver = this.beaverService.getCurrentBeaver();
+		if (beaver == null) {
 			return "redirect:/accesoNoAutorizado";
-		} else{
-			Solicitud solicitud = solicitudService.findById(solicitudId);
-			if(solicitud.getBeaver() != beaver){
+		} else {
+			Solicitud solicitud = this.solicitudService.findById(solicitudId);
+			if (solicitud.getBeaver() != beaver) {
 				return "redirect:/accesoNoAutorizado";
 			}
-			if(solicitud.getEncargo() == null){
+			if (solicitud.getEncargo() == null) {
 				return "redirect:/accesoNoAutorizado";
 			} else {
-				Factura factura = facturaService.findFacturaBySolicitud(solicitud);
+				Factura factura = this.facturaService.findFacturaBySolicitud(solicitud);
 				factura.setRecibido(true);
-				facturaService.saveFactura(factura);
+				this.facturaService.saveFactura(factura);
 				return "redirect:/solicitudes/solicitudInfo/" + solicitudId;
 			}
 		}

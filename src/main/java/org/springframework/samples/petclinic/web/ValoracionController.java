@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.web;
 
 import javax.validation.Valid;
@@ -18,91 +19,93 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/beavers/{beaverId}/valoraciones")
 public class ValoracionController {
-    
-    private final ValoracionService valoracionService;
-    private final BeaverService beaverService;
 
-    @Autowired
-    public ValoracionController(final ValoracionService valoracionService, final BeaverService beaverService) {
-        this.valoracionService = valoracionService;
-        this.beaverService = beaverService;
-    }
+	private final ValoracionService	valoracionService;
+	private final BeaverService		beaverService;
 
-    //LIST
-    @GetMapping("/list")
-    public String listarValoraciones(@PathVariable("beaverId") final int beaverId, final ModelMap model){
 
-        String vista = "valoracion/lista"; //REDIRECCIONAR A VISTA CORRECTA
-        Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
-        model.addAttribute("beaverId", beaverId);
+	@Autowired
+	public ValoracionController(final ValoracionService valoracionService, final BeaverService beaverService) {
+		this.valoracionService = valoracionService;
+		this.beaverService = beaverService;
+	}
+
+	//LIST
+	@GetMapping("/list")
+	public String listarValoraciones(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
+		if (this.beaverService.findBeaverByIntId(beaverId) == null) {
+			return "accesoNoAutorizado";
+		}
+
+		String vista = "valoracion/lista"; //REDIRECCIONAR A VISTA CORRECTA
+		Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+		model.addAttribute("beaverId", beaverId);
 		model.addAttribute("beaver", beaver);
-		
+
 		//PARA QUE FUNCIONE EL BOTÓN MI PERFIL
 		Beaver current = this.beaverService.getCurrentBeaver();
-		if(current != null){
-	        model.put("myBeaverId", current.getId());
-	        }
+		if (current != null) {
+			model.put("myBeaverId", current.getId());
+		}
 
-        if (beaver.getValoraciones().isEmpty()) {
-            model.addAttribute("hayValoraciones", false); //Control de falta de valoraciones
-        }
-        Iterable<Valoracion> valoraciones = this.valoracionService.findValoracionesByBeaverId(beaverId);
-        model.addAttribute("valoraciones", valoraciones);
-        return vista;
-    }
+		if (beaver.getValoraciones().isEmpty()) {
+			model.addAttribute("hayValoraciones", false); //Control de falta de valoraciones
+		}
+		Iterable<Valoracion> valoraciones = this.valoracionService.findValoracionesByBeaverId(beaverId);
+		model.addAttribute("valoraciones", valoraciones);
+		return vista;
+	}
 
-    //Creacion de Valoraciones
+	//Creacion de Valoraciones
 
-    @GetMapping(value = "/create")
-    public String initCreationForm(@PathVariable("beaverId") final int beaverId, ModelMap model){
-        Beaver current = beaverService.getCurrentBeaver();
-        Beaver reciever = beaverService.findBeaverByIntId(beaverId); 
-        
-        if(current  == null|| current == reciever){
-            return "accesoNoAutorizado";
-        } else {
-            model.addAttribute("myBeaverId", current.getId());
-            final Valoracion valoracion = new Valoracion();
-            model.addAttribute("valoracion", valoracion);
-            return "valoracion/createValoracion"; //TODO FRONT: Añadir vista de creación aquí
-        }
-    }
+	@GetMapping(value = "/create")
+	public String initCreationForm(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
+		Beaver current = this.beaverService.getCurrentBeaver();
+		Beaver reciever = this.beaverService.findBeaverByIntId(beaverId);
 
-    @PostMapping(value = "/create")
-    public String processCreationForm(@PathVariable("beaverId") final int beaverId, @Valid Valoracion valoracion, final BindingResult result, final ModelMap model){
-        Beaver current = this.beaverService.getCurrentBeaver();
-        Beaver reciever = this.beaverService.findBeaverByIntId(beaverId);
-        if(current != null){
-        model.put("myBeaverId", current.getId());
-        }
+		if (current == null || current == reciever) {
+			return "accesoNoAutorizado";
+		} else {
+			model.addAttribute("myBeaverId", current.getId());
+			final Valoracion valoracion = new Valoracion();
+			model.addAttribute("valoracion", valoracion);
+			return "valoracion/createValoracion"; //TODO FRONT: Añadir vista de creación aquí
+		}
+	}
 
-        Iterable<Valoracion> valoracionesUsuario = this.valoracionService.findValoracionesByBeaverId(beaverId);
+	@PostMapping(value = "/create")
+	public String processCreationForm(@PathVariable("beaverId") final int beaverId, @Valid final Valoracion valoracion, final BindingResult result, final ModelMap model) {
+		Beaver current = this.beaverService.getCurrentBeaver();
+		Beaver reciever = this.beaverService.findBeaverByIntId(beaverId);
+		if (current != null) {
+			model.put("myBeaverId", current.getId());
+		}
+
+		Iterable<Valoracion> valoracionesUsuario = this.valoracionService.findValoracionesByBeaverId(beaverId);
 		Boolean usuarioYaValorado = false;
-		for(Valoracion v: valoracionesUsuario){
-			if(v.getValAuthor().getId() == this.beaverService.getCurrentBeaver().getId()){
-			usuarioYaValorado = true;
+		for (Valoracion v : valoracionesUsuario) {
+			if (v.getValAuthor().getId() == this.beaverService.getCurrentBeaver().getId()) {
+				usuarioYaValorado = true;
 			}
 		}
 
-        if(result.hasErrors() || usuarioYaValorado == true){
-            if(valoracion.getPuntuacion() < 1 || valoracion.getPuntuacion() > 5) {
-                model.addAttribute("errorPuntuacion", true);
-                model.addAttribute("mensajePuntuacion", "La puntuación debe estar entre 1 y 5.");
-            }
-            if(usuarioYaValorado == true) {
-                model.addAttribute("usuarioYaValorado", usuarioYaValorado);
-                model.addAttribute("mensajeUsuarioValorado", "Ya has valorado a este usuario.");
-            }
-            
-            model.addAttribute("valoracion", valoracion);
-            return "valoracion/createValoracion"; //TODO FRONT: Añadir vista de creación aquí
-        } else if(current  == null|| current == reciever){
-            return "accesoNoAutorizado";
-        } else {
-            valoracionService.crearValoracion(valoracion, reciever, current);
-            return "redirect:/beavers/beaverInfo/"+reciever.getId(); //TODO: FRONT: Añadir vista de lista de valoraciones o el Perfil del usuario valorado
-        }
-    }
+		if (result.hasErrors() || usuarioYaValorado == true) {
+			if (valoracion.getPuntuacion() < 1 || valoracion.getPuntuacion() > 5) {
+				model.addAttribute("errorPuntuacion", true);
+				model.addAttribute("mensajePuntuacion", "La puntuación debe estar entre 1 y 5.");
+			}
+			if (usuarioYaValorado == true) {
+				model.addAttribute("usuarioYaValorado", usuarioYaValorado);
+				model.addAttribute("mensajeUsuarioValorado", "Ya has valorado a este usuario.");
+			}
+
+			model.addAttribute("valoracion", valoracion);
+			return "valoracion/createValoracion"; //TODO FRONT: Añadir vista de creación aquí
+		} else if (current == null || current == reciever) {
+			return "accesoNoAutorizado";
+		} else {
+			this.valoracionService.crearValoracion(valoracion, reciever, current);
+			return "redirect:/beavers/beaverInfo/" + reciever.getId(); //TODO: FRONT: Añadir vista de lista de valoraciones o el Perfil del usuario valorado
+		}
+	}
 }
-
-

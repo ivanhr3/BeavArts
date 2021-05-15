@@ -36,7 +36,7 @@ public class EncargoController {
 	private final EncargoService	encargoService;
 	private final BeaverService		beaverService;
 	private final SolicitudService	solicitudService;
-	private final FacturaService 	facturaService;
+	private final FacturaService	facturaService;
 	private static final String		VIEWS_ENCARGOS_CREATE_OR_UPDATE_FORM	= "encargos/createEncargosForm";
 
 
@@ -100,6 +100,10 @@ public class EncargoController {
 
 	@GetMapping("/list")
 	public String listarEncargos(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
+
+		if (this.beaverService.findBeaverByIntId(beaverId) == null) {
+			return "accesoNoAutorizado";
+		}
 
 		if (this.beaverService.getCurrentBeaver() != null) {
 			Beaver me = this.beaverService.getCurrentBeaver();
@@ -216,7 +220,7 @@ public class EncargoController {
 		} else if (esAdmin) {
 			for (Solicitud s : this.encargoService.findEncargoById(encargoId).getSolicitud()) {
 				Factura factura = this.facturaService.findFacturaBySolicitud(s);
-				if(factura != null){
+				if (factura != null) {
 					factura.setSolicitud(null);
 					this.facturaService.saveFactura(factura);
 				}

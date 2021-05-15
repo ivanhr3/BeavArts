@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.web;
 
 import java.util.Collection;
@@ -35,21 +36,22 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WebMvcTest(value = ValoracionController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 @AutoConfigureMockMvc
 public class ValoracionControllerTests {
-    
-    @Autowired
+
+	@Autowired
 	private MockMvc				mockMvc;
 
 	@MockBean
-    private ValoracionService	valoracionService; 
+	private ValoracionService	valoracionService;
 
 	@MockBean
 	private BeaverService		beaverService;
 
-	private static final int	TEST_BEAVER_ID		= 99;
+	private static final int	TEST_BEAVER_ID	= 99;
+
 
 	@BeforeEach
 	public void setUp() {
-        User user = new User();
+		User user = new User();
 		user.setUsername("User123");
 		user.setPassword("supersecretpass");
 		user.setEnabled(true);
@@ -70,9 +72,9 @@ public class ValoracionControllerTests {
 		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
 		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(beaver);
 
-    } 
+	}
 
-    @WithMockUser(value = "User123")
+	@WithMockUser(value = "User123")
 	@Test
 	public void testListValoracionesEmpty() throws Exception {
 
@@ -80,11 +82,11 @@ public class ValoracionControllerTests {
 			.andExpect(MockMvcResultMatchers.model().attributeExists("hayValoraciones"));
 	}
 
-    @WithMockUser(value = "User123")
+	@WithMockUser(value = "User123")
 	@Test
 	public void testListValoraciones() throws Exception {
 
-        User user = new User();
+		User user = new User();
 		user.setUsername("User12");
 		user.setPassword("supersecretpass");
 		user.setEnabled(true);
@@ -98,8 +100,8 @@ public class ValoracionControllerTests {
 		beaver.setUser(user);
 
 		Valoracion v = new Valoracion();
-        v.setPuntuacion(3);
-        v.setComentario("Que comentario más chulo");
+		v.setPuntuacion(3);
+		v.setComentario("Que comentario más chulo");
 		Set<Valoracion> valoraciones = new HashSet<>();
 		valoraciones.add(v);
 		beaver.setValoraciones(valoraciones);
@@ -111,9 +113,9 @@ public class ValoracionControllerTests {
 			.andExpect(MockMvcResultMatchers.model().attributeExists("valoraciones"));
 	}
 
-	@WithMockUser(value= "spring")
+	@WithMockUser(value = "spring")
 	@Test
-	public void initCreationFormConExito() throws Exception{
+	public void initCreationFormConExito() throws Exception {
 		User user = new User();
 		user.setUsername("Reciever");
 		user.setPassword("supersecretpass");
@@ -130,53 +132,41 @@ public class ValoracionControllerTests {
 		beaver.setDni("12345678F");
 		beaver.setUser(user);
 
-		BDDMockito.given(beaverService.findBeaverByIntId(Mockito.anyInt())).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(ArgumentMatchers.anyInt())).willReturn(beaver);
 
-		this.mockMvc
-		.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/create", 98))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.model().attribute("myBeaverId", 99))
-		.andExpect(MockMvcResultMatchers.model().attributeExists("valoracion"))
-		.andExpect(MockMvcResultMatchers.view().name("valoracion/createValoracion")); //TODO: Front avisad cuando cambieis el nombre de la vista
-
-	}
-
-	@WithMockUser(value= "spring")
-	@Test
-	public void initCreationFormUserValorarseSiMismoFallo() throws Exception{
-
-		this.mockMvc
-		.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/create", 99))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado")); //TODO: Front avisad cuando cambieis el nombre de la vista
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/create", 98)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attribute("myBeaverId", 99))
+			.andExpect(MockMvcResultMatchers.model().attributeExists("valoracion")).andExpect(MockMvcResultMatchers.view().name("valoracion/createValoracion")); //TODO: Front avisad cuando cambieis el nombre de la vista
 
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
-	public void initCreationFormAnonimoValoraFallo() throws Exception{
-		BDDMockito.given(beaverService.getCurrentBeaver()).willReturn(null);
+	public void initCreationFormUserValorarseSiMismoFallo() throws Exception {
 
-		this.mockMvc
-		.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/create", 99))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado")); //TODO: Front avisad cuando cambieis el nombre de la vista
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/create", 99)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado")); //TODO: Front avisad cuando cambieis el nombre de la vista
 
 	}
 
-	@Test
-	public void initCreationFormAnonimoValora2Fallo() throws Exception{
-		BDDMockito.given(beaverService.getCurrentBeaver()).willReturn(null);
-
-		this.mockMvc
-		.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/create", 99))
-		.andExpect(MockMvcResultMatchers.status().isUnauthorized()); //TODO: Front avisad cuando cambieis el nombre de la vista
-
-	}
-	
 	@WithMockUser(value = "spring")
 	@Test
-	public void processCreationFormExito() throws Exception{
+	public void initCreationFormAnonimoValoraFallo() throws Exception {
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(null);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/create", 99)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado")); //TODO: Front avisad cuando cambieis el nombre de la vista
+
+	}
+
+	@Test
+	public void initCreationFormAnonimoValora2Fallo() throws Exception {
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(null);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/create", 99)).andExpect(MockMvcResultMatchers.status().isUnauthorized()); //TODO: Front avisad cuando cambieis el nombre de la vista
+
+	}
+
+	@WithMockUser(value = "spring")
+	@Test
+	public void processCreationFormExito() throws Exception {
 		User user = new User();
 		user.setUsername("Reciever");
 		user.setPassword("supersecretpass");
@@ -193,21 +183,16 @@ public class ValoracionControllerTests {
 		beaver.setDni("12345678F");
 		beaver.setUser(user);
 
-		BDDMockito.given(beaverService.findBeaverByIntId(Mockito.anyInt())).willReturn(beaver);
-		BDDMockito.doNothing().when(this.valoracionService).crearValoracion(ArgumentMatchers.any(Valoracion.class), ArgumentMatchers.any(Beaver.class), ArgumentMatchers.any(Beaver.class));
+		BDDMockito.given(this.beaverService.findBeaverByIntId(ArgumentMatchers.anyInt())).willReturn(beaver);
+		Mockito.doNothing().when(this.valoracionService).crearValoracion(ArgumentMatchers.any(Valoracion.class), ArgumentMatchers.any(Beaver.class), ArgumentMatchers.any(Beaver.class));
 
-		this.mockMvc.perform(
-			MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 98)
-			.with(SecurityMockMvcRequestPostProcessors.csrf())
-			.param("puntuacion", "3.5")
-			.param("comentario", "Buen vendedor, mejor persona"))
-			.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-			.andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/beaverInfo/"+98)); //TODO FRONT: AVISAD CUANDO TENGAIS EL NOMBRE DE LA VISTA
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 98).with(SecurityMockMvcRequestPostProcessors.csrf()).param("puntuacion", "3.5").param("comentario", "Buen vendedor, mejor persona"))
+			.andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/beavers/beaverInfo/" + 98)); //TODO FRONT: AVISAD CUANDO TENGAIS EL NOMBRE DE LA VISTA
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
-	public void processCreationFormConErrores() throws Exception{
+	public void processCreationFormConErrores() throws Exception {
 		User user = new User();
 		user.setUsername("Reciever");
 		user.setPassword("supersecretpass");
@@ -224,60 +209,71 @@ public class ValoracionControllerTests {
 		beaver.setDni("12345678F");
 		beaver.setUser(user);
 
-		BDDMockito.given(beaverService.findBeaverByIntId(Mockito.anyInt())).willReturn(beaver);
-		BDDMockito.doNothing().when(this.valoracionService).crearValoracion(ArgumentMatchers.any(Valoracion.class), ArgumentMatchers.any(Beaver.class), ArgumentMatchers.any(Beaver.class));
+		BDDMockito.given(this.beaverService.findBeaverByIntId(ArgumentMatchers.anyInt())).willReturn(beaver);
+		Mockito.doNothing().when(this.valoracionService).crearValoracion(ArgumentMatchers.any(Valoracion.class), ArgumentMatchers.any(Beaver.class), ArgumentMatchers.any(Beaver.class));
 
-		this.mockMvc.perform(
-			MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 98)
-			.with(SecurityMockMvcRequestPostProcessors.csrf())
-			.param("puntuacion", "2.5") //Las puntuaciones en el front no pueden ser menores a 1 ni exceder de 5
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 98).with(SecurityMockMvcRequestPostProcessors.csrf()).param("puntuacion", "2.5") //Las puntuaciones en el front no pueden ser menores a 1 ni exceder de 5
 			.param("comentario", "Corto")) //Tiene menos de 10 caracteres
-			.andExpect(MockMvcResultMatchers.status().isOk())
-			.andExpect(MockMvcResultMatchers.model().attributeExists("valoracion"))
-			.andExpect(MockMvcResultMatchers.view().name("valoracion/createValoracion")); //TODO FRONT: AVISAD CUANDO TENGAIS EL NOMBRE DE LA VISTA
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("valoracion")).andExpect(MockMvcResultMatchers.view().name("valoracion/createValoracion")); //TODO FRONT: AVISAD CUANDO TENGAIS EL NOMBRE DE LA VISTA
 	}
 
-	@WithMockUser(value= "spring")
+	@WithMockUser(value = "spring")
 	@Test
-	public void processCreationFormUserValorarseSiMismoFallo() throws Exception{
+	public void processCreationFormUserValorarseSiMismoFallo() throws Exception {
 
-		this.mockMvc
-		.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 99)
-		.with(SecurityMockMvcRequestPostProcessors.csrf())
-		.param("puntuacion", "2.5")
-		.param("comentario", "Buen vendedor, mejor persona. Trust me Bro."))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado")); //TODO: Front avisad cuando cambieis el nombre de la vista
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 99).with(SecurityMockMvcRequestPostProcessors.csrf()).param("puntuacion", "2.5").param("comentario", "Buen vendedor, mejor persona. Trust me Bro."))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado")); //TODO: Front avisad cuando cambieis el nombre de la vista
 
 	}
 
-	@WithMockUser(value= "spring")
+	@WithMockUser(value = "spring")
 	@Test
-	public void processCreationFormUserAnonimoValoraFallo() throws Exception{
+	public void processCreationFormUserAnonimoValoraFallo() throws Exception {
 
-		BDDMockito.given(beaverService.getCurrentBeaver()).willReturn(null);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(null);
 
-		this.mockMvc
-		.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 99)
-		.with(SecurityMockMvcRequestPostProcessors.csrf())
-		.param("puntuacion", "2.5")
-		.param("comentario", "Buen vendedor, mejor persona. Trust me Bro."))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado")); //TODO: Front avisad cuando cambieis el nombre de la vista
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 99).with(SecurityMockMvcRequestPostProcessors.csrf()).param("puntuacion", "2.5").param("comentario", "Buen vendedor, mejor persona. Trust me Bro."))
+			.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado")); //TODO: Front avisad cuando cambieis el nombre de la vista
 
 	}
 
 	@Test
-	public void processCreationFormUserAnonimo2ValoraFallo() throws Exception{
+	public void processCreationFormUserAnonimo2ValoraFallo() throws Exception {
 
-		BDDMockito.given(beaverService.getCurrentBeaver()).willReturn(null);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(null);
 
-		this.mockMvc
-		.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 99)
-		.with(SecurityMockMvcRequestPostProcessors.csrf())
-		.param("puntuacion", "2.5")
-		.param("comentario", "Buen vendedor, mejor persona. Trust me Bro."))
-		.andExpect(MockMvcResultMatchers.status().isUnauthorized()); //TODO: Front avisad cuando cambieis el nombre de la vista
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/beavers/{beaverId}/valoraciones/create", 99).with(SecurityMockMvcRequestPostProcessors.csrf()).param("puntuacion", "2.5").param("comentario", "Buen vendedor, mejor persona. Trust me Bro."))
+			.andExpect(MockMvcResultMatchers.status().isUnauthorized()); //TODO: Front avisad cuando cambieis el nombre de la vista
 
+	}
+
+	@WithMockUser(value = "User123")
+	@Test
+	public void testListValoracionesNoExiste() throws Exception {
+
+		User user = new User();
+		user.setUsername("User12");
+		user.setPassword("supersecretpass");
+		user.setEnabled(true);
+
+		Beaver beaver = new Beaver();
+		beaver.setFirstName("Nombre2");
+		beaver.setLastName("Apellidos");
+		beaver.setEmail("vali2d@gmail.com");
+		beaver.setDni("12345678Q");
+		beaver.setId(7);
+		beaver.setUser(user);
+
+		Valoracion v = new Valoracion();
+		v.setPuntuacion(3);
+		v.setComentario("Que comentario más chulo");
+		Set<Valoracion> valoraciones = new HashSet<>();
+		valoraciones.add(v);
+		beaver.setValoraciones(valoraciones);
+		this.beaverService.saveBeaver(beaver);
+		BDDMockito.given(this.beaverService.getCurrentBeaver()).willReturn(beaver);
+		BDDMockito.given(this.beaverService.findBeaverByIntId(beaver.getId())).willReturn(null);
+
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/beavers/{beaverId}/valoraciones/list", 7)).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.view().name("accesoNoAutorizado"));
 	}
 }
