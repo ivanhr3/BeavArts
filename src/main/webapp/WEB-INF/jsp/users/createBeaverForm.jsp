@@ -201,14 +201,23 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <%-- *First name group --%>
           <div class="form-group widhtTam ">
             <label class="sr-only">{% trans "First name" %}</label>
-            <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30" required>
-            	
+            <c:if test="${someError == false}">
+              <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30" required>
+            </c:if>
+            <c:if test="${someError == true}">
+              <input type="text" id="id_first_name" name="firstName" class="form-control" value="${firstName}" maxlength="30" required>
+            </c:if>
           </div>
 
             <%-- *Last name group --%>
           <div class="form-group widhtTam">
             <label class="sr-only">{% trans "Last name" %}</label>
-            <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
+            <c:if test="${someError == false}">
+              <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
+            </c:if>
+            <c:if test="${someError == true}">
+              <input type="text" id="id_last_name" name="lastName" class="form-control" value="${lastName}" maxlength="100" required>
+            </c:if>
           </div>  
             <div class="control-group widhtTam2 RobotoLight">           
 
@@ -224,21 +233,33 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <!-- email group -->
 
           <div class="form-group widhtTam">
-            <input type="email" id="id_email" required name="email" class="form-control" 
-              value="" placeholder="email@dominio.com" maxlength="254">
+            <c:if test="${someError == false}">
+              <input type="email" id="id_email" required name="email" class="form-control" 
+                value="" placeholder="email@dominio.com" maxlength="254">
+            </c:if>
+            <c:if test="${someError == true}">
+              <input type="email" id="id_email" required name="email" class="form-control" 
+                value="${email}" maxlength="254">
+            </c:if>
          
-          <c:if test="${urlEmail == true}">
-                        	<div class="alert alert-danger" role="alert">
-								<c:out value="${emailExistente}"/>
-							</div>
-						</c:if>
- 			</div>
+            <c:if test="${urlEmail == true}">
+                <div class="alert alert-danger" role="alert">
+                  <c:out value="${emailExistente}"/>
+                </div>
+            </c:if>
+ 			  </div>
             <%-- Username --%>
             <div class="form-group widhtTam">
                 <label class="sr-only">{% trans "Username" %}</label>
-                <input type="text" id="id_username" name="user.username" class="form-control"
-                value="" placeholder="Usuario..." required>
-              
+                <c:if test="${someError == false}">
+                  <input type="text" id="id_username" name="user.username" class="form-control"
+                    value="" placeholder="Usuario..." required>
+                </c:if>
+                <c:if test="${someError == true}">
+                  <input type="text" id="id_username" name="user.username" class="form-control"
+                    value="${username}" required>
+                </c:if>
+                
               <c:if test="${urlUsername == true}">
                         	<div class="alert alert-danger" role="alert">
 								<c:out value="${usernameExistente}"/>
@@ -256,8 +277,14 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <label class="sr-only">{% trans "Password" %}</label>
             <!-- password input -->
             <div class="input-group">
-              <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
-      data-html="true" value="" placeholder="Contraseña..." required >
+              <c:if test="${someError == false}">
+                <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
+                  data-html="true" value="" placeholder="Contraseña..." required >
+              </c:if>
+              <c:if test="${someError == true}">
+                <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
+                  data-html="true" value="${password}" required >
+              </c:if>
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-append1" onclick="togglePassword()">
                   <p class="fa fa-eye" aria-hidden="true"></p>
