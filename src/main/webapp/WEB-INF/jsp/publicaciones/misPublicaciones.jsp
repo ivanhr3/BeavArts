@@ -49,11 +49,11 @@
   					<spring:url value="/beavers/${beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
                         <spring:param name="anuncioId" value="${anuncio.id}"/>
                 	</spring:url>   	
-  			<div class="card-header-publicaciones"><h4><c:out value="${anuncio.titulo}"/></h4></div>
+  			<div class="card-header-publicaciones"><h4 class="publicacionesTitulo"><c:out value="${anuncio.titulo}"/></h4></div>
             <div class="card-body card-body-anuncios">
-            	<h5><c:out value="${anuncio.descripcion}"/></h5>
+            	<h5 class="encargoDetailsFont"><c:out value="${anuncio.descripcion}"/></h5>
             	<div class="row justify-content-center">
-            	<h5>Categoría:&nbsp;</h5>
+            	<h5 class="mb-0 encargoDetailsFont">Categoría:&nbsp;</h5>
             	<h5 style="color:grey">  
             								<c:if test="${fn:escapeXml(anuncio.especialidad) == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
@@ -101,7 +101,7 @@
       		
   	<div class="tab-pane fade" id="listEncargos">
   		<c:if test="${hayEncargos == false}">
-  			<h2>¡AÚN NO HAY ENCARGOS!</h2></c:if>
+  			<h2 class="publicacionesTitulo">¡AÚN NO HAY ENCARGOS!</h2></c:if>
   			<c:if test="${hayEncargos != false}">
     			<c:forEach items="${encargos}" var="encargo">
     			 <div class="encargosCard" style="width: auto;" id="encargosCard">
@@ -110,14 +110,20 @@
                 	</spring:url>
     	
                 	<c:if test="${!encargo.photo.isEmpty()}">
-            		<img class="card-img-top-publicacion rounded" src="${encargo.photo}" alt="Card image cap">
+            		<div id="multi-item-example" class="carousel carousel-multi-item carouselPerfil text-center" data-ride="carousel">
+            		<div class="carousel-inner sombraPng" role="listbox">		
+            		<div class="carousel-item active">
+            		<img class ="d-bldk w-75"src="${encargo.photo}" alt="">
+            		</div>
+            		</div>
+            		</div>
             		<div class="card-body">
-            		<h4 class="card-title"><c:out value="${encargo.titulo}"/></h4>
+            		<h4 class="card-title publicacionesTitulo"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
-            				<h5><span class="badge badge-danger">No disponible</span></h5>
+            				<h5 class="publicacionesTitulo"><span class="badge badge-danger">No disponible</span></h5>
         				</c:if>
         				<c:if test="${encargo.disponibilidad == true}">
-            				<h5><span class="badge badge-success">Disponible</span></h5>
+            				<h5 class="publicacionesTitulo"><span class="badge badge-success">Disponible</span></h5>
         				</c:if></p>
         				<a href="${fn:escapeXml(encargoUrl)}" class="btn btn-primary" id="verMas">Ver más</a>
         			</div>
@@ -126,12 +132,12 @@
             		<c:if test="${encargo.photo.isEmpty()}">
             		<img class="card-img-top-publicacion rounded" src="/resources/images/no-pictures.png" alt="No hay imagen">
             			<div class="card-body" id ="card-body">
-            			<h4 class="card-title"><c:out value="${encargo.titulo}"/></h4>
+            			<h4 class="card-title publicacionesTitulo"><c:out value="${encargo.titulo}"/></h4>
                     	<p><c:if test="${encargo.disponibilidad == false}">
-            				<h5><span class="badge badge-pill badge-danger" id="badge-noDisponible">No disponible</span></h5>
+            				<h5 class="publicacionesTitulo"><span class="badge badge-pill badge-danger" id="badge-noDisponible">No disponible</span></h5>
         				</c:if>
         				<c:if test="${encargo.disponibilidad == true}">
-            				<h5><span class="badge badge-pill badge-success" id="badge-disponible">Disponible</span></h5>
+            				<h5 class="publicacionesTitulo"><span class="badge badge-pill badge-success" id="badge-disponible">Disponible</span></h5>
         				</c:if></p>
         					<a href="${encargoUrl}" class="btn btn-primary" id="verMas">Ver más</a>
         			</div>

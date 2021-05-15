@@ -9540,7 +9540,22 @@ align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
 align-items: center;
-}
+	}
+	.anuncioDetailsFont{
+	font-size:22px;
+	}
+	.encargoDetailsFont{
+	font-size:22px;
+	}
+	.encargoDetailsFontBody{
+	font-size:15px;
+	}
+	.anuncioDetailsFontBody{
+	font-size:15px;
+	}
+	.encargoDetailsPrecio{
+		font-size:17px;
+	}
 }
 
 @media only screen and (max-width: 1200px) {
@@ -10043,7 +10058,8 @@ td {
 	
 	.tamBoton{
 		width:30%;
-		font-size: 10px;
+		font-size: 13px;
+		margin-top:0.3rem;
 		padding: 4px;
 	}
 }
@@ -10067,9 +10083,18 @@ td {
 	}
 	
 	.responsiveFontSmartphoneTituloMediano{
-		font-size:15px;
+		font-size:14px;
 	}
 	
+	.encargoDetailsFont{
+	font-size:16px;
+	}
+	.encargoDetailsFontBody{
+	font-size:13px;
+	}
+	.encargoDetailsPrecio{
+		font-size:15px;
+	}
 }
 
 .formulario {
@@ -10177,6 +10202,12 @@ td {
 	font-size:30px;
 	margin-top: 10px;
 	}
+	.tamBoton{
+		width:30%;
+		font-size: 12px;
+		margin-top:0.3rem;
+		padding: 4px;
+	}
 	
 }
 
@@ -10211,6 +10242,12 @@ td {
 	.responsiveFontSignBoard{
 		font-size: 30px;
 	}
+	.tamBoton{
+		width:30%;
+		margin-top:0.3rem;
+		font-size: 11px;
+		padding: 4px;
+	}
 	
 }
 
@@ -10220,7 +10257,8 @@ td {
 		width: 100%;
 		font-size:12px;
 		
-	}	
+	}
+	
 }
 
 .headerDiv {
@@ -10625,6 +10663,9 @@ td {
 	.encargosFont{
 		font-size:14px;	
 	}
+	.encargoDetailsFont{
+	font-size:17px;
+	}
 }
 
 
@@ -10939,7 +10980,7 @@ a.customHoverEncargos:hover {
 		height:50px;
 	}
 	.responsiveFontSmartphoneTituloMediano{
-		font-size: 13px;
+		font-size: 15px;
 	}
 }
 
@@ -10947,6 +10988,9 @@ a.customHoverEncargos:hover {
 	.user-dashboard-info-box .title{
  		display: block;
 		padding: 20px 0;
+	}
+	.publicacionesTitulo{
+		font-size:21px;
 	}
 }
 
@@ -10984,5 +11028,8 @@ footer {
     margin-left: auto;
     margin-right: auto;
 	font-size:16px;
+	}
+	.publicacionesTitulo{
+		font-size:20px;
 	}
 }

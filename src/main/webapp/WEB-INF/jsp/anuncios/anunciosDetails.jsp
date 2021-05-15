@@ -30,7 +30,7 @@
 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 	<spring:param name="beaverId" value="${anuncio.beaver.id}"/>
                	</spring:url>
-     <h1 class="mb-0 Roboto"><c:out value="${anuncio.titulo}"/>&nbsp;
+     <h1 class="mb-0 Roboto anuncioDetailsFont"><c:out value="${anuncio.titulo}"/>&nbsp;
      							<c:if test="${anuncio.especialidad == 'TEXTIL'}">
 					                      		<i class="fas fa-socks"></i>
 					                      	</c:if>
@@ -73,25 +73,21 @@
 				<p style="color: black; float: right; font-style: italic; font-size:15px;"> &nbsp;Promocionado</p>
 		    	</div>
 				</c:if>
+				<hr/>
         	<c:if test="${createdByUser== false}">
-        	<div class="row">
-            	<h3 class="mb-0 ">Publicado por:&nbsp; </h3><br/><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
-            </div>
-            <br/>
-            </c:if>
-            <div class="row">
-           		<h4><c:out value="${anuncio.descripcion}"/></h4></div>
-           		<div class="row">
-           		<h4>Precio: <c:out value="${anuncio.precio} €"/></h4></div>
+            	<h3 class="anuncioDetailsFontBody">Publicado por:&nbsp; </h3><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
+          	</c:if>
+           		<h4 class="anuncioDetailsFontBody"><c:out value="${anuncio.descripcion}"/></h4>
+           		<h4 class="anuncioDetailsFontBody">Precio: <c:out value="${anuncio.precio} €"/></h4>
         	
         	
 		<c:if test="${!anuncio.photo.isEmpty()}">
 		<div class="row justify-content-center">
-            	<h4 class="mb-0">Imagen de ejemplo</h4></div>
+            	<h4 class="mb-0 anuncioDetailsFontBody">Imagen de ejemplo</h4></div>
             	<div id="multi-item-example" class="carousel carousel-multi-item carouselPerfil text-center" data-ride="carousel">
             	<div class="carousel-inner sombraPng" role="listbox">		
             	<div class="carousel-item active">
-            		<img class ="d-bldk w-50"src="${anuncio.photo}" alt="">
+            		<img class ="d-bldk w-75"src="${anuncio.photo}" alt="">
             		</div>
             		</div>
             		</div>
@@ -108,11 +104,11 @@
 
     <div class="text-center">
     <c:if test="${createdByUser == false}">
-				<a class="btn btn-primary" href='<spring:url value="/solicitudes/${fn:escapeXml(anuncio.id)}/new" htmlEscape="true"/>'>Responder al anuncio</a>
+				<a class="btn btn-primary anuncioDetailsFontBody" href='<spring:url value="/solicitudes/${fn:escapeXml(anuncio.id)}/new" htmlEscape="true"/>'>Responder al anuncio</a>
 	</c:if>
 	</div>
     <c:if test="${createdByUser == true}">
-        	<a class="btn btn-primary" href='<spring:url value="/beavers/${fn:escapeXml(anuncio.beaver.id)}/anuncios/${fn:escapeXml(anuncio.id)}/edit" htmlEscape="true"/>'>Editar anuncio</a>
+        	<a class="btn btn-primary anuncioDetailsFontBody" href='<spring:url value="/beavers/${fn:escapeXml(anuncio.beaver.id)}/anuncios/${fn:escapeXml(anuncio.id)}/edit" htmlEscape="true"/>'>Editar anuncio</a>
         	<c:if test="${urlEdit == true}">
         	<div class="alert alert-danger" role="alert">
 			<c:out value="${errorEditarSolicitudesAceptadas}"/>
@@ -120,7 +116,7 @@
 			</c:if>
 			
 			<security:authorize access="!hasAuthority('admin')">
-        	<a class="btn btn-primary" href='<spring:url value="/beavers/${fn:escapeXml(anuncio.beaver.id)}/anuncios/${fn:escapeXml(anuncio.id)}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
+        	<a class="btn btn-primary anuncioDetailsFontBody" href='<spring:url value="/beavers/${fn:escapeXml(anuncio.beaver.id)}/anuncios/${fn:escapeXml(anuncio.id)}/delete" htmlEscape="true"/>'>Eliminar anuncio</a>
         	<c:if test="${urlEliminar == true}">
         	<div class="alert alert-danger" role="alert">
 			<c:out value="${errorEliminarSolicitudesAceptadas}"/>

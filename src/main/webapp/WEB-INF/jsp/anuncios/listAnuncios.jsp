@@ -82,7 +82,7 @@
 	
 	<c:if test="${!anuncios.isEmpty()}">
 	<div style="font-size:20px; text-align:center">
-		<b class="RobotoLight responsiveFontSmartphoneTituloMediano" style=" text-align:center">¡Usa los filtros para buscar anuncios a tu gusto!</b>
+		<b class="RobotoLight responsiveFontSmartphoneTituloMediano">¡Usa los filtros para buscar anuncios a tu gusto!</b>
 	</div>
 	<br/>
 	
