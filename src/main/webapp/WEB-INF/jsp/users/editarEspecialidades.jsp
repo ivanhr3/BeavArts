@@ -13,11 +13,40 @@
     <br/>    
     <form:form modelAttribute="beaver" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">
-         	      
-            	<petclinic:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
-            
-            <p class="RobotoLight">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades.</p>
-        </div>
+              <div class="form-group">
+                <label class="col control-label">Especialidades:</label>
+                <div class="col-sm-10">
+                  <select id="especialidades" name="especialidades" class="form-control" multiple="multiple" size="8">
+                    <option value="ACRILICO">ACRILICO</option>
+                    <option value="ESCULTURA">ESCULTURA</option>
+                    <option value="FOTOGRAFIA">FOTOGRAFIA</option>
+                    <option value="ILUSTRACION">ILUSTRACION</option>
+                    <option value="JOYERIA">JOYERIA</option>
+                    <option value="RESINA">RESINA</option>
+                    <option value="TEXTIL">TEXTIL</option>
+                    <option value="OLEO">OLEO</option>
+                  </select>
+                  <input type="hidden" name="_especialidades" value="1">
+                  <span class="form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <script>
+                  window.onmousedown = function (e) {
+                    var el = e.target;
+                    if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                        e.preventDefault();
+
+                        // toggle selection
+                        if (el.hasAttribute('selected')) el.removeAttribute('selected');
+                        else el.setAttribute('selected', '');
+
+                        // hack to correct buggy behavior
+                        var select = el.parentNode.cloneNode(true);
+                        el.parentNode.parentNode.replaceChild(select, el.parentNode);
+                    }
+                  }
+                </script>
+              </div>
+          </div>
         <c:if test="${errorUrl != null}">
                         	<div class="alert alert-danger col-sm-10" role="alert">
 								<c:out value="${errorUrl}"/>

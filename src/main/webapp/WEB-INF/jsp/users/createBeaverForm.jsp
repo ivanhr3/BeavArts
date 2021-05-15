@@ -201,21 +201,59 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <%-- *First name group --%>
           <div class="form-group widhtTam ">
             <label class="sr-only">{% trans "First name" %}</label>
-            <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30" required>
-            	
+            <c:if test="${someError == false}">
+              <input type="text" id="id_first_name" name="firstName" class="form-control" value="" placeholder="Nombre..." maxlength="30" required>
+            </c:if>
+            <c:if test="${someError == true}">
+              <input type="text" id="id_first_name" name="firstName" class="form-control" value="${firstName}" maxlength="30" required>
+            </c:if>
           </div>
 
             <%-- *Last name group --%>
           <div class="form-group widhtTam">
             <label class="sr-only">{% trans "Last name" %}</label>
-            <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
+            <c:if test="${someError == false}">
+              <input type="text" id="id_last_name" name="lastName" class="form-control" value="" placeholder="Apellidos..." maxlength="100" required>
+            </c:if>
+            <c:if test="${someError == true}">
+              <input type="text" id="id_last_name" name="lastName" class="form-control" value="${lastName}" maxlength="100" required>
+            </c:if>
           </div>  
             <div class="control-group widhtTam2 RobotoLight">           
+              <div class="form-group">
+                <label class="col control-label">Especialidades:</label>
+                <div class="col-sm-10">
+                  <select id="especialidades" name="especialidades" class="form-control" multiple="multiple" size="8">
+                    <option value="ACRILICO">ACRILICO</option>
+                    <option value="ESCULTURA">ESCULTURA</option>
+                    <option value="FOTOGRAFIA">FOTOGRAFIA</option>
+                    <option value="ILUSTRACION">ILUSTRACION</option>
+                    <option value="JOYERIA">JOYERIA</option>
+                    <option value="RESINA">RESINA</option>
+                    <option value="TEXTIL">TEXTIL</option>
+                    <option value="OLEO">OLEO</option>
+                  </select>
+                  <input type="hidden" name="_especialidades" value="1">
+                  <span class="form-control-feedback" aria-hidden="true"></span>
+                </div>
+                <script>
+                  window.onmousedown = function (e) {
+                    var el = e.target;
+                    if (el.tagName.toLowerCase() == 'option' && el.parentNode.hasAttribute('multiple')) {
+                        e.preventDefault();
 
-            	<beavarts:selectField name="especialidades" label="Especialidades:" names="${types}" size="8" />
+                        // toggle selection
+                        if (el.hasAttribute('selected')) el.removeAttribute('selected');
+                        else el.setAttribute('selected', '');
+
+                        // hack to correct buggy behavior
+                        var select = el.parentNode.cloneNode(true);
+                        el.parentNode.parentNode.replaceChild(select, el.parentNode);
+                    }
+                  }
+                </script>
+              </div>
             </div>
-            <p class="widhtTam RobotoLight" style="margin-left:auto; margin-right:auto; font-size:12px">*Para seleccionar varias especialidades mantenga la tecla 'ctrl' y seleccione sus especialidades. Tenga en cuenta que si no elige ninguna especialidad NO PODRÁ CREAR ENCARGOS.</p>
-
             <!-- dni group -->
           <div class="form-group widhtTam">
             <beavarts:inputDNIField label="Introduce el DNI:" name="dni" placeholder="22333444X"/>
@@ -224,21 +262,33 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <!-- email group -->
 
           <div class="form-group widhtTam">
-            <input type="email" id="id_email" required name="email" class="form-control" 
-              value="" placeholder="email@dominio.com" maxlength="254">
+            <c:if test="${someError == false}">
+              <input type="email" id="id_email" required name="email" class="form-control" 
+                value="" placeholder="email@dominio.com" maxlength="254">
+            </c:if>
+            <c:if test="${someError == true}">
+              <input type="email" id="id_email" required name="email" class="form-control" 
+                value="${email}" maxlength="254">
+            </c:if>
          
-          <c:if test="${urlEmail == true}">
-                        	<div class="alert alert-danger" role="alert">
-								<c:out value="${emailExistente}"/>
-							</div>
-						</c:if>
- 			</div>
+            <c:if test="${urlEmail == true}">
+                <div class="alert alert-danger" role="alert">
+                  <c:out value="${emailExistente}"/>
+                </div>
+            </c:if>
+ 			  </div>
             <%-- Username --%>
             <div class="form-group widhtTam">
                 <label class="sr-only">{% trans "Username" %}</label>
-                <input type="text" id="id_username" name="user.username" class="form-control"
-                value="" placeholder="Usuario..." required>
-              
+                <c:if test="${someError == false}">
+                  <input type="text" id="id_username" name="user.username" class="form-control"
+                    value="" placeholder="Usuario..." required>
+                </c:if>
+                <c:if test="${someError == true}">
+                  <input type="text" id="id_username" name="user.username" class="form-control"
+                    value="${username}" required>
+                </c:if>
+                
               <c:if test="${urlUsername == true}">
                         	<div class="alert alert-danger" role="alert">
 								<c:out value="${usernameExistente}"/>
@@ -256,8 +306,14 @@ element2.type = (element.type == 'password' ? 'text' : 'password');
             <label class="sr-only">{% trans "Password" %}</label>
             <!-- password input -->
             <div class="input-group">
-              <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
-      data-html="true" value="" placeholder="Contraseña..." required >
+              <c:if test="${someError == false}">
+                <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
+                  data-html="true" value="" placeholder="Contraseña..." required >
+              </c:if>
+              <c:if test="${someError == true}">
+                <input type="password" id="id_password1" name="user.password" class="form-control" data-placement="bottom" data-toggle="popover" data-container="body"
+                  data-html="true" value="${password}" required >
+              </c:if>
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" id="button-append1" onclick="togglePassword()">
                   <p class="fa fa-eye" aria-hidden="true"></p>

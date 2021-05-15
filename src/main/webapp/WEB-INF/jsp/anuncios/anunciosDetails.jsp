@@ -68,19 +68,19 @@
 	 <div class="card" style="box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;">
 	 	<div class="card-body">
 	 		<c:if test="${anuncio.destacado == true}">
-		    	<div class="SegoeFont" style="float: right;">
+		    	<div class="Roboto" style="float: right;">
 		    	<i style="color: orange; " class="fas fa-star"> </i>
 				<p style="color: black; float: right; font-style: italic; font-size:15px;"> &nbsp;Promocionado</p>
 		    	</div>
 				</c:if>
 				<hr/>
         	<c:if test="${createdByUser== false}">
+
             	<h3 class="anuncioDetailsFontBody">Publicado por:&nbsp; </h3><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
           	</c:if>
            		<h4 class="anuncioDetailsFontBody"><c:out value="${anuncio.descripcion}"/></h4>
            		<h4 class="anuncioDetailsFontBody">Precio: <c:out value="${anuncio.precio} €"/></h4>
-        	
-        	
+
 		<c:if test="${!anuncio.photo.isEmpty()}">
 		<div class="row justify-content-center">
             	<h4 class="mb-0 anuncioDetailsFontBody">Imagen de ejemplo</h4></div>

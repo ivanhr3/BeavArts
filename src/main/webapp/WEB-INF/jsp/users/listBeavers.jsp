@@ -102,7 +102,7 @@
 	</div>
 	
 	<br/>
-	<div style="text-align:center"class="centerContainer" id="myBtnContainer">
+	<div style="text-align:center"class="centerContainer Roboto" id="myBtnContainer">
 	  <button class="btn active btn-primary tamBoton" onclick="filterSelection('all')" > Mostrar todos</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('TEXTIL')"> Textil</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ESCULTURA')"> Escultura</button>
@@ -145,12 +145,10 @@
 		                  </div>
 		                  <div class="candidate-list-details">
 		                    <div class="candidate-list-info responsiveFontSmartphoneTituloMediano">
-		                      <div class="candidate-list-title">
-		                      	
-								<h5 class="mb-0 SegoeFont responsiveFontSmartphoneTexto"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
-			                         
+		                      <div class="candidate-list-title"> 	
+								<h5 class="mb-0 Roboto responsiveFontSmartphoneTexto"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
 									<security:authorize access="hasAuthority('admin')">
-													
+												
 										   <c:if test="${beaver.user.enabled == true}">
 											   <p style="color:Green">Activo</p>
 										   </c:if>

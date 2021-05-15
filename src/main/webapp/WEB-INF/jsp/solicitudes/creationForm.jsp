@@ -28,7 +28,7 @@
                         <spring:param name="beaverId" value="${encargo.beaver.id}"/>
     </spring:url>
     <br/> 
-    <h5><c:out value="${encargo.descripcion}"/></h5><br/> 
+    <h5 class="Roboto"><c:out value="${encargo.descripcion}"/></h5><br/> 
     <h5>Publicado por <a href="${fn:escapeXml(beaverUrl)}"><c:out value=" ${encargo.beaver.user.username}"/></a></h5>
     <br/>
     <h5>Precio: <c:out value="${encargo.precio}"/>€</h5>
@@ -42,7 +42,7 @@
   <c:if test="${!pendiente}">     
   <br/>      
     <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
- <div class="container">   
+ <div class="container Roboto">   
     <form:form modelAttribute="solicitud" class="form-horizontal" id="add-solicitud-form">
         <div class="form-group has-feedback">
         <div class="form-group" >

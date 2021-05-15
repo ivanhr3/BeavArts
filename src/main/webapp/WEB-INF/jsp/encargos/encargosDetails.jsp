@@ -41,9 +41,7 @@
 			</div>
 			</div>
         	<c:if test="${createdByUser== false}">
-        	
-            	<h4 class="encargoDetailsFontBody">Publicado por&nbsp;</h4><h4 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h4>
-        	
+            <h4 class="encargoDetailsFontBody">Publicado por&nbsp;</h4><h4 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h4>
         	</c:if>
         	
         	<h4 class="col mb-1 encargoDetailsFontBody"><c:out value="${encargo.descripcion}"/></h4>

@@ -11,7 +11,7 @@
 	</security:authorize>
 
 <beavarts:layout pageName="Mis publicaciones">
-<div class="minAlto">
+<div class="minAlto Roboto">
 <div class="mb-3 centerContainerVal"style="display:flex; flex-wrap: wrap;">
 <div class="container row">
 <div class="col">
@@ -43,7 +43,7 @@
     <div class="card-body tab-content justify-content-center">	
   	<div class="tab-pane fade show active" id="listAnuncios">
   	 	<c:if test="${hayAnuncios == false}">
-  			<h2>¡AÚN NO HAY ANUNCIOS!</h2></c:if>
+  			<h3>¡AÚN NO HAY ANUNCIOS!</h3></c:if>
   	<c:if test="${hayAnuncios != false}">		
   	<c:forEach items="${beaver.anuncios}" var="anuncio">
   					<spring:url value="/beavers/${beaverId}/anuncios/{anuncioId}" var="anuncioUrl">
@@ -99,7 +99,7 @@
       			</c:if>
         	</div>
       		
-  	<div class="tab-pane fade" id="listEncargos">
+  	<div class="tab-pane fade Roboto" id="listEncargos">
   		<c:if test="${hayEncargos == false}">
   			<h2 class="publicacionesTitulo">¡AÚN NO HAY ENCARGOS!</h2></c:if>
   			<c:if test="${hayEncargos != false}">

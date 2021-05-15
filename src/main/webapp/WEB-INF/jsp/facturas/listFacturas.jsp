@@ -57,7 +57,7 @@
 	                  	 	<spring:url value="/facturas/{facturaId}" var="facturaUrl">
 							<spring:param name="facturaId" value="${factura.id}"/>              
 							</spring:url>
-				            <a style="width: 100%;"class="btn btn-invoice" href="${fn:escapeXml(facturaUrl)}"><i class="fas fa-receipt"></i> Detalles</a>    
+				            <a style="width: 100%;"class="btn btn-invoice Roboto" href="${fn:escapeXml(facturaUrl)}"><i class="fas fa-receipt"></i> Detalles</a>    
 	                 </div>
 	              </div> 	
 			  </c:forEach>

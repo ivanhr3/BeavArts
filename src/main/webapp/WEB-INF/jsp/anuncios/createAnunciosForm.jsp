@@ -9,16 +9,16 @@
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
 
 <beavarts:layout pageName="crearAnuncios">
-    <h2 class="Roboto">
+    <h3 class="Roboto">
        	<c:if test="${!editando}">Registrar </c:if> 
         <c:if test="${editando}">Editar </c:if> Anuncio
-    </h2>
+    </h3>
     
-    <p style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
+    <p class="RobotoLight" style="color:red; margin-top:10px"><c:out value=" Los campos señalados con * son obligatorios"/></p>
     <div class="container justify-content-center" style="display:block;">
     <form:form modelAttribute="anuncio" class="form-horizontal" id="add-anuncio-form">
         <div class="form-group has-feedback">
-        <div class="form-group">
+        <div class="form-group RobotoLight">
         	<b style="margin-left:15px">*Título:</b>
             <beavarts:inputField label="" name="titulo"/>
             <b style="margin-left:15px">*Precio:</b>
@@ -26,14 +26,14 @@
 			<b style="margin-left:15px">*Descripción:</b>
 			<beavarts:inputField label="" name="descripcion"/>
             <div class="control-group">
-            <b style="margin-left:15px">Seleccione una categoría</b>
+            <b class="RobotoLight" style="margin-left:15px">Seleccione una categoría</b>
             	<beavarts:selectField name="especialidad" label="" names="${types}" size="8"/>
             </div>
             <b style="margin-left:15px">Introduce URL de la foto:</b>
             <beavarts:inputField label="" name="photo"/>
            </div>
         </div>
-        <div class="form-group">
+        <div class="form-group Roboto">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${!editando}">
