@@ -68,7 +68,7 @@
 				  input = document.getElementById("myInput");
 				  filter = input.value.toUpperCase();
 				  table = document.getElementById("myTable");
-				  tr = table.getElementsByTagName("tr");
+				  tr = table.getElementsByTagName("li");
 				  // Loop through all table rows, and hide those who don't match the search query
 				  for (i = 0; i < tr.length; i++) {
 				    td = tr[i].getElementsByTagName("a")[0];
@@ -107,33 +107,30 @@
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('TEXTIL')"> Textil</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ESCULTURA')"> Escultura</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ILUSTRACION')"> Ilustración</button>
-	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ACRILICO')""> Acrílico</button>
+	  <button class="btn btn-primary tamBoton" onclick="filterSelection('ACRILICO')"> Acrílico</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('OLEO')"> Óleo</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('JOYERIA')"> Joyería</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('RESINA')"> Resina</button>
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
 	</div>
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">     
+        <div class="user-dashboard-info-box bg-white p-2 shadow-sm">     
           <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar usuarios">
-          <table class="table manage-candidates-top mb-0" id="myTable">
-              <tr class="header">
-                <th class="RobotoLight">Usuarios</th> 
-              </tr>
+          <ul class="usersList manage-candidates-top mb-0" id="myTable">
 			  <security:authorize access="hasAuthority('admin')">
             	<c:set var="isAdmin1" value="true"></c:set>
             </security:authorize>
 	            <c:forEach items="${beavers}" var="beaver" >
 					<c:choose>
-	            	
 	            	<c:when test="${!isAdmin1 && beaver.user.enabled == false}">	            	
 	            	</c:when>
-	            	
 	            	<c:otherwise>
-		            <tr class="candidates-list ${beaver.especialidades}">
-		             <td class="title">
+	            	
+		            <li class="candidates-list ${beaver.especialidades}">
+		             <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
+                       		 		<spring:param name="beaverId" value="${beaver.id}"/>
+                    			</spring:url>
+                    	<div class="title">
 		                  <div class="thumb">
 			                  <c:choose>
 									<c:when test="${not empty beaver.urlFotoPerfil}">
@@ -145,15 +142,11 @@
 							  </c:choose>	                    
 		                  </div>
 		                  <div class="candidate-list-details">
-		                    <div class="candidate-list-info">
-		                      <div class="candidate-list-title">
-		                      	<spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
-                       		 		<spring:param name="beaverId" value="${beaver.id}"/>
-                    			</spring:url>
-								<h5 class="mb-0 Roboto"row""><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
-			                         
+		                    <div class="candidate-list-info responsiveFontSmartphoneTituloMediano">
+		                      <div class="candidate-list-title"> 	
+								<h5 class="mb-0 Roboto responsiveFontSmartphoneTexto"><a href="${fn:escapeXml(beaverUrl)}">${beaver.user.username} </a> 
 									<security:authorize access="hasAuthority('admin')">
-													
+												
 										   <c:if test="${beaver.user.enabled == true}">
 											   <p style="color:Green">Activo</p>
 										   </c:if>
@@ -208,18 +201,16 @@
 		                      <c:out value="${beaver.portfolio.sobreMi}"/>
 		                    </div>
 		                  </div>
-		                </td>
-		              </tr>  
+		                  </div>
+		              </li>  
 					</c:otherwise>
 	            	           	
 				</c:choose>    
 	            </c:forEach>
-          </table>          
+          </ul>          
         </div>
       </div>
     </div>
-  </div>
-</div>
 </jsp:body> 
   
 </beavarts:layout>

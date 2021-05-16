@@ -10,20 +10,18 @@
 
 <div class="minAlto">                              
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==true && listaSolicitudesRecibidasAnuncios.isEmpty()==true}">
-
-	<h3 class="Roboto">No hay solicitudes recibidas.</h3>
+	<h2 class="Roboto responsiveFontSmartphoneTitulo">No hay solicitudes recibidas.</h2>
 </c:if>
 
 <c:if test="${listaSolicitudesRecibidas.isEmpty()==false || listaSolicitudesRecibidasAnuncios.isEmpty()==false}">
-	
-    <h3 class="Roboto">Mis solicitudes recibidas </h3>
+    <h2 class="Roboto responsiveFontSmartphoneTitulo">Mis solicitudes recibidas </h2>
     <br/>
 <ul class="list-group">
     <c:forEach items="${listaSolicitudesRecibidas}" var="solicitud">
     <c:if test="${solicitud.encargo != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading RobotoLight">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading RobotoLight responsiveFontSmartphoneTextoM">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -48,10 +46,11 @@
                 <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
-                  <div class="row RobotoLight">  
-                    <h5 class="list-group-item-text" style="color:#34302D;"> Realizada por:&nbsp;</h5>
-                    <div>
-                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b></h5>
+                  <div class="row">  
+                    <h5 class="list-group-item-text  responsiveFontSmartphoneTexto" style="color:#34302D;">Realizada por:&nbsp;</h5>
+                    <div class="RobotoLight">
+                    <h5 class="list-group-item-text responsiveFontSmartphoneTexto"><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b></h5>
+
         			</div>
         		</div>
         </div>  
@@ -61,7 +60,7 @@
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-primary Roboto" href="${fn:escapeXml(solicitudUrl)}"> Ver solicitud</a>
+    			<a class="btn btn-primary Roboto responsiveFontSmartphoneTexto" href="${fn:escapeXml(solicitudUrl)}"> Ver solicitud</a>
     	</div>
     </li>
     </c:if>
@@ -71,7 +70,7 @@
     <c:if test="${solicitud.anuncio != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading ">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
+                <h4 class="responsiveFontSmartphoneTextoM ">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -142,9 +141,9 @@
                         <spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                     </spring:url>
                     <div class="row">
-                    <h5 class="list-group-item-text" style="color:#34302D;">Realizada por:&nbsp;</h5>
-                    <div class="SegoeFont">
-                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b></h5>
+                    <h5 class="list-group-item-text responsiveFontSmartphoneTexto" style="color:#34302D;">Realizada por:&nbsp;</h5>
+                    <div class="RobotoLight">
+                    <h5 class="list-group-item-text responsiveFontSmartphoneTexto"><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.beaver.user.username}"/></a></b></h5>
         			</div>
         			</div>
         </div>  
@@ -154,7 +153,7 @@
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    			<a class="btn btn-primary Roboto responsiveFontSmartphoneTexto" href="${solicitudUrl}"> Ver solicitud</a>
     	</div>
     </li>
     </c:if>
@@ -164,17 +163,17 @@
 </c:if>
 <br/>
 <c:if test="${haySolicitudes==false}">
-	<h3 class="Roboto">No hay solicitudes enviadas.</h3>
+	<h2 class="Roboto responsiveFontSmartphoneTitulo">No hay solicitudes enviadas.</h2>
 </c:if>
-
 <c:if test="${haySolicitudes==true}">
-    <h3 class="Roboto">Mis solicitudes enviadas</h3>
+    <h2 class="Roboto responsiveFontSmartphoneTitulo">Mis solicitudes enviadas</h2>
+
 	<ul class="list-group">
 	<c:forEach items="${listaSolicitudesEnviadas}" var="solicitud">
 	<c:if test="${solicitud.encargo != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading">Encargo:<c:out value="${solicitud.encargo.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading responsiveFontSmartphoneTextoM">Encargo: <c:out value="${solicitud.encargo.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -202,9 +201,9 @@
                         <spring:param name="beaverId" value="${solicitud.encargo.beaver.id}"/>
                     </spring:url>
                  <div class="row">
-                    <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
-                    <div class="SegoeFont"> 
-                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.encargo.beaver.user.username}"/></a></b></h5>
+                    <h5 class="list-group-item-text responsiveFontSmartphoneTexto" style="color:#34302D;">Enviado a:&nbsp;</h5>
+                    <div class="RobotoLight"> 
+                    <h5 class="responsiveFontSmartphoneTexto"><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.encargo.beaver.user.username}"/></a></b></h5>
         		</div>
         		</div>
         </div>  
@@ -214,7 +213,7 @@
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    			<a class="btn btn-primary Roboto responsiveFontSmartphoneTexto" href="${solicitudUrl}"> Ver solicitud</a>
     	</div>
     </li>
     </c:if>
@@ -222,7 +221,7 @@
     <c:if test="${solicitud.anuncio != null}">
 	<li class="list-group-item">
 		<div id=izquierda style="text-align: left;">
-                <h4 class="list-group-item-heading">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
+                <h4 class="list-group-item-heading responsiveFontSmartphoneTextoM">Anuncio: <c:out value="${solicitud.anuncio.titulo}"/>&nbsp;
                 	 <c:choose>
 	                      
 					       <c:when test="${solicitud.estado == 'ACEPTADO'}">
@@ -293,9 +292,9 @@
                         <spring:param name="beaverId" value="${solicitud.anuncio.beaver.id}"/>
                     </spring:url>
                  <div class="row">   
-                    <h5 class="list-group-item-text" style="color:#34302D;">Enviado a:&nbsp;</h5>
-                    <div class="SegoeFont">
-                    <h5><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.anuncio.beaver.user.username}"/></a></b></h5>
+                    <h5 class="list-group-item-text responsiveFontSmartphoneTexto" style="color:#34302D;">Enviado a:&nbsp;</h5>
+                    <div class="RobotoLight">
+                    <h5 class="responsiveFontSmartphoneTexto"><b><a href="${fn:escapeXml(beaverUrl)}"><c:out value="${solicitud.anuncio.beaver.user.username}"/></a></b></h5>
         		 	</div>
         		 </div>
         </div>  
@@ -305,7 +304,7 @@
             	<spring:url value="/solicitudes/solicitudInfo/{idSolicitud}" var="solicitudUrl">
         			<spring:param name="idSolicitud" value="${solicitud.id}"/>
     			</spring:url>
-    			<a class="btn btn-primary" href="${solicitudUrl}"> Ver solicitud</a>
+    			<a class="btn btn-primary Roboto responsiveFontSmartphoneTexto" href="${solicitudUrl}"> Ver solicitud</a>
     	</div>
     </li>
     </c:if>
