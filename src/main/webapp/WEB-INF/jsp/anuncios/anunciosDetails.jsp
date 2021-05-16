@@ -70,13 +70,13 @@
 	 		<c:if test="${anuncio.destacado == true}">
 		    	<div class="Roboto" style="float: right;">
 		    	<i style="color: orange; " class="fas fa-star"> </i>
-				<p style="color: black; float: right; font-style: italic; font-size:15px;"> &nbsp;Promocionado</p>
+				<p style="color: black; float: right; font-style: italic; font-size:16px;">&nbsp;Promocionado</p>
 		    	</div>
 				</c:if>
 				<hr/>
         	<c:if test="${createdByUser== false}">
 
-            	<h3 class="anuncioDetailsFontBody">Publicado por:&nbsp; </h3><h3 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
+            	<h3 class="anuncioDetailsFontBody">Publicado por:&nbsp; </h3><h3 class="RobotoLight"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
           	</c:if>
            		<h4 class="anuncioDetailsFontBody"><c:out value="${anuncio.descripcion}"/></h4>
            		<h4 class="anuncioDetailsFontBody">Precio: <c:out value="${anuncio.precio} €"/></h4>

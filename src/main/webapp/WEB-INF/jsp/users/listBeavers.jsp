@@ -114,9 +114,7 @@
 	  <button class="btn btn-primary tamBoton" onclick="filterSelection('FOTOGRAFIA')"> Fotografía</button>
 	</div>
 <div class="col-lg-9 mt-4 mt-lg-0 centerContainer">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="user-dashboard-info-box mb-0 bg-white p-4 shadow-sm">     
+        <div class="user-dashboard-info-box bg-white p-2 shadow-sm">     
           <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar usuarios">
           <ul class="usersList manage-candidates-top mb-0" id="myTable">
 			  <security:authorize access="hasAuthority('admin')">
@@ -213,8 +211,6 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
 </jsp:body> 
   
 </beavarts:layout>

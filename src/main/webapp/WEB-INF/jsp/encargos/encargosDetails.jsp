@@ -32,23 +32,23 @@
 			<div class="row">
 			<div class="col">
 			<div class="card-title text-center"><h2 class="mb-0 Roboto encargoDetailsFont"><c:out value="${encargo.titulo}"/>&nbsp;<c:if test="${encargo.disponibilidad == false}">
-            				<span class="badge badge-pill badge-danger encargoDetailsFont" id="badge-noDisponible">No disponible</span>
+            				<span class="badge badge-pill badge-danger" id="badge-noDisponible">No disponible</span>
         				</c:if>
         				<c:if test="${encargo.disponibilidad == true}">
-            				<span class="badge badge-pill badge-success encargoDetailsFont" id="badge-disponible">Disponible</span>
+            				<span class="badge badge-pill badge-success" id="badge-disponible">Disponible</span>
         			</c:if></h2>
 			</div>
 			</div>
 			</div>
         	<c:if test="${createdByUser== false}">
-            <h4 class="encargoDetailsFontBody">Publicado por&nbsp;</h4><h4 class="SegoeFont"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h4>
+            <h4 class="encargoDetailsPrecio">Publicado por&nbsp;</h4><h4 class="RobotoLight"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${encargo.beaver.user.username}"/></strong></a></h4>
         	</c:if>
         	
-        	<h4 class="col mb-1 encargoDetailsFontBody"><c:out value="${encargo.descripcion}"/></h4>
+        	<h4 class="col mb-1 encargoDetailsPrecio"><c:out value="${encargo.descripcion}"/></h4>
            	<h4 class="col mt-4 mb-1 encargoDetailsPrecio">Precio: <c:out value="${encargo.precio} €"/></h4>
         	<div class="text-center">
             	<c:if test="${encargo.photo.isEmpty()}">
-            	<br/><h5 class="mb-0 encargoDetailsFontBody">No hay imagen para mostrar</h5>
+            	<br/><h5 class="mb-0 encargoDetailsPrecio">No hay imagen para mostrar</h5>
         		</c:if>
         	</div>
     </div>
