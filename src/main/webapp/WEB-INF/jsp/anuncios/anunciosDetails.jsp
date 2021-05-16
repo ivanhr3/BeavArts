@@ -72,8 +72,8 @@
 		    	<i style="color: orange; " class="fas fa-star"> </i>
 				<p style="color: black; float: right; font-style: italic; font-size:16px;">&nbsp;Promocionado</p>
 		    	</div>
+		    	<hr/>
 				</c:if>
-				<hr/>
         	<c:if test="${createdByUser== false}">
 
             	<h3 class="anuncioDetailsFontBody">Publicado por:&nbsp; </h3><h3 class="RobotoLight"><a href="${fn:escapeXml(beaverUrl)}"><strong><c:out value="${anuncio.beaver.user.username}"/></strong></a></h3><br/>
@@ -94,7 +94,7 @@
         </c:if>
         <c:if test="${anuncio.photo.isEmpty()}">
             	<div class="row justify-content-center">
-            	<h4 class="mb-0">No hay imagen para mostrar</h4></div>
+            	<h4 class="mb-0 anuncioDetailsFontBody">No hay imagen para mostrar</h4></div>
         </c:if>
         
   </div>
@@ -130,8 +130,8 @@
 
 	<c:if test="${!promocionado}">
 			<form:form modelAttribute="anuncio" class="form-horizontal" id="promocionar-anuncio" action="/beavers/${anuncio.beaver.id}/anuncios/${anuncio.id}/promote">
-			<p class="RobotoLight" style="text-align:justify">Puedes destacar tu anuncio por sólo 4.99 Euros, para ello realiza el pago con una de las siguientes opciones.</p>
-			<div class="form-group has-feedback">
+			<p class="RobotoLight text-center anuncioDetailsFontBody" style="text-align:justify">Puedes destacar tu anuncio por sólo 4.99 Euros, para ello realiza el pago con una de las siguientes opciones.</p>
+			<div class="form-group has-feedback text-center">
 				<div class="form-group" >
 			<!-- Pasarela de Pago Promoción -->
 			<script
