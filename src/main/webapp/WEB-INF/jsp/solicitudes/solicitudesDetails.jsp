@@ -29,13 +29,13 @@
 <beavarts:layout pageName="solicitudDetails">
 
 <c:if test="${esDeEncargo==true}">
-<h3 class="Roboto"> Encargo: </h3>
+<h2 class="solicitudDetailsFont Roboto"> Encargo: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row solicitudDetailsFont ">
                     <div class="col-sm-3">
                       <h5 class="RobotoLight">Título </h5>
                     </div>
@@ -48,8 +48,9 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3 Roboto">
+
                       <h5>Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
@@ -65,13 +66,13 @@
 <br/>
 
 <c:if test="${esDeEncargo==false}">
-<h3 class="Roboto"> Anuncio: </h3>
+<h2 class="Roboto solicitudDetailsFont"> Anuncio: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3">
                       <h5 class="mb-0 SegoeFont">Título </h5>
                     </div>
@@ -84,7 +85,7 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3">
                       <h5>Especialidad</h5>
                     </div>
@@ -136,7 +137,7 @@
                     
                    
                   </div>
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3 Roboto">
                       <h5>Precio</h5>
                     </div>
@@ -151,15 +152,13 @@
 </div>
 </c:if>
 <br/>
-
-
-<h3 class="Roboto"> Solicitud: </h3>
+<h2 class="Roboto solicitudDetailsFont"> Solicitud: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3 Roboto">
                       <h5>Estado </h5>
                     </div>
@@ -188,8 +187,7 @@
                     </div>
                   </div>
                   <hr>
-                  
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3 Roboto">
                       <h5>Condiciones propuestas </h5>
                     </div>
@@ -199,7 +197,7 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3 Roboto">
                       <h5>Precio</h5>
                     </div>
@@ -208,7 +206,7 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3 Roboto">
                       <h5>Realizado por </h5>
                     </div>
@@ -222,7 +220,7 @@
                 
                   <c:if test= "${solicitudAceptada == true}">
                     <hr>
-    				<div class="row">
+    				<div class="row solicitudDetailsFont">
                     <div class="col-sm-3">
                       <h5>Contacto: </h5>
                     </div>
@@ -237,11 +235,8 @@
 </div>
 </div>                  
 <br/>
-
-
 <c:if test= "${solicitud.fotos.isEmpty() != true}">
-
-<h3 class="Roboto"> Fotos adjuntas: </h3>
+<h2 class="Roboto solicitudDetailsFont"> Fotos adjuntas: </h2>
 <br/>
 <br/>
 <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
@@ -291,7 +286,7 @@
 </c:if>
 
 <c:if test= "${solicitud.fotos.isEmpty() == true}">
-	<h5 class="RobotoLight"> No hay fotos adjuntas </h5>
+	<h5 class="RobotoLight solicitudDetailsFont"> No hay fotos adjuntas </h5>
 </c:if>
 
 <c:if test = "${esDeEncargo ==true}">
@@ -303,12 +298,12 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Confirmar Recepción</h5>
+            <h5 class="modal-title solicitudDetailsFont">Confirmar Recepción</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body solicitudDetailsFont">
             <p>Tras confirmar la recepción se marcará el pago para ser enviado a la persona que ha realizado el encargo. ¿Estás seguro de que quieres confirmar la recepción?</p>
           </div>
           <div class="modal-footer">
