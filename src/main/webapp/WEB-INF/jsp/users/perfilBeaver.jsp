@@ -230,7 +230,7 @@
 								<spring:url value="/beavers/${beaverId}/valoraciones/list" var="listValUrl">
 		                        <spring:param name="beaverId" value="${beaver.id}"/>
 		            			</spring:url>
-								<a class="valHover" href="${fn:escapeXml(listValUrl)}">(${numValoraciones})</a>
+								<a class="valHover" href="${fn:escapeXml(listValUrl)}">(${numValoraciones}) ir a valoraciones</a>
 					</div>
 					
 					
