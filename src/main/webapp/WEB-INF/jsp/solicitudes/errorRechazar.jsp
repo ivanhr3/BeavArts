@@ -8,8 +8,8 @@
     uri="http://www.springframework.org/security/tags%22%%3E" %>
  --%>
 <beavarts:layout pageName="errorRechazar">
-<div class="minAlto">
-    <h2>Ha ocurrido un error al intentar rechazar la solicitud</h2>
+<div class="minAlto Roboto">
+    <h3>Ha ocurrido un error al intentar rechazar la solicitud</h3>
 <br/>
 	<a class="btn btn-primary" href="/">Volver al inicio</a>
 

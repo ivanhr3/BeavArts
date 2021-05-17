@@ -29,17 +29,17 @@
 <beavarts:layout pageName="solicitudDetails">
 
 <c:if test="${esDeEncargo==true}">
-<h2 class="Roboto"> Encargo: </h2>
+<h2 class="solicitudDetailsFont Roboto"> Encargo: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row solicitudDetailsFont ">
                     <div class="col-sm-3">
-                      <h5>Título </h5>
+                      <h5 class="RobotoLight">Título </h5>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="RobotoLight" class="col-sm-9 text-secondary">
                       <spring:url value="/beavers/{beaverId}/encargos/{encargoId}" var="beaverUrl">
                 			<spring:param name="beaverId" value="${encargo.beaver.id}"/>
                	    		<spring:param name="encargoId" value="${encargo.id}"/>
@@ -48,8 +48,9 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
+                  <div class="row solicitudDetailsFont">
+                    <div class="col-sm-3 Roboto">
+
                       <h5>Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
@@ -65,13 +66,13 @@
 <br/>
 
 <c:if test="${esDeEncargo==false}">
-<h2 class="Roboto"> Anuncio: </h2>
+<h2 class="Roboto solicitudDetailsFont"> Anuncio: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3">
                       <h5 class="mb-0 SegoeFont">Título </h5>
                     </div>
@@ -84,7 +85,7 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
+                  <div class="row solicitudDetailsFont">
                     <div class="col-sm-3">
                       <h5>Especialidad</h5>
                     </div>
@@ -136,8 +137,8 @@
                     
                    
                   </div>
-                  <div class="row">
-                    <div class="col-sm-3">
+                  <div class="row solicitudDetailsFont">
+                    <div class="col-sm-3 Roboto">
                       <h5>Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
@@ -151,16 +152,14 @@
 </div>
 </c:if>
 <br/>
-
-
-<h2 class="Roboto"> Solicitud: </h2>
+<h2 class="Roboto solicitudDetailsFont"> Solicitud: </h2>
 <br/>
 <div class= "container">
 <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
+                  <div class="row solicitudDetailsFont">
+                    <div class="col-sm-3 Roboto">
                       <h5>Estado </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
@@ -188,9 +187,8 @@
                     </div>
                   </div>
                   <hr>
-                  
-                  <div class="row">
-                    <div class="col-sm-3">
+                  <div class="row solicitudDetailsFont">
+                    <div class="col-sm-3 Roboto">
                       <h5>Condiciones propuestas </h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
@@ -199,8 +197,8 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
+                  <div class="row solicitudDetailsFont">
+                    <div class="col-sm-3 Roboto">
                       <h5>Precio</h5>
                     </div>
                     <div class="col-sm-9 text-secondary">
@@ -208,11 +206,11 @@
                     </div>
                   </div>
                   <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
+                  <div class="row solicitudDetailsFont">
+                    <div class="col-sm-3 Roboto">
                       <h5>Realizado por </h5>
                     </div>
-                    <div class="col-sm-9 SegoeFont text-secondary">
+                    <div class="col-sm-9 Roboto text-secondary">
                       <spring:url value="/beavers/beaverInfo/{beaverId}" var="beaverUrl">
                 		<spring:param name="beaverId" value="${solicitud.beaver.id}"/>
                		  </spring:url>
@@ -222,7 +220,7 @@
                 
                   <c:if test= "${solicitudAceptada == true}">
                     <hr>
-    				<div class="row">
+    				<div class="row solicitudDetailsFont">
                     <div class="col-sm-3">
                       <h5>Contacto: </h5>
                     </div>
@@ -237,11 +235,8 @@
 </div>
 </div>                  
 <br/>
-
-
 <c:if test= "${solicitud.fotos.isEmpty() != true}">
-
-<h2 class="Roboto"> Fotos adjuntas: </h2>
+<h2 class="Roboto solicitudDetailsFont"> Fotos adjuntas: </h2>
 <br/>
 <br/>
 <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
@@ -291,7 +286,7 @@
 </c:if>
 
 <c:if test= "${solicitud.fotos.isEmpty() == true}">
-	<h5 class="RobotoLight"> No hay fotos adjuntas </h5>
+	<h5 class="RobotoLight solicitudDetailsFont"> No hay fotos adjuntas </h5>
 </c:if>
 
 <c:if test = "${esDeEncargo ==true}">
@@ -303,12 +298,12 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Confirmar Recepción</h5>
+            <h5 class="modal-title solicitudDetailsFont">Confirmar Recepción</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body solicitudDetailsFont">
             <p>Tras confirmar la recepción se marcará el pago para ser enviado a la persona que ha realizado el encargo. ¿Estás seguro de que quieres confirmar la recepción?</p>
           </div>
           <div class="modal-footer">
@@ -328,16 +323,16 @@
 <c:if test= "${solicitudPendiente==true}">
    <spring:url value="/solicitudes/accept/${solicitud.id}" var="aceptarUrl">
    </spring:url>
-    <a class="btn btn-primary" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
+    <a class="btn btn-primary Roboto" href="${fn:escapeXml(aceptarUrl)}" >Aceptar Solicitud</a>
 	
 	<spring:url value="/solicitudes/decline/${solicitud.id}" var="rechazarUrl">
 	</spring:url>
-    <a class="btn btn-primary" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
+    <a class="btn btn-primary Roboto" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
 </c:if>
 <c:if test= "${solicitudAceptada == true}">
     <spring:url value="/solicitudes/finish/${solicitud.id}" var="finishUrl">
     </spring:url>
-    <a class="btn btn-primary" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
+    <a class="btn btn-primary Roboto" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
 </c:if>
 </c:if>
 
@@ -345,7 +340,7 @@
 <c:if test= "${isAnuncioCreator==true}"> 
 <c:if test= "${solicitudPendiente==true}">
    
-    <p style="text-align:justify">Para aceptar esta solicitud debes realizar el pago con una de las siguientes opciones. Cuando se acepte esta solicitud usted estará aceptando las condiciones descritas en la solicitud, así como la contraoferta propuesta.</p>
+    <p class="Roboto"style="text-align:justify">Para aceptar esta solicitud debes realizar el pago con una de las siguientes opciones. Cuando se acepte esta solicitud usted estará aceptando las condiciones descritas en la solicitud, así como la contraoferta propuesta.</p>
     <body>
         <script
           src="https://www.paypal.com/sdk/js?client-id=AZAQtxAN8iGqHpcNLU_OvBfyH5WNRCw8feeZEQ_9VNgPfU-ADWq70YgaKqcWxmYYKF_JCPaQDXb5uRG9&currency=EUR"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
@@ -382,12 +377,12 @@
 	
 	<spring:url value="/solicitudes/decline/${solicitud.id}" var="rechazarUrl">
 	</spring:url>
-    <a class="btn btn-primary" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
+    <a class="btn btn-primary Roboto" href="${fn:escapeXml(rechazarUrl)}" >Rechazar Solicitud</a>
 </c:if>
 <c:if test= "${solicitudAceptada == true}">
     <spring:url value="/solicitudes/finish/${solicitud.id}" var="finishUrl">
     </spring:url>
-    <a class="btn btn-primary" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
+    <a class="btn btn-primary Roboto" href="${fn:escapeXml(finishUrl)}" >Finalizar Solicitud</a>
 </c:if>
 </c:if>
 </beavarts:layout>

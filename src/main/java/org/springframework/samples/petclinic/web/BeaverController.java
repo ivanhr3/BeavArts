@@ -342,6 +342,27 @@ public class BeaverController {
 		}
 	}
 
+	@RequestMapping("/beaverInfo/{beaverId}/unban")
+	public String unbanUser(@PathVariable("beaverId") final int beaverId, @Valid final User usr, final BindingResult result, final ModelMap model){
+		final Beaver beaver = this.beaverService.findBeaverByIntId(beaverId);
+		User banneduser = beaver.getUser();
+		List<Authorities> targetAuth = this.beaverService.findUserAuthorities(banneduser);
+		Boolean targetEsAdmin = targetAuth.get(0).getAuthority().equals("admin");
+
+		Beaver me = this.beaverService.getCurrentBeaver();
+		User user = me.getUser();
+		List<Authorities> auth = this.beaverService.findUserAuthorities(user);
+		Boolean esAdmin = auth.get(0).getAuthority().equals("admin");
+
+		if(esAdmin && !targetEsAdmin){
+			banneduser.setEnabled(true);
+			this.userService.save(banneduser);
+			return "redirect:/beavers/list";
+		} else {
+			return "accesoNoAutorizado";
+		}
+	}
+
 	@GetMapping("/beaverInfo/{beaverId}/editEspecialidades")
 	public String initEditEspecialidades(@PathVariable("beaverId") final int beaverId, final ModelMap model) {
 		Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();

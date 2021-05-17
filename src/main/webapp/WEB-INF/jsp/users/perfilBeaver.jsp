@@ -76,6 +76,15 @@
 			                  <a style="color:white"class="btn btn-red" href="${fn:escapeXml(banUserUrl)}"><i class="fas fa-ban"></i> Suspender</a>
 		                  		
 		                  </c:if>
+
+						  <c:if test="${beaver.user.enabled == false and authority!='admin'}">
+						
+							<spring:url value="/beavers/beaverInfo/{beaverId}/unban" var="unbanUserUrl">
+						  <spring:param name="beaverId" value="${beaver.id}"/>              
+						  </spring:url>
+						  <a style="color:white"class="btn btn-success" href="${fn:escapeXml(unbanUserUrl)}"><i class="fas fa-check"></i> Reactivar Cuenta</a>
+							  
+					  </c:if>
 						
 		                  <c:if test="${beaver.user.enabled == true and authority == 'admin'}">
 		                  	
@@ -94,7 +103,7 @@
 				</div>
 				
 				<div class="fotoCard2 text-center">
-					<div class ="Roboto textoEsp" style="height:20%; color:#3a3a3a; ">
+					<div class ="Roboto textoEsp" style="height:35%; color:#3a3a3a; ">
 
 						<h4 class ="Roboto tituloPerfil" style="color:black">Especialidades</h4>
 						
@@ -127,10 +136,11 @@
 						                  </c:choose>                          
 			                    		  <c:out value="${especialidad} "/> &nbsp;
 						</c:forEach>
-						
+					
 						<c:if test="${beaver.user.username == principalUsername}">
+						<div class="container">
 								<a class="btn btn-primary espButton" href='<spring:url value="/beavers/beaverInfo/${beaver.id}/editEspecialidades" htmlEscape="true"/>'>Cambiar</a>              
-	                      </c:if>
+	                     </div> </c:if>
 					</div>
 					
 					<div class ="Roboto" style="height:50%">
@@ -213,13 +223,14 @@
 		                    	</c:if>
 		
 		                    	<c:if test = "${sinPuntuacionMedia != null}">
-		                    	<c:out value = "${sinPuntuacionMedia}"/>&nbsp;
+		                    	<p class="textoPerfil text-center"><c:out value = "${sinPuntuacionMedia}"/>&nbsp;</p>
 		                    	</c:if>
 			                    	
 								<spring:url value="/beavers/${beaverId}/valoraciones/list" var="listValUrl">
 		                        <spring:param name="beaverId" value="${beaver.id}"/>
 		            			</spring:url>
-								<a class="valHover" href="${fn:escapeXml(listValUrl)}">(${numValoraciones})</a>
+								<a class="valHover textoPerfil" href="${fn:escapeXml(listValUrl)}">(${numValoraciones}) ir a valoraciones</a>
+
 					</div>
 					
 					
@@ -341,7 +352,7 @@
 	                  
 	                 <div class="cuerpoCarta" style="background-image: url(${encargo.photo}); background-position: center; ">
 							<div class="text-center" style="height:50%;">
-								<div class="letrero Roboto"  style="font-size:20px">
+								<div class="letrero Roboto">
 									<c:out value="${encargo.titulo}"/>
 								</div>
 		
@@ -362,7 +373,7 @@
 	                  
 		
 					  <div class="cuerpoFooter text-center">
-					  		<a  class="customHoverEncargos" href="#myModal${encargo.id}" data-toggle="modal"><b style="font-size: 1.5rem;" class="card-title Roboto ">Ver más</b></a>
+					  		<a  class="customHoverEncargos" href="#myModal${encargo.id}" data-toggle="modal"><b class="card-title Roboto">Ver más</b></a>
 					  </div>
 					</div>
 					</c:if>
@@ -416,7 +427,11 @@
             	<spring:param name="beaverId" value="${beaver.id}"/>
             </spring:url>
             <security:authorize access="isAuthenticated()">
-				<b style="color: white" class="Roboto encargosFont">Mira el resto de mis encargos </b><a href="${fn:escapeXml(listUrl)}"><b  class="Roboto encargosFont">aquí</b></a>
+            	<div class="row text-center">
+            	<div class="col">
+				<p style="color: white" class="RobotoLight encargosFont">Mira el resto de mis encargos&nbsp;<a href="${fn:escapeXml(listUrl)}"><b  class="RobotoLight encargosFont">aquí</b></a> </p>
+           		</div>
+           		</div>
             </security:authorize>
             <c:if test="${principalUsername == null}">
                 <spring:url value="/login" var="loginURL">
