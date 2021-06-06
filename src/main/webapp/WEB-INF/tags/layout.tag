@@ -5,8 +5,6 @@
 <%@ attribute name="pageName" required="true" %>
 <%@ attribute name="customScript" required="false" fragment="true"%>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"/>
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <!doctype html>
 <html>
