@@ -4,7 +4,7 @@
 <%@ taglib prefix="beavarts" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ page contentType="text/html; charset=UTF-8" %> <!-- Para  tildes, ñ y caracteres especiales como el € %-->
-
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <beavarts:layout pageName="home">
 <div class="minAlto text-center">
     
