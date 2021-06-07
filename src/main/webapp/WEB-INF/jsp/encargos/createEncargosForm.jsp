@@ -17,6 +17,10 @@
                 document.getElementById('updateButton').style.display = 'none';
             }
         }
+    function goBack() {
+        window.history.back();
+        }
+
 </script>
 
 <beavarts:layout pageName="Encargos">
@@ -82,6 +86,8 @@
                         <c:if test="${encargo.disponibilidad != true}">
                         <button class="btn btn-primary" id="updateButton" type="submit" name= "updateButton">Actualizar encargo</button>
                         </c:if>
+                        <br/>
+                        <a class="btn btn-secondary" href="javascript:history.back()"><p class="fas fa-trash-alt"></p>Volver</a>
                         <br/>
                         <c:if test="${url == true}">
                         	<div class="alert alert-danger" role="alert">
